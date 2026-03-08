@@ -162,6 +162,9 @@ model Property {
   isTokenized      Boolean  @default(false)
   tokenMintAddress String?
 
+  // Features / keywords — JSON string array used for search and AI matching
+  features         Json     @default("[]")
+
   // Engagement (incremented by background jobs / API handlers)
   viewCount    Int @default(0)
   saveCount    Int @default(0)

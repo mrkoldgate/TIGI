@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { PageHeader } from '@/components/shared/page-header'
 import { MarketplaceClient } from '@/components/marketplace/marketplace-client'
+import { getActiveListings, computeMarketplaceStats } from '@/lib/listings/listing-query'
 
 export const metadata: Metadata = {
   title: 'Marketplace',
@@ -10,12 +11,18 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 // Marketplace — /marketplace
 //
-// Server Component shell. MarketplaceClient handles all filtering client-side.
-// DB integration path: fetch listings via Prisma here, pass as props instead
-// of importing mock data directly in the client component.
+// Server Component: fetches all ACTIVE listings from the database and passes
+// them as props to MarketplaceClient. All filtering + sorting stays client-side
+// (acceptable for MVP volume). For scale, move filter params to searchParams
+// and push the filtering into the DB query.
+//
+// Falls back to mock data if the database is unavailable (dev without DB).
 // ---------------------------------------------------------------------------
 
-export default function MarketplacePage() {
+export default async function MarketplacePage() {
+  const listings = await getActiveListings()
+  const stats = computeMarketplaceStats(listings)
+
   return (
     <div className="animate-fade-in pt-6 pb-16">
       <PageHeader
@@ -24,7 +31,7 @@ export default function MarketplacePage() {
       />
 
       <div className="mt-6">
-        <MarketplaceClient />
+        <MarketplaceClient listings={listings} stats={stats} />
       </div>
     </div>
   )

@@ -13,18 +13,14 @@ import {
   Trees,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { PropertyCardSkeleton, LandCardSkeleton } from '@/components/ui/skeleton'
 import { PropertyCard, PropertyRow } from '@/components/marketplace/property-card'
 import {
   MarketplaceLandCard,
   MarketplaceLandRow,
   inferDevOpportunity,
 } from '@/components/marketplace/land-card'
-import {
-  MOCK_LISTINGS,
-  MARKETPLACE_STATS,
-  type MockListing,
-} from '@/lib/marketplace/mock-data'
+import type { MockListing } from '@/lib/marketplace/mock-data'
+import type { MarketplaceStats } from '@/lib/listings/listing-query'
 import { useSavedListings } from '@/lib/saved/saved-context'
 
 // ---------------------------------------------------------------------------
@@ -596,10 +592,14 @@ function ListingRow({
 // Main export
 // ---------------------------------------------------------------------------
 
-export function MarketplaceClient() {
+interface MarketplaceClientProps {
+  listings: MockListing[]
+  stats: MarketplaceStats
+}
+
+export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const [isLoading] = useState(false) // replace with real loading state when DB integrated
 
   // Shared save state — persists across marketplace, detail pages, and /saved
   const { savedIds, toggleSave } = useSavedListings()
@@ -624,13 +624,13 @@ export function MarketplaceClient() {
   const handleSave = toggleSave
 
   const filteredListings = useMemo(
-    () => applyFilters(MOCK_LISTINGS, filters),
-    [filters],
+    () => applyFilters(listings, filters),
+    [listings, filters],
   )
 
   const visibleListings = filteredListings.slice(0, visibleCount)
   const hasMore = visibleCount < filteredListings.length
-  const totalValueDisplay = `$${(MARKETPLACE_STATS.totalValue / 1_000_000).toFixed(1)}M`
+  const totalValueDisplay = `$${(stats.totalValue / 1_000_000).toFixed(1)}M`
   const gridCols = getGridCols(filters.category)
 
   return (
@@ -638,11 +638,11 @@ export function MarketplaceClient() {
 
       {/* ── Stats strip — landCount chip navigates to LAND tab ── */}
       <div className="flex flex-wrap items-center gap-2">
-        <StatChip value={String(MARKETPLACE_STATS.totalActive)} label="active listings" />
-        <StatChip value={String(MARKETPLACE_STATS.tokenizedCount)} label="tokenized" gold />
+        <StatChip value={String(stats.totalActive)} label="active listings" />
+        <StatChip value={String(stats.tokenizedCount)} label="tokenized" gold />
         <StatChip value={totalValueDisplay} label="total listed value" />
         <StatChip
-          value={String(MARKETPLACE_STATS.landCount)}
+          value={String(stats.landCount)}
           label="land parcels"
           green
           onClick={() => patchFilters({ category: 'LAND' })}
@@ -677,17 +677,7 @@ export function MarketplaceClient() {
       />
 
       {/* ── Grid / List ── */}
-      {isLoading ? (
-        <div className={cn(filters.view === 'grid' ? `grid ${gridCols} gap-6` : 'flex flex-col gap-3')}>
-          {Array.from({ length: PAGE_SIZE }).map((_, i) =>
-            filters.category === 'LAND' ? (
-              <LandCardSkeleton key={i} />
-            ) : (
-              <PropertyCardSkeleton key={i} />
-            ),
-          )}
-        </div>
-      ) : filteredListings.length === 0 ? (
+      {filteredListings.length === 0 ? (
         <EmptyState
           category={filters.category}
           hasSearch={filters.search.trim().length > 0}
@@ -732,7 +722,7 @@ export function MarketplaceClient() {
       )}
 
       {/* ── Load more ── */}
-      {hasMore && !isLoading && (
+      {hasMore && (
         <div className="flex flex-col items-center gap-3 pt-4">
           <button
             type="button"

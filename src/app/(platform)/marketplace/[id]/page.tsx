@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
-import { MOCK_LISTINGS } from '@/lib/marketplace/mock-data'
+import { getListingById, getActiveListings } from '@/lib/listings/listing-query'
 import { PropertyDetailClient } from '@/components/marketplace/property-detail-client'
 import { LandDetailClient } from '@/components/marketplace/land-detail-client'
 import { getValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
@@ -8,12 +8,12 @@ import { getValuation, marketplaceListingToInput } from '@/lib/valuation/valuati
 // ---------------------------------------------------------------------------
 // /marketplace/[id] — Unified property & land detail route.
 //
-// Routes to the appropriate client component based on propertyType:
-//   LAND     → LandDetailClient
-//   all else → PropertyDetailClient
+// Data is fetched from the database via listing-query.ts.
+// Both getListingById and getActiveListings are wrapped in React cache() so
+// parallel calls within generateMetadata + page component deduplicate to a
+// single Prisma query each.
 //
-// DB integration path: replace MOCK_LISTINGS.find() with:
-//   const listing = await prisma.listing.findUnique({ where: { id }, include: { ... } })
+// Falls back to MOCK_LISTINGS if the DB is unavailable (dev without Postgres).
 // ---------------------------------------------------------------------------
 
 interface PageProps {
@@ -22,7 +22,7 @@ interface PageProps {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
-  const listing = MOCK_LISTINGS.find((l) => l.id === id)
+  const listing = await getListingById(id)
   if (!listing) return { title: 'Not Found' }
 
   const suffix = listing.propertyType === 'LAND' ? 'Land — TIGI' : 'TIGI Marketplace'
@@ -36,21 +36,22 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 }
 
-export async function generateStaticParams() {
-  return MOCK_LISTINGS.map((l) => ({ id: l.id }))
-}
-
 export default async function ListingDetailPage({ params }: PageProps) {
   const { id } = await params
-  const listing = MOCK_LISTINGS.find((l) => l.id === id)
+
+  // Both queries are React-cached — parallel calls are deduplicated.
+  const [listing, allListings] = await Promise.all([
+    getListingById(id),
+    getActiveListings(),
+  ])
 
   if (!listing) notFound()
 
   const valuation = await getValuation(listing.id, marketplaceListingToInput(listing))
 
   if (listing.propertyType === 'LAND') {
-    return <LandDetailClient listing={listing} allListings={MOCK_LISTINGS} valuation={valuation} />
+    return <LandDetailClient listing={listing} allListings={allListings} valuation={valuation} />
   }
 
-  return <PropertyDetailClient listing={listing} allListings={MOCK_LISTINGS} valuation={valuation} />
+  return <PropertyDetailClient listing={listing} allListings={allListings} valuation={valuation} />
 }
