@@ -38,6 +38,7 @@ export interface PropertyCardData {
   bathrooms?: number
   lotAcres?: number
   yearBuilt?: number
+  imageUrl?: string | null
   imageSlot?: string
   imagePropertyType?: 'residential' | 'commercial' | 'land' | 'industrial' | 'mixed'
   isTokenized?: boolean
@@ -240,6 +241,7 @@ function CardVariant({
         {/* ── Image ── */}
         <div className="relative overflow-hidden">
           <PlaceholderImage
+            src={data.imageUrl}
             slot={data.imageSlot}
             propertyType={data.imagePropertyType}
             alt={data.title}
@@ -370,6 +372,7 @@ function RowVariant({
         {/* Thumbnail */}
         <div className="relative w-32 shrink-0 overflow-hidden rounded-lg sm:w-44">
           <PlaceholderImage
+            src={data.imageUrl}
             slot={data.imageSlot}
             propertyType={data.imagePropertyType}
             alt={data.title}

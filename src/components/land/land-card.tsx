@@ -47,6 +47,7 @@ export interface LandCardData {
   /** Key attributes: zoning details, utilities, development readiness, access */
   features?: string[]
   isDevelopmentOpportunity?: boolean
+  imageUrl?: string | null
   imageSlot?: string
   isTokenized?: boolean
   tokenInfo?: LandTokenInfo
@@ -342,6 +343,7 @@ function CardVariant({
         {/* ── Panoramic image ── */}
         <div className="relative overflow-hidden">
           <PlaceholderImage
+            src={data.imageUrl}
             slot={data.imageSlot}
             propertyType="land"
             alt={data.title}
@@ -487,6 +489,7 @@ function RowVariant({
         {/* Thumbnail — landscape crop */}
         <div className="relative w-36 shrink-0 overflow-hidden rounded-lg sm:w-52">
           <PlaceholderImage
+            src={data.imageUrl}
             slot={data.imageSlot}
             propertyType="land"
             alt={data.title}

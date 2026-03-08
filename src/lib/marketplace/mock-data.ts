@@ -31,7 +31,9 @@ export interface MockListing {
   tokenAvailableSupply: number | null
   tokenPricePerFraction: number | null
   tokenInvestorCount: number | null
-  // Image — slots match PlaceholderImage curated Unsplash IDs
+  // Image — real URL takes priority; falls back to placeholder slot
+  // Optional: mock data omits this; DB-backed listings populate it.
+  imageUrl?: string | null
   imageSlot: string
   imagePropertyType: ImagePropertyType
   // Meta

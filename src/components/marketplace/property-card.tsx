@@ -29,6 +29,7 @@ function toCardData(listing: MockListing): PropertyCardData {
     bathrooms: listing.bathrooms,
     lotAcres: listing.lotAcres,
     yearBuilt: listing.yearBuilt,
+    imageUrl: listing.imageUrl ?? null,
     imageSlot: listing.imageSlot,
     imagePropertyType: listing.imagePropertyType,
     isNew: listing.isNew,

@@ -60,6 +60,7 @@ model User {
   kycVerifications KycVerification[]
   auditLogs       AuditLog[]
   savedListings   SavedListing[]
+  userDocuments   UserDocument[]
   beneficiaryDesignations BeneficiaryDesignation[]
 
   createdAt DateTime @default(now())
@@ -200,12 +201,17 @@ model PropertyImage {
   id          String   @id @default(cuid())
   propertyId  String
   url         String
+  storageKey  String?  // Path within storage bucket (e.g. "listing-images/{id}/{uuid}.jpg")
+  fileName    String?  // Original uploaded file name
+  fileSize    Int?     // Size in bytes
+  mimeType    String?  // e.g. "image/jpeg"
   order       Int      @default(0)
   isPrimary   Boolean  @default(false)
   property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime @default(now())
 
+  @@index([propertyId, order])
   @@map("property_images")
 }
 
@@ -215,11 +221,17 @@ model PropertyDocument {
   name        String
   type        DocumentType
   url         String
+  storageKey  String?      // Path within storage bucket
+  fileName    String?      // Original uploaded file name
+  fileSize    Int?         // Size in bytes
+  mimeType    String?      // e.g. "application/pdf"
   verified    Boolean      @default(false)
+  uploadedBy  String?      // userId of the uploader
   property    Property     @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 
   createdAt   DateTime     @default(now())
 
+  @@index([propertyId])
   @@map("property_documents")
 }
 
@@ -388,6 +400,35 @@ model SavedListing {
   @@unique([userId, listingId])
   @@index([userId])
   @@map("saved_listings")
+}
+
+// =============================================================================
+// USER DOCUMENTS
+// =============================================================================
+
+// Non-property documents: KYC identity docs, inheritance supporting docs, etc.
+// Separate from PropertyDocument because these belong to the user, not a listing.
+model UserDocument {
+  id          String         @id @default(cuid())
+  userId      String
+  purpose     UserDocPurpose
+  name        String
+  url         String
+  storageKey  String?        // Path within storage bucket
+  fileName    String?        // Original uploaded file name
+  fileSize    Int?           // Size in bytes
+  mimeType    String?        // e.g. "application/pdf"
+  verified    Boolean        @default(false)
+  reviewedBy  String?
+  reviewNote  String?
+
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([userId, purpose])
+  @@map("user_documents")
 }
 
 // =============================================================================
@@ -565,4 +606,10 @@ enum AiConfidence {
   LOW
   MEDIUM
   HIGH
+}
+
+enum UserDocPurpose {
+  KYC          // Identity verification documents
+  INHERITANCE  // Beneficiary designation supporting documents
+  OTHER
 }

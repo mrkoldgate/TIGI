@@ -16,7 +16,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'plus.unsplash.com',
       },
-      // Future: production storage
+      // Local dev: uploads written to public/uploads/ by LocalStorageProvider
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '3000',
+        pathname: '/uploads/**',
+      },
+      // Production storage
       {
         protocol: 'https',
         hostname: '*.r2.cloudflarestorage.com',

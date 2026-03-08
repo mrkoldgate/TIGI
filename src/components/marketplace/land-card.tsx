@@ -74,6 +74,7 @@ function toCardData(listing: MockListing): LandCardData {
     listingType: listing.listingType,
     features,
     isDevelopmentOpportunity: inferDevOpportunity(features),
+    imageUrl: listing.imageUrl ?? null,
     imageSlot: listing.imageSlot,
     isNew: listing.isNew,
     isTokenized: listing.isTokenized,

@@ -22,7 +22,7 @@
 // ---------------------------------------------------------------------------
 
 import { cache } from 'react'
-import type { Property, Token, AiValuation as PrismaAiValuation, Prisma } from '@prisma/client'
+import type { Property, Token, AiValuation as PrismaAiValuation, PropertyImage, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
 import {
   MOCK_LISTINGS,
@@ -35,6 +35,7 @@ import {
 type PropertyWithIncludes = Property & {
   token: Token | null
   aiValuations: PrismaAiValuation[]
+  images: PropertyImage[]
 }
 
 // ── Image slot derivation ────────────────────────────────────────────────────
@@ -76,6 +77,9 @@ export function propertyToMockListing(p: PropertyWithIncludes): MockListing {
     DELISTED:     'SOLD',
   }
 
+  // Use the primary image URL if one exists; fall back to placeholder slot
+  const primaryImage = p.images.find((img) => img.isPrimary) ?? p.images[0] ?? null
+
   return {
     id:          p.id,
     title:       p.title,
@@ -103,7 +107,8 @@ export function propertyToMockListing(p: PropertyWithIncludes): MockListing {
     tokenPricePerFraction: p.token ? Number(p.token.pricePerFraction) : null,
     tokenInvestorCount:    null, // TODO: COUNT(TokenHolding) join
 
-    // Images — placeholder-derived until real S3 images are attached
+    // Images — use real URL when available; fall back to placeholder slot
+    imageUrl:          primaryImage?.url ?? null,
     imageSlot:         TYPE_TO_IMAGE_SLOT[p.type]  ?? 'residential-1',
     imagePropertyType: TYPE_TO_IMAGE_PROP_TYPE[p.type] ?? 'residential',
 
@@ -121,6 +126,7 @@ export function propertyToMockListing(p: PropertyWithIncludes): MockListing {
 const LISTING_INCLUDE = {
   token: true,
   aiValuations: { orderBy: { generatedAt: 'desc' as const }, take: 1 },
+  images: { orderBy: { order: 'asc' as const }, take: 6 },
 } satisfies Prisma.PropertyInclude
 
 // ── Query functions ──────────────────────────────────────────────────────────

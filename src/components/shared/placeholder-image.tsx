@@ -49,6 +49,8 @@ type ImageSlot = keyof typeof PLACEHOLDER_PHOTOS
 type PropertyType = 'residential' | 'commercial' | 'land' | 'industrial' | 'mixed'
 
 interface PlaceholderImageProps {
+  /** Real image URL (from storage). Takes priority over slot when provided. */
+  src?: string | null
   slot?: ImageSlot
   propertyType?: PropertyType
   alt: string
@@ -60,6 +62,7 @@ interface PlaceholderImageProps {
 }
 
 export function PlaceholderImage({
+  src,
   slot,
   propertyType = 'residential',
   alt,
@@ -71,6 +74,25 @@ export function PlaceholderImage({
 }: PlaceholderImageProps) {
   // Determine gradient for CSS fallback
   const gradient = GRADIENT_FALLBACKS[propertyType] ?? GRADIENT_FALLBACKS.default
+
+  // Real uploaded image — takes priority over Unsplash slot
+  if (src) {
+    return (
+      <div className={cn('relative overflow-hidden', className)}>
+        <Image
+          src={src}
+          alt={alt}
+          fill={fill}
+          width={!fill ? (width ?? 800) : undefined}
+          height={!fill ? (height ?? 600) : undefined}
+          className="object-cover"
+          priority={priority}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/30 via-transparent to-transparent pointer-events-none" />
+      </div>
+    )
+  }
 
   // Try Unsplash URL if slot is provided
   if (slot && PLACEHOLDER_PHOTOS[slot]) {

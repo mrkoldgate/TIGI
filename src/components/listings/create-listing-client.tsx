@@ -41,6 +41,12 @@ interface UploadSlot {
   preview: string | null
   status: 'idle' | 'uploading' | 'done' | 'error'
   label: string
+  /** Storage key returned by POST /api/upload — null until upload completes */
+  storageKey: string | null
+  /** Public URL returned by POST /api/upload — null until upload completes */
+  url: string | null
+  /** Error message shown when status === 'error' */
+  errorMessage: string | null
 }
 
 interface FormState {
@@ -77,12 +83,12 @@ interface FormState {
 }
 
 const INITIAL_UPLOAD_SLOTS: UploadSlot[] = [
-  { id: 'hero', file: null, preview: null, status: 'idle', label: 'Hero Image' },
-  { id: 'img-2', file: null, preview: null, status: 'idle', label: 'Image 2' },
-  { id: 'img-3', file: null, preview: null, status: 'idle', label: 'Image 3' },
-  { id: 'img-4', file: null, preview: null, status: 'idle', label: 'Image 4' },
-  { id: 'img-5', file: null, preview: null, status: 'idle', label: 'Image 5' },
-  { id: 'img-6', file: null, preview: null, status: 'idle', label: 'Image 6' },
+  { id: 'hero',  file: null, preview: null, status: 'idle', label: 'Hero Image', storageKey: null, url: null, errorMessage: null },
+  { id: 'img-2', file: null, preview: null, status: 'idle', label: 'Image 2',    storageKey: null, url: null, errorMessage: null },
+  { id: 'img-3', file: null, preview: null, status: 'idle', label: 'Image 3',    storageKey: null, url: null, errorMessage: null },
+  { id: 'img-4', file: null, preview: null, status: 'idle', label: 'Image 4',    storageKey: null, url: null, errorMessage: null },
+  { id: 'img-5', file: null, preview: null, status: 'idle', label: 'Image 5',    storageKey: null, url: null, errorMessage: null },
+  { id: 'img-6', file: null, preview: null, status: 'idle', label: 'Image 6',    storageKey: null, url: null, errorMessage: null },
 ]
 
 const INITIAL_FORM: FormState = {
@@ -895,14 +901,45 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
   const isLand = form.assetType === 'LAND'
 
   const handleFileSelect = useCallback(
-    (slotId: string, file: File) => {
+    async (slotId: string, file: File) => {
       const preview = URL.createObjectURL(file)
+      // Optimistically set uploading state with local preview
       setForm((prev) => ({
         ...prev,
         uploadSlots: prev.uploadSlots.map((s) =>
-          s.id === slotId ? { ...s, file, preview, status: 'done' } : s,
+          s.id === slotId
+            ? { ...s, file, preview, status: 'uploading', storageKey: null, url: null, errorMessage: null }
+            : s,
         ),
       }))
+
+      try {
+        const fd = new FormData()
+        fd.append('file', file)
+        fd.append('purpose', 'listing-images')
+        const res = await fetch('/api/upload', { method: 'POST', body: fd })
+        const json = await res.json()
+        if (!res.ok) {
+          throw new Error(json.error?.message ?? 'Upload failed')
+        }
+        const { key, url } = json.data as { key: string; url: string }
+        setForm((prev) => ({
+          ...prev,
+          uploadSlots: prev.uploadSlots.map((s) =>
+            s.id === slotId ? { ...s, status: 'done', storageKey: key, url } : s,
+          ),
+        }))
+      } catch (err) {
+        const message = err instanceof Error ? err.message : 'Upload failed'
+        setForm((prev) => ({
+          ...prev,
+          uploadSlots: prev.uploadSlots.map((s) =>
+            s.id === slotId
+              ? { ...s, status: 'error', errorMessage: message }
+              : s,
+          ),
+        }))
+      }
     },
     [setForm],
   )
@@ -913,7 +950,7 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
         ...prev,
         uploadSlots: prev.uploadSlots.map((s) =>
           s.id === slotId
-            ? { ...s, file: null, preview: null, status: 'idle' }
+            ? { ...s, file: null, preview: null, status: 'idle', storageKey: null, url: null, errorMessage: null }
             : s,
         ),
       }))
@@ -921,7 +958,9 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
     [setForm],
   )
 
-  const uploadedCount = form.uploadSlots.filter((s) => s.status === 'done').length
+  // Count done + uploading (in-flight) for the progress bar
+  const uploadedCount = form.uploadSlots.filter((s) => s.status === 'done' || s.status === 'uploading').length
+  // Allow proceeding only once the hero is fully done (not still uploading)
   const hasHero = form.uploadSlots[0].status === 'done'
 
   return (
@@ -1029,6 +1068,26 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     if (file) onSelect(file)
   }
 
+  // Uploading state — local preview visible, spinner overlay
+  if (slot.status === 'uploading' && slot.preview) {
+    return (
+      <div
+        className={cn(
+          'relative overflow-hidden rounded-xl border border-[#2A2A3A]',
+          large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
+        )}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={slot.preview} alt={slot.label} className="h-full w-full object-cover opacity-50" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-black/50">
+          <SpinnerIcon style={{ color }} />
+          <span className="text-[10px] font-medium text-white/70">Uploading…</span>
+        </div>
+      </div>
+    )
+  }
+
+  // Done state — preview + hover remove
   if (slot.status === 'done' && slot.preview) {
     return (
       <div
@@ -1063,6 +1122,32 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     )
   }
 
+  // Error state — show error + retry option
+  if (slot.status === 'error') {
+    return (
+      <div
+        className={cn(
+          'flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#EF4444]',
+          'bg-[#14141E] transition-all duration-200',
+          large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
+        )}
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={handleDrop}
+      >
+        <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={handleChange} />
+        <div className="mb-1 flex h-8 w-8 items-center justify-center rounded-xl bg-red-500/15">
+          <ErrorIcon />
+        </div>
+        <p className="px-1 text-center text-[10px] text-[#EF4444]">
+          {slot.errorMessage ?? 'Upload failed'}
+        </p>
+        <p className="mt-0.5 text-[10px] text-[#6B6B80]">Click to retry</p>
+      </div>
+    )
+  }
+
+  // Idle state
   return (
     <div
       className={cn(
@@ -1415,6 +1500,7 @@ export function CreateListingClient() {
     setIsSubmitting(true)
     setSubmitError(null)
     try {
+      // 1. Create the listing record
       const res = await fetch('/api/listings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -1424,6 +1510,30 @@ export function CreateListingClient() {
       if (!res.ok) {
         throw new Error(json.error?.message ?? 'Failed to create listing. Please try again.')
       }
+      const listingId: string = json.data?.id
+
+      // 2. Associate any uploaded images with the new listing
+      if (listingId) {
+        const uploadedSlots = form.uploadSlots.filter((s) => s.status === 'done' && s.storageKey && s.url)
+        await Promise.allSettled(
+          uploadedSlots.map((slot, index) =>
+            fetch(`/api/listings/${listingId}/images`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                key:      slot.storageKey,
+                url:      slot.url,
+                fileName: slot.file?.name,
+                fileSize: slot.file?.size,
+                mimeType: slot.file?.type,
+                order:    index,
+                isPrimary: index === 0,
+              }),
+            }),
+          ),
+        )
+      }
+
       setSubmitted(true)
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
@@ -1549,6 +1659,34 @@ function CheckCircleIcon({ style, className }: { style?: React.CSSProperties; cl
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
       <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
       <polyline points="22 4 12 14.01 9 11.01" />
+    </svg>
+  )
+}
+
+function SpinnerIcon({ style, className }: { style?: React.CSSProperties; className?: string }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      style={style}
+      className={cn('animate-spin', className)}
+    >
+      <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+    </svg>
+  )
+}
+
+function ErrorIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" />
+      <line x1="12" y1="8" x2="12" y2="12" />
+      <line x1="12" y1="16" x2="12.01" y2="16" />
     </svg>
   )
 }
