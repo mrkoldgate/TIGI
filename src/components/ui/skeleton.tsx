@@ -59,6 +59,40 @@ export function PropertyCardSkeleton() {
 }
 
 // ---------------------------------------------------------------------------
+// LandCardSkeleton — matches LandCard dimensions (panoramic image + body)
+// ---------------------------------------------------------------------------
+
+export function LandCardSkeleton() {
+  return (
+    <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
+      {/* Panoramic image — 21/9 ratio placeholder */}
+      <Skeleton className="mb-4 h-[7.5rem] w-full rounded-lg opacity-60" />
+      {/* Land use badge */}
+      <Skeleton variant="text" className="mb-3 h-3 w-24 opacity-50" />
+      {/* Title */}
+      <Skeleton variant="text" className="mb-2 h-5 w-3/4 opacity-60" />
+      {/* Location */}
+      <Skeleton variant="text" className="mb-4 h-3 w-1/3 opacity-40" />
+      {/* Acreage hero */}
+      <Skeleton variant="text" className="mb-3 h-7 w-28 opacity-60" />
+      {/* Feature chips row */}
+      <div className="mb-4 flex flex-wrap gap-1">
+        <Skeleton className="h-5 w-24 rounded opacity-40" />
+        <Skeleton className="h-5 w-20 rounded opacity-40" />
+        <Skeleton className="h-5 w-16 rounded opacity-40" />
+      </div>
+      {/* Price row */}
+      <div className="flex justify-between border-t border-[#1A2B1A] pt-3">
+        <div className="space-y-1.5">
+          <Skeleton variant="text" className="h-3 w-16 opacity-40" />
+          <Skeleton variant="text" className="h-5 w-20 opacity-60" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
 // StatCardSkeleton — for dashboard stat cards
 // ---------------------------------------------------------------------------
 

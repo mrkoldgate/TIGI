@@ -50,7 +50,7 @@ function inferLandUse(features: string[]): LandUseType {
   return 'COMMERCIAL_DEV'
 }
 
-function inferDevOpportunity(features: string[]): boolean {
+export function inferDevOpportunity(features: string[]): boolean {
   const lower = features.map((f) => f.toLowerCase()).join(' ')
   return DEV_OPPORTUNITY_SIGNALS.some((sig) => lower.includes(sig))
 }
