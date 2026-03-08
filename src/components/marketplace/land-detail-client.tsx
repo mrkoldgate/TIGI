@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useSavedListings } from '@/lib/saved/saved-context'
 import {
   ArrowLeft,
   MapPin,
@@ -1033,7 +1034,9 @@ export function LandDetailClient({
   listing: MockListing
   allListings: MockListing[]
 }) {
-  const [isSaved, setIsSaved] = useState(false)
+  const { isSaved, toggleSave } = useSavedListings()
+  const saved = isSaved(listing.id)
+  const onSave = () => toggleSave(listing.id)
 
   const landUse = inferLandUse(listing.features)
   const isDevOpportunity = inferDevOpportunity(listing.features)
@@ -1051,8 +1054,8 @@ export function LandDetailClient({
         listing={listing}
         landUse={landUse}
         isDevOpportunity={isDevOpportunity}
-        isSaved={isSaved}
-        onSave={() => setIsSaved((v) => !v)}
+        isSaved={saved}
+        onSave={onSave}
       />
 
       {/* Divider */}
@@ -1074,8 +1077,8 @@ export function LandDetailClient({
               listing={listing}
               landUse={landUse}
               isDevOpportunity={isDevOpportunity}
-              isSaved={isSaved}
-              onSave={() => setIsSaved((v) => !v)}
+              isSaved={saved}
+              onSave={onSave}
             />
           </div>
         </div>

@@ -25,6 +25,7 @@ import {
   MARKETPLACE_STATS,
   type MockListing,
 } from '@/lib/marketplace/mock-data'
+import { useSavedListings } from '@/lib/saved/saved-context'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -590,8 +591,10 @@ function ListingRow({
 export function MarketplaceClient() {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
-  const [savedIds, setSavedIds] = useState<Set<string>>(new Set())
   const [isLoading] = useState(false) // replace with real loading state when DB integrated
+
+  // Shared save state — persists across marketplace, detail pages, and /saved
+  const { savedIds, toggleSave } = useSavedListings()
 
   function patchFilters(patch: Partial<Filters>) {
     setFilters((prev) => ({ ...prev, ...patch }))
@@ -610,13 +613,7 @@ export function MarketplaceClient() {
     setVisibleCount(PAGE_SIZE)
   }
 
-  function handleSave(id: string) {
-    setSavedIds((prev) => {
-      const next = new Set(prev)
-      next.has(id) ? next.delete(id) : next.add(id)
-      return next
-    })
-  }
+  const handleSave = toggleSave
 
   const filteredListings = useMemo(
     () => applyFilters(MOCK_LISTINGS, filters),

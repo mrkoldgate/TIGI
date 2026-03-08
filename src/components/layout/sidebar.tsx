@@ -14,9 +14,11 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Heart,
 } from 'lucide-react'
 import { Logo } from '@/components/shared/logo'
 import { cn } from '@/lib/utils'
+import { useSavedListings } from '@/lib/saved/saved-context'
 
 // ---------------------------------------------------------------------------
 // Sidebar — Platform navigation
@@ -45,6 +47,7 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { href: '/marketplace', label: 'Explore', icon: Compass },
+  { href: '/saved', label: 'Saved', icon: Heart },
   { href: '/portfolio', label: 'Invest', icon: TrendingUp },
   { href: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
   { href: '/listings', label: 'My Properties', icon: Building2 },
@@ -196,17 +199,44 @@ function SidebarLink({ item, active, collapsed, onClick }: SidebarLinkProps) {
         )}
       />
 
-      {/* Label + milestone badge */}
+      {/* Label + badge (milestone or saved count) */}
       {!collapsed && (
         <span className="flex flex-1 items-center justify-between">
           <span className="font-medium">{item.label}</span>
-          {item.milestone && (
+          {item.href === '/saved' ? (
+            <SavedCountBadge />
+          ) : item.milestone ? (
             <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
               {item.milestone}
             </span>
-          )}
+          ) : null}
         </span>
       )}
+
+      {/* Collapsed: saved dot indicator when count > 0 */}
+      {collapsed && item.href === '/saved' && <SavedDotBadge />}
     </Link>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Saved count badge — reads from context, renders only when count > 0
+// ---------------------------------------------------------------------------
+
+function SavedCountBadge() {
+  const { savedCount } = useSavedListings()
+  if (savedCount === 0) return null
+  return (
+    <span className="rounded-full bg-rose-500/90 px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
+      {savedCount > 99 ? '99+' : savedCount}
+    </span>
+  )
+}
+
+function SavedDotBadge() {
+  const { savedCount } = useSavedListings()
+  if (savedCount === 0) return null
+  return (
+    <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-rose-500" />
   )
 }

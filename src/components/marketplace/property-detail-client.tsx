@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useSavedListings } from '@/lib/saved/saved-context'
 import {
   ArrowLeft,
   Bed,
@@ -770,7 +771,9 @@ export function PropertyDetailClient({
   listing: MockListing
   allListings: MockListing[]
 }) {
-  const [isSaved, setIsSaved] = useState(false)
+  const { isSaved, toggleSave } = useSavedListings()
+  const saved = isSaved(listing.id)
+  const onSave = () => toggleSave(listing.id)
 
   return (
     <div className="animate-fade-in space-y-6 pb-16">
@@ -781,7 +784,7 @@ export function PropertyDetailClient({
       <GalleryMosaic listing={listing} />
 
       {/* Title (full-width, above the 2-col split) */}
-      <ListingHeader listing={listing} isSaved={isSaved} onSave={() => setIsSaved((v) => !v)} />
+      <ListingHeader listing={listing} isSaved={saved} onSave={onSave} />
 
       {/* Divider */}
       <div className="border-t border-[#1E1E2A]" />
@@ -796,7 +799,7 @@ export function PropertyDetailClient({
         {/* Right — sticky action panel */}
         <div className="lg:col-span-5 xl:col-span-4">
           <div className="lg:sticky lg:top-6">
-            <ActionPanel listing={listing} isSaved={isSaved} onSave={() => setIsSaved((v) => !v)} />
+            <ActionPanel listing={listing} isSaved={saved} onSave={onSave} />
           </div>
         </div>
       </div>
