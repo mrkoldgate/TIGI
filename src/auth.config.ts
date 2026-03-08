@@ -48,6 +48,8 @@ export const authConfig: NextAuthConfig = {
 
       // ---- Platform (authenticated) routes ------------------------------------
       const isProtectedRoute =
+        pathname.startsWith('/dashboard') ||
+        pathname.startsWith('/saved') ||
         pathname.startsWith('/portfolio') ||
         pathname.startsWith('/transactions') ||
         pathname.startsWith('/listings') ||

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { MOCK_SELLER_LISTINGS } from '@/lib/listings/seller-mock-data'
+import { requireAuth } from '@/lib/auth/session'
+import { getOwnerDashboardData } from '@/lib/listings/owner-query'
 import { OwnerDashboardClient } from '@/components/listings/owner-dashboard-client'
 
 export const metadata: Metadata = {
@@ -10,19 +11,16 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 // /listings — Owner dashboard ("My Properties" in sidebar).
 //
-// Server Component shell. Passes the owner's listings to OwnerDashboardClient
-// which orchestrates the full dashboard: stats, quick actions, inquiries,
-// performance panel, and the embedded SellerListingsClient table.
+// Async server component. requireAuth() provides belt-and-suspenders auth
+// enforcement on top of the middleware guard.
 //
-// DB integration path:
-//   const session = await getServerSession()
-//   const listings = await prisma.listing.findMany({
-//     where:   { ownerId: session.user.id },
-//     orderBy: { updatedAt: 'desc' },
-//   })
-//   return <OwnerDashboardClient listings={listings} />
+// getOwnerDashboardData fetches the user's DB listings (with mock fallback)
+// and builds the OwnerUser context from session fields.
 // ---------------------------------------------------------------------------
 
-export default function OwnerListingsPage() {
-  return <OwnerDashboardClient listings={MOCK_SELLER_LISTINGS} />
+export default async function OwnerListingsPage() {
+  const sessionUser = await requireAuth('/listings')
+  const { listings, ownerUser } = await getOwnerDashboardData(sessionUser)
+
+  return <OwnerDashboardClient listings={listings} ownerUser={ownerUser} />
 }

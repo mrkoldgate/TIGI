@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
-import { MOCK_LISTINGS } from '@/lib/marketplace/mock-data'
+import { requireAuth } from '@/lib/auth/session'
+import { getActiveListings } from '@/lib/listings/listing-query'
+import { getDashboardData } from '@/lib/dashboard/dashboard-query'
 import { DashboardClient } from '@/components/dashboard/dashboard-client'
 
 export const metadata: Metadata = {
@@ -10,18 +12,26 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 // Dashboard — /dashboard
 //
-// Server Component shell. Passes the listing catalogue to DashboardClient
-// which resolves recommended + watchlist listings client-side.
+// Async server component. Fetches user context + live listing catalogue in
+// parallel, then passes everything to DashboardClient.
 //
-// DB integration path:
-//   - Replace MOCK_LISTINGS with Prisma fetches:
-//       const listings = await prisma.listing.findMany({ where: { status: 'ACTIVE' } })
-//   - Or fetch only the listings the user needs (saved IDs + recommended IDs)
-//       via a combined query keyed to the authenticated session.
-//   - Move MOCK_USER to session: const session = await getServerSession()
-//   - Move MOCK_STATS to aggregates: prisma.savedListing.count({ where: { userId } })
+// requireAuth() redirects to /auth/login if the session has expired —
+// belt-and-suspenders on top of the middleware guard.
 // ---------------------------------------------------------------------------
 
-export default function DashboardPage() {
-  return <DashboardClient allListings={MOCK_LISTINGS} />
+export default async function DashboardPage() {
+  const sessionUser = await requireAuth('/dashboard')
+
+  const [dashboardData, allListings] = await Promise.all([
+    getDashboardData(sessionUser),
+    getActiveListings(),
+  ])
+
+  return (
+    <DashboardClient
+      allListings={allListings}
+      user={dashboardData.user}
+      stats={dashboardData.stats}
+    />
+  )
 }

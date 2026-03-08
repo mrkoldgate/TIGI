@@ -1,18 +1,14 @@
 import type { Metadata } from 'next'
-import { MOCK_LISTINGS } from '@/lib/marketplace/mock-data'
+import { getActiveListings } from '@/lib/listings/listing-query'
 import { SavedListingsClient } from '@/components/saved/saved-listings-client'
 
 // ---------------------------------------------------------------------------
 // /saved — Favorites / saved listings page.
 //
-// Server shell: passes the full listing catalogue to the client component.
-// The client intersects it with the user's saved IDs from SavedListingsContext.
-//
-// DB integration path:
-//   - Replace MOCK_LISTINGS with: prisma.listing.findMany({ where: { status: 'ACTIVE' } })
-//   - Or fetch only the saved listings:
-//       const savedIds = getSavedIdsFromSession(session)  // from DB / JWT
-//       const listings = await prisma.listing.findMany({ where: { id: { in: savedIds } } })
+// Passes the active listing catalogue to SavedListingsClient, which
+// intersects it with the user's saved IDs from SavedListingsContext.
+// The context is already seeded from DB in the platform layout — no
+// redundant DB call needed here for the saved IDs themselves.
 // ---------------------------------------------------------------------------
 
 export const metadata: Metadata = {
@@ -20,6 +16,7 @@ export const metadata: Metadata = {
   description: 'Your saved properties and land parcels on the TIGI marketplace.',
 }
 
-export default function SavedPage() {
-  return <SavedListingsClient allListings={MOCK_LISTINGS} />
+export default async function SavedPage() {
+  const allListings = await getActiveListings()
+  return <SavedListingsClient allListings={allListings} />
 }

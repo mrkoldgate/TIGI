@@ -59,6 +59,7 @@ model User {
   transactions    Transaction[]    @relation("TransactionBuyer")
   kycVerifications KycVerification[]
   auditLogs       AuditLog[]
+  savedListings   SavedListing[]
   beneficiaryDesignations BeneficiaryDesignation[]
 
   createdAt DateTime @default(now())
@@ -368,6 +369,25 @@ model AuditLog {
   createdAt   DateTime @default(now())
 
   @@map("audit_logs")
+}
+
+// =============================================================================
+// SAVED LISTINGS
+// =============================================================================
+
+// User-linked bookmarks. listingId is not a FK to Property intentionally —
+// allows referencing mock IDs during dev without constraint violations.
+model SavedListing {
+  id        String   @id @default(cuid())
+  userId    String
+  listingId String
+  savedAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, listingId])
+  @@index([userId])
+  @@map("saved_listings")
 }
 
 // =============================================================================

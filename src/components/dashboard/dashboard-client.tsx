@@ -14,8 +14,8 @@ import {
 import { useSavedListings } from '@/lib/saved/saved-context'
 import { type MockListing } from '@/lib/marketplace/mock-data'
 import {
-  MOCK_USER,
-  MOCK_STATS,
+  type DashboardUser,
+  type DashboardStats,
   MOCK_INSIGHTS,
   MOCK_ACTIVITY,
   MOCK_VALUATION_ALERTS,
@@ -48,9 +48,11 @@ import { ValuationAlerts } from './valuation-alerts'
 
 interface DashboardClientProps {
   allListings: MockListing[]
+  user: DashboardUser
+  stats: DashboardStats
 }
 
-export function DashboardClient({ allListings }: DashboardClientProps) {
+export function DashboardClient({ allListings, user, stats: serverStats }: DashboardClientProps) {
   const { savedIds, savedCount } = useSavedListings()
 
   // Recommended: scored by recommendation engine (saved-signal + tokenization + AI confidence)
@@ -73,12 +75,10 @@ export function DashboardClient({ allListings }: DashboardClientProps) {
       : allListings.filter((l) => l.isTokenized).slice(0, 3)
   const watchlistIsEmpty = watchlist.length === 0
 
-  const stats = {
-    ...MOCK_STATS,
-    savedCount, // live from context
-  }
+  // savedCount from context is always authoritative (live, client-side)
+  const stats = { ...serverStats, savedCount }
 
-  const greeting = getGreeting(MOCK_USER.firstName)
+  const greeting = getGreeting(user.firstName)
 
   return (
     <div className="animate-fade-in pt-6 pb-16 space-y-8">
@@ -86,9 +86,9 @@ export function DashboardClient({ allListings }: DashboardClientProps) {
       {/* ── Welcome bar ─────────────────────────────────────────────────── */}
       <WelcomeBar
         greeting={greeting}
-        userName={MOCK_USER.name}
-        role={MOCK_USER.role}
-        kycStatus={MOCK_USER.kycStatus}
+        userName={user.name}
+        role={user.role}
+        kycStatus={user.kycStatus}
       />
 
       {/* ── Stats row ───────────────────────────────────────────────────── */}

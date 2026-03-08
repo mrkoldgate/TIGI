@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { type SellerListing, getSellerStats, formatPrice } from '@/lib/listings/seller-mock-data'
 import {
-  MOCK_OWNER_USER,
+  type OwnerUser,
   MOCK_OWNER_INQUIRIES,
   MOCK_OWNER_PERFORMANCE,
   OWNER_QUICK_ACTIONS,
@@ -52,12 +52,13 @@ import { SellerListingsClient } from './seller-listings-client'
 
 interface OwnerDashboardClientProps {
   listings: SellerListing[]
+  ownerUser: OwnerUser
 }
 
-export function OwnerDashboardClient({ listings }: OwnerDashboardClientProps) {
+export function OwnerDashboardClient({ listings, ownerUser }: OwnerDashboardClientProps) {
   const stats = useMemo(() => getSellerStats(listings), [listings])
   const newInquiryCount = MOCK_OWNER_INQUIRIES.filter((i) => i.status === 'NEW').length
-  const greeting = getGreeting(MOCK_OWNER_USER.firstName)
+  const greeting = getGreeting(ownerUser.firstName)
 
   return (
     <div className="animate-fade-in pt-6 pb-16 space-y-8">
@@ -65,7 +66,7 @@ export function OwnerDashboardClient({ listings }: OwnerDashboardClientProps) {
       {/* ── Welcome bar ─────────────────────────────────────────────────── */}
       <OwnerWelcomeBar
         greeting={greeting}
-        user={MOCK_OWNER_USER}
+        user={ownerUser}
         portfolioValue={stats.totalPortfolioValue}
         newInquiryCount={newInquiryCount}
       />
@@ -168,7 +169,7 @@ export function OwnerDashboardClient({ listings }: OwnerDashboardClientProps) {
 
 interface OwnerWelcomeBarProps {
   greeting: string
-  user: typeof MOCK_OWNER_USER
+  user: OwnerUser
   portfolioValue: number
   newInquiryCount: number
 }

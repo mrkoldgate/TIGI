@@ -3,21 +3,20 @@
 // ---------------------------------------------------------------------------
 // SavedListingsContext — platform-wide save / favorites state.
 //
-// MVP: persists to localStorage under the key `tigi_saved_ids`.
-//      Initializes to empty on server render, hydrates on mount.
+// Two operating modes:
 //
-// DB integration path:
-//   1. Replace the localStorage read in the useEffect with:
-//        const data = await fetch('/api/saved').then(r => r.json())
-//        setEntries(data.entries)
-//   2. Replace the localStorage write with:
-//        await fetch('/api/saved', { method: 'POST', body: JSON.stringify({ id, savedAt }) })
-//   3. Replace the delete with:
-//        await fetch(`/api/saved/${id}`, { method: 'DELETE' })
-//   4. Wrap optimistic updates with rollback on error.
+//   API mode  (initialEntries provided — authenticated user):
+//     • State is seeded from the server (DB query in platform layout).
+//       No localStorage read on mount — DB is authoritative.
+//     • toggleSave calls POST/DELETE /api/saved with optimistic update +
+//       rollback on error. localStorage is also written as an offline cache.
 //
-// The context shape and hook API are intentionally stable so consumers don't
-// need to change when the data layer swaps from localStorage → API.
+//   Local mode (initialEntries not provided — unauthenticated / SSR):
+//     • Hydrates from localStorage on mount.
+//     • Writes to localStorage on every change. No API calls.
+//
+// The context shape and hook API are stable — consumers don't change when
+// the data layer swaps between modes.
 // ---------------------------------------------------------------------------
 
 import React, {
@@ -59,7 +58,6 @@ function readStorage(): SavedEntry[] {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return []
     const parsed = JSON.parse(raw)
-    // Validate shape: must be an array of { id, savedAt }
     if (!Array.isArray(parsed)) return []
     return parsed.filter(
       (e): e is SavedEntry =>
@@ -80,37 +78,82 @@ function writeStorage(entries: SavedEntry[]): void {
 
 // ── Provider ───────────────────────────────────────────────────────────────
 
-export function SavedListingsProvider({ children }: { children: React.ReactNode }) {
-  // Start empty — avoids SSR hydration mismatch.
-  // Hydrated from localStorage in the useEffect below.
-  const [entries, setEntries] = useState<SavedEntry[]>([])
+interface SavedListingsProviderProps {
+  children: React.ReactNode
+  /**
+   * Server-seeded initial entries (from DB query in platform layout).
+   * When provided, the provider operates in API mode:
+   *   - skips localStorage read on mount
+   *   - syncs every toggle with POST/DELETE /api/saved
+   * When undefined (unauthenticated), falls back to localStorage-only mode.
+   */
+  initialEntries?: SavedEntry[]
+}
 
-  // Hydrate from localStorage on mount (client-only)
+export function SavedListingsProvider({
+  children,
+  initialEntries,
+}: SavedListingsProviderProps) {
+  // If initialEntries is defined, user is authenticated → API mode.
+  const isApiMode = initialEntries !== undefined
+
+  // Seed from server when authenticated; start empty for local mode
+  // (local mode hydrates from localStorage in useEffect below).
+  const [entries, setEntries] = useState<SavedEntry[]>(initialEntries ?? [])
+
+  // Local mode: hydrate from localStorage on mount
   useEffect(() => {
-    setEntries(readStorage())
-  }, [])
+    if (!isApiMode) {
+      setEntries(readStorage())
+    }
+  }, [isApiMode])
 
-  // Persist to localStorage whenever entries change (skip the initial SSR render)
+  // Always keep localStorage in sync as an offline cache
   useEffect(() => {
     writeStorage(entries)
   }, [entries])
 
   const savedIds = useMemo(() => new Set(entries.map((e) => e.id)), [entries])
 
-  const toggleSave = useCallback((id: string) => {
-    setEntries((prev) => {
-      if (prev.some((e) => e.id === id)) {
-        // Remove
-        return prev.filter((e) => e.id !== id)
-      }
-      // Add — newest first
-      return [{ id, savedAt: Date.now() }, ...prev]
-    })
-  }, [])
+  const toggleSave = useCallback(
+    (id: string) => {
+      setEntries((prev) => {
+        const isCurrentlySaved = prev.some((e) => e.id === id)
+        const next = isCurrentlySaved
+          ? prev.filter((e) => e.id !== id)
+          : [{ id, savedAt: Date.now() }, ...prev]
+
+        if (isApiMode) {
+          // Optimistic update already applied via `next`.
+          // Fire API call; roll back to `prev` on error.
+          if (isCurrentlySaved) {
+            fetch(`/api/saved/${id}`, { method: 'DELETE' }).catch(() => {
+              setEntries(prev)
+            })
+          } else {
+            fetch('/api/saved', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id }),
+            }).catch(() => {
+              setEntries(prev)
+            })
+          }
+        }
+
+        return next
+      })
+    },
+    [isApiMode],
+  )
 
   const isSaved = useCallback((id: string) => savedIds.has(id), [savedIds])
 
-  const clearAll = useCallback(() => setEntries([]), [])
+  const clearAll = useCallback(() => {
+    setEntries([])
+    // Note: does not bulk-delete from API — acceptable for MVP.
+    // Add DELETE /api/saved (bulk) in M3 if needed.
+  }, [])
 
   const value: SavedListingsContextValue = useMemo(
     () => ({
