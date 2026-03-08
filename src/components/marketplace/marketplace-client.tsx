@@ -5,6 +5,7 @@ import { Search, X, LayoutGrid, List, Zap, Building2, TrendingUp } from 'lucide-
 import { cn } from '@/lib/utils'
 import { PropertyCardSkeleton } from '@/components/ui/skeleton'
 import { PropertyCard, PropertyRow } from '@/components/marketplace/property-card'
+import { MarketplaceLandCard, MarketplaceLandRow } from '@/components/marketplace/land-card'
 import {
   MOCK_LISTINGS,
   MARKETPLACE_STATS,
@@ -467,19 +468,31 @@ export function MarketplaceClient() {
         <EmptyState onClear={clearFilters} />
       ) : filters.view === 'grid' ? (
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleListings.map((listing, i) => (
-            <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}>
-              <PropertyCard listing={listing} index={i} />
-            </div>
-          ))}
+          {visibleListings.map((listing, i) =>
+            listing.propertyType === 'LAND' ? (
+              <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}>
+                <MarketplaceLandCard listing={listing} index={i} />
+              </div>
+            ) : (
+              <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}>
+                <PropertyCard listing={listing} index={i} />
+              </div>
+            )
+          )}
         </div>
       ) : (
         <div className="flex flex-col gap-3">
-          {visibleListings.map((listing, i) => (
-            <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}>
-              <PropertyRow listing={listing} index={i} />
-            </div>
-          ))}
+          {visibleListings.map((listing, i) =>
+            listing.propertyType === 'LAND' ? (
+              <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}>
+                <MarketplaceLandRow listing={listing} index={i} />
+              </div>
+            ) : (
+              <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}>
+                <PropertyRow listing={listing} index={i} />
+              </div>
+            )
+          )}
         </div>
       )}
 
