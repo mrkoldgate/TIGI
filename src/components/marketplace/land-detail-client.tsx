@@ -16,7 +16,6 @@ import {
   Eye,
   Clock,
   Check,
-  Phone,
   LayoutGrid,
   Layers,
   Compass,
@@ -36,6 +35,7 @@ import {
   formatPrice,
   tokenSoldPercent,
 } from '@/lib/marketplace/mock-data'
+import { IntentPanel } from '@/components/intents/intent-panel'
 
 // ---------------------------------------------------------------------------
 // Land use config — labels, descriptions, color tokens
@@ -833,13 +833,14 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
           </span>
         </div>
       )}
-      <button
-        type="button"
-        className="w-full rounded-xl bg-[#C9A84C]/15 py-2.5 text-sm font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25 transition-all hover:bg-[#C9A84C]/25 active:scale-[0.98]"
-      >
-        <Zap className="mr-1.5 inline h-3.5 w-3.5" />
-        Invest from ${listing.tokenPricePerFraction.toLocaleString()}
-      </button>
+      <IntentPanel
+        propertyId={listing.id}
+        listingType={listing.listingType}
+        isTokenized={listing.isTokenized}
+        tokenPricePerFraction={listing.tokenPricePerFraction}
+        only={['PREPARE_INVEST']}
+        theme="land"
+      />
       <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A6A4A]">
         Fractional tokens represent proportional economic interest. Not a securities offering. See disclosures.
       </p>
@@ -860,11 +861,6 @@ function LandActionPanel({
   isSaved: boolean
   onSave: () => void
 }) {
-  const primaryLabel =
-    listing.listingType === 'BUY'   ? 'Acquire Land'       :
-    listing.listingType === 'LEASE' ? 'Lease Parcel'        :
-    'Acquire or Lease'
-
   const acres = listing.lotAcres ?? 0
 
   return (
@@ -888,22 +884,16 @@ function LandActionPanel({
           </p>
         )}
 
-        {/* Primary CTA */}
-        <button
-          type="button"
-          className="mt-4 w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
-        >
-          {primaryLabel}
-        </button>
-
-        {/* Site visit */}
-        <button
-          type="button"
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-[#1E2D1E] py-2.5 text-sm font-medium text-[#8A9E8A] transition-all hover:border-[#2A3A2A] hover:text-[#E8F0E8] active:scale-[0.98]"
-        >
-          <Phone className="h-4 w-4" />
-          Schedule Site Visit
-        </button>
+        {/* Primary CTA — live intent flow */}
+        <div className="mt-4">
+          <IntentPanel
+            propertyId={listing.id}
+            listingType={listing.listingType}
+            isTokenized={false}
+            only={['PREPARE_PURCHASE', 'PREPARE_LEASE', 'EXPRESS_INTEREST']}
+            theme="land"
+          />
+        </div>
 
         {/* Save */}
         <button

@@ -19,7 +19,6 @@ import {
   Eye,
   Clock,
   Check,
-  Phone,
   LayoutGrid,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -37,6 +36,7 @@ import {
   formatPrice,
   tokenSoldPercent,
 } from '@/lib/marketplace/mock-data'
+import { IntentPanel } from '@/components/intents/intent-panel'
 
 // ---------------------------------------------------------------------------
 // Gallery slot pools — derive additional images from property type
@@ -589,13 +589,13 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
       </div>
 
       {/* Invest CTA */}
-      <button
-        type="button"
-        className="w-full rounded-xl bg-[#C9A84C]/15 py-2.5 text-sm font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25 transition-all hover:bg-[#C9A84C]/25 active:scale-[0.98]"
-      >
-        <Zap className="mr-1.5 inline h-3.5 w-3.5" />
-        Invest from ${listing.tokenPricePerFraction.toLocaleString()}
-      </button>
+      <IntentPanel
+        propertyId={listing.id}
+        listingType={listing.listingType}
+        isTokenized={listing.isTokenized}
+        tokenPricePerFraction={listing.tokenPricePerFraction}
+        only={['PREPARE_INVEST']}
+      />
 
       <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A4A60]">
         Fractional tokens represent proportional economic interest. Returns distributed quarterly. Not a securities offering. See disclosures.
@@ -613,11 +613,6 @@ function ActionPanel({
   isSaved: boolean
   onSave: () => void
 }) {
-  const primaryLabel =
-    listing.listingType === 'BUY'    ? 'Buy Property'     :
-    listing.listingType === 'LEASE'  ? 'Schedule Tour'    :
-    'Buy or Lease'
-
   return (
     <div className="space-y-4">
       {/* Price card */}
@@ -633,22 +628,15 @@ function ActionPanel({
           </p>
         )}
 
-        {/* Primary CTA */}
-        <button
-          type="button"
-          className="mt-4 w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
-        >
-          {primaryLabel}
-        </button>
-
-        {/* Contact */}
-        <button
-          type="button"
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-[#3A3A4A] hover:text-[#F5F5F7] active:scale-[0.98]"
-        >
-          <Phone className="h-4 w-4" />
-          Contact Agent
-        </button>
+        {/* Primary CTA — live intent flow */}
+        <div className="mt-4">
+          <IntentPanel
+            propertyId={listing.id}
+            listingType={listing.listingType}
+            isTokenized={false}
+            only={['PREPARE_PURCHASE', 'PREPARE_LEASE', 'EXPRESS_INTEREST']}
+          />
+        </div>
 
         {/* Save */}
         <button

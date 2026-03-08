@@ -9,6 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { prisma } from '@/lib/db'
+import { getActiveIntentCount } from '@/lib/intents/intent-query'
 import type { DashboardUser, DashboardStats } from './mock-dashboard'
 
 // ── KYC + Role mapping ────────────────────────────────────────────────────────
@@ -73,9 +74,11 @@ export async function getDashboardData(sessionUser: {
     console.warn('[dashboard-query] Failed to fetch investment count:', (err as Error).message)
   }
 
+  const activeInterestsCount = await getActiveIntentCount(sessionUser.id)
+
   const stats: DashboardStats = {
     savedCount:           0,    // overridden by SavedListingsContext.savedCount client-side
-    activeInterestsCount: 0,    // TODO M3: prisma.inquiry.count({ where: { userId, status: 'ACTIVE' } })
+    activeInterestsCount,
     investmentCount,
     portfolioValue:       null, // TODO M4: aggregate token holdings × current price
     portfolioChange24h:   null,

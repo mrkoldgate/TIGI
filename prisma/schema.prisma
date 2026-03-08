@@ -62,6 +62,7 @@ model User {
   savedListings   SavedListing[]
   userDocuments   UserDocument[]
   beneficiaryDesignations BeneficiaryDesignation[]
+  intents         TransactionIntent[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -185,6 +186,7 @@ model Property {
   token       Token?
   transactions Transaction[]
   aiValuations AiValuation[]
+  intents      TransactionIntent[]
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -612,4 +614,70 @@ enum UserDocPurpose {
   KYC          // Identity verification documents
   INHERITANCE  // Beneficiary designation supporting documents
   OTHER
+}
+
+// =============================================================================
+// TRANSACTION INTENTS  (M3 — pre-execution layer)
+// =============================================================================
+//
+// TransactionIntent captures user intent before full legal execution.
+// Sits between "browsing" and a full Transaction — the lightweight first step.
+//
+// Lifecycle:  PENDING → REVIEWING → APPROVED → EXECUTED (→ Transaction row)
+//             PENDING → CANCELLED (user withdrew)
+//             PENDING / REVIEWING → EXPIRED (no action after expiresAt)
+//
+// Blockchain hook point: metadata JSON is populated by compliance checks and
+// eventually Solana tx references when Milestone 5 smart contracts are ready.
+// =============================================================================
+
+enum IntentType {
+  EXPRESS_INTEREST  // Soft signal — "I'm interested"
+  PREPARE_PURCHASE  // Full-ownership purchase intent
+  PREPARE_INVEST    // Fractional token investment intent
+  PREPARE_LEASE     // Lease intent
+}
+
+enum IntentStatus {
+  PENDING    // Created, awaiting compliance pre-check
+  REVIEWING  // Compliance officer manually reviewing
+  APPROVED   // Pre-approved, user may proceed to next step
+  EXECUTED   // Promoted to a full Transaction record
+  CANCELLED  // Withdrawn by user (or admin-cancelled)
+  EXPIRED    // Passed expiresAt without action
+}
+
+model TransactionIntent {
+  id          String       @id @default(cuid())
+  userId      String
+  propertyId  String
+
+  intentType  IntentType
+  status      IntentStatus @default(PENDING)
+
+  // Intent-specific numeric data
+  fractionQty  Int?               // PREPARE_INVEST: desired fraction count
+  offerAmount  Decimal?           @db.Decimal(14, 2) // PREPARE_PURCHASE: indicative offer
+
+  // Free-text user context — stored in audit trail
+  note         String?            @db.Text
+
+  // Extensible hook point: populated by compliance checks, legal workflow,
+  // Solana tx signatures, or external vendor callbacks (Milestone 5+)
+  metadata     Json               @default("{}")
+
+  // Set when this intent is promoted to a full on-chain / legal Transaction
+  transactionId String?
+
+  user         User               @relation(fields: [userId], references: [id])
+  property     Property           @relation(fields: [propertyId], references: [id])
+
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  expiresAt    DateTime?
+
+  @@index([userId])
+  @@index([propertyId])
+  @@index([status])
+  @@map("transaction_intents")
 }
