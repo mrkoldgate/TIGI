@@ -18,7 +18,6 @@
 //   - Add full-text search: replace in-memory filter with Prisma `contains` or
 //     a dedicated search provider (Typesense/Meilisearch).
 //   - Add cursor-based pagination: accept `cursor` + `limit` params.
-//   - Add `tokenInvestorCount` once a `TokenHolding` count query is efficient.
 // ---------------------------------------------------------------------------
 
 import { cache } from 'react'
@@ -33,7 +32,7 @@ import {
 // ── Type alias for a fully-included Property row ────────────────────────────
 
 type PropertyWithIncludes = Property & {
-  token: Token | null
+  token: (Token & { _count: { holdings: number } }) | null
   aiValuations: PrismaAiValuation[]
   images: PropertyImage[]
 }
@@ -105,7 +104,7 @@ export function propertyToMockListing(p: PropertyWithIncludes): MockListing {
     tokenTotalSupply:      p.token?.totalSupply ?? null,
     tokenAvailableSupply:  p.token?.availableSupply ?? null,
     tokenPricePerFraction: p.token ? Number(p.token.pricePerFraction) : null,
-    tokenInvestorCount:    null, // TODO: COUNT(TokenHolding) join
+    tokenInvestorCount:    p.token?._count.holdings ?? null,
 
     // Images — use real URL when available; fall back to placeholder slot
     imageUrl:          primaryImage?.url ?? null,
@@ -124,7 +123,7 @@ export function propertyToMockListing(p: PropertyWithIncludes): MockListing {
 // ── Prisma include shape ─────────────────────────────────────────────────────
 
 const LISTING_INCLUDE = {
-  token: true,
+  token: { include: { _count: { select: { holdings: true } } } },
   aiValuations: { orderBy: { generatedAt: 'desc' as const }, take: 1 },
   images: { orderBy: { order: 'asc' as const }, take: 6 },
 } satisfies Prisma.PropertyInclude

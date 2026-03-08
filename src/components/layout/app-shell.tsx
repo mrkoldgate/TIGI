@@ -17,11 +17,17 @@ import { AssistantTrigger } from '@/components/assistant/assistant-trigger'
 //   mobileSidebarOpen — mobile only, toggled via hamburger in TopNav
 // ---------------------------------------------------------------------------
 
-interface AppShellProps {
-  children: React.ReactNode
+export interface ShellUser {
+  name:  string | null
+  email: string
 }
 
-export function AppShell({ children }: AppShellProps) {
+interface AppShellProps {
+  children: React.ReactNode
+  user?:    ShellUser | null
+}
+
+export function AppShell({ children, user }: AppShellProps) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
@@ -42,7 +48,10 @@ export function AppShell({ children }: AppShellProps) {
       >
         <div className="flex flex-1 flex-col">
           {/* TopNav — sticky, spans content width */}
-          <TopNav onMobileMenuToggle={() => setMobileSidebarOpen((o) => !o)} />
+          <TopNav
+            onMobileMenuToggle={() => setMobileSidebarOpen((o) => !o)}
+            user={user}
+          />
 
           {/* Scrollable content area — horizontal padding applied once here so every
               page gets consistent gutters without each having to repeat px-* classes.

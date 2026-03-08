@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { PageHeader } from '@/components/shared/page-header'
 import { MarketplaceClient } from '@/components/marketplace/marketplace-client'
 import { getActiveListings, computeMarketplaceStats } from '@/lib/listings/listing-query'
+import { requireAuth } from '@/lib/auth/session'
 
 export const metadata: Metadata = {
   title: 'Marketplace',
@@ -20,6 +21,7 @@ export const metadata: Metadata = {
 // ---------------------------------------------------------------------------
 
 export default async function MarketplacePage() {
+  await requireAuth('/marketplace')
   const listings = await getActiveListings()
   const stats = computeMarketplaceStats(listings)
 

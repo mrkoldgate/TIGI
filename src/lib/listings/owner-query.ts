@@ -174,6 +174,7 @@ export function buildOwnerUser(
     kycStatus?: string
   },
   listings: SellerListing[],
+  joinedAt: string,
 ): OwnerUser {
   const name = sessionUser.name ?? sessionUser.email.split('@')[0]
   const firstName = name.split(' ')[0]
@@ -184,7 +185,7 @@ export function buildOwnerUser(
     role:                  mapOwnerRole(sessionUser.role ?? 'OWNER'),
     kycStatus:             mapKycStatus(sessionUser.kycStatus ?? 'NONE'),
     hasTokenizedListings:  listings.some((l) => l.isTokenized),
-    joinedAt:              new Date().toISOString(), // createdAt not in JWT; acceptable for MVP
+    joinedAt,
   }
 }
 
@@ -206,7 +207,14 @@ export async function getOwnerDashboardData(sessionUser: {
   role?: string
   kycStatus?: string
 }): Promise<OwnerDashboardData> {
-  const listings = await getOwnerListings(sessionUser.id)
-  const ownerUser = buildOwnerUser(sessionUser, listings)
+  // Fetch listings and createdAt in parallel
+  const [listings, dbUser] = await Promise.all([
+    getOwnerListings(sessionUser.id),
+    prisma.user.findUnique({ where: { id: sessionUser.id }, select: { createdAt: true } })
+      .catch(() => null),
+  ])
+
+  const joinedAt = dbUser?.createdAt.toISOString() ?? new Date().toISOString()
+  const ownerUser = buildOwnerUser(sessionUser, listings, joinedAt)
   return { listings, ownerUser }
 }

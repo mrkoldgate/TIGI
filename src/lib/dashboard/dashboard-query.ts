@@ -39,12 +39,12 @@ export interface DashboardData {
 /**
  * Build the full DashboardData payload for the given session user.
  *
- * - user:  built entirely from session fields (no extra DB call)
+ * - user:  built from session fields + one DB call for createdAt
  * - stats.investmentCount: from TokenHolding count (1 query)
  * - stats.savedCount:      0 here — overridden client-side by SavedListingsContext
  *                          (the context is already seeded from DB via platform layout)
- * - stats.activeInterestsCount: 0 until Inquiry model is built (M3)
- * - portfolio fields: null until wallet integration (M4)
+ * - stats.activeInterestsCount: live from TransactionIntent table
+ * - portfolio fields: null until wallet integration (M5)
  */
 export async function getDashboardData(sessionUser: {
   id: string
@@ -56,12 +56,24 @@ export async function getDashboardData(sessionUser: {
   const name      = sessionUser.name ?? sessionUser.email.split('@')[0]
   const firstName = name.split(' ')[0]
 
+  // Fetch createdAt from DB — not available in the JWT
+  let joinedAt = new Date().toISOString()
+  try {
+    const dbUser = await prisma.user.findUnique({
+      where:  { id: sessionUser.id },
+      select: { createdAt: true },
+    })
+    if (dbUser) joinedAt = dbUser.createdAt.toISOString()
+  } catch {
+    // non-critical; keep fallback value
+  }
+
   const user: DashboardUser = {
     name,
     firstName,
     role:      mapDashboardRole(sessionUser.role ?? 'INVESTOR'),
     kycStatus: mapKycStatus(sessionUser.kycStatus ?? 'NONE'),
-    joinedAt:  new Date().toISOString(), // createdAt not in JWT; placeholder for MVP
+    joinedAt,
   }
 
   // Investment count — number of distinct tokenized assets held

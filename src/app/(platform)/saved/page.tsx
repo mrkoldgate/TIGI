@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getActiveListings } from '@/lib/listings/listing-query'
 import { SavedListingsClient } from '@/components/saved/saved-listings-client'
+import { requireAuth } from '@/lib/auth/session'
 
 // ---------------------------------------------------------------------------
 // /saved — Favorites / saved listings page.
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 }
 
 export default async function SavedPage() {
+  await requireAuth('/saved')
   const allListings = await getActiveListings()
   return <SavedListingsClient allListings={allListings} />
 }
