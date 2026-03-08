@@ -1,0 +1,489 @@
+// =============================================================================
+// TIGI — Prisma Schema
+// Source of truth for all business data.
+// See system-architecture.md §2.3 for full schema strategy.
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================================================
+// IDENTITY
+// =============================================================================
+
+model User {
+  id              String   @id @default(cuid())
+  email           String   @unique
+  emailVerified   DateTime?
+  name            String?
+  avatarUrl       String?
+  phone           String?
+
+  // Auth
+  passwordHash    String?
+
+  // RBAC
+  role            UserRole @default(INVESTOR)
+
+  // Blockchain
+  walletAddress   String?  // Public key of custodial or connected wallet
+
+  // KYC
+  kycStatus       KycStatus @default(NONE)
+
+  // Subscription
+  subscriptionTier SubscriptionTier @default(free)
+  subscriptionEndsAt DateTime?
+
+  // Relations
+  accounts        Account[]
+  sessions        Session[]
+  custodialWallet CustodialWallet?
+  properties      Property[]       @relation("PropertyOwner")
+  tokenHoldings   TokenHolding[]
+  transactions    Transaction[]    @relation("TransactionBuyer")
+  kycVerifications KycVerification[]
+  auditLogs       AuditLog[]
+  beneficiaryDesignations BeneficiaryDesignation[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+// Custodial wallet — separate table, restricted access
+model CustodialWallet {
+  id               String   @id @default(cuid())
+  userId           String   @unique
+  publicKey        String   @unique
+  encryptedSecretKey String  @db.Text
+  algorithm        String   @default("AES-256-GCM")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("custodial_wallets")
+}
+
+// =============================================================================
+// PROPERTY
+// =============================================================================
+
+model Property {
+  id          String        @id @default(cuid())
+  ownerId     String
+  title       String
+  description String        @db.Text
+  type        PropertyType
+  status      ListingStatus @default(DRAFT)
+
+  // Location
+  address     String
+  city        String
+  state       String
+  country     String        @default("US")
+  zipCode     String?
+  latitude    Float?
+  longitude   Float?
+
+  // Specs
+  price       Decimal       @db.Decimal(14, 2)
+  sqft        Int?
+  bedrooms    Int?
+  bathrooms   Float?
+  yearBuilt   Int?
+  lotSize     Float?        // acres
+
+  // Tokenization
+  tokenMintAddress String?
+
+  // Relations
+  owner       User          @relation("PropertyOwner", fields: [ownerId], references: [id])
+  images      PropertyImage[]
+  documents   PropertyDocument[]
+  token       Token?
+  transactions Transaction[]
+  aiValuations AiValuation[]
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  listedAt    DateTime?
+  soldAt      DateTime?
+
+  @@map("properties")
+}
+
+model PropertyImage {
+  id          String   @id @default(cuid())
+  propertyId  String
+  url         String
+  order       Int      @default(0)
+  isPrimary   Boolean  @default(false)
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime @default(now())
+
+  @@map("property_images")
+}
+
+model PropertyDocument {
+  id          String       @id @default(cuid())
+  propertyId  String
+  name        String
+  type        DocumentType
+  url         String
+  verified    Boolean      @default(false)
+  property    Property     @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime     @default(now())
+
+  @@map("property_documents")
+}
+
+// =============================================================================
+// BLOCKCHAIN / TOKENIZATION
+// =============================================================================
+
+model Token {
+  id              String   @id @default(cuid())
+  propertyId      String   @unique
+  mintAddress     String   @unique
+  totalSupply     Int
+  availableSupply Int
+  pricePerFraction Decimal @db.Decimal(12, 2)
+  status          TokenStatus @default(ACTIVE)
+  metadataUri     String?
+
+  property        Property @relation(fields: [propertyId], references: [id])
+  holdings        TokenHolding[]
+
+  mintedAt        DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("tokens")
+}
+
+model TokenHolding {
+  id          String   @id @default(cuid())
+  userId      String
+  tokenId     String
+  quantity    Int
+  costBasis   Decimal  @db.Decimal(14, 2)
+
+  user        User     @relation(fields: [userId], references: [id])
+  token       Token    @relation(fields: [tokenId], references: [id])
+
+  acquiredAt  DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@unique([userId, tokenId])
+  @@map("token_holdings")
+}
+
+// =============================================================================
+// TRANSACTIONS
+// =============================================================================
+
+model Transaction {
+  id              String            @id @default(cuid())
+  buyerId         String
+  propertyId      String
+  type            TransactionType
+  status          TransactionStatus @default(INITIATED)
+  amount          Decimal           @db.Decimal(14, 2)
+  fee             Decimal           @db.Decimal(14, 2)
+  total           Decimal           @db.Decimal(14, 2)
+  solanaSignature String?
+  flagged         Boolean           @default(false)
+
+  buyer           User              @relation("TransactionBuyer", fields: [buyerId], references: [id])
+  property        Property          @relation(fields: [propertyId], references: [id])
+  escrow          Escrow?
+  steps           TransactionStep[]
+
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  completedAt     DateTime?
+
+  @@map("transactions")
+}
+
+model TransactionStep {
+  id            String   @id @default(cuid())
+  transactionId String
+  name          String
+  completed     Boolean  @default(false)
+  order         Int
+
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+
+  completedAt   DateTime?
+  createdAt     DateTime @default(now())
+
+  @@map("transaction_steps")
+}
+
+model Escrow {
+  id              String       @id @default(cuid())
+  transactionId   String       @unique
+  status          EscrowStatus @default(CREATED)
+  amount          Decimal      @db.Decimal(14, 2)
+  pdaAddress      String?      // Solana PDA address
+  deadline        DateTime?
+
+  transaction     Transaction  @relation(fields: [transactionId], references: [id])
+
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  fundedAt        DateTime?
+  releasedAt      DateTime?
+
+  @@map("escrows")
+}
+
+// =============================================================================
+// COMPLIANCE
+// =============================================================================
+
+model KycVerification {
+  id          String    @id @default(cuid())
+  userId      String
+  status      KycStatus @default(PENDING)
+  provider    String    @default("mock")
+  providerRef String?
+
+  // Documents (S3 URLs — access-controlled)
+  idFrontUrl  String?
+  idBackUrl   String?
+  selfieUrl   String?
+
+  // Review
+  reviewedBy  String?
+  reviewNote  String?
+  reviewedAt  DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+
+  submittedAt DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("kyc_verifications")
+}
+
+// Append-only audit log — no UPDATE/DELETE allowed on this table
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?
+  action      String   // e.g. "property.list", "kyc.approve", "token.mint"
+  resourceType String? // e.g. "Property", "User", "Transaction"
+  resourceId  String?
+  metadata    Json?
+  ipAddress   String?
+  userAgent   String?
+
+  user        User?    @relation(fields: [userId], references: [id])
+
+  createdAt   DateTime @default(now())
+
+  @@map("audit_logs")
+}
+
+// =============================================================================
+// INHERITANCE
+// =============================================================================
+
+model BeneficiaryDesignation {
+  id                String          @id @default(cuid())
+  userId            String
+  tokenHoldingId    String
+  beneficiaryEmail  String
+  beneficiaryName   String?
+  sharePercent      Int             // 1–100
+  triggerType       TransferTrigger @default(MANUAL)
+  triggerDate       DateTime?
+  inactivityDays    Int?
+  status            DesignationStatus @default(ACTIVE)
+
+  user              User            @relation(fields: [userId], references: [id])
+
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
+  revokedAt         DateTime?
+
+  @@map("beneficiary_designations")
+}
+
+// =============================================================================
+// AI
+// =============================================================================
+
+model AiValuation {
+  id               String   @id @default(cuid())
+  propertyId       String
+  estimatedValue   Decimal  @db.Decimal(14, 2)
+  valueRangeLow    Decimal  @db.Decimal(14, 2)
+  valueRangeHigh   Decimal  @db.Decimal(14, 2)
+  confidenceScore  Float
+  confidence       AiConfidence
+  methodology      String   @db.Text
+  provider         String   @default("mock")
+  modelVersion     String?
+
+  property         Property @relation(fields: [propertyId], references: [id])
+
+  generatedAt      DateTime @default(now())
+
+  @@map("ai_valuations")
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum UserRole {
+  INVESTOR
+  OWNER
+  BOTH
+  ADMIN
+  COMPLIANCE_OFFICER
+}
+
+enum KycStatus {
+  NONE
+  PENDING
+  SUBMITTED
+  VERIFIED
+  REJECTED
+}
+
+enum SubscriptionTier {
+  free
+  pro
+  pro_plus
+  enterprise
+}
+
+enum PropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+  LAND
+  INDUSTRIAL
+  MIXED_USE
+}
+
+enum ListingStatus {
+  DRAFT
+  UNDER_REVIEW
+  ACTIVE
+  SOLD
+  LEASED
+  DELISTED
+}
+
+enum DocumentType {
+  TITLE_DEED
+  INSPECTION
+  APPRAISAL
+  CONTRACT
+  OFFERING
+  OTHER
+}
+
+enum TokenStatus {
+  PENDING
+  ACTIVE
+  FROZEN
+  BURNED
+}
+
+enum TransactionType {
+  FRACTIONAL_INVESTMENT
+  FULL_PURCHASE
+  LEASE
+}
+
+enum TransactionStatus {
+  INITIATED
+  OFFER_PENDING
+  ESCROW_CREATED
+  ESCROW_FUNDED
+  CONDITIONS_MET
+  COMPLETED
+  FAILED
+  CANCELLED
+  DISPUTED
+}
+
+enum EscrowStatus {
+  CREATED
+  FUNDED
+  RELEASED
+  REFUNDED
+  DISPUTED
+  CANCELLED
+}
+
+enum TransferTrigger {
+  MANUAL
+  DATE
+  INACTIVITY
+}
+
+enum DesignationStatus {
+  ACTIVE
+  REVOKED
+}
+
+enum AiConfidence {
+  LOW
+  MEDIUM
+  HIGH
+}
