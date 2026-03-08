@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 
 export default function MarketplacePage() {
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-6 pb-16">
       <PageHeader
         title="Marketplace"
         description="Browse and invest in tokenized real estate, globally."
       />
 
-      <div className="mt-8">
+      <div className="mt-6">
         <MarketplaceClient />
       </div>
     </div>

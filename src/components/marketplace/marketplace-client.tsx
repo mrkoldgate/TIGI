@@ -9,7 +9,7 @@ import {
   Zap,
   Building2,
   Layers,
-  TrendingUp,
+  ChevronDown,
   Trees,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -359,7 +359,7 @@ function FilterBar({
           className={cn(
             'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
             filters.devOpportunityOnly
-              ? 'border-[#4ADE80]/35 bg-[#4ADE80]/8 text-[#4ADE80]'
+              ? 'border-[#4ADE80]/30 bg-[#4ADE80]/10 text-[#4ADE80]'
               : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#1E2D1E] hover:text-[#A0A0B2]',
           )}
         >
@@ -527,11 +527,13 @@ function ListingCard({
   index,
   savedIds,
   onSave,
+  priority,
 }: {
   listing: MockListing
   index: number
   savedIds: Set<string>
   onSave: (id: string) => void
+  priority?: boolean
 }) {
   if (listing.propertyType === 'LAND') {
     return (
@@ -540,6 +542,7 @@ function ListingCard({
         index={index}
         isSaved={savedIds.has(listing.id)}
         onSave={onSave}
+        priority={priority}
       />
     )
   }
@@ -549,6 +552,7 @@ function ListingCard({
       index={index}
       isSaved={savedIds.has(listing.id)}
       onSave={onSave}
+      priority={priority}
     />
   )
 }
@@ -558,11 +562,13 @@ function ListingRow({
   index,
   savedIds,
   onSave,
+  priority,
 }: {
   listing: MockListing
   index: number
   savedIds: Set<string>
   onSave: (id: string) => void
+  priority?: boolean
 }) {
   if (listing.propertyType === 'LAND') {
     return (
@@ -571,6 +577,7 @@ function ListingRow({
         index={index}
         isSaved={savedIds.has(listing.id)}
         onSave={onSave}
+        priority={priority}
       />
     )
   }
@@ -580,6 +587,7 @@ function ListingRow({
       index={index}
       isSaved={savedIds.has(listing.id)}
       onSave={onSave}
+      priority={priority}
     />
   )
 }
@@ -698,6 +706,7 @@ export function MarketplaceClient() {
                 index={i}
                 savedIds={savedIds}
                 onSave={handleSave}
+                priority={i < 3}
               />
             </div>
           ))}
@@ -715,6 +724,7 @@ export function MarketplaceClient() {
                 index={i}
                 savedIds={savedIds}
                 onSave={handleSave}
+                priority={i < 5}
               />
             </div>
           ))}
@@ -735,7 +745,7 @@ export function MarketplaceClient() {
                 : 'border-[#2A2A3A] hover:border-[#C9A84C]/40',
             )}
           >
-            <TrendingUp className="h-4 w-4" />
+            <ChevronDown className="h-4 w-4" />
             {getLoadMoreLabel(filters.category)}
           </button>
           <p className="text-xs text-[#4A4A60]">

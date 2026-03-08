@@ -42,9 +42,12 @@ export function AppShell({ children }: AppShellProps) {
           {/* TopNav — sticky, spans content width */}
           <TopNav onMobileMenuToggle={() => setMobileSidebarOpen((o) => !o)} />
 
-          {/* Scrollable content area */}
+          {/* Scrollable content area — horizontal padding applied once here so every
+              page gets consistent gutters without each having to repeat px-* classes.
+              Vertical padding is intentionally omitted; pages own their own top/bottom
+              rhythm (PageHeader, space-y-*, pb-16 etc.). */}
           <main className="flex-1 overflow-auto">
-            <div className="animate-fade-in">{children}</div>
+            <div className="px-4 sm:px-6 lg:px-8">{children}</div>
           </main>
         </div>
       </div>

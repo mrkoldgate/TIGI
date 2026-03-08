@@ -61,18 +61,21 @@ export function inferDevOpportunity(features: string[]): boolean {
 
 function toCardData(listing: MockListing): LandCardData {
   const features = listing.features ?? []
+  const acres = listing.lotAcres ?? 0
   return {
     id: listing.id,
     title: listing.title,
     city: listing.city,
     state: listing.state,
     price: listing.price,
-    acres: listing.lotAcres ?? 0,
+    acres,
+    pricePerAcre: acres > 0 ? Math.round(listing.price / acres) : undefined,
     landUse: inferLandUse(features),
     listingType: listing.listingType,
     features,
     isDevelopmentOpportunity: inferDevOpportunity(features),
     imageSlot: listing.imageSlot,
+    isNew: listing.isNew,
     isTokenized: listing.isTokenized,
     tokenInfo:
       listing.isTokenized && listing.tokenTotalSupply
@@ -86,7 +89,7 @@ function toCardData(listing: MockListing): LandCardData {
     aiValuation: listing.aiEstimatedValue
       ? {
           estimatedValue: listing.aiEstimatedValue,
-          confidence: listing.aiConfidence ?? 'MEDIUM',
+          confidence: listing.aiConfidence ?? 'LOW',
         }
       : undefined,
   }
@@ -128,6 +131,7 @@ export function MarketplaceLandRow({
   index,
   isSaved,
   onSave,
+  priority,
 }: MarketplaceLandCardProps) {
   return (
     <LandCard
@@ -136,9 +140,7 @@ export function MarketplaceLandRow({
       index={index}
       isSaved={isSaved}
       onSave={onSave}
+      priority={priority}
     />
   )
 }
-
-export const LandCard_Card = MarketplaceLandCard
-export const LandCard_Row = MarketplaceLandRow

@@ -31,6 +31,7 @@ function toCardData(listing: MockListing): PropertyCardData {
     yearBuilt: listing.yearBuilt,
     imageSlot: listing.imageSlot,
     imagePropertyType: listing.imagePropertyType,
+    isNew: listing.isNew,
     isTokenized: listing.isTokenized,
     tokenInfo: listing.isTokenized && listing.tokenTotalSupply
       ? {
@@ -43,7 +44,7 @@ function toCardData(listing: MockListing): PropertyCardData {
     aiValuation: listing.aiEstimatedValue
       ? {
           estimatedValue: listing.aiEstimatedValue,
-          confidence: listing.aiConfidence ?? 'MEDIUM',
+          confidence: listing.aiConfidence ?? 'LOW',
         }
       : undefined,
   }

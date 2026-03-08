@@ -176,7 +176,7 @@ export function InitialsAvatar({ name, size = 'md', className }: InitialsAvatarP
   return (
     <div
       className={cn(
-        'flex flex-shrink-0 items-center justify-center rounded-md bg-[#C9A84C] font-heading font-600 text-[#0A0A0F]',
+        'flex flex-shrink-0 items-center justify-center rounded-md bg-[#C9A84C] font-heading font-semibold text-[#0A0A0F]',
         sizeClasses[size],
         className
       )}

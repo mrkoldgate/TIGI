@@ -725,7 +725,7 @@ export function PropertyDetailClient({
   const onSave = () => toggleSave(listing.id)
 
   return (
-    <div className="animate-fade-in space-y-6 pb-16">
+    <div className="animate-fade-in space-y-6 pt-6 pb-16">
       {/* Breadcrumb */}
       <BreadcrumbNav listing={listing} />
 
