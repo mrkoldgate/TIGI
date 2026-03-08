@@ -27,6 +27,8 @@ import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import { MarketplaceLandCard, inferLandUse, inferDevOpportunity } from '@/components/marketplace/land-card'
 import { type LandUseType } from '@/components/land/land-card'
+import { ValuationPanel } from '@/components/valuation/valuation-panel'
+import { getMockValuation } from '@/lib/valuation/mock-valuations'
 import {
   type MockListing,
   formatPrice,
@@ -184,12 +186,6 @@ function daysAgo(dateStr: string): number {
   return Math.floor((Date.now() - new Date(dateStr).getTime()) / 86_400_000)
 }
 
-function getAiDelta(aiEstimate: number, listPrice: number) {
-  const pct = ((aiEstimate - listPrice) / listPrice) * 100
-  if (pct > 2)  return { label: `${pct.toFixed(1)}% below AI estimate`, variant: 'under' as const }
-  if (pct < -2) return { label: `${Math.abs(pct).toFixed(1)}% above AI estimate`, variant: 'over' as const }
-  return { label: 'At AI estimated value', variant: 'at' as const }
-}
 
 // ---------------------------------------------------------------------------
 // Gallery — panoramic hero + thumbnail strip
@@ -867,53 +863,6 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
   )
 }
 
-function AiValuationPanel({ listing }: { listing: MockListing }) {
-  if (!listing.aiEstimatedValue) return null
-
-  const delta = getAiDelta(listing.aiEstimatedValue, listing.price)
-  const confidence = listing.aiConfidence ?? 'LOW'
-  const acres = listing.lotAcres ?? 0
-
-  const confBarWidth = { HIGH: '100%', MEDIUM: '65%', LOW: '33%' }[confidence]
-  const confColor    = { HIGH: '#4ADE80', MEDIUM: '#FCD34D', LOW: '#6B6B80' }[confidence]
-  const confLabel    = { HIGH: 'High', MEDIUM: 'Medium', LOW: 'Low' }[confidence]
-  const deltaColor   = delta.variant === 'under' ? '#4ADE80' : delta.variant === 'over' ? '#FCD34D' : '#8A9E8A'
-
-  return (
-    <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
-      <div className="mb-3 flex items-center gap-2">
-        <TrendingUp className="h-3.5 w-3.5 text-[#C9A84C]" />
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8A9E8A]">AI Valuation</span>
-        <span className="ml-auto text-[10px] text-[#4A6A4A]">Beta</span>
-      </div>
-      <div className="mb-3 flex items-baseline justify-between gap-2">
-        <div>
-          <p className="text-[10px] text-[#4A6A4A]">Estimated value</p>
-          <p className="font-heading text-xl font-semibold text-[#E8F0E8]">
-            ${listing.aiEstimatedValue.toLocaleString()}
-          </p>
-          {acres > 0 && (
-            <p className="text-[11px] text-[#5A7060]">
-              ~{formatPricePerAcre(listing.aiEstimatedValue, acres)}/ac
-            </p>
-          )}
-        </div>
-        <p className="text-right text-xs font-medium" style={{ color: deltaColor }}>{delta.label}</p>
-      </div>
-      <div className="mb-1 flex items-center justify-between text-[10px] text-[#4A6A4A]">
-        <span>Model confidence</span>
-        <span style={{ color: confColor }}>{confLabel}</span>
-      </div>
-      <div className="h-1 overflow-hidden rounded-full bg-[#1A2B1A]">
-        <div className="h-full rounded-full transition-all duration-700" style={{ width: confBarWidth, backgroundColor: confColor }} />
-      </div>
-      <p className="mt-3 text-[10px] leading-relaxed text-[#4A6A4A]">
-        Land estimate uses comparable sales, zoning data, and parcel attributes. Not a certified appraisal.
-      </p>
-    </div>
-  )
-}
-
 function LandActionPanel({
   listing,
   landUse,
@@ -998,7 +947,16 @@ function LandActionPanel({
       <InvestmentPanel listing={listing} />
 
       {/* AI valuation */}
-      <AiValuationPanel listing={listing} />
+      {listing.aiEstimatedValue && (
+        <ValuationPanel
+          listPrice={listing.price}
+          estimatedValue={listing.aiEstimatedValue}
+          confidence={listing.aiConfidence ?? 'LOW'}
+          valuation={getMockValuation(listing.id)}
+          assetType="land"
+          lotAcres={listing.lotAcres ?? undefined}
+        />
+      )}
 
       {/* Trust signals */}
       <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">

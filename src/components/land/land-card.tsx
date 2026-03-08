@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { Heart, MapPin, Zap, TrendingUp, Layers } from 'lucide-react'
+import { Heart, MapPin, Zap, Layers } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
+import { ValuationBadge } from '@/components/valuation/valuation-badge'
+import { type AiConfidence } from '@/lib/valuation/valuation-types'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -20,7 +22,6 @@ export type LandUseType =
   | 'RURAL'
 
 export type LandListingType = 'BUY' | 'LEASE' | 'BOTH'
-export type LandAiConfidence = 'LOW' | 'MEDIUM' | 'HIGH'
 
 export interface LandTokenInfo {
   pricePerFraction: number
@@ -31,7 +32,7 @@ export interface LandTokenInfo {
 
 export interface LandAiValuation {
   estimatedValue: number
-  confidence: LandAiConfidence
+  confidence: AiConfidence
 }
 
 export interface LandCardData {
@@ -183,66 +184,6 @@ function DevOpportunityBadge({ small }: { small?: boolean }) {
       <Layers className={cn(small ? 'h-2 w-2' : 'h-2.5 w-2.5')} />
       Dev. Opportunity
     </span>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// AI valuation row — compact inline for row variant, full block for card
-// ---------------------------------------------------------------------------
-
-const CONFIDENCE_CLASS: Record<LandAiConfidence, string> = {
-  HIGH:   'text-[#4ADE80]',
-  MEDIUM: 'text-[#FCD34D]',
-  LOW:    'text-[#6B6B80]',
-}
-
-const CONFIDENCE_RING: Record<LandAiConfidence, string> = {
-  HIGH:   'bg-[#22C55E]/10 ring-[#22C55E]/20 text-[#4ADE80]',
-  MEDIUM: 'bg-[#F59E0B]/10 ring-[#F59E0B]/20 text-[#FCD34D]',
-  LOW:    'bg-[#2A2A3A]/80 ring-[#3A3A48] text-[#A0A0B2]',
-}
-
-function AiValuationBlock({ valuation }: { valuation: LandAiValuation }) {
-  return (
-    <div className="flex items-center justify-between rounded-lg bg-[#0D0D14] px-3 py-2 ring-1 ring-[#2A2A3A]">
-      <div className="flex items-center gap-1.5">
-        <TrendingUp className="h-3 w-3 text-[#C9A84C]" />
-        <span className="text-[10px] uppercase tracking-wider text-[#4A4A60]">AI Estimate</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="text-xs font-medium text-[#F5F5F7]">
-          {formatPrice(valuation.estimatedValue)}
-        </span>
-        <span
-          className={cn(
-            'inline-flex items-center rounded px-1.5 py-0.5 text-[9px] font-medium ring-1 ring-inset',
-            CONFIDENCE_RING[valuation.confidence],
-          )}
-        >
-          {valuation.confidence === 'HIGH'
-            ? 'High conf.'
-            : valuation.confidence === 'MEDIUM'
-            ? 'Med. conf.'
-            : 'Low conf.'}
-        </span>
-      </div>
-    </div>
-  )
-}
-
-function AiValuationInline({ valuation }: { valuation: LandAiValuation }) {
-  return (
-    <div className="flex items-center gap-1.5 text-[10px] text-[#6B6B80]">
-      <TrendingUp className="h-3 w-3 text-[#C9A84C]" />
-      <span>
-        AI est.{' '}
-        <span className="text-[#F5F5F7]">{formatPrice(valuation.estimatedValue)}</span>
-        {' · '}
-        <span className={CONFIDENCE_CLASS[valuation.confidence]}>
-          {valuation.confidence.toLowerCase()} conf.
-        </span>
-      </span>
-    </div>
   )
 }
 
@@ -477,7 +418,12 @@ function CardVariant({
           {/* AI valuation */}
           {data.aiValuation && (
             <div className="mt-3">
-              <AiValuationBlock valuation={data.aiValuation} />
+              <ValuationBadge
+                estimatedValue={data.aiValuation.estimatedValue}
+                confidence={data.aiValuation.confidence}
+                listPrice={data.price}
+                assetType="land"
+              />
             </div>
           )}
 
@@ -600,7 +546,13 @@ function RowVariant({
               <FeatureChips features={data.features} max={3} />
             )}
             {data.aiValuation && (
-              <AiValuationInline valuation={data.aiValuation} />
+              <ValuationBadge
+                estimatedValue={data.aiValuation.estimatedValue}
+                confidence={data.aiValuation.confidence}
+                listPrice={data.price}
+                variant="inline"
+                assetType="land"
+              />
             )}
           </div>
         </div>
