@@ -26,6 +26,12 @@ const CreateIntentSchema = z.object({
   fractionQty: z.number().int().positive().optional(),
   offerAmount: z.number().positive().optional(),
   note:        z.string().max(1000).trim().optional(),
+  // Lease-specific structured details (PREPARE_LEASE only)
+  leaseDetails: z.object({
+    desiredStartDate:     z.string().optional(), // ISO date string
+    desiredDurationMonths: z.number().int().positive().optional(),
+    intendedUse:          z.string().max(200).trim().optional(),
+  }).optional(),
 })
 
 // ── POST /api/intents ─────────────────────────────────────────────────────────
@@ -57,7 +63,7 @@ export async function POST(req: Request) {
     )
   }
 
-  const { propertyId, intentType, fractionQty, offerAmount, note } = parsed.data
+  const { propertyId, intentType, fractionQty, offerAmount, note, leaseDetails } = parsed.data
   const userId = session.user.id
 
   try {
@@ -108,6 +114,10 @@ export async function POST(req: Request) {
     }
 
     const intent = await prisma.$transaction(async (tx) => {
+      const intentMetadata = leaseDetails
+        ? { leaseDetails }
+        : undefined
+
       const created = await tx.transactionIntent.create({
         data: {
           userId,
@@ -116,6 +126,7 @@ export async function POST(req: Request) {
           fractionQty: fractionQty ?? null,
           offerAmount: offerAmount ?? null,
           note:        note ?? null,
+          ...(intentMetadata && { metadata: intentMetadata }),
         },
       })
 
@@ -131,6 +142,7 @@ export async function POST(req: Request) {
             propertyTitle: property.title,
             fractionQty:   fractionQty ?? null,
             offerAmount:   offerAmount ?? null,
+            ...(leaseDetails && { leaseDetails }),
           },
         },
       })

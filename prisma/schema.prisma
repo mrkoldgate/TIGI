@@ -188,6 +188,8 @@ model Property {
   transactions Transaction[]
   aiValuations AiValuation[]
   intents      TransactionIntent[]
+  leaseTerms   LeaseTerms?
+  devOpportunity DevelopmentOpportunity?
 
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
@@ -435,6 +437,99 @@ model UserDocument {
 }
 
 // =============================================================================
+// TERRA — Land Leasing & Development
+// =============================================================================
+//
+// LeaseTerms:           Structured lease configuration for a land parcel.
+//                       One-to-one with Property. Separate model so terms can
+//                       be updated independently of core listing data.
+//
+// DevelopmentOpportunity: Structured development signals for a land parcel.
+//                         Replaces / formalizes the inferred feature-array
+//                         approach used in M2. Powers the Terra dev filter.
+// =============================================================================
+
+model LeaseTerms {
+  id              String             @id @default(cuid())
+  propertyId      String             @unique
+
+  // Duration
+  durationType    LeaseDurationType  @default(NEGOTIABLE)
+  minimumMonths   Int?               // minimum lease term required
+  maximumMonths   Int?               // maximum term offered (null = open-ended)
+
+  // Financials
+  rateMonthly     Decimal?           @db.Decimal(14, 2)
+  rateAnnual      Decimal?           @db.Decimal(14, 2)
+  ratePerAcre     Decimal?           @db.Decimal(14, 2)  // $/acre/year
+  securityDeposit Decimal?           @db.Decimal(14, 2)
+
+  // Escalation
+  escalationType  LeaseEscalationType @default(NONE)
+  escalationRate  Float?              // percent per year (if PERCENT_PER_YEAR)
+
+  // Option clauses
+  hasRenewalOption     Boolean  @default(false)
+  renewalTermMonths    Int?
+  hasPurchaseOption    Boolean  @default(false)
+  purchaseOptionPrice  Decimal? @db.Decimal(14, 2)
+
+  // Permitted / restricted uses — JSON string arrays
+  allowedUses     Json     @default("[]")
+  prohibitedUses  Json     @default("[]")
+
+  // Free-text additional terms
+  additionalTerms String?  @db.Text
+
+  property        Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("lease_terms")
+}
+
+model DevelopmentOpportunity {
+  id          String           @id @default(cuid())
+  propertyId  String           @unique
+
+  stage       DevelopmentStage @default(RAW)
+
+  // Zoning
+  zoningDescription   String?  @db.Text
+  maxBuildableUnits   Int?
+  maxFloorAreaRatio   Float?
+  heightLimitFt       Int?
+
+  // Infrastructure
+  utilitiesAvailable  Json     @default("[]")  // string array of utility types
+  roadAccess          Boolean  @default(false)
+  roadType            String?  // "Paved", "Gravel", "Easement"
+
+  // Entitlements
+  entitlementStatus   String?  // "Unentitled" | "In process" | "Entitled"
+  permitsAvailable    Json     @default("[]")  // string array of permit names
+  environmentalStatus String?  // "Clean" | "Phase I complete" | "Remediation needed"
+
+  // Topography
+  topography          String?  // "Flat" | "Gently sloping" | "Rolling" | "Hilly"
+  floodZone           String?  // "None" | "Zone X" | "Zone AE"
+
+  // Dev highlights — string array shown as bullet points
+  highlights          Json     @default("[]")
+
+  // Notes for future financing / crowdfunding
+  financingNotes      String?  @db.Text
+
+  property            Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("development_opportunities")
+}
+
+// =============================================================================
 // INHERITANCE
 // =============================================================================
 
@@ -677,6 +772,27 @@ enum TransferTrigger {
 enum DesignationStatus {
   ACTIVE
   REVOKED
+}
+
+enum LeaseDurationType {
+  FIXED          // Set term (minimumMonths = maximumMonths)
+  FLEXIBLE       // Range (minimumMonths to maximumMonths)
+  MONTH_TO_MONTH
+  NEGOTIABLE
+}
+
+enum LeaseEscalationType {
+  NONE
+  FIXED          // Fixed increase per renewal period
+  CPI            // Consumer Price Index linked
+  PERCENT_PER_YEAR
+}
+
+enum DevelopmentStage {
+  RAW           // Unimproved, no entitlements
+  ENTITLED      // Zoning and permits approved
+  IMPROVED      // Infrastructure in place
+  SHOVEL_READY  // All approvals + grading + utilities done
 }
 
 enum LegacyPlanStatus {

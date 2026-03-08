@@ -4,6 +4,7 @@ import { getListingById, getActiveListings } from '@/lib/listings/listing-query'
 import { PropertyDetailClient } from '@/components/marketplace/property-detail-client'
 import { LandDetailClient } from '@/components/marketplace/land-detail-client'
 import { getValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
+import { getTerraListing } from '@/lib/terra/terra-query'
 
 // ---------------------------------------------------------------------------
 // /marketplace/[id] — Unified property & land detail route.
@@ -50,7 +51,18 @@ export default async function ListingDetailPage({ params }: PageProps) {
   const valuation = await getValuation(listing.id, marketplaceListingToInput(listing))
 
   if (listing.propertyType === 'LAND') {
-    return <LandDetailClient listing={listing} allListings={allListings} valuation={valuation} />
+    // Enrich with Terra structured data (lease terms + dev opportunity)
+    const terraListing = await getTerraListing(listing.id)
+    return (
+      <LandDetailClient
+        listing={listing}
+        allListings={allListings}
+        valuation={valuation}
+        leaseTerms={terraListing?.leaseTerms ?? null}
+        devOpportunity={terraListing?.devOpportunity ?? null}
+        leaseRateMonthly={terraListing?.leaseRateMonthly ?? null}
+      />
+    )
   }
 
   return <PropertyDetailClient listing={listing} allListings={allListings} valuation={valuation} />

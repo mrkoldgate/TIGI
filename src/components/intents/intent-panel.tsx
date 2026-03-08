@@ -43,11 +43,12 @@ interface IntentPanelProps {
 }
 
 interface PendingIntent {
-  type:        IntentType
-  label:       string
-  confirmText: string
-  showQty:     boolean
-  showOffer:   boolean
+  type:             IntentType
+  label:            string
+  confirmText:      string
+  showQty:          boolean
+  showOffer:        boolean
+  showLeaseDetails: boolean
 }
 
 // ── Config ─────────────────────────────────────────────────────────────────
@@ -107,6 +108,15 @@ function SuccessCard({
 
 // ── Inline confirm panel ───────────────────────────────────────────────────
 
+const LEASE_DURATION_OPTIONS = [
+  { value: 12,   label: '1 year'   },
+  { value: 24,   label: '2 years'  },
+  { value: 36,   label: '3 years'  },
+  { value: 60,   label: '5 years'  },
+  { value: 120,  label: '10 years' },
+  { value: 0,    label: 'Negotiable' },
+]
+
 function ConfirmPanel({
   pending,
   isSubmitting,
@@ -118,29 +128,103 @@ function ConfirmPanel({
   pending:      PendingIntent
   isSubmitting: boolean
   error:        string | null
-  onConfirm:    (note: string, qty?: number, offer?: number) => void
+  onConfirm:    (note: string, qty?: number, offer?: number, leaseDetails?: { desiredStartDate?: string; desiredDurationMonths?: number; intendedUse?: string }) => void
   onCancel:     () => void
   theme:        'default' | 'land'
 }) {
-  const [note,  setNote]  = useState('')
-  const [qty,   setQty]   = useState('')
-  const [offer, setOffer] = useState('')
+  const [note,          setNote]          = useState('')
+  const [qty,           setQty]           = useState('')
+  const [offer,         setOffer]         = useState('')
+  const [startDate,     setStartDate]     = useState('')
+  const [durationMonths,setDurationMonths]= useState<string>('')
+  const [intendedUse,   setIntendedUse]   = useState('')
 
   const borderClass = theme === 'land' ? 'border-[#1E2D1E]' : 'border-[#2A2A3A]'
   const bgClass     = theme === 'land' ? 'bg-[#0D110D]'     : 'bg-[#0D0D14]'
   const inputClass  = theme === 'land'
     ? 'border-[#1E2D1E] bg-[#111A11] text-[#E8F0E8] placeholder-[#4A6A4A] focus:border-[#2A3A2A]'
     : 'border-[#2A2A3A] bg-[#111118] text-[#F5F5F7] placeholder-[#4A4A60] focus:border-[#3A3A4A]'
+  const labelClass  = theme === 'land' ? 'text-[#5A7060]' : 'text-[#6B6B80]'
+
+  const handleSubmit = () => {
+    const leaseDetails = pending.showLeaseDetails ? {
+      ...(startDate && { desiredStartDate: startDate }),
+      ...(durationMonths && parseInt(durationMonths, 10) > 0 && { desiredDurationMonths: parseInt(durationMonths, 10) }),
+      ...(intendedUse.trim() && { intendedUse: intendedUse.trim() }),
+    } : undefined
+
+    onConfirm(
+      note,
+      pending.showQty   && qty   ? parseInt(qty, 10)  : undefined,
+      pending.showOffer && offer ? parseFloat(offer)   : undefined,
+      Object.keys(leaseDetails ?? {}).length ? leaseDetails : undefined,
+    )
+  }
 
   return (
     <div className={cn('rounded-xl border p-4 space-y-3', borderClass, bgClass)}>
-      <p className="text-[11px] font-semibold uppercase tracking-wider text-[#6B6B80]">
+      <p className={cn('text-[11px] font-semibold uppercase tracking-wider', labelClass)}>
         {pending.confirmText}
       </p>
 
+      {/* Lease-specific fields */}
+      {pending.showLeaseDetails && (
+        <>
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className={cn('mb-1 block text-[11px]', labelClass)}>
+                Desired start date
+              </label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className={cn(
+                  'w-full rounded-lg border px-3 py-2 text-sm outline-none transition-colors',
+                  inputClass,
+                )}
+              />
+            </div>
+            <div>
+              <label className={cn('mb-1 block text-[11px]', labelClass)}>
+                Desired duration
+              </label>
+              <select
+                value={durationMonths}
+                onChange={(e) => setDurationMonths(e.target.value)}
+                className={cn(
+                  'w-full rounded-lg border px-3 py-2 text-sm outline-none transition-colors',
+                  inputClass,
+                )}
+              >
+                <option value="">Select…</option>
+                {LEASE_DURATION_OPTIONS.map((opt) => (
+                  <option key={opt.value} value={String(opt.value)}>{opt.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div>
+            <label className={cn('mb-1 block text-[11px]', labelClass)}>
+              Intended use
+            </label>
+            <input
+              type="text"
+              value={intendedUse}
+              onChange={(e) => setIntendedUse(e.target.value)}
+              placeholder="e.g. Cattle grazing, Organic farming, Storage…"
+              className={cn(
+                'w-full rounded-lg border px-3 py-2 text-sm outline-none transition-colors',
+                inputClass,
+              )}
+            />
+          </div>
+        </>
+      )}
+
       {pending.showQty && (
         <div>
-          <label className="mb-1 block text-[11px] text-[#6B6B80]">
+          <label className={cn('mb-1 block text-[11px]', labelClass)}>
             Number of fractions
           </label>
           <input
@@ -159,8 +243,8 @@ function ConfirmPanel({
 
       {pending.showOffer && (
         <div>
-          <label className="mb-1 block text-[11px] text-[#6B6B80]">
-            Offer amount (optional)
+          <label className={cn('mb-1 block text-[11px]', labelClass)}>
+            Offer amount <span className="text-[#4A4A60]">(optional)</span>
           </label>
           <input
             type="number"
@@ -178,7 +262,7 @@ function ConfirmPanel({
       )}
 
       <div>
-        <label className="mb-1 block text-[11px] text-[#6B6B80]">
+        <label className={cn('mb-1 block text-[11px]', labelClass)}>
           Note <span className="text-[#4A4A60]">(optional)</span>
         </label>
         <textarea
@@ -200,11 +284,7 @@ function ConfirmPanel({
       <div className="flex gap-2">
         <button
           type="button"
-          onClick={() => onConfirm(
-            note,
-            pending.showQty  && qty   ? parseInt(qty, 10)    : undefined,
-            pending.showOffer && offer ? parseFloat(offer)    : undefined,
-          )}
+          onClick={handleSubmit}
           disabled={isSubmitting}
           className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#C9A84C] py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
         >
@@ -246,14 +326,20 @@ export function IntentPanel({
     setError(null)
     setPending({
       type,
-      label:       INTENT_CONFIG[type].label,
-      confirmText: INTENT_CONFIG[type].confirmText,
-      showQty:     type === 'PREPARE_INVEST',
-      showOffer:   type === 'PREPARE_PURCHASE' || type === 'PREPARE_LEASE',
+      label:            INTENT_CONFIG[type].label,
+      confirmText:      INTENT_CONFIG[type].confirmText,
+      showQty:          type === 'PREPARE_INVEST',
+      showOffer:        type === 'PREPARE_PURCHASE',
+      showLeaseDetails: type === 'PREPARE_LEASE',
     })
   }, [])
 
-  const handleConfirm = useCallback(async (note: string, qty?: number, offer?: number) => {
+  const handleConfirm = useCallback(async (
+    note: string,
+    qty?: number,
+    offer?: number,
+    leaseDetails?: { desiredStartDate?: string; desiredDurationMonths?: number; intendedUse?: string },
+  ) => {
     if (!pending) return
     setIsSubmitting(true)
     setError(null)
@@ -263,10 +349,11 @@ export function IntentPanel({
         headers: { 'Content-Type': 'application/json' },
         body:    JSON.stringify({
           propertyId,
-          intentType:  pending.type,
-          fractionQty: qty    ?? undefined,
-          offerAmount: offer  ?? undefined,
-          note:        note || undefined,
+          intentType:   pending.type,
+          fractionQty:  qty          ?? undefined,
+          offerAmount:  offer        ?? undefined,
+          note:         note || undefined,
+          leaseDetails: leaseDetails ?? undefined,
         }),
       })
       const json = await res.json()

@@ -36,6 +36,10 @@ import {
   tokenSoldPercent,
 } from '@/lib/marketplace/mock-data'
 import { IntentPanel } from '@/components/intents/intent-panel'
+import { LeaseTermsPanel } from '@/components/terra/lease-terms-panel'
+import { DevOpportunityPanel as TerraDevOpportunityPanel } from '@/components/terra/dev-opportunity-panel'
+import type { LeaseTerms, DevOpportunity } from '@/lib/terra/terra-types'
+import { formatLeaseRate } from '@/lib/terra/terra-mock-data'
 
 // ---------------------------------------------------------------------------
 // Land use config — labels, descriptions, color tokens
@@ -496,10 +500,14 @@ function ZoningTab({
   listing,
   landUse,
   isDevOpportunity,
+  devOpportunity,
+  leaseTerms,
 }: {
   listing: MockListing
   landUse: LandUseType
   isDevOpportunity: boolean
+  devOpportunity: DevOpportunity | null
+  leaseTerms: LeaseTerms | null
 }) {
   const config = LAND_USE_CONFIG[landUse]
   const permittedUses = inferPermittedUses(listing.features, landUse)
@@ -567,7 +575,12 @@ function ZoningTab({
       </section>
 
       {/* Development opportunity */}
-      {isDevOpportunity && (
+      {devOpportunity ? (
+        <section>
+          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Development Opportunity</h2>
+          <TerraDevOpportunityPanel opportunity={devOpportunity} variant="full" />
+        </section>
+      ) : isDevOpportunity && (
         <section>
           <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Development Opportunity</h2>
           <div className="rounded-xl border border-[#22C55E]/20 bg-[#0D110D] p-4">
@@ -592,6 +605,14 @@ function ZoningTab({
               ))}
             </div>
           </div>
+        </section>
+      )}
+
+      {/* Lease terms */}
+      {leaseTerms && (
+        <section>
+          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Lease Terms</h2>
+          <LeaseTermsPanel terms={leaseTerms} acres={listing.lotAcres ?? undefined} variant="full" />
         </section>
       )}
 
@@ -665,11 +686,15 @@ function LandDetailTabs({
   allListings,
   landUse,
   isDevOpportunity,
+  devOpportunity,
+  leaseTerms,
 }: {
   listing: MockListing
   allListings: MockListing[]
   landUse: LandUseType
   isDevOpportunity: boolean
+  devOpportunity: DevOpportunity | null
+  leaseTerms: LeaseTerms | null
 }) {
   const [activeTab, setActiveTab] = useState<LandTab>('overview')
 
@@ -703,7 +728,7 @@ function LandDetailTabs({
 
       <div className="mt-6">
         {activeTab === 'overview'  && <OverviewTab listing={listing} />}
-        {activeTab === 'zoning'    && <ZoningTab listing={listing} landUse={landUse} isDevOpportunity={isDevOpportunity} />}
+        {activeTab === 'zoning'    && <ZoningTab listing={listing} landUse={landUse} isDevOpportunity={isDevOpportunity} devOpportunity={devOpportunity} leaseTerms={leaseTerms} />}
         {activeTab === 'documents' && <DocumentsTab />}
         {activeTab === 'similar'   && <SimilarTab listing={listing} allListings={allListings} landUse={landUse} />}
       </div>
@@ -750,47 +775,6 @@ function LandMetricsGrid({ listing, landUse }: { listing: MockListing; landUse: 
   )
 }
 
-function DevOpportunityPanel({ listing, isDevOpportunity }: { listing: MockListing; isDevOpportunity: boolean }) {
-  if (!isDevOpportunity) return null
-
-  const signals = listing.features.filter((f) => {
-    const lower = f.toLowerCase()
-    return (
-      lower.includes('zoning') ||
-      lower.includes('graded') ||
-      lower.includes('shovel') ||
-      lower.includes('buildable') ||
-      lower.includes('permits') ||
-      lower.includes('utilities') ||
-      lower.includes('transit') ||
-      lower.includes('rail spur')
-    )
-  })
-
-  return (
-    <div className="rounded-xl border border-[#22C55E]/25 bg-[#0D110D] p-4">
-      <div className="mb-3 flex items-center gap-2">
-        <Layers className="h-3.5 w-3.5 text-[#4ADE80]" />
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#4ADE80]">
-          Development Opportunity
-        </span>
-      </div>
-      {signals.length > 0 && (
-        <div className="mb-3 space-y-1.5">
-          {signals.map((s) => (
-            <div key={s} className="flex items-center gap-2 text-xs text-[#8A9E8A]">
-              <Check className="h-3 w-3 shrink-0 text-[#4ADE80]" />
-              {s}
-            </div>
-          ))}
-        </div>
-      )}
-      <p className="text-[10px] leading-relaxed text-[#4A6A4A]">
-        Development signals identified from listing attributes. Verify entitlement status with local planning authority.
-      </p>
-    </div>
-  )
-}
 
 function InvestmentPanel({ listing }: { listing: MockListing }) {
   if (!listing.isTokenized || !listing.tokenTotalSupply || !listing.tokenPricePerFraction) return null
@@ -854,28 +838,60 @@ function LandActionPanel({
   isDevOpportunity,
   isSaved,
   onSave,
+  devOpportunity,
+  leaseTerms,
+  leaseRateMonthly,
+  valuation,
 }: {
   listing: MockListing
   landUse: LandUseType
   isDevOpportunity: boolean
   isSaved: boolean
   onSave: () => void
+  devOpportunity: DevOpportunity | null
+  leaseTerms: LeaseTerms | null
+  leaseRateMonthly: number | null
+  valuation?: AiValuation | null
 }) {
   const acres = listing.lotAcres ?? 0
+  const isLeaseOnly = listing.listingType === 'LEASE'
 
   return (
     <div className="space-y-4">
       {/* Price card */}
       <div className="rounded-2xl border border-[#1E2D1E] bg-[#0D110D] p-5">
-        <p className="text-[10px] uppercase tracking-widest text-[#4A6A4A]">List Price</p>
-        <p className="mt-1 font-heading text-3xl font-bold text-[#E8F0E8]">
-          {formatPrice(listing.price)}
-        </p>
-        {acres > 0 && (
-          <p className="mt-0.5 text-sm text-[#5A7060]">
-            {formatPricePerAcre(listing.price, acres)}
-            <span className="text-xs"> per acre</span>
-          </p>
+        {isLeaseOnly && leaseRateMonthly ? (
+          <>
+            <p className="text-[10px] uppercase tracking-widest text-[#4A6A4A]">Lease Rate</p>
+            <p className="mt-1 font-heading text-3xl font-bold text-[#E8F0E8]">
+              {formatLeaseRate(leaseRateMonthly)}
+            </p>
+            {acres > 0 && (
+              <p className="mt-0.5 text-sm text-[#5A7060]">
+                {formatPricePerAcre(leaseRateMonthly * 12, acres)}
+                <span className="text-xs"> per acre / yr</span>
+              </p>
+            )}
+          </>
+        ) : (
+          <>
+            <p className="text-[10px] uppercase tracking-widest text-[#4A6A4A]">List Price</p>
+            <p className="mt-1 font-heading text-3xl font-bold text-[#E8F0E8]">
+              {formatPrice(listing.price)}
+            </p>
+            {acres > 0 && (
+              <p className="mt-0.5 text-sm text-[#5A7060]">
+                {formatPricePerAcre(listing.price, acres)}
+                <span className="text-xs"> per acre</span>
+              </p>
+            )}
+            {leaseRateMonthly && (
+              <p className="mt-0.5 text-sm text-[#60A5FA]">
+                or {formatLeaseRate(leaseRateMonthly)}
+                <span className="text-xs text-[#5A7060]"> to lease</span>
+              </p>
+            )}
+          </>
         )}
         {listing.isTokenized && listing.tokenPricePerFraction && (
           <p className="mt-0.5 text-sm text-[#C9A84C]">
@@ -914,8 +930,27 @@ function LandActionPanel({
       {/* Land metrics grid */}
       <LandMetricsGrid listing={listing} landUse={landUse} />
 
+      {/* Lease terms summary */}
+      {leaseTerms && (
+        <LeaseTermsPanel terms={leaseTerms} acres={listing.lotAcres ?? undefined} variant="summary" />
+      )}
+
       {/* Dev opportunity */}
-      <DevOpportunityPanel listing={listing} isDevOpportunity={isDevOpportunity} />
+      {devOpportunity ? (
+        <TerraDevOpportunityPanel opportunity={devOpportunity} variant="compact" />
+      ) : isDevOpportunity && (
+        <div className="rounded-xl border border-[#22C55E]/25 bg-[#0D110D] p-4">
+          <div className="mb-3 flex items-center gap-2">
+            <Layers className="h-3.5 w-3.5 text-[#4ADE80]" />
+            <span className="text-[11px] font-semibold uppercase tracking-wider text-[#4ADE80]">
+              Development Opportunity
+            </span>
+          </div>
+          <p className="text-[10px] leading-relaxed text-[#4A6A4A]">
+            Development signals identified from listing attributes. Verify entitlement status with local planning authority.
+          </p>
+        </div>
+      )}
 
       {/* Fractional investment */}
       <InvestmentPanel listing={listing} />
@@ -963,10 +998,16 @@ export function LandDetailClient({
   listing,
   allListings,
   valuation,
+  leaseTerms = null,
+  devOpportunity = null,
+  leaseRateMonthly = null,
 }: {
   listing: MockListing
   allListings: MockListing[]
   valuation?: AiValuation | null
+  leaseTerms?: LeaseTerms | null
+  devOpportunity?: DevOpportunity | null
+  leaseRateMonthly?: number | null
 }) {
   const { isSaved, toggleSave } = useSavedListings()
   const saved = isSaved(listing.id)
@@ -1003,6 +1044,8 @@ export function LandDetailClient({
             allListings={allListings}
             landUse={landUse}
             isDevOpportunity={isDevOpportunity}
+            devOpportunity={devOpportunity}
+            leaseTerms={leaseTerms}
           />
         </div>
         <div className="lg:col-span-5 xl:col-span-4">
@@ -1013,6 +1056,10 @@ export function LandDetailClient({
               isDevOpportunity={isDevOpportunity}
               isSaved={saved}
               onSave={onSave}
+              devOpportunity={devOpportunity}
+              leaseTerms={leaseTerms}
+              leaseRateMonthly={leaseRateMonthly}
+              valuation={valuation}
             />
           </div>
         </div>

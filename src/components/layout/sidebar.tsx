@@ -54,7 +54,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/portfolio', label: 'Invest', icon: TrendingUp },
   { href: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
   { href: '/listings', label: 'My Properties', icon: Building2 },
-  { href: '/leasing', label: 'Land', icon: Map, milestone: 'M9' },
+  { href: '/leasing', label: 'Land', icon: Map },
   { href: '/inheritance', label: 'Legacy', icon: Landmark },
   { href: '/insights', label: 'Insights', icon: Lightbulb, milestone: 'M5' },
 ]
