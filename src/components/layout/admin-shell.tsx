@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
   Users,
+  Building2,
+  ClipboardList,
+  Flag,
   ShieldCheck,
   ArrowLeftRight,
   LogOut,
@@ -19,10 +22,13 @@ import { cn } from '@/lib/utils'
 // ---------------------------------------------------------------------------
 
 const ADMIN_NAV = [
-  { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/admin/users', label: 'Users', icon: Users },
-  { href: '/admin/compliance', label: 'Compliance', icon: ShieldCheck },
-  { href: '/admin/transactions', label: 'Transactions', icon: ArrowLeftRight },
+  { href: '/admin/dashboard',    label: 'Dashboard',    icon: LayoutDashboard },
+  { href: '/admin/users',        label: 'Users',        icon: Users           },
+  { href: '/admin/listings',     label: 'Listings',     icon: Building2       },
+  { href: '/admin/reviews',      label: 'Reviews',      icon: ClipboardList   },
+  { href: '/admin/flagged',      label: 'Flagged',      icon: Flag            },
+  { href: '/admin/compliance',   label: 'Compliance',   icon: ShieldCheck     },
+  { href: '/admin/transactions', label: 'Transactions', icon: ArrowLeftRight  },
 ]
 
 interface AdminShellProps {
@@ -91,7 +97,7 @@ export function AdminShell({ children }: AdminShellProps) {
       {/* Content */}
       <div className="ml-60 flex-1">
         <main className="min-h-screen">
-          <div className="page-content animate-fade-in">{children}</div>
+          <div className="px-6 py-8">{children}</div>
         </main>
       </div>
     </div>
