@@ -1,3 +1,5 @@
+'use client'
+
 import { CheckCircle2, XCircle, ChevronsUp, ChevronRight, FileText, ShieldCheck, Building2, Landmark, AlertTriangle } from 'lucide-react'
 import {
   type ComplianceQueueItem,
@@ -93,11 +95,17 @@ function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: 
   )
 }
 
+export type KycAction = 'approve' | 'reject' | 'escalate'
+
 interface ComplianceQueueProps {
   items: ComplianceQueueItem[]
+  /** Called when Approve / Reject / Escalate is clicked for a real KYC submission. */
+  onKycAction?: (submissionId: string, action: KycAction) => void
+  /** ID of the submission currently being actioned — disables its buttons. */
+  actioningId?: string | null
 }
 
-export function ComplianceQueue({ items }: ComplianceQueueProps) {
+export function ComplianceQueue({ items, onKycAction, actioningId }: ComplianceQueueProps) {
   if (items.length === 0) {
     return (
       <div className="flex items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118] py-16 text-sm text-[#6B6B80]">
@@ -205,36 +213,11 @@ export function ComplianceQueue({ items }: ComplianceQueueProps) {
 
                   {/* Actions */}
                   <td className="px-4 py-3">
-                    <div className="flex items-center gap-1">
-                      {/* Review — primary, not yet wired to detail route */}
-                      <button
-                        className="inline-flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
-                      >
-                        Review
-                        <ChevronRight className="h-3 w-3" />
-                      </button>
-                      {/* Approve */}
-                      <button
-                        title="Approve — coming in M2"
-                        className="flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] text-[#3A3A4A] opacity-40 transition-all hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100"
-                      >
-                        <CheckCircle2 className="h-3.5 w-3.5" />
-                      </button>
-                      {/* Reject */}
-                      <button
-                        title="Reject — coming in M2"
-                        className="flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] text-[#3A3A4A] opacity-40 transition-all hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100"
-                      >
-                        <XCircle className="h-3.5 w-3.5" />
-                      </button>
-                      {/* Escalate */}
-                      <button
-                        title="Escalate — coming in M2"
-                        className="flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] text-[#3A3A4A] opacity-40 transition-all hover:border-[#FB923C]/40 hover:text-[#FB923C] hover:opacity-100"
-                      >
-                        <ChevronsUp className="h-3.5 w-3.5" />
-                      </button>
-                    </div>
+                    <KycActionButtons
+                      item={item}
+                      onKycAction={onKycAction}
+                      actioning={actioningId === item.kycSubmissionId && !!item.kycSubmissionId}
+                    />
                   </td>
                 </tr>
               )
@@ -308,14 +291,111 @@ export function ComplianceQueue({ items }: ComplianceQueueProps) {
                 </div>
               </div>
 
-              {/* Action */}
-              <button className="flex-shrink-0 rounded-lg border border-[#2A2A3A] px-2.5 py-1.5 text-xs text-[#A0A0B2] transition-colors hover:text-[#C9A84C]">
-                Review
-              </button>
+              {/* Mobile action buttons */}
+              <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+                <KycActionButtons
+                  item={item}
+                  onKycAction={onKycAction}
+                  actioning={actioningId === item.kycSubmissionId && !!item.kycSubmissionId}
+                  compact
+                />
+              </div>
             </div>
           )
         })}
       </div>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// KycActionButtons — Review / Approve / Reject / Escalate row
+//
+// When `item.kycSubmissionId` is set the action buttons are live and call
+// `onKycAction(submissionId, action)`. Otherwise they render as disabled
+// placeholders (mock / non-KYC items).
+// ---------------------------------------------------------------------------
+
+interface KycActionButtonsProps {
+  item: ComplianceQueueItem
+  onKycAction?: (submissionId: string, action: KycAction) => void
+  actioning?: boolean
+  compact?: boolean
+}
+
+function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionButtonsProps) {
+  const sid  = item.kycSubmissionId
+  const live = !!sid && !!onKycAction
+
+  const reviewBtn = (
+    <button
+      disabled={actioning}
+      className={cn(
+        'inline-flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
+        live ? 'hover:border-[#C9A84C]/40 hover:text-[#C9A84C]' : 'cursor-default opacity-50',
+        compact && 'py-1.5',
+      )}
+    >
+      Review
+      <ChevronRight className="h-3 w-3" />
+    </button>
+  )
+
+  if (compact) {
+    // Mobile: just the Review button (keep it small)
+    return reviewBtn
+  }
+
+  return (
+    <div className="flex items-center gap-1">
+      {reviewBtn}
+
+      {/* Approve */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Approve' : 'Approve — not available for this item type'}
+        onClick={() => live && onKycAction!(sid!, 'approve')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        <CheckCircle2 className="h-3.5 w-3.5" />
+      </button>
+
+      {/* Reject */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Reject' : 'Reject — not available for this item type'}
+        onClick={() => live && onKycAction!(sid!, 'reject')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        <XCircle className="h-3.5 w-3.5" />
+      </button>
+
+      {/* Escalate */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Escalate' : 'Escalate — not available for this item type'}
+        onClick={() => live && onKycAction!(sid!, 'escalate')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#FB923C]/40 hover:text-[#FB923C] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        {actioning
+          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
+          : <ChevronsUp className="h-3.5 w-3.5" />}
+      </button>
     </div>
   )
 }

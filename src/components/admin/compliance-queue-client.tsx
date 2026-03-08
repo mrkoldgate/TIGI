@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import { ShieldCheck, Building2, Landmark, AlertTriangle } from 'lucide-react'
 import {
   type ComplianceQueueItem,
@@ -8,7 +8,7 @@ import {
   type ComplianceItemStatus,
 } from '@/lib/admin/mock-admin-data'
 import { cn } from '@/lib/utils'
-import { ComplianceQueue } from './compliance-queue'
+import { ComplianceQueue, type KycAction } from './compliance-queue'
 
 // ---------------------------------------------------------------------------
 // ComplianceQueueClient — Compliance review queue with interactive filters.
@@ -63,9 +63,44 @@ interface ComplianceQueueClientProps {
   items: ComplianceQueueItem[]
 }
 
-export function ComplianceQueueClient({ items }: ComplianceQueueClientProps) {
+export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueClientProps) {
+  const [items,        setItems]        = useState<ComplianceQueueItem[]>(initialItems)
   const [activeType,   setActiveType]   = useState<ComplianceItemType | 'ALL'>('ALL')
   const [activeStatus, setActiveStatus] = useState<ComplianceItemStatus | 'ALL'>('ALL')
+  const [actioningId,  setActioningId]  = useState<string | null>(null)
+  const [actionError,  setActionError]  = useState<string | null>(null)
+
+  const handleKycAction = useCallback(async (submissionId: string, action: KycAction) => {
+    setActioningId(submissionId)
+    setActionError(null)
+    try {
+      const res = await fetch(`/api/admin/kyc/${submissionId}`, {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ action }),
+      })
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}))
+        throw new Error(json?.error?.message ?? `Request failed (${res.status})`)
+      }
+      // Optimistically update status in local list
+      const newStatus: ComplianceItemStatus =
+        action === 'approve'  ? 'APPROVED'  :
+        action === 'reject'   ? 'REJECTED'  :
+        /* escalate */          'ESCALATED'
+      setItems((prev) =>
+        prev.map((item) =>
+          item.kycSubmissionId === submissionId
+            ? { ...item, status: newStatus }
+            : item,
+        ),
+      )
+    } catch (err) {
+      setActionError((err as Error).message)
+    } finally {
+      setActioningId(null)
+    }
+  }, [])
 
   // Count per type (unfiltered, for summary cards)
   const typeCounts = useMemo(() => {
@@ -183,15 +218,33 @@ export function ComplianceQueueClient({ items }: ComplianceQueueClientProps) {
       </div>
 
       {/* ── Queue table ───────────────────────────────────────────────── */}
-      <ComplianceQueue items={filtered} />
+      <ComplianceQueue
+        items={filtered}
+        onKycAction={handleKycAction}
+        actioningId={actioningId}
+      />
+
+      {/* ── Action error toast ────────────────────────────────────────── */}
+      {actionError && (
+        <div className="flex items-center gap-2 rounded-lg border border-[#EF4444]/30 bg-[#EF4444]/10 px-4 py-2.5 text-sm text-[#EF4444]">
+          <span className="font-medium">Action failed:</span> {actionError}
+          <button
+            onClick={() => setActionError(null)}
+            className="ml-auto text-[#EF4444]/60 hover:text-[#EF4444]"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* ── Milestone footer ──────────────────────────────────────────── */}
       <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
-        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#F59E0B]" />
+        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
         <p className="text-xs text-[#6B6B80]">
-          <span className="font-medium text-[#A0A0B2]">Approve, Reject, and Escalate</span> action
-          workflows, document viewer, and full audit trail arrive in{' '}
-          <span className="font-medium text-[#C9A84C]">M2</span>.{' '}
+          <span className="font-medium text-[#A0A0B2]">KYC Approve / Reject / Escalate</span>{' '}
+          actions are live for submitted KYC verifications.{' '}
+          Document viewer and full audit trail in{' '}
+          <span className="font-medium text-[#C9A84C]">M3</span>.{' '}
           AML automated screening in{' '}
           <span className="font-medium text-[#C9A84C]">M5</span>.{' '}
           FINCEN / SEC regulatory exports in{' '}

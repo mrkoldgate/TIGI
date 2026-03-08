@@ -384,6 +384,12 @@ export interface ComplianceQueueItem {
   daysInQueue: number
   /** Admin username assigned to this item */
   assignedTo?: string
+  /**
+   * KycVerification.id — present only for items backed by a real DB record.
+   * When set, the Approve / Reject / Escalate buttons call PATCH /api/admin/kyc/[kycSubmissionId].
+   * Mock items leave this undefined and the action buttons are disabled.
+   */
+  kycSubmissionId?: string
 }
 
 export const MOCK_COMPLIANCE_QUEUE: ComplianceQueueItem[] = [
