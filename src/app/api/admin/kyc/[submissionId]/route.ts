@@ -8,7 +8,10 @@
 // Access: ADMIN or COMPLIANCE_OFFICER only.
 //
 // Body:
-//   { action: 'approve' | 'reject' | 'escalate', note?: string }
+//   { action: 'approve' | 'reject' | 'escalate' | 'request_update', note?: string }
+//
+// request_update: returns submission to PENDING (user must re-submit).
+//   KycVerification.status → PENDING, User.kycStatus → PENDING.
 //
 // Vendor integration path:
 //   On 'approve', call the KYC provider's verification confirmation endpoint
@@ -21,7 +24,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 
 const DecisionSchema = z.object({
-  action: z.enum(['approve', 'reject', 'escalate']),
+  action: z.enum(['approve', 'reject', 'escalate', 'request_update']),
   note:   z.string().max(2000).optional(),
 })
 
@@ -82,14 +85,16 @@ export async function PATCH(
 
     // Map action → KycVerification status
     const newVerifStatus =
-      action === 'approve'  ? 'VERIFIED'  :
-      action === 'reject'   ? 'REJECTED'  :
-      /* escalate */ verification.status  // keep current status, just log it
+      action === 'approve'         ? 'VERIFIED'            :
+      action === 'reject'          ? 'REJECTED'            :
+      action === 'request_update'  ? 'PENDING'             :
+      /* escalate */                 verification.status   // keep current status, just log it
 
     // Map action → User.kycStatus
     const newUserStatus =
-      action === 'approve' ? 'VERIFIED' :
-      action === 'reject'  ? 'REJECTED' :
+      action === 'approve'        ? 'VERIFIED' :
+      action === 'reject'         ? 'REJECTED' :
+      action === 'request_update' ? 'PENDING'  :
       null // escalate doesn't change the user's visible status
 
     const result = await prisma.$transaction(async (tx) => {

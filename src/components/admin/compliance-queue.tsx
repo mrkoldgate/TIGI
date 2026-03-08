@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle2, XCircle, ChevronsUp, ChevronRight, FileText, ShieldCheck, Building2, Landmark, AlertTriangle } from 'lucide-react'
+import { CheckCircle2, XCircle, ChevronsUp, ChevronRight, FileText, RefreshCw, ShieldCheck, Building2, Landmark, AlertTriangle } from 'lucide-react'
 import {
   type ComplianceQueueItem,
   type ComplianceItemType,
@@ -95,7 +95,7 @@ function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: 
   )
 }
 
-export type KycAction = 'approve' | 'reject' | 'escalate'
+export type KycAction = 'approve' | 'reject' | 'escalate' | 'request_update'
 
 interface ComplianceQueueProps {
   items: ComplianceQueueItem[]
@@ -378,6 +378,21 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         )}
       >
         <XCircle className="h-3.5 w-3.5" />
+      </button>
+
+      {/* Request Update */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Request Update' : 'Request Update — not available for this item type'}
+        onClick={() => live && onKycAction!(sid!, 'request_update')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        <RefreshCw className="h-3.5 w-3.5" />
       </button>
 
       {/* Escalate */}

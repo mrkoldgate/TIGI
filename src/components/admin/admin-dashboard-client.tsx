@@ -7,6 +7,7 @@ import {
   Flag,
   ArrowLeftRight,
   DollarSign,
+  ShieldCheck,
   RefreshCw,
   AlertTriangle,
 } from 'lucide-react'
@@ -17,6 +18,7 @@ import {
   MOCK_RECENT_USERS,
   MOCK_DEFERRED_COUNTS,
 } from '@/lib/admin/mock-admin-data'
+import type { KycQueueStats } from '@/lib/compliance/kyc-query'
 
 import { AdminStatCard } from './admin-stat-card'
 import { ReviewQueue } from './review-queue'
@@ -83,10 +85,21 @@ function AdminSectionHeader({
   )
 }
 
-export function AdminDashboardClient() {
+interface AdminDashboardClientProps {
+  /** Live count of Property.status = UNDER_REVIEW (from DB). */
+  pendingReviewCount?: number
+  /** Live KYC queue stats (from DB). */
+  kycStats?: KycQueueStats
+}
+
+export function AdminDashboardClient({ pendingReviewCount, kycStats }: AdminDashboardClientProps = {}) {
   const stats = ADMIN_PLATFORM_STATS
-  const criticalFlags = MOCK_FLAGGED_ITEMS.filter((f) => f.severity === 'CRITICAL').length
+  const criticalFlags   = MOCK_FLAGGED_ITEMS.filter((f) => f.severity === 'CRITICAL').length
   const criticalReviews = MOCK_REVIEW_QUEUE.filter((r) => r.urgency === 'CRITICAL').length
+
+  // Use live count when available; fall back to mock
+  const liveReviewCount = pendingReviewCount ?? stats.pendingReviewListings
+  const kycPending      = (kycStats?.pending ?? 0) + (kycStats?.submitted ?? 0)
 
   return (
     <div className="space-y-8">
@@ -113,14 +126,14 @@ export function AdminDashboardClient() {
           </div>
           <div className="flex items-center gap-1.5 text-[11px] text-[#4A4A5E]">
             <RefreshCw className="h-3 w-3" />
-            Mock data · Mar 8, 2026
+            {pendingReviewCount !== undefined ? 'Live · KYC & Reviews' : 'Mock data'}
           </div>
         </div>
       </div>
 
       {/* ── KPI row ─────────────────────────────────────────────────────── */}
       <section aria-label="Platform KPIs">
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
           <AdminStatCard
             label="Total Users"
             value={stats.totalUsers.toLocaleString()}
@@ -140,16 +153,24 @@ export function AdminDashboardClient() {
           />
           <AdminStatCard
             label="Pending Review"
-            value={stats.pendingReviewListings}
-            hint="Awaiting compliance"
+            value={liveReviewCount}
+            hint="Listings awaiting review"
             icon={ClipboardList}
-            urgency={stats.pendingReviewListings > 5 ? 'warn' : 'normal'}
+            urgency={liveReviewCount > 5 ? 'warn' : 'normal'}
             delta={
               criticalReviews > 0
                 ? { value: criticalReviews, label: 'critical', urgent: true }
                 : undefined
             }
             href="/admin/reviews"
+          />
+          <AdminStatCard
+            label="KYC Queue"
+            value={kycPending}
+            hint={kycStats ? `${kycStats.verified} verified` : 'Pending + submitted'}
+            icon={ShieldCheck}
+            urgency={kycPending > 10 ? 'warn' : 'normal'}
+            href="/admin/compliance"
           />
           <AdminStatCard
             label="Flagged Items"
@@ -190,7 +211,7 @@ export function AdminDashboardClient() {
         <section aria-label="Pending review queue" className="lg:col-span-3">
           <AdminSectionHeader
             title="Pending Reviews"
-            count={MOCK_REVIEW_QUEUE.length}
+            count={liveReviewCount}
             href="/admin/reviews"
             urgentCount={criticalReviews}
           />

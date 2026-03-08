@@ -85,9 +85,10 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
       }
       // Optimistically update status in local list
       const newStatus: ComplianceItemStatus =
-        action === 'approve'  ? 'APPROVED'  :
-        action === 'reject'   ? 'REJECTED'  :
-        /* escalate */          'ESCALATED'
+        action === 'approve'        ? 'APPROVED'  :
+        action === 'reject'         ? 'REJECTED'  :
+        action === 'request_update' ? 'PENDING'   :
+        /* escalate */                'ESCALATED'
       setItems((prev) =>
         prev.map((item) =>
           item.kycSubmissionId === submissionId
