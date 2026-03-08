@@ -6,9 +6,8 @@ import { z } from 'zod'
 // ---------------------------------------------------------------------------
 // PATCH /api/users/me/role
 //
-// Updates the authenticated user's role.
-// Called from onboarding page after role selection.
-// Session refresh is handled client-side via useSession().update().
+// Legacy endpoint — kept for post-onboarding role changes (e.g. Settings page).
+// New onboarding flow uses /api/users/me/onboarding instead.
 // ---------------------------------------------------------------------------
 
 const schema = z.object({

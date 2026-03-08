@@ -1,4 +1,4 @@
-import type { UserRole, KycStatus, SubscriptionTier } from '@prisma/client'
+import type { UserRole, UserType, KycStatus, SubscriptionTier } from '@prisma/client'
 import type { DefaultSession, DefaultJWT } from 'next-auth'
 
 // ---------------------------------------------------------------------------
@@ -11,6 +11,7 @@ declare module 'next-auth' {
     user: DefaultSession['user'] & {
       id: string
       role: UserRole
+      userType: UserType | null
       kycStatus: KycStatus
       subscriptionTier: SubscriptionTier
       walletAddress: string | null
@@ -20,6 +21,7 @@ declare module 'next-auth' {
 
   interface User {
     role?: UserRole
+    userType?: UserType | null
     kycStatus?: KycStatus
     subscriptionTier?: SubscriptionTier
     walletAddress?: string | null
@@ -31,6 +33,7 @@ declare module 'next-auth/jwt' {
   interface JWT extends DefaultJWT {
     id?: string
     role?: UserRole
+    userType?: UserType | null
     kycStatus?: KycStatus
     subscriptionTier?: SubscriptionTier
     walletAddress?: string | null

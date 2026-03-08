@@ -28,8 +28,17 @@ model User {
   // Auth
   passwordHash    String?
 
-  // RBAC
+  // RBAC — coarse access-control role
   role            UserRole @default(INVESTOR)
+
+  // Onboarding — granular user-facing type + progress
+  userType        UserType?            // selected during onboarding step 1
+  onboardingStep  Int      @default(0) // 0=new, 1=role, 2=profile, 3=interests, 4=complete
+
+  // Extended profile (set during onboarding steps 2–3)
+  location        String?              // e.g. "Austin, TX"
+  bio             String?  @db.Text
+  preferences     Json?                // interests/goals — typed as UserPreferences in TS
 
   // Blockchain
   walletAddress   String?  // Public key of custodial or connected wallet
@@ -394,6 +403,19 @@ enum UserRole {
   BOTH
   ADMIN
   COMPLIANCE_OFFICER
+}
+
+// Granular onboarding-selected role. Maps to UserRole for RBAC but stored
+// separately for dashboard personalization and future feature gating.
+enum UserType {
+  BUYER
+  INVESTOR
+  SELLER
+  PROPERTY_OWNER
+  LAND_OWNER
+  DEVELOPER
+  LEGAL_PROFESSIONAL
+  FINANCIAL_PROFESSIONAL
 }
 
 enum KycStatus {

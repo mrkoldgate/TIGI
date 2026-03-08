@@ -49,9 +49,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             avatarUrl: true,
             passwordHash: true,
             role: true,
+            userType: true,
             kycStatus: true,
             subscriptionTier: true,
             walletAddress: true,
+            onboardingStep: true,
           },
         })
 
@@ -68,10 +70,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           name: user.name,
           image: user.avatarUrl,
           role: user.role,
+          userType: user.userType,
           kycStatus: user.kycStatus,
           subscriptionTier: user.subscriptionTier,
           walletAddress: user.walletAddress,
-          onboardingComplete: user.role !== 'INVESTOR' || user.name !== null,
+          onboardingComplete: user.onboardingStep >= 4,
         }
       },
     }),
@@ -86,6 +89,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id as string
         token.role = (user as { role?: string }).role ?? 'INVESTOR'
+        token.userType = (user as { userType?: string | null }).userType ?? null
         token.kycStatus = (user as { kycStatus?: string }).kycStatus ?? 'NONE'
         token.subscriptionTier =
           (user as { subscriptionTier?: string }).subscriptionTier ?? 'free'
@@ -101,18 +105,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { id: token.id as string },
           select: {
             role: true,
+            userType: true,
             kycStatus: true,
             subscriptionTier: true,
             walletAddress: true,
-            name: true,
+            onboardingStep: true,
           },
         })
         if (dbUser) {
           token.role = dbUser.role
+          token.userType = dbUser.userType
           token.kycStatus = dbUser.kycStatus
           token.subscriptionTier = dbUser.subscriptionTier
           token.walletAddress = dbUser.walletAddress
-          token.onboardingComplete = !!dbUser.name
+          token.onboardingComplete = dbUser.onboardingStep >= 4
         }
       }
 

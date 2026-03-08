@@ -81,6 +81,7 @@ export const authConfig: NextAuthConfig = {
         // Embed DB fields into token at first sign-in
         token.id = user.id as string
         token.role = (user as { role?: string }).role ?? 'INVESTOR'
+        token.userType = (user as { userType?: string | null }).userType ?? null
         token.kycStatus = (user as { kycStatus?: string }).kycStatus ?? 'NONE'
         token.subscriptionTier =
           (user as { subscriptionTier?: string }).subscriptionTier ?? 'free'
@@ -99,6 +100,7 @@ export const authConfig: NextAuthConfig = {
       if (token && session.user) {
         session.user.id = token.id as string
         session.user.role = token.role as string
+        session.user.userType = token.userType as string | null
         session.user.kycStatus = token.kycStatus as string
         session.user.subscriptionTier = token.subscriptionTier as string
         session.user.walletAddress = token.walletAddress as string | null
