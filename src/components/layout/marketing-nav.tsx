@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
+import { useSession } from 'next-auth/react'
 import { Menu, X, LayoutDashboard } from 'lucide-react'
 import { Logo } from '@/components/shared/logo'
 import { MAIN_NAV } from '@/lib/nav-config'
@@ -14,17 +15,12 @@ import { cn } from '@/lib/utils'
 // States:
 //   Unauthenticated: logo | nav links | Sign In · Get Started
 //   Authenticated:   logo | nav links | Dashboard (gold pill)
-//
-// M2 TODO: Replace `isAuthenticated = false` with:
-//   const session = await getSession() — or pass via prop from server component
 // ---------------------------------------------------------------------------
-
-// M1 scaffold: hardcoded to unauthenticated.
-// M2: derive from NextAuth session passed as prop or from context.
-const IS_AUTHENTICATED = false
 
 export function MarketingNav() {
   const pathname = usePathname()
+  const { status } = useSession()
+  const isAuthenticated = status === 'authenticated'
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -89,7 +85,7 @@ export function MarketingNav() {
 
         {/* Desktop auth CTAs */}
         <div className="hidden items-center gap-3 md:flex">
-          {IS_AUTHENTICATED ? (
+          {isAuthenticated ? (
             // Authenticated state — single Dashboard CTA
             <Link
               href="/dashboard"
@@ -166,7 +162,7 @@ export function MarketingNav() {
 
           {/* Auth CTAs */}
           <div className="mt-4 flex flex-col gap-2 border-t border-[#1F1F2E] pt-4">
-            {IS_AUTHENTICATED ? (
+            {isAuthenticated ? (
               <Link
                 href="/dashboard"
                 className="flex items-center justify-center gap-2 rounded-lg bg-[#C9A84C] px-4 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-colors hover:bg-[#B8932F]"

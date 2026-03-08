@@ -1,11 +1,11 @@
 'use client'
 
+import { SessionProvider } from 'next-auth/react'
+
 // ---------------------------------------------------------------------------
 // Providers — Root client provider tree.
-// Add providers here as they're integrated:
-//   M2: SessionProvider (NextAuth)
-//   M4: WalletAdapterProvider (Solana)
-//   Post-MVP: ThirdParty analytics, etc.
+//   M2: SessionProvider — wraps app for useSession() access ✓
+//   M4: WalletAdapterProvider (Solana) — TODO
 // ---------------------------------------------------------------------------
 
 interface ProvidersProps {
@@ -13,7 +13,10 @@ interface ProvidersProps {
 }
 
 export function Providers({ children }: ProvidersProps) {
-  // M2: Wrap with <SessionProvider session={session}>
-  // M4: Wrap with <WalletAdapterProvider wallets={wallets}>
-  return <>{children}</>
+  return (
+    <SessionProvider>
+      {/* M4: <WalletAdapterProvider wallets={wallets}> */}
+      {children}
+    </SessionProvider>
+  )
 }
