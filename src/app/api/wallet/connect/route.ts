@@ -14,6 +14,7 @@ import { z } from 'zod'
 
 const bodySchema = z.object({
   walletAddress: z.string().min(32).max(44),
+  walletName:    z.string().max(64).optional(),
 })
 
 export async function POST(request: Request) {
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
     )
   }
 
-  const { walletAddress } = parsed.data
+  const { walletAddress, walletName } = parsed.data
   const userId = session.user.id
 
   await prisma.$transaction(async (tx) => {
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
         action: 'wallet.connect',
         resourceType: 'User',
         resourceId: userId,
-        metadata: { walletAddress },
+        metadata: { walletAddress, walletName: walletName ?? 'Unknown' },
       },
     })
   })

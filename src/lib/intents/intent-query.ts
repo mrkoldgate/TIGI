@@ -33,6 +33,13 @@ export interface UserIntent {
   createdAt:   string
   updatedAt:   string
   expiresAt:   string | null
+  /**
+   * Extensible JSON metadata. Known keys:
+   *   walletPreparation: WalletPreparation (set when status = READY_TO_SIGN)
+   *   solanaSignature:   string (set when status = EXECUTED)
+   *   explorerUrl:       string (set when status = EXECUTED)
+   */
+  metadata:    Record<string, unknown> | null
   property:    IntentPropertySummary
 }
 
@@ -63,6 +70,7 @@ export const getIntentsForUser = cache(async (userId: string): Promise<UserInten
       createdAt:   r.createdAt.toISOString(),
       updatedAt:   r.updatedAt.toISOString(),
       expiresAt:   r.expiresAt?.toISOString() ?? null,
+      metadata:    (r.metadata ?? null) as Record<string, unknown> | null,
       property: {
         id:          r.property.id,
         title:       r.property.title,
@@ -80,7 +88,7 @@ export const getIntentsForUser = cache(async (userId: string): Promise<UserInten
 })
 
 /**
- * Returns count of PENDING + REVIEWING intents for the user.
+ * Returns count of active (non-terminal) intents for the user.
  * Used by the dashboard activeInterestsCount KPI.
  */
 export const getActiveIntentCount = cache(async (userId: string): Promise<number> => {
@@ -88,7 +96,7 @@ export const getActiveIntentCount = cache(async (userId: string): Promise<number
     return await prisma.transactionIntent.count({
       where: {
         userId,
-        status: { in: ['PENDING', 'REVIEWING'] as never[] },
+        status: { in: ['PENDING', 'REVIEWING', 'APPROVED', 'READY_TO_SIGN'] as never[] },
       },
     })
   } catch {

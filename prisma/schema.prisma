@@ -639,12 +639,13 @@ enum IntentType {
 }
 
 enum IntentStatus {
-  PENDING    // Created, awaiting compliance pre-check
-  REVIEWING  // Compliance officer manually reviewing
-  APPROVED   // Pre-approved, user may proceed to next step
-  EXECUTED   // Promoted to a full Transaction record
-  CANCELLED  // Withdrawn by user (or admin-cancelled)
-  EXPIRED    // Passed expiresAt without action
+  PENDING        // Created, awaiting compliance pre-check
+  REVIEWING      // Compliance officer manually reviewing
+  APPROVED       // Pre-approved, user may proceed to wallet preparation
+  READY_TO_SIGN  // Solana tx prepared server-side, awaiting client wallet signature
+  EXECUTED       // Signed tx confirmed on-chain; promoted to Transaction record
+  CANCELLED      // Withdrawn by user (or admin-cancelled)
+  EXPIRED        // Passed expiresAt without action
 }
 
 model TransactionIntent {

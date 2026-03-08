@@ -6,9 +6,9 @@ import { Connection, clusterApiUrl } from '@solana/web3.js'
 // See solana-strategy.md §8.3 for RPC provider strategy.
 // ---------------------------------------------------------------------------
 
-type SolanaNetwork = 'mainnet-beta' | 'devnet'
+export type SolanaNetwork = 'mainnet-beta' | 'devnet'
 
-function getNetwork(): SolanaNetwork {
+export function getNetwork(): SolanaNetwork {
   return process.env.NEXT_PUBLIC_SOLANA_NETWORK === 'mainnet-beta'
     ? 'mainnet-beta'
     : 'devnet'

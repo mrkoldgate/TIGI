@@ -12,7 +12,7 @@ import { ArrowLeftRight } from 'lucide-react'
 import { IntentCard } from './intent-card'
 import type { UserIntent } from '@/lib/intents/intent-query'
 
-const ACTIVE_STATUSES   = ['PENDING', 'REVIEWING', 'APPROVED']
+const ACTIVE_STATUSES   = ['PENDING', 'REVIEWING', 'APPROVED', 'READY_TO_SIGN']
 const TERMINAL_STATUSES = ['EXECUTED', 'CANCELLED', 'EXPIRED']
 
 interface IntentsListClientProps {

@@ -18,6 +18,14 @@ import { truncateAddress, getExplorerUrl } from '@/lib/solana/client'
 // UX language follows solana-strategy.md §2.4:
 //   - Custodial → "TIGI Managed Wallet" (never say "custodial")
 //   - Connected → wallet name ("Phantom", "Solflare")
+//
+// Session sync:
+//   - On external wallet connect: persists address to DB AND updates the
+//     NextAuth session so session.user.walletAddress reflects the change
+//     immediately — no page reload required.
+//   - On unexpected disconnect (user revokes in extension while app is open):
+//     auto-calls /api/wallet/disconnect and updates session to restore
+//     the custodial address.
 // ---------------------------------------------------------------------------
 
 export type WalletMode = 'custodial' | 'connected' | 'none'
@@ -52,41 +60,89 @@ export interface TigiWalletState {
 }
 
 export function useWalletTIGI(): TigiWalletState {
-  const { data: session } = useSession()
+  const { data: session, update: updateSession } = useSession()
   const {
     publicKey: adapterPublicKey,
-    wallet: adapterWallet,
+    wallet:    adapterWallet,
     connected,
     connecting,
   } = useWallet()
 
-  // After connecting, persist the external wallet address to the DB.
-  // This runs once per new public key.
+  // Track the last key we successfully persisted to avoid duplicate requests.
   const lastSavedKey = useRef<string | null>(null)
 
+  // Track whether the previous render had an external wallet connected,
+  // so we can detect an unexpected disconnect (revoked in extension).
+  const wasConnectedRef = useRef<boolean>(false)
+
+  // ── On external wallet connect: persist + sync session ─────────────────
   useEffect(() => {
     if (!connected || !adapterPublicKey || !session?.user?.id) return
+
     const key = adapterPublicKey.toBase58()
-    if (key === lastSavedKey.current) return // already saved this session
+    if (key === lastSavedKey.current) return // already handled this session
 
     lastSavedKey.current = key
 
     fetch('/api/wallet/connect', {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body:    JSON.stringify({
         walletAddress: key,
-        walletName: adapterWallet?.adapter.name ?? 'Unknown',
+        walletName:    adapterWallet?.adapter.name ?? 'Unknown',
       }),
-    }).catch((err) => {
-      console.warn('[wallet] Failed to persist connected wallet:', err)
     })
-  }, [connected, adapterPublicKey, adapterWallet, session?.user?.id])
+      .then(async (res) => {
+        if (res.ok) {
+          // Sync session immediately so components see the new address
+          // without requiring a page reload.
+          await updateSession({ walletAddress: key })
+        } else {
+          console.warn('[wallet] Failed to persist connected wallet:', res.status)
+        }
+      })
+      .catch((err) => {
+        console.warn('[wallet] Failed to persist connected wallet:', err)
+      })
+  }, [connected, adapterPublicKey, adapterWallet, session?.user?.id, updateSession])
 
-  // Determine the active wallet mode
+  // ── On unexpected disconnect: auto-restore session ──────────────────────
+  // Detects the case where the adapter becomes disconnected while we were
+  // in 'connected' mode — user revoked in browser extension, or extension
+  // crashed. We call /api/wallet/disconnect to restore the custodial address
+  // in DB and update the session, so the UI stays consistent.
+  useEffect(() => {
+    const wasConnected = wasConnectedRef.current
+    wasConnectedRef.current = connected
+
+    if (
+      !connected &&
+      wasConnected &&
+      session?.user?.id &&
+      lastSavedKey.current
+    ) {
+      // Was connected, now unexpectedly disconnected — restore custodial
+      lastSavedKey.current = null // reset so re-connect works
+
+      fetch('/api/wallet/disconnect', { method: 'POST' })
+        .then(async (res) => {
+          if (res.ok) {
+            const json = await res.json() as { walletAddress: string | null }
+            await updateSession({ walletAddress: json.walletAddress })
+          }
+        })
+        .catch((err) => {
+          console.warn('[wallet] Failed to restore custodial on unexpected disconnect:', err)
+        })
+    }
+  // Only re-run when connected changes — other deps would cause loops
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connected])
+
+  // ── Resolve active wallet state ─────────────────────────────────────────
   const walletMode: WalletMode = (() => {
     if (connected && adapterPublicKey) return 'connected'
-    if (session?.user?.walletAddress) return 'custodial'
+    if (session?.user?.walletAddress)  return 'custodial'
     return 'none'
   })()
 
@@ -105,12 +161,12 @@ export function useWalletTIGI(): TigiWalletState {
     walletMode,
     publicKey,
     displayAddress: publicKey ? truncateAddress(publicKey) : null,
-    explorerUrl: publicKey ? getExplorerUrl(publicKey, 'address') : null,
+    explorerUrl:    publicKey ? getExplorerUrl(publicKey, 'address') : null,
     walletLabel,
-    walletIcon: adapterWallet?.adapter.icon ?? null,
-    isConnecting: connecting,
-    isConnected: connected,
-    hasWallet: walletMode !== 'none',
+    walletIcon:     adapterWallet?.adapter.icon ?? null,
+    isConnecting:   connecting,
+    isConnected:    connected,
+    hasWallet:      walletMode !== 'none',
   }
 }
 
@@ -121,8 +177,8 @@ export function useWalletTIGI(): TigiWalletState {
 // ---------------------------------------------------------------------------
 
 export function useWalletActions() {
-  const { select, connect, disconnect, wallets } = useWallet()
-  const { data: session, update: updateSession } = useSession()
+  const { select, disconnect, wallets } = useWallet()
+  const { update: updateSession }       = useSession()
 
   const connectWallet = useCallback(
     async (walletName: string) => {
@@ -130,8 +186,8 @@ export function useWalletActions() {
       if (!target) throw new Error(`Wallet "${walletName}" not registered`)
 
       select(target.adapter.name)
-      // connect() is called after select() in the wallet modal
-      // so we just select here — modal's onSelect triggers connect()
+      // connect() is called after select() in the wallet modal —
+      // we just select here; the modal's onSelect triggers connect().
     },
     [select, wallets],
   )
@@ -142,8 +198,8 @@ export function useWalletActions() {
     try {
       const res = await fetch('/api/wallet/disconnect', { method: 'POST' })
       if (res.ok) {
-        const { walletAddress } = await res.json()
-        await updateSession({ walletAddress })
+        const json = await res.json() as { walletAddress: string | null }
+        await updateSession({ walletAddress: json.walletAddress })
       }
     } catch (err) {
       console.warn('[wallet] Failed to persist disconnect:', err)

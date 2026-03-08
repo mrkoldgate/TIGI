@@ -15,7 +15,7 @@
 // On success, updates status to CANCELLED in local state via onCancel callback.
 // ---------------------------------------------------------------------------
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import {
   MapPin,
@@ -24,11 +24,13 @@ import {
   CheckCircle2,
   XCircle,
   AlertCircle,
+  PenLine,
   Loader2,
   X,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { UserIntent } from '@/lib/intents/intent-query'
+import { WalletPreparationPanel } from '@/components/wallet/wallet-preparation-panel'
 
 // ── Label maps ─────────────────────────────────────────────────────────────
 
@@ -62,6 +64,12 @@ const STATUS_CONFIG: Record<string, {
     icon:       CheckCircle2,
     badgeClass: 'border-[#22C55E]/30 bg-[#22C55E]/10 text-[#22C55E]',
     dotClass:   'bg-[#22C55E]',
+  },
+  READY_TO_SIGN: {
+    label:      'Ready to Sign',
+    icon:       PenLine,
+    badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
+    dotClass:   'bg-[#C9A84C] animate-pulse',
   },
   EXECUTED: {
     label:      'Executed',
@@ -102,16 +110,54 @@ interface IntentCardProps {
   onCancel?: (id: string) => void
 }
 
+interface WalletPreparationData {
+  serialized:           string
+  requiredSigner:       string
+  blockhash:            string
+  lastValidBlockHeight: number
+  expiresAt:            string
+  program:              string
+  memoText:             string
+}
+
 export function IntentCard({ intent, onCancel }: IntentCardProps) {
-  const [isCancelling, setIsCancelling] = useState(false)
-  const [cancelError,  setCancelError]  = useState<string | null>(null)
-  const [localStatus,  setLocalStatus]  = useState(intent.status)
+  const [isCancelling,    setIsCancelling]    = useState(false)
+  const [cancelError,     setCancelError]     = useState<string | null>(null)
+  const [localStatus,     setLocalStatus]     = useState(intent.status)
+  const [isPreparing,     setIsPreparing]     = useState(false)
+  const [prepareError,    setPrepareError]    = useState<string | null>(null)
+  const [preparation,     setPreparation]     = useState<WalletPreparationData | null>(() => {
+    // If the intent was already prepared (READY_TO_SIGN), hydrate from metadata
+    if (intent.status === 'READY_TO_SIGN') {
+      const meta = intent.metadata as Record<string, unknown> | null
+      return (meta?.walletPreparation as WalletPreparationData) ?? null
+    }
+    return null
+  })
 
   const statusCfg   = STATUS_CONFIG[localStatus]   ?? STATUS_CONFIG.PENDING
   const intentLabel = INTENT_TYPE_LABELS[intent.intentType] ?? { label: intent.intentType, short: intent.intentType }
   const StatusIcon  = statusCfg.icon
 
-  const canCancel = CANCELLABLE_STATUSES.includes(localStatus)
+  const canCancel  = CANCELLABLE_STATUSES.includes(localStatus)
+  const canPrepare = localStatus === 'APPROVED'
+  const showPanel  = localStatus === 'READY_TO_SIGN' && preparation !== null
+
+  const handlePrepare = useCallback(async () => {
+    setIsPreparing(true)
+    setPrepareError(null)
+    try {
+      const res  = await fetch(`/api/intents/${intent.id}/prepare`, { method: 'POST' })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json?.error?.message ?? `Request failed (${res.status})`)
+      setPreparation(json.data.preparation as WalletPreparationData)
+      setLocalStatus('READY_TO_SIGN')
+    } catch (err) {
+      setPrepareError((err as Error).message)
+    } finally {
+      setIsPreparing(false)
+    }
+  }, [intent.id])
 
   const handleCancel = async () => {
     setIsCancelling(true)
@@ -233,6 +279,40 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
           {cancelError && (
             <p className="mt-1.5 text-[11px] text-[#EF4444]">{cancelError}</p>
+          )}
+
+          {/* Prepare for signing — shown when APPROVED */}
+          {canPrepare && (
+            <div className="mt-3 border-t border-[#1A1A24] pt-3">
+              {prepareError && (
+                <p className="mb-2 text-[11px] text-[#EF4444]">{prepareError}</p>
+              )}
+              <button
+                type="button"
+                onClick={handlePrepare}
+                disabled={isPreparing}
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C]/15 py-2 text-sm font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25 transition-all hover:bg-[#C9A84C]/25 disabled:opacity-60 active:scale-[0.98]"
+              >
+                {isPreparing ? (
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                ) : (
+                  <PenLine className="h-3.5 w-3.5" />
+                )}
+                {isPreparing ? 'Preparing…' : 'Prepare to sign'}
+              </button>
+            </div>
+          )}
+
+          {/* Wallet preparation signing panel — shown when READY_TO_SIGN */}
+          {showPanel && preparation && (
+            <div className="mt-3 border-t border-[#1A1A24] pt-3">
+              <WalletPreparationPanel
+                intentId={intent.id}
+                preparation={preparation}
+                onSuccess={() => setLocalStatus('EXECUTED')}
+                onRefreshed={(newPrep) => setPreparation(newPrep)}
+              />
+            </div>
           )}
         </div>
       </div>
