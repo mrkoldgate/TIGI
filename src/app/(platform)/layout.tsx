@@ -1,15 +1,15 @@
 import { AppShell } from '@/components/layout/app-shell'
 import { SavedListingsProvider } from '@/lib/saved/saved-context'
+import { AssistantProvider } from '@/lib/assistant/assistant-context'
 
 // Platform layout — authenticated users only.
 // Auth check is handled in middleware.ts.
 // Layout wraps all /marketplace, /portfolio, /transactions, etc.
 //
-// SavedListingsProvider sits here so save state is shared across:
-//   - Marketplace browse page
-//   - Property / land detail pages
-//   - /saved favorites page
-//   - Sidebar saved count badge
+// SavedListingsProvider — save state shared across marketplace, detail pages,
+//   /saved page, and sidebar badge.
+// AssistantProvider — Aria panel open/close state and conversation shared
+//   across all platform pages; panel is mounted in AppShell.
 export default function PlatformLayout({
   children,
 }: {
@@ -17,7 +17,9 @@ export default function PlatformLayout({
 }) {
   return (
     <SavedListingsProvider>
-      <AppShell>{children}</AppShell>
+      <AssistantProvider>
+        <AppShell>{children}</AppShell>
+      </AssistantProvider>
     </SavedListingsProvider>
   )
 }

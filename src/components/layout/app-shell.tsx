@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import { Sidebar } from './sidebar'
 import { TopNav } from './top-nav'
+import { AssistantPanel } from '@/components/assistant/assistant-panel'
+import { AssistantTrigger } from '@/components/assistant/assistant-trigger'
 
 // ---------------------------------------------------------------------------
 // AppShell — Platform layout container
@@ -51,6 +53,10 @@ export function AppShell({ children }: AppShellProps) {
           </main>
         </div>
       </div>
+
+      {/* Aria — floating trigger + slide-over panel (both read from AssistantContext) */}
+      <AssistantTrigger />
+      <AssistantPanel />
     </div>
   )
 }

@@ -11,6 +11,7 @@ import {
   Map,
   Landmark,
   Lightbulb,
+  Sparkles,
   Settings,
   ChevronLeft,
   ChevronRight,
@@ -59,7 +60,8 @@ const NAV_ITEMS: NavItem[] = [
 ]
 
 const BOTTOM_NAV: NavItem[] = [
-  { href: '/settings', label: 'Settings', icon: Settings },
+  { href: '/assistant', label: 'Aria',     icon: Sparkles },
+  { href: '/settings',  label: 'Settings', icon: Settings },
 ]
 
 export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: SidebarProps) {
