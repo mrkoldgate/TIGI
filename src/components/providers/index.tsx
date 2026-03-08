@@ -1,11 +1,14 @@
 'use client'
 
 import { SessionProvider } from 'next-auth/react'
+import { SolanaWalletProvider } from '@/components/wallet/wallet-provider'
+import { WalletModal } from '@/components/wallet/wallet-modal'
 
 // ---------------------------------------------------------------------------
 // Providers — Root client provider tree.
-//   M2: SessionProvider — wraps app for useSession() access ✓
-//   M4: WalletAdapterProvider (Solana) — TODO
+//   SessionProvider — wraps app for useSession() access
+//   SolanaWalletProvider — Phantom/Solflare adapter + WalletModalContext
+//   WalletModal — rendered once at root; opened via useWalletModal().open()
 // ---------------------------------------------------------------------------
 
 interface ProvidersProps {
@@ -15,8 +18,10 @@ interface ProvidersProps {
 export function Providers({ children }: ProvidersProps) {
   return (
     <SessionProvider>
-      {/* M4: <WalletAdapterProvider wallets={wallets}> */}
-      {children}
+      <SolanaWalletProvider>
+        {children}
+        <WalletModal />
+      </SolanaWalletProvider>
     </SessionProvider>
   )
 }

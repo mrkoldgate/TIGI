@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/db'
 import { registerSchema } from '@/lib/validations/auth'
+import { createCustodialWallet } from '@/lib/solana/custodial'
 
 // ---------------------------------------------------------------------------
 // POST /api/users/register
@@ -46,7 +47,7 @@ export async function POST(request: Request) {
     // Hash password
     const passwordHash = await bcrypt.hash(password, 12)
 
-    // Create user + audit log atomically
+    // Create user + custodial wallet + audit log atomically
     const user = await prisma.$transaction(async (tx) => {
       const newUser = await tx.user.create({
         data: {
@@ -62,6 +63,9 @@ export async function POST(request: Request) {
           role: true,
         },
       })
+
+      // Provision a custodial Solana wallet — sets User.walletAddress
+      await createCustodialWallet(newUser.id, tx)
 
       await tx.auditLog.create({
         data: {
