@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
+  LayoutDashboard,
   Compass,
   TrendingUp,
   ArrowLeftRight,
@@ -46,6 +47,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/marketplace', label: 'Explore', icon: Compass },
   { href: '/saved', label: 'Saved', icon: Heart },
   { href: '/portfolio', label: 'Invest', icon: TrendingUp },
