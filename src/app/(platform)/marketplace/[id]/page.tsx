@@ -2,12 +2,14 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { MOCK_LISTINGS } from '@/lib/marketplace/mock-data'
 import { PropertyDetailClient } from '@/components/marketplace/property-detail-client'
+import { LandDetailClient } from '@/components/marketplace/land-detail-client'
 
 // ---------------------------------------------------------------------------
-// /marketplace/[id] — Property detail page.
+// /marketplace/[id] — Unified property & land detail route.
 //
-// Server Component shell. Resolves listing from mock data and passes to the
-// interactive client component.
+// Routes to the appropriate client component based on propertyType:
+//   LAND     → LandDetailClient
+//   all else → PropertyDetailClient
 //
 // DB integration path: replace MOCK_LISTINGS.find() with:
 //   const listing = await prisma.listing.findUnique({ where: { id }, include: { ... } })
@@ -22,8 +24,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const listing = MOCK_LISTINGS.find((l) => l.id === id)
   if (!listing) return { title: 'Not Found' }
 
+  const suffix = listing.propertyType === 'LAND' ? 'Land — TIGI' : 'TIGI Marketplace'
   return {
-    title: `${listing.title} — TIGI Marketplace`,
+    title: `${listing.title} — ${suffix}`,
     description: listing.description.slice(0, 160),
     openGraph: {
       title: listing.title,
@@ -36,12 +39,15 @@ export async function generateStaticParams() {
   return MOCK_LISTINGS.map((l) => ({ id: l.id }))
 }
 
-export default async function PropertyDetailPage({ params }: PageProps) {
+export default async function ListingDetailPage({ params }: PageProps) {
   const { id } = await params
   const listing = MOCK_LISTINGS.find((l) => l.id === id)
 
   if (!listing) notFound()
 
-  // Pass all listings for "similar" section — server avoids re-importing in client
+  if (listing.propertyType === 'LAND') {
+    return <LandDetailClient listing={listing} allListings={MOCK_LISTINGS} />
+  }
+
   return <PropertyDetailClient listing={listing} allListings={MOCK_LISTINGS} />
 }
