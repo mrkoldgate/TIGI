@@ -1,23 +1,28 @@
 import type { Metadata } from 'next'
 import { MOCK_SELLER_LISTINGS } from '@/lib/listings/seller-mock-data'
-import { SellerListingsClient } from '@/components/listings/seller-listings-client'
-
-// ---------------------------------------------------------------------------
-// /listings — Seller listings dashboard ("My Properties" in sidebar).
-//
-// DB integration path:
-//   const listings = await prisma.listing.findMany({
-//     where: { ownerId: session.user.id },
-//     orderBy: { updatedAt: 'desc' },
-//   })
-//   return <SellerListingsClient listings={listings} />
-// ---------------------------------------------------------------------------
+import { OwnerDashboardClient } from '@/components/listings/owner-dashboard-client'
 
 export const metadata: Metadata = {
-  title: 'My Listings — TIGI',
-  description: 'Manage your property and land listings on the TIGI marketplace.',
+  title: 'My Properties — TIGI',
+  description: 'Owner dashboard — manage listings, track inquiries, and monitor portfolio performance.',
 }
 
-export default function SellerListingsPage() {
-  return <SellerListingsClient listings={MOCK_SELLER_LISTINGS} />
+// ---------------------------------------------------------------------------
+// /listings — Owner dashboard ("My Properties" in sidebar).
+//
+// Server Component shell. Passes the owner's listings to OwnerDashboardClient
+// which orchestrates the full dashboard: stats, quick actions, inquiries,
+// performance panel, and the embedded SellerListingsClient table.
+//
+// DB integration path:
+//   const session = await getServerSession()
+//   const listings = await prisma.listing.findMany({
+//     where:   { ownerId: session.user.id },
+//     orderBy: { updatedAt: 'desc' },
+//   })
+//   return <OwnerDashboardClient listings={listings} />
+// ---------------------------------------------------------------------------
+
+export default function OwnerListingsPage() {
+  return <OwnerDashboardClient listings={MOCK_SELLER_LISTINGS} />
 }

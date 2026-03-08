@@ -156,11 +156,18 @@ function sortListings(listings: SellerListing[], key: SortKey): SellerListing[] 
 
 interface SellerListingsClientProps {
   listings: SellerListing[]
+  /**
+   * Embedded mode — set true when nested inside OwnerDashboardClient.
+   * Hides the PageHeader, stat tiles, and portfolio callout (owner dashboard
+   * provides these). Also removes standalone outer padding.
+   * Default: false (renders as a full standalone page section).
+   */
+  embeddedMode?: boolean
 }
 
 // ── Root component ─────────────────────────────────────────────────────────
 
-export function SellerListingsClient({ listings }: SellerListingsClientProps) {
+export function SellerListingsClient({ listings, embeddedMode = false }: SellerListingsClientProps) {
   const [tab, setTab] = useState<TabFilter>('ALL')
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<SortKey>('updatedAt')
@@ -197,62 +204,70 @@ export function SellerListingsClient({ listings }: SellerListingsClientProps) {
   }, [listings])
 
   return (
-    <div className="px-4 py-8 md:px-8 md:py-10">
-      {/* ── Page header ── */}
-      <PageHeader
-        eyebrow="Seller Dashboard"
-        title="My Listings"
-        description="Manage your properties and land parcels listed on the TIGI marketplace."
-        actions={
-          <Link href="/listings/new">
-            <Button variant="primary" size="md">
-              <PlusIcon />
-              New Listing
-            </Button>
-          </Link>
-        }
-      />
+    // Standalone mode: animate-fade-in + full page vertical rhythm.
+    // Embedded mode: no padding or animation (parent OwnerDashboardClient owns these).
+    <div className={embeddedMode ? '' : 'animate-fade-in pt-6 pb-16'}>
+      {/* ── Page header — standalone only ── */}
+      {!embeddedMode && (
+        <PageHeader
+          eyebrow="Seller Dashboard"
+          title="My Listings"
+          description="Manage your properties and land parcels listed on the TIGI marketplace."
+          actions={
+            <Link href="/listings/new">
+              <Button variant="primary" size="md">
+                <PlusIcon />
+                New Listing
+              </Button>
+            </Link>
+          }
+        />
+      )}
 
-      {/* ── Stats strip ── */}
-      <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
-        <StatTile
-          label="Active Listings"
-          value={stats.active}
-          accent="#C9A84C"
-          icon={<CheckCircleIcon />}
-        />
-        <StatTile
-          label="Pending Review"
-          value={stats.pending}
-          accent="#F59E0B"
-          icon={<ClockIcon />}
-        />
-        <StatTile
-          label="Total Views"
-          value={stats.totalViews.toLocaleString()}
-          accent="#60A5FA"
-          icon={<EyeIcon />}
-        />
-        <StatTile
-          label="Total Inquiries"
-          value={stats.totalInquiries.toLocaleString()}
-          accent="#A78BFA"
-          icon={<MessageIcon />}
-        />
-      </div>
+      {/* ── Stats strip — standalone only ── */}
+      {!embeddedMode && (
+        <>
+          <div className="mt-8 grid grid-cols-2 gap-3 md:grid-cols-4">
+            <StatTile
+              label="Active Listings"
+              value={stats.active}
+              accent="#C9A84C"
+              icon={<CheckCircleIcon />}
+            />
+            <StatTile
+              label="Pending Review"
+              value={stats.pending}
+              accent="#F59E0B"
+              icon={<ClockIcon />}
+            />
+            <StatTile
+              label="Total Views"
+              value={stats.totalViews.toLocaleString()}
+              accent="#60A5FA"
+              icon={<EyeIcon />}
+            />
+            <StatTile
+              label="Total Inquiries"
+              value={stats.totalInquiries.toLocaleString()}
+              accent="#A78BFA"
+              icon={<MessageIcon />}
+            />
+          </div>
 
-      {/* ── Portfolio value callout ── */}
-      {stats.totalPortfolioValue > 0 && (
-        <div className="mt-3 flex items-center justify-between rounded-xl border border-[#2A2A3A] bg-[#111118] px-5 py-3">
-          <span className="text-sm text-[#6B6B80]">Active listing portfolio value</span>
-          <span className="text-lg font-bold text-[#C9A84C]">
-            {formatPrice(stats.totalPortfolioValue)}
-          </span>
-        </div>
+          {/* Portfolio value callout */}
+          {stats.totalPortfolioValue > 0 && (
+            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#2A2A3A] bg-[#111118] px-5 py-3">
+              <span className="text-sm text-[#6B6B80]">Active listing portfolio value</span>
+              <span className="text-lg font-bold text-[#C9A84C]">
+                {formatPrice(stats.totalPortfolioValue)}
+              </span>
+            </div>
+          )}
+        </>
       )}
 
       {/* ── Tabs + toolbar ── */}
-      <div className="mt-8 space-y-3">
+      <div className={embeddedMode ? 'space-y-3' : 'mt-8 space-y-3'}>
         {/* Tab bar */}
         <div className="flex items-center gap-1 overflow-x-auto border-b border-[#2A2A3A] pb-0">
           {TABS.map((t) => {
