@@ -59,6 +59,8 @@ export interface AiValuation {
   modelVersion: string            // e.g. "tigi-val-v0.2-mock"
   generatedAt: string             // ISO 8601
   methodology: string             // Short human-readable description
+  /** Human-readable narrative summary of the estimate (rule-based or AI-generated) */
+  summary?: string
 }
 
 // ---------------------------------------------------------------------------

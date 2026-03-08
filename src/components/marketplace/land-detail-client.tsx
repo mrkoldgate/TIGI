@@ -28,7 +28,7 @@ import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import { MarketplaceLandCard, inferLandUse, inferDevOpportunity } from '@/components/marketplace/land-card'
 import { type LandUseType } from '@/components/land/land-card'
 import { ValuationPanel } from '@/components/valuation/valuation-panel'
-import { getMockValuation } from '@/lib/valuation/mock-valuations'
+import type { AiValuation } from '@/lib/valuation/valuation-types'
 import {
   type MockListing,
   formatPrice,
@@ -947,12 +947,12 @@ function LandActionPanel({
       <InvestmentPanel listing={listing} />
 
       {/* AI valuation */}
-      {listing.aiEstimatedValue && (
+      {valuation && (
         <ValuationPanel
           listPrice={listing.price}
-          estimatedValue={listing.aiEstimatedValue}
-          confidence={listing.aiConfidence ?? 'LOW'}
-          valuation={getMockValuation(listing.id)}
+          estimatedValue={valuation.estimatedValue}
+          confidence={valuation.confidence}
+          valuation={valuation}
           assetType="land"
           lotAcres={listing.lotAcres ?? undefined}
         />
@@ -988,9 +988,11 @@ function LandActionPanel({
 export function LandDetailClient({
   listing,
   allListings,
+  valuation,
 }: {
   listing: MockListing
   allListings: MockListing[]
+  valuation?: AiValuation | null
 }) {
   const { isSaved, toggleSave } = useSavedListings()
   const saved = isSaved(listing.id)
