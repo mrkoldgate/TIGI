@@ -340,6 +340,251 @@ export const MOCK_DEFERRED_COUNTS: DeferredQueueCounts = {
 }
 
 // ---------------------------------------------------------------------------
+// Compliance review queue
+// ---------------------------------------------------------------------------
+//
+// Integration path (M2+):
+//   MOCK_COMPLIANCE_QUEUE → prisma.complianceItem.findMany({ where: { resolvedAt: null } })
+//   ComplianceItemType    → prisma enum ComplianceType
+//   ComplianceItemStatus  → prisma enum ComplianceStatus
+// ---------------------------------------------------------------------------
+
+export type ComplianceItemType =
+  | 'KYC'
+  | 'LISTING_VERIFICATION'
+  | 'INHERITANCE'
+  | 'FLAGGED_ANOMALY'
+
+export type ComplianceItemStatus =
+  | 'PENDING'
+  | 'IN_REVIEW'
+  | 'APPROVED'
+  | 'REJECTED'
+  | 'ESCALATED'
+
+export type CompliancePriority = 'CRITICAL' | 'HIGH' | 'NORMAL' | 'NEW'
+
+export interface ComplianceQueueItem {
+  id: string
+  type: ComplianceItemType
+  status: ComplianceItemStatus
+  priority: CompliancePriority
+  subjectId: string
+  /** Primary display label — user name, listing title, transaction ref */
+  subjectLabel: string
+  /** Secondary metadata — role for KYC, asset type for listings */
+  subjectMeta?: string
+  /** ISO alpha-2 country code — KYC items only */
+  subjectCountry?: string
+  /** Summary of what triggered the review or what is needed */
+  notes: string
+  /** Number of attached documents */
+  documentCount?: number
+  submittedAt: string
+  daysInQueue: number
+  /** Admin username assigned to this item */
+  assignedTo?: string
+}
+
+export const MOCK_COMPLIANCE_QUEUE: ComplianceQueueItem[] = [
+  // ── KYC ────────────────────────────────────────────────────────────────
+  {
+    id: 'cr-001',
+    type: 'KYC',
+    status: 'ESCALATED',
+    priority: 'CRITICAL',
+    subjectId: 'user-x92b',
+    subjectLabel: 'user_x92b (anon)',
+    subjectMeta: 'INVESTOR',
+    subjectCountry: 'US',
+    notes: 'Duplicate documents detected — three SSN matches to different identities',
+    documentCount: 4,
+    submittedAt: '2026-03-03T09:00:00Z',
+    daysInQueue: 5,
+  },
+  {
+    id: 'cr-002',
+    type: 'KYC',
+    status: 'PENDING',
+    priority: 'HIGH',
+    subjectId: 'u-002',
+    subjectLabel: 'Marcus Webb',
+    subjectMeta: 'OWNER',
+    subjectCountry: 'US',
+    notes: 'Passport and utility bill submitted — address mismatch requires review',
+    documentCount: 2,
+    submittedAt: '2026-03-06T06:45:00Z',
+    daysInQueue: 2,
+  },
+  {
+    id: 'cr-003',
+    type: 'KYC',
+    status: 'PENDING',
+    priority: 'HIGH',
+    subjectId: 'ent-001',
+    subjectLabel: 'Delta Farms LLC',
+    subjectMeta: 'OWNER (Entity)',
+    subjectCountry: 'US',
+    notes: 'Business entity KYC — EIN, articles of incorporation, and beneficial ownership pending verification',
+    documentCount: 3,
+    submittedAt: '2026-03-05T14:00:00Z',
+    daysInQueue: 3,
+  },
+  {
+    id: 'cr-004',
+    type: 'KYC',
+    status: 'IN_REVIEW',
+    priority: 'NORMAL',
+    subjectId: 'u-006',
+    subjectLabel: 'Ahmad Karimi',
+    subjectMeta: 'INVESTOR',
+    subjectCountry: 'AE',
+    notes: 'FATF-jurisdiction investor — enhanced due diligence in progress',
+    documentCount: 2,
+    submittedAt: '2026-03-07T10:30:00Z',
+    daysInQueue: 1,
+    assignedTo: 'R. Hoffman',
+  },
+  {
+    id: 'cr-005',
+    type: 'KYC',
+    status: 'PENDING',
+    priority: 'NEW',
+    subjectId: 'u-003',
+    subjectLabel: 'Ingrid Vasquez',
+    subjectMeta: 'BUYER',
+    subjectCountry: 'MX',
+    notes: 'No documents submitted yet — account created 4h ago, waiting for upload',
+    documentCount: 0,
+    submittedAt: '2026-03-08T04:20:00Z',
+    daysInQueue: 0,
+  },
+
+  // ── Listing Verification ────────────────────────────────────────────────
+  {
+    id: 'cr-006',
+    type: 'LISTING_VERIFICATION',
+    status: 'PENDING',
+    priority: 'CRITICAL',
+    subjectId: 'sl-004',
+    subjectLabel: 'Shovel-Ready Dev Parcel — E. Mesa',
+    subjectMeta: 'Land · Commercial Dev · Tokenized',
+    notes: 'Securities compliance required before token offering — no Reg D filing on record',
+    documentCount: 1,
+    submittedAt: '2026-03-01T14:30:00Z',
+    daysInQueue: 7,
+  },
+  {
+    id: 'cr-007',
+    type: 'LISTING_VERIFICATION',
+    status: 'IN_REVIEW',
+    priority: 'HIGH',
+    subjectId: 'prop-fl2',
+    subjectLabel: 'Ocean View Estate — Naples, FL',
+    subjectMeta: 'Property · Residential',
+    notes: 'AI valuation >40% above comps — independent appraisal and title verification requested',
+    documentCount: 2,
+    submittedAt: '2026-03-06T14:30:00Z',
+    daysInQueue: 2,
+    assignedTo: 'M. Torres',
+  },
+  {
+    id: 'cr-008',
+    type: 'LISTING_VERIFICATION',
+    status: 'PENDING',
+    priority: 'HIGH',
+    subjectId: 'prop-rq3',
+    subjectLabel: 'Urban Loft — District One, Denver',
+    subjectMeta: 'Property · Mixed-Use · Tokenized',
+    notes: 'Mixed-use zoning classification needs municipal confirmation before token offering',
+    documentCount: 1,
+    submittedAt: '2026-03-06T16:00:00Z',
+    daysInQueue: 2,
+  },
+  {
+    id: 'cr-009',
+    type: 'LISTING_VERIFICATION',
+    status: 'PENDING',
+    priority: 'NEW',
+    subjectId: 'prop-rq5',
+    subjectLabel: 'Beachfront Villa Suite 4A — Malibu',
+    subjectMeta: 'Property · Residential · Tokenized',
+    notes: 'Coastal zone permit verification required — CEQA documentation not yet submitted',
+    documentCount: 0,
+    submittedAt: '2026-03-08T07:45:00Z',
+    daysInQueue: 0,
+  },
+
+  // ── Inheritance ─────────────────────────────────────────────────────────
+  {
+    id: 'cr-010',
+    type: 'INHERITANCE',
+    status: 'PENDING',
+    priority: 'HIGH',
+    subjectId: 'inh-001',
+    subjectLabel: 'Estate of Harold Vance',
+    subjectMeta: 'Property + Token holdings',
+    notes: 'Probate filing and executor designation submitted — digital asset transfer authorization pending',
+    documentCount: 5,
+    submittedAt: '2026-03-04T11:00:00Z',
+    daysInQueue: 4,
+  },
+  {
+    id: 'cr-011',
+    type: 'INHERITANCE',
+    status: 'IN_REVIEW',
+    priority: 'NORMAL',
+    subjectId: 'inh-002',
+    subjectLabel: 'Nakamura Family Trust',
+    subjectMeta: '2 Property Listings',
+    notes: 'Trust amendment and successor trustee documents submitted — legal review in progress',
+    documentCount: 3,
+    submittedAt: '2026-03-07T09:00:00Z',
+    daysInQueue: 1,
+    assignedTo: 'Legal Team',
+  },
+
+  // ── Flagged Anomaly ─────────────────────────────────────────────────────
+  {
+    id: 'cr-012',
+    type: 'FLAGGED_ANOMALY',
+    status: 'PENDING',
+    priority: 'CRITICAL',
+    subjectId: 'user-x92b',
+    subjectLabel: 'user_x92b — Account Activity',
+    subjectMeta: 'USER',
+    notes: 'Multiple accounts detected — IP and device fingerprint overlap with 2 previously suspended accounts',
+    submittedAt: '2026-03-08T06:12:00Z',
+    daysInQueue: 0,
+  },
+  {
+    id: 'cr-013',
+    type: 'FLAGGED_ANOMALY',
+    status: 'PENDING',
+    priority: 'HIGH',
+    subjectId: 'txn-8821',
+    subjectLabel: 'Transaction #8821',
+    subjectMeta: 'TRANSACTION',
+    notes: 'Unusual payment velocity — 3 escrow interactions within 4 minutes, potential wash trading pattern',
+    submittedAt: '2026-03-07T09:44:00Z',
+    daysInQueue: 1,
+  },
+  {
+    id: 'cr-014',
+    type: 'FLAGGED_ANOMALY',
+    status: 'IN_REVIEW',
+    priority: 'NORMAL',
+    subjectId: 'land-fl4',
+    subjectLabel: 'Desert Land Parcel — Tucson, AZ',
+    subjectMeta: 'LISTING',
+    notes: 'Zoning classification dispute — user-reported inaccuracy on commercial designation',
+    submittedAt: '2026-03-06T11:20:00Z',
+    daysInQueue: 2,
+    assignedTo: 'R. Hoffman',
+  },
+]
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
