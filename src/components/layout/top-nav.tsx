@@ -1,6 +1,7 @@
 'use client'
 
-import { Search, Bell, ChevronDown, Menu } from 'lucide-react'
+import { Search, ChevronDown, Menu } from 'lucide-react'
+import { NotificationBell } from '@/components/notifications/notification-bell'
 
 // ---------------------------------------------------------------------------
 // TopNav — Platform top navigation bar
@@ -38,15 +39,7 @@ export function TopNav({ onMobileMenuToggle }: TopNavProps) {
 
       <div className="ml-auto flex items-center gap-3">
         {/* Notifications */}
-        <button
-          className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] transition-colors hover:border-[#C9A84C] hover:text-[#F5F5F7]"
-          title="Notifications"
-          aria-label="Notifications"
-        >
-          <Bell className="h-4 w-4" />
-          {/* Unread indicator */}
-          <span className="absolute right-1.5 top-1.5 h-1.5 w-1.5 rounded-full bg-[#C9A84C]" aria-hidden="true" />
-        </button>
+        <NotificationBell />
 
         {/* User menu — M2: replace with real auth session */}
         <UserMenu />

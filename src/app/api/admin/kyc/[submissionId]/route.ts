@@ -22,6 +22,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { createNotification } from '@/lib/notifications/notification-service'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'escalate', 'request_update']),
@@ -132,6 +133,42 @@ export async function PATCH(
 
       return updated
     })
+
+    // Notify the user being reviewed — non-blocking
+    if (action !== 'escalate') {
+      const kycNotifMap: Record<string, { type: string; title: string; body: string }> = {
+        approve: {
+          type:  'KYC_APPROVED',
+          title: 'Identity verified',
+          body:  'Your KYC verification has been approved. You now have full access to transact on TIGI.',
+        },
+        reject: {
+          type:  'KYC_REJECTED',
+          title: 'Verification declined',
+          body:  note
+            ? `Your identity verification was not approved. ${note}`
+            : 'Your identity verification was not approved. Please contact support.',
+        },
+        request_update: {
+          type:  'KYC_UPDATE_REQUESTED',
+          title: 'Update required for your KYC submission',
+          body:  note
+            ? `Please update your KYC documents. ${note}`
+            : 'Please review and resubmit your identity documents.',
+        },
+      }
+      const notif = kycNotifMap[action]
+      if (notif) {
+        void createNotification({
+          userId:    verification.userId,
+          type:      notif.type as never,
+          title:     notif.title,
+          body:      notif.body,
+          actionUrl: '/settings',
+          metadata:  { submissionId },
+        })
+      }
+    }
 
     return NextResponse.json({ success: true, data: result })
   } catch (err) {

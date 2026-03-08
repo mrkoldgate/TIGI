@@ -19,6 +19,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { createNotification } from '@/lib/notifications/notification-service'
 
 const CreateIntentSchema = z.object({
   propertyId:  z.string().min(1),
@@ -70,7 +71,7 @@ export async function POST(req: Request) {
     // Verify property is ACTIVE
     const property = await prisma.property.findUnique({
       where:  { id: propertyId },
-      select: { id: true, status: true, isTokenized: true, title: true },
+      select: { id: true, status: true, isTokenized: true, title: true, ownerId: true },
     })
 
     if (!property) {
@@ -149,6 +150,26 @@ export async function POST(req: Request) {
 
       return created
     })
+
+    // Notify the property owner — non-blocking
+    // Don't notify if the owner is the same as the intent creator
+    if (property.ownerId && property.ownerId !== userId) {
+      const isLease = intentType === 'PREPARE_LEASE'
+      const intentLabels: Record<string, string> = {
+        EXPRESS_INTEREST: 'expressed interest in',
+        PREPARE_PURCHASE: 'submitted a purchase intent for',
+        PREPARE_INVEST:   'expressed investment interest in',
+        PREPARE_LEASE:    'submitted a lease interest for',
+      }
+      void createNotification({
+        userId:    property.ownerId,
+        type:      isLease ? 'LEASE_INTEREST_CREATED' : 'INTENT_CREATED',
+        title:     isLease ? 'New lease interest received' : 'New interest in your listing',
+        body:      `A user has ${intentLabels[intentType] ?? 'submitted an intent for'} "${property.title}".`,
+        actionUrl: '/listings',
+        metadata:  { intentId: intent.id, propertyId, intentType },
+      })
+    }
 
     return NextResponse.json({ success: true, data: intent }, { status: 201 })
   } catch (err) {

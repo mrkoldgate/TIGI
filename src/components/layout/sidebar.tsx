@@ -10,6 +10,7 @@ import {
   Building2,
   Map,
   Landmark,
+  Bell,
   Lightbulb,
   Sparkles,
   Settings,
@@ -56,6 +57,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: '/listings', label: 'My Properties', icon: Building2 },
   { href: '/leasing', label: 'Land', icon: Map },
   { href: '/inheritance', label: 'Legacy', icon: Landmark },
+  { href: '/notifications', label: 'Notifications', icon: Bell },
   { href: '/insights', label: 'Insights', icon: Lightbulb, milestone: 'M5' },
 ]
 

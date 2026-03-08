@@ -17,6 +17,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { createNotification } from '@/lib/notifications/notification-service'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'request_update']),
@@ -111,6 +112,40 @@ export async function PATCH(
       },
     },
   })
+
+  // Notify the plan owner — non-blocking
+  const legacyNotifMap: Record<string, { type: string; title: string; body: string }> = {
+    approve: {
+      type:  'LEGACY_APPROVED',
+      title: 'Legacy plan approved',
+      body:  'Your legacy plan has been reviewed and is now active on file.',
+    },
+    reject: {
+      type:  'LEGACY_REJECTED',
+      title: 'Legacy plan suspended',
+      body:  note
+        ? `Your legacy plan has been suspended. ${note}`
+        : 'Your legacy plan has been suspended. Please contact support.',
+    },
+    request_update: {
+      type:  'LEGACY_UPDATE_REQUESTED',
+      title: 'Updates needed on your legacy plan',
+      body:  note
+        ? `Please update your legacy plan and resubmit. ${note}`
+        : 'Please review and resubmit your legacy plan.',
+    },
+  }
+  const notif = legacyNotifMap[action]
+  if (notif) {
+    void createNotification({
+      userId:    plan.userId,
+      type:      notif.type as never,
+      title:     notif.title,
+      body:      notif.body,
+      actionUrl: '/inheritance',
+      metadata:  { planId },
+    })
+  }
 
   return NextResponse.json({ success: true, data: { id: updated.id, status: updated.status } })
 }

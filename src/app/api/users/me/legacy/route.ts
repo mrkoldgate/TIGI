@@ -19,6 +19,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { createNotification } from '@/lib/notifications/notification-service'
 
 export async function GET() {
   const session = await auth()
@@ -136,6 +137,16 @@ export async function POST(req: Request) {
         resourceId:   plan.id,
         metadata:     { beneficiaryCount: plan.beneficiaries.length },
       },
+    })
+
+    // Confirm submission to the user — non-blocking
+    void createNotification({
+      userId,
+      type:      'LEGACY_SUBMITTED',
+      title:     'Legacy plan submitted for review',
+      body:      `Your legacy plan with ${plan.beneficiaries.length} beneficiar${plan.beneficiaries.length === 1 ? 'y' : 'ies'} has been submitted and is under compliance review. We'll notify you when it's approved.`,
+      actionUrl: '/inheritance',
+      metadata:  { planId: plan.id },
     })
   }
 

@@ -64,6 +64,7 @@ model User {
   beneficiaryDesignations BeneficiaryDesignation[]
   intents         TransactionIntent[]
   legacyPlan      LegacyPlan?
+  notifications   Notification[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -843,6 +844,37 @@ enum UserDocPurpose {
 // eventually Solana tx references when Milestone 5 smart contracts are ready.
 // =============================================================================
 
+enum NotificationType {
+  // Listing events — notifies the listing owner
+  LISTING_APPROVED
+  LISTING_REJECTED
+  LISTING_UPDATE_REQUESTED
+
+  // KYC / compliance events — notifies the user under review
+  KYC_APPROVED
+  KYC_REJECTED
+  KYC_UPDATE_REQUESTED
+
+  // Transaction intent events — notifies the property owner
+  INTENT_CREATED
+  LEASE_INTEREST_CREATED
+
+  // Legacy / inheritance events — notifies the plan owner
+  LEGACY_SUBMITTED
+  LEGACY_APPROVED
+  LEGACY_REJECTED
+  LEGACY_UPDATE_REQUESTED
+
+  // System-level announcements
+  SYSTEM_ANNOUNCEMENT
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+  PUSH
+}
+
 enum IntentType {
   EXPRESS_INTEREST  // Soft signal — "I'm interested"
   PREPARE_PURCHASE  // Full-ownership purchase intent
@@ -858,6 +890,45 @@ enum IntentStatus {
   EXECUTED       // Signed tx confirmed on-chain; promoted to Transaction record
   CANCELLED      // Withdrawn by user (or admin-cancelled)
   EXPIRED        // Passed expiresAt without action
+}
+
+// =============================================================================
+// NOTIFICATIONS
+// =============================================================================
+//
+// In-app notification feed. Extensible to email / push via channel field.
+//
+// type    — semantic event type (determines icon, color, copy, routing)
+// readAt  — null = unread; timestamped = read. Never deleted.
+// actionUrl — relative deep-link stored at creation time (e.g. "/listings")
+// channel — IN_APP always; EMAIL/PUSH will be dispatched via queue in M5+
+// =============================================================================
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String
+
+  type      NotificationType
+  title     String
+  body      String              @db.Text
+  actionUrl String?
+
+  // Extensible per-event context (e.g. propertyId, planId, intentId)
+  metadata  Json                @default("{}")
+
+  // Channel — IN_APP written synchronously; others queued in future
+  channel   NotificationChannel @default(IN_APP)
+
+  // Read state — null = unread
+  readAt    DateTime?
+
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime            @default(now())
+
+  @@index([userId, readAt])
+  @@index([userId, createdAt(sort: Desc)])
+  @@map("notifications")
 }
 
 model TransactionIntent {

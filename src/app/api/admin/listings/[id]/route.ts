@@ -20,6 +20,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { createNotification } from '@/lib/notifications/notification-service'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'archive', 'request_update']),
@@ -119,6 +120,33 @@ export async function PATCH(
 
       return updated
     })
+
+    // Notify the listing owner — non-blocking, never throws
+    const notifType =
+      action === 'approve'         ? 'LISTING_APPROVED'          :
+      action === 'reject'          ? 'LISTING_REJECTED'          :
+      action === 'request_update'  ? 'LISTING_UPDATE_REQUESTED'  :
+      null  // archive → no dedicated type, skip
+
+    if (notifType) {
+      const bodyMap: Record<string, string> = {
+        approve:        `"${listing.title}" is now live on the marketplace.`,
+        reject:         note
+          ? `"${listing.title}" was not approved. ${note}`
+          : `"${listing.title}" was not approved. Please contact support for details.`,
+        request_update: `Please update "${listing.title}" and resubmit for review.`,
+      }
+      void createNotification({
+        userId:    listing.ownerId,
+        type:      notifType as never,
+        title:     notifType === 'LISTING_APPROVED' ? 'Listing approved'
+                 : notifType === 'LISTING_REJECTED' ? 'Listing rejected'
+                 : 'Update requested on your listing',
+        body:      bodyMap[action] ?? '',
+        actionUrl: '/listings',
+        metadata:  { propertyId: id, propertyTitle: listing.title },
+      })
+    }
 
     return NextResponse.json({ success: true, data: { id: result.id, status: result.status } })
   } catch (err) {
