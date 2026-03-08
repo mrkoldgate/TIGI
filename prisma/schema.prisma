@@ -63,6 +63,7 @@ model User {
   userDocuments   UserDocument[]
   beneficiaryDesignations BeneficiaryDesignation[]
   intents         TransactionIntent[]
+  legacyPlan      LegacyPlan?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -458,6 +459,80 @@ model BeneficiaryDesignation {
   @@map("beneficiary_designations")
 }
 
+// ---------------------------------------------------------------------------
+// LegacyPlan — user's overall inheritance planning document.
+//
+// One plan per user (unique userId). Starts as DRAFT, user progresses
+// through a wizard (onboardingStep tracks position), then SUBMITS for
+// admin/compliance review. Admin can APPROVE (→ ACTIVE), REJECT, or
+// REQUEST_UPDATE (→ back to DRAFT with reviewNote).
+//
+// This is a structured planning tool — NOT a final legal instrument.
+// Language enforced via LEGACY_MESSAGING constants in legacy-query.ts.
+// ---------------------------------------------------------------------------
+model LegacyPlan {
+  id             String          @id @default(cuid())
+  userId         String          @unique
+
+  status         LegacyPlanStatus @default(DRAFT)
+
+  // Free-text planning fields
+  instructions   String?         @db.Text  // General estate instructions
+  specialConditions String?      @db.Text  // Any special distribution conditions
+
+  // Executor (the person who will carry out the plan)
+  executorName   String?
+  executorEmail  String?
+  executorPhone  String?
+
+  // Wizard progress — 0=intro, 1=instructions, 2=beneficiaries, 3=executor, 4=documents, 5=review
+  onboardingStep Int             @default(0)
+
+  // Compliance review fields
+  submittedAt    DateTime?
+  reviewedAt     DateTime?
+  reviewedBy     String?         // Admin user ID
+  reviewNote     String?         @db.Text
+
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  beneficiaries  LegacyBeneficiary[]
+
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@map("legacy_plans")
+}
+
+// ---------------------------------------------------------------------------
+// LegacyBeneficiary — person-level beneficiary on a LegacyPlan.
+//
+// allocationPercent is a target split — total across all beneficiaries
+// should sum to 100. Enforced at the application layer, not DB constraint
+// (allows partial / in-progress plans).
+// ---------------------------------------------------------------------------
+model LegacyBeneficiary {
+  id                String                  @id @default(cuid())
+  legacyPlanId      String
+
+  name              String
+  email             String?
+  phone             String?
+  relationship      BeneficiaryRelationship @default(OTHER)
+
+  // Desired allocation percent (0–100). May not sum to 100 while editing.
+  allocationPercent Int                     @default(0)
+
+  notes             String?                 @db.Text
+
+  plan              LegacyPlan              @relation(fields: [legacyPlanId], references: [id], onDelete: Cascade)
+
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+
+  @@index([legacyPlanId])
+  @@map("legacy_beneficiaries")
+}
+
 // =============================================================================
 // AI
 // =============================================================================
@@ -602,6 +677,27 @@ enum TransferTrigger {
 enum DesignationStatus {
   ACTIVE
   REVOKED
+}
+
+enum LegacyPlanStatus {
+  DRAFT          // User still filling in / editing
+  SUBMITTED      // Awaiting compliance review
+  UNDER_REVIEW   // Compliance officer actively reviewing
+  ACTIVE         // Approved — plan is on file
+  SUSPENDED      // Temporarily suspended by admin
+}
+
+enum BeneficiaryRelationship {
+  SPOUSE
+  PARTNER
+  CHILD
+  SIBLING
+  PARENT
+  GRANDCHILD
+  TRUSTEE
+  CHARITY
+  FRIEND
+  OTHER
 }
 
 enum AiConfidence {

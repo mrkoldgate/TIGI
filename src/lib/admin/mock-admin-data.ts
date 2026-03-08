@@ -390,6 +390,12 @@ export interface ComplianceQueueItem {
    * Mock items leave this undefined and the action buttons are disabled.
    */
   kycSubmissionId?: string
+  /**
+   * LegacyPlan.id — present only for INHERITANCE items backed by a real DB record.
+   * When set, the Approve / Reject / Request Update buttons call PATCH /api/admin/legacy/[legacyPlanId].
+   * Mock items leave this undefined and the action buttons are disabled.
+   */
+  legacyPlanId?: string
 }
 
 export const MOCK_COMPLIANCE_QUEUE: ComplianceQueueItem[] = [

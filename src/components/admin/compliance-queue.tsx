@@ -95,17 +95,20 @@ function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: 
   )
 }
 
-export type KycAction = 'approve' | 'reject' | 'escalate' | 'request_update'
+export type KycAction    = 'approve' | 'reject' | 'escalate' | 'request_update'
+export type LegacyAction = 'approve' | 'reject' | 'request_update'
 
 interface ComplianceQueueProps {
   items: ComplianceQueueItem[]
   /** Called when Approve / Reject / Escalate is clicked for a real KYC submission. */
   onKycAction?: (submissionId: string, action: KycAction) => void
+  /** Called when Approve / Reject / Request Update is clicked for a real Legacy plan. */
+  onLegacyAction?: (planId: string, action: LegacyAction) => void
   /** ID of the submission currently being actioned — disables its buttons. */
   actioningId?: string | null
 }
 
-export function ComplianceQueue({ items, onKycAction, actioningId }: ComplianceQueueProps) {
+export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningId }: ComplianceQueueProps) {
   if (items.length === 0) {
     return (
       <div className="flex items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118] py-16 text-sm text-[#6B6B80]">
@@ -213,11 +216,19 @@ export function ComplianceQueue({ items, onKycAction, actioningId }: ComplianceQ
 
                   {/* Actions */}
                   <td className="px-4 py-3">
-                    <KycActionButtons
-                      item={item}
-                      onKycAction={onKycAction}
-                      actioning={actioningId === item.kycSubmissionId && !!item.kycSubmissionId}
-                    />
+                    {item.type === 'INHERITANCE' ? (
+                      <LegacyActionButtons
+                        item={item}
+                        onLegacyAction={onLegacyAction}
+                        actioning={actioningId === item.legacyPlanId && !!item.legacyPlanId}
+                      />
+                    ) : (
+                      <KycActionButtons
+                        item={item}
+                        onKycAction={onKycAction}
+                        actioning={actioningId === item.kycSubmissionId && !!item.kycSubmissionId}
+                      />
+                    )}
                   </td>
                 </tr>
               )
@@ -293,12 +304,21 @@ export function ComplianceQueue({ items, onKycAction, actioningId }: ComplianceQ
 
               {/* Mobile action buttons */}
               <div className="flex flex-shrink-0 flex-col items-end gap-1.5">
+                {item.type === 'INHERITANCE' ? (
+                  <LegacyActionButtons
+                    item={item}
+                    onLegacyAction={onLegacyAction}
+                    actioning={actioningId === item.legacyPlanId && !!item.legacyPlanId}
+                    compact
+                  />
+                ) : (
                 <KycActionButtons
                   item={item}
                   onKycAction={onKycAction}
                   actioning={actioningId === item.kycSubmissionId && !!item.kycSubmissionId}
                   compact
                 />
+                )}
               </div>
             </div>
           )
@@ -410,6 +430,93 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         {actioning
           ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
           : <ChevronsUp className="h-3.5 w-3.5" />}
+      </button>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// LegacyActionButtons — Approve / Reject / Request Update for Legacy plans.
+//
+// When `item.legacyPlanId` is set the action buttons are live.
+// ---------------------------------------------------------------------------
+
+interface LegacyActionButtonsProps {
+  item:            ComplianceQueueItem
+  onLegacyAction?: (planId: string, action: LegacyAction) => void
+  actioning?:      boolean
+  compact?:        boolean
+}
+
+function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: LegacyActionButtonsProps) {
+  const pid  = item.legacyPlanId
+  const live = !!pid && !!onLegacyAction
+
+  const reviewBtn = (
+    <button
+      disabled={actioning}
+      className={cn(
+        'inline-flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
+        live ? 'hover:border-[#A78BFA]/40 hover:text-[#A78BFA]' : 'cursor-default opacity-50',
+        compact && 'py-1.5',
+      )}
+    >
+      Review
+      <ChevronRight className="h-3 w-3" />
+    </button>
+  )
+
+  if (compact) return reviewBtn
+
+  return (
+    <div className="flex items-center gap-1">
+      {reviewBtn}
+
+      {/* Approve */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Approve' : 'Approve — not available for this item type'}
+        onClick={() => live && onLegacyAction!(pid!, 'approve')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        <CheckCircle2 className="h-3.5 w-3.5" />
+      </button>
+
+      {/* Reject */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Reject' : 'Reject — not available for this item type'}
+        onClick={() => live && onLegacyAction!(pid!, 'reject')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        <XCircle className="h-3.5 w-3.5" />
+      </button>
+
+      {/* Request Update */}
+      <button
+        disabled={!live || actioning}
+        title={live ? 'Request Update' : 'Request Update — not available for this item type'}
+        onClick={() => live && onLegacyAction!(pid!, 'request_update')}
+        className={cn(
+          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          live && !actioning
+            ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+        )}
+      >
+        {actioning
+          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
+          : <RefreshCw className="h-3.5 w-3.5" />}
       </button>
     </div>
   )

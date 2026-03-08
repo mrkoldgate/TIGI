@@ -8,7 +8,7 @@ import {
   type ComplianceItemStatus,
 } from '@/lib/admin/mock-admin-data'
 import { cn } from '@/lib/utils'
-import { ComplianceQueue, type KycAction } from './compliance-queue'
+import { ComplianceQueue, type KycAction, type LegacyAction } from './compliance-queue'
 
 // ---------------------------------------------------------------------------
 // ComplianceQueueClient — Compliance review queue with interactive filters.
@@ -69,6 +69,37 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
   const [activeStatus, setActiveStatus] = useState<ComplianceItemStatus | 'ALL'>('ALL')
   const [actioningId,  setActioningId]  = useState<string | null>(null)
   const [actionError,  setActionError]  = useState<string | null>(null)
+
+  const handleLegacyAction = useCallback(async (planId: string, action: LegacyAction) => {
+    setActioningId(planId)
+    setActionError(null)
+    try {
+      const res = await fetch(`/api/admin/legacy/${planId}`, {
+        method:  'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ action }),
+      })
+      if (!res.ok) {
+        const json = await res.json().catch(() => ({}))
+        throw new Error(json?.error?.message ?? `Request failed (${res.status})`)
+      }
+      const newStatus: ComplianceItemStatus =
+        action === 'approve'        ? 'APPROVED' :
+        action === 'reject'         ? 'REJECTED' :
+        /* request_update */          'PENDING'
+      setItems((prev) =>
+        prev.map((item) =>
+          item.legacyPlanId === planId
+            ? { ...item, status: newStatus }
+            : item,
+        ),
+      )
+    } catch (err) {
+      setActionError((err as Error).message)
+    } finally {
+      setActioningId(null)
+    }
+  }, [])
 
   const handleKycAction = useCallback(async (submissionId: string, action: KycAction) => {
     setActioningId(submissionId)
@@ -222,6 +253,7 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
       <ComplianceQueue
         items={filtered}
         onKycAction={handleKycAction}
+        onLegacyAction={handleLegacyAction}
         actioningId={actioningId}
       />
 
