@@ -1106,9 +1106,10 @@ interface Step6Props {
   onBack: () => void
   onSubmit: () => void
   isSubmitting: boolean
+  submitError: string | null
 }
 
-function ReviewStep({ form, onBack, onSubmit, isSubmitting }: Step6Props) {
+function ReviewStep({ form, onBack, onSubmit, isSubmitting, submitError }: Step6Props) {
   const isLand = form.assetType === 'LAND'
 
   return (
@@ -1250,6 +1251,12 @@ function ReviewStep({ form, onBack, onSubmit, isSubmitting }: Step6Props) {
         </p>
       </div>
 
+      {submitError && (
+        <div className="mt-4 rounded-xl border border-red-500/30 bg-red-500/8 px-4 py-3 text-sm text-red-400">
+          {submitError}
+        </div>
+      )}
+
       <div className="mt-6 flex flex-col-reverse items-center gap-3 sm:flex-row sm:justify-between">
         <Button variant="secondary" size="lg" onClick={onBack} disabled={isSubmitting}>
           <ChevronLeft /> Back
@@ -1361,22 +1368,69 @@ function SuccessScreen({ assetType }: { assetType: AssetType | null }) {
 
 // ── Root component ─────────────────────────────────────────────────────────
 
+// Converts multi-step FormState into the API payload expected by POST /api/listings
+function buildApiPayload(form: FormState) {
+  const price = form.price ? parseFloat(form.price.replace(/,/g, '')) : undefined
+  const leaseRate = form.leaseRateMonthly ? parseFloat(form.leaseRateMonthly.replace(/,/g, '')) : undefined
+  const isLand = form.assetType === 'LAND'
+  const isFractional = form.ownershipModel === 'FRACTIONAL' || form.ownershipModel === 'BOTH'
+
+  return {
+    title: form.title.trim(),
+    description: form.description?.trim() ?? '',
+    address: form.address.trim(),
+    city: form.city.trim(),
+    state: form.state.trim(),
+    type: isLand ? 'LAND' : (form.propertyType || 'RESIDENTIAL'),
+    listingType: form.listingType || 'BUY',
+    ownershipModel: form.ownershipModel || 'FULL',
+    price: price,
+    leaseRateMonthly: leaseRate,
+    // Property specs
+    sqft: form.sqft ? parseInt(form.sqft) : undefined,
+    bedrooms: form.bedrooms ? parseInt(form.bedrooms) : undefined,
+    bathrooms: form.bathrooms ? parseFloat(form.bathrooms) : undefined,
+    yearBuilt: form.yearBuilt ? parseInt(form.yearBuilt) : undefined,
+    // Land specs
+    lotAcres: form.lotAcres ? parseFloat(form.lotAcres) : undefined,
+    zoningCode: form.zoningCode?.trim() || undefined,
+    // Tokenization
+    isTokenized: isFractional,
+    tokenTotalSupply: form.tokenTotalSupply ? parseInt(form.tokenTotalSupply) : undefined,
+    tokenPricePerFraction: form.tokenPricePerFraction ? parseFloat(form.tokenPricePerFraction) : undefined,
+  }
+}
+
 export function CreateListingClient() {
   const [step, setStep] = useState(1)
   const [form, setForm] = useState<FormState>(INITIAL_FORM)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   const goNext = useCallback(() => setStep((s) => Math.min(s + 1, 6)), [])
   const goBack = useCallback(() => setStep((s) => Math.max(s - 1, 1)), [])
 
   const handleSubmit = useCallback(async () => {
     setIsSubmitting(true)
-    // DB integration path: replace with server action / API call
-    await new Promise((r) => setTimeout(r, 1500))
-    setIsSubmitting(false)
-    setSubmitted(true)
-  }, [])
+    setSubmitError(null)
+    try {
+      const res = await fetch('/api/listings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(buildApiPayload(form)),
+      })
+      const json = await res.json()
+      if (!res.ok) {
+        throw new Error(json.error?.message ?? 'Failed to create listing. Please try again.')
+      }
+      setSubmitted(true)
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }, [form])
 
   if (submitted) {
     return (
@@ -1428,6 +1482,7 @@ export function CreateListingClient() {
             onBack={goBack}
             onSubmit={handleSubmit}
             isSubmitting={isSubmitting}
+            submitError={submitError}
           />
         )}
       </div>

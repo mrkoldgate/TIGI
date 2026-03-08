@@ -134,6 +134,10 @@ model Property {
   type        PropertyType
   status      ListingStatus @default(DRAFT)
 
+  // Listing configuration
+  listingType  ListingType   @default(BUY)
+  ownershipModel OwnershipModel @default(FULL)
+
   // Location
   address     String
   city        String
@@ -144,15 +148,30 @@ model Property {
   longitude   Float?
 
   // Specs
-  price       Decimal       @db.Decimal(14, 2)
-  sqft        Int?
-  bedrooms    Int?
-  bathrooms   Float?
-  yearBuilt   Int?
-  lotSize     Float?        // acres
+  price              Decimal?  @db.Decimal(14, 2)
+  leaseRateMonthly   Decimal?  @db.Decimal(12, 2)
+  sqft               Int?
+  bedrooms           Int?
+  bathrooms          Float?
+  yearBuilt          Int?
+  lotAcres           Float?
+  parcelId           String?
+  zoningCode         String?
 
-  // Tokenization
+  // Tokenization (denormalized for fast reads; authoritative record is Token table)
+  isTokenized      Boolean  @default(false)
   tokenMintAddress String?
+
+  // Engagement (incremented by background jobs / API handlers)
+  viewCount    Int @default(0)
+  saveCount    Int @default(0)
+  inquiryCount Int @default(0)
+
+  // Compliance review
+  reviewNote  String?   @db.Text
+  reviewedBy  String?
+  reviewedAt  DateTime?
+  featuredAt  DateTime?
 
   // Relations
   owner       User          @relation("PropertyOwner", fields: [ownerId], references: [id])
@@ -167,6 +186,9 @@ model Property {
   listedAt    DateTime?
   soldAt      DateTime?
 
+  @@index([status, type, city])
+  @@index([ownerId])
+  @@index([price])
   @@map("properties")
 }
 
@@ -448,6 +470,18 @@ enum ListingStatus {
   SOLD
   LEASED
   DELISTED
+}
+
+enum ListingType {
+  BUY
+  LEASE
+  BOTH
+}
+
+enum OwnershipModel {
+  FULL
+  FRACTIONAL
+  BOTH
 }
 
 enum DocumentType {
