@@ -28,6 +28,8 @@ import { PropertyCard } from '@/components/marketplace/property-card'
 import { MarketplaceLandCard } from '@/components/marketplace/land-card'
 import { ValuationPanel } from '@/components/valuation/valuation-panel'
 import type { AiValuation } from '@/lib/valuation/valuation-types'
+import { getSimilarListings } from '@/lib/recommendations/recommendation-service'
+import { SimilarListingsGrid } from '@/components/recommendations/recommendation-rail'
 import {
   type MockListing,
   type PropertyType,
@@ -446,26 +448,21 @@ function TabContent({
     )
   }
 
-  // Similar tab
-  const similar = allListings
-    .filter((l) => l.id !== listing.id && l.status === 'ACTIVE' && l.propertyType === listing.propertyType)
-    .sort((a, b) => Math.abs(a.price - listing.price) - Math.abs(b.price - listing.price))
-    .slice(0, 3)
-
-  if (similar.length === 0) {
-    return <p className="py-8 text-center text-sm text-[#6B6B80]">No similar listings available right now.</p>
-  }
+  // Similar tab — scored by recommendation engine
+  const similar = getSimilarListings(allListings, listing, 3)
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {similar.map((l, i) =>
+    <SimilarListingsGrid
+      items={similar}
+      emptyMessage="No similar listings available right now."
+      renderCard={(l, i) =>
         l.propertyType === 'LAND' ? (
           <MarketplaceLandCard key={l.id} listing={l} index={i} />
         ) : (
           <PropertyCard key={l.id} listing={l} index={i} />
-        ),
-      )}
-    </div>
+        )
+      }
+    />
   )
 }
 

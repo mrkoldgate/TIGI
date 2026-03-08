@@ -29,6 +29,8 @@ import { MarketplaceLandCard, inferLandUse, inferDevOpportunity } from '@/compon
 import { type LandUseType } from '@/components/land/land-card'
 import { ValuationPanel } from '@/components/valuation/valuation-panel'
 import type { AiValuation } from '@/lib/valuation/valuation-types'
+import { getSimilarListings } from '@/lib/recommendations/recommendation-service'
+import { SimilarListingsGrid } from '@/components/recommendations/recommendation-rail'
 import {
   type MockListing,
   formatPrice,
@@ -641,38 +643,20 @@ function DocumentsTab() {
 function SimilarTab({
   listing,
   allListings,
-  landUse,
 }: {
   listing: MockListing
   allListings: MockListing[]
   landUse: LandUseType
 }) {
-  // Same land use first, then any land parcel by price proximity
-  const sameLandUse = allListings.filter((l) =>
-    l.id !== listing.id &&
-    l.propertyType === 'LAND' &&
-    l.status === 'ACTIVE' &&
-    inferLandUse(l.features) === landUse,
-  )
-  const otherLand = allListings.filter((l) =>
-    l.id !== listing.id &&
-    l.propertyType === 'LAND' &&
-    l.status === 'ACTIVE' &&
-    inferLandUse(l.features) !== landUse,
-  ).sort((a, b) => Math.abs(a.price - listing.price) - Math.abs(b.price - listing.price))
-
-  const similar = [...sameLandUse, ...otherLand].slice(0, 3)
-
-  if (similar.length === 0) {
-    return <p className="py-8 text-center text-sm text-[#5A7060]">No similar land parcels available right now.</p>
-  }
+  // Scored by recommendation engine — multi-signal: type, location, price, tokenization
+  const similar = getSimilarListings(allListings, listing, 3)
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {similar.map((l, i) => (
-        <MarketplaceLandCard key={l.id} listing={l} index={i} />
-      ))}
-    </div>
+    <SimilarListingsGrid
+      items={similar}
+      emptyMessage="No similar land parcels available right now."
+      renderCard={(l, i) => <MarketplaceLandCard key={l.id} listing={l} index={i} />}
+    />
   )
 }
 

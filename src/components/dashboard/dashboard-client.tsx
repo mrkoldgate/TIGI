@@ -19,8 +19,9 @@ import {
   MOCK_INSIGHTS,
   MOCK_ACTIVITY,
   MOCK_VALUATION_ALERTS,
-  RECOMMENDED_LISTING_IDS,
 } from '@/lib/dashboard/mock-dashboard'
+import { getRecommendations, DEMO_USER_PREFERENCES } from '@/lib/recommendations/recommendation-service'
+import { RecommendationRail } from '@/components/recommendations/recommendation-rail'
 
 import { StatCard } from './stat-card'
 import { SectionHeader } from './section-header'
@@ -52,8 +53,13 @@ interface DashboardClientProps {
 export function DashboardClient({ allListings }: DashboardClientProps) {
   const { savedIds, savedCount } = useSavedListings()
 
-  // Recommended: resolve IDs to listing objects, fall back to first 3 tokenized
-  const recommended = resolveListings(RECOMMENDED_LISTING_IDS, allListings).slice(0, 3)
+  // Recommended: scored by recommendation engine (saved-signal + tokenization + AI confidence)
+  const recommendationResult = getRecommendations(
+    allListings,
+    { kind: 'DASHBOARD', prefs: { ...DEMO_USER_PREFERENCES, savedListingIds: [...savedIds] } },
+    4,
+  )
+  const recommended = recommendationResult.items
 
   // Watchlist: live from saved context, show first 4
   const watchlist = allListings
@@ -148,40 +154,16 @@ export function DashboardClient({ allListings }: DashboardClientProps) {
           <section aria-label="Recommended listings">
             <SectionHeader
               title="Recommended for You"
-              description="Curated picks matching your investment profile."
+              description="Personalised by your activity, preferences, and AI signals."
               viewAllHref="/marketplace"
               viewAllLabel="Browse all"
             />
-            <div className="mt-4 overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118]">
-              {recommended.length > 0 ? (
-                <div className="divide-y divide-[#1F1F2E]">
-                  {recommended.map((listing, i) => (
-                    <div key={listing.id} className="px-2 py-1">
-                      <MiniListingRow
-                        listing={listing}
-                        showConfidence
-                        index={i}
-                      />
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <EmptySection
-                  message="No recommendations yet."
-                  hint="Browse the marketplace to refine your profile."
-                  href="/marketplace"
-                  cta="Explore marketplace"
-                />
-              )}
-              <div className="border-t border-[#1F1F2E] px-4 py-3">
-                <Link
-                  href="/marketplace"
-                  className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
-                >
-                  View all listings
-                  <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
+            <div className="mt-4">
+              <RecommendationRail
+                items={recommended}
+                viewAllHref="/marketplace"
+                viewAllLabel="View all listings"
+              />
             </div>
           </section>
 
@@ -410,19 +392,6 @@ function EmptySection({
 // Helpers
 // ---------------------------------------------------------------------------
 
-function resolveListings(ids: string[], all: MockListing[]): MockListing[] {
-  const map = new Map(all.map((l) => [l.id, l]))
-  const resolved = ids.map((id) => map.get(id)).filter(Boolean) as MockListing[]
-
-  // Supplement with tokenized listings if recommended IDs aren't in the mock set
-  if (resolved.length < 3) {
-    const extra = all
-      .filter((l) => !ids.includes(l.id) && l.isTokenized && l.status === 'ACTIVE')
-      .slice(0, 3 - resolved.length)
-    return [...resolved, ...extra]
-  }
-  return resolved
-}
 
 function getGreeting(firstName: string): string {
   // In real app use user's local time; fixed for SSR consistency in MVP
