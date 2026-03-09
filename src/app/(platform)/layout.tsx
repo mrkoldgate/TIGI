@@ -1,6 +1,8 @@
 import { AppShell } from '@/components/layout/app-shell'
 import { SavedListingsProvider } from '@/lib/saved/saved-context'
 import { AssistantProvider } from '@/lib/assistant/assistant-context'
+import { CompareProvider } from '@/lib/compare/compare-context'
+import { CompareBar } from '@/components/compare/compare-bar'
 import { getCurrentUser } from '@/lib/auth/session'
 import { getSavedEntriesForUser } from '@/lib/saved/saved-query'
 
@@ -13,7 +15,8 @@ import { getSavedEntriesForUser } from '@/lib/saved/saved-query'
 //
 // SavedListingsProvider — save state shared across marketplace, detail pages,
 //   /saved page, sidebar badge, and all card components.
-// AssistantProvider — Aria panel open/close + conversation shared across pages.
+// AssistantProvider    — Aria panel open/close + conversation shared across pages.
+// CompareProvider      — Compare tray (up to 3 properties); sessionStorage backed.
 export default async function PlatformLayout({
   children,
 }: {
@@ -29,10 +32,13 @@ export default async function PlatformLayout({
     : null
 
   return (
-    <SavedListingsProvider initialEntries={initialEntries}>
-      <AssistantProvider>
-        <AppShell user={shellUser}>{children}</AppShell>
-      </AssistantProvider>
-    </SavedListingsProvider>
+    <CompareProvider>
+      <SavedListingsProvider initialEntries={initialEntries}>
+        <AssistantProvider>
+          <AppShell user={shellUser}>{children}</AppShell>
+          <CompareBar />
+        </AssistantProvider>
+      </SavedListingsProvider>
+    </CompareProvider>
   )
 }

@@ -14,9 +14,10 @@
 //   └─ Empty state ──────────────────────────────────────────────────────┘
 // ---------------------------------------------------------------------------
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useCallback } from 'react'
 import Link from 'next/link'
 import { useSavedListings } from '@/lib/saved/saved-context'
+import { useCompare } from '@/lib/compare/compare-context'
 import { PropertyCard, PropertyRow } from '@/components/marketplace/property-card'
 import {
   MarketplaceLandCard,
@@ -60,10 +61,19 @@ interface SavedListingsClientProps {
 
 export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
   const { savedIds, savedEntries, toggleSave, savedCount, clearAll } = useSavedListings()
+  const { isComparing, addToCompare, removeFromCompare } = useCompare()
   const [tab, setTab] = useState<AssetTab>('ALL')
   const [sort, setSort] = useState<SortMode>('DATE_SAVED')
   const [view, setView] = useState<ViewMode>('grid')
   const [confirmClear, setConfirmClear] = useState(false)
+
+  const handleCompare = useCallback(
+    (id: string, title: string) => {
+      if (isComparing(id)) removeFromCompare(id)
+      else addToCompare(id, title)
+    },
+    [isComparing, addToCompare, removeFromCompare],
+  )
 
   // Build a Map: id → savedAt for O(1) lookup when sorting
   const savedAtMap = useMemo(
@@ -249,6 +259,8 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             savedIds={savedIds}
             onToggle={toggleSave}
             isLandTab={tab === 'LAND'}
+            isComparing={isComparing}
+            onCompare={handleCompare}
           />
         ) : (
           <SavedList
@@ -256,6 +268,8 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             savedAtMap={savedAtMap}
             savedIds={savedIds}
             onToggle={toggleSave}
+            isComparing={isComparing}
+            onCompare={handleCompare}
           />
         )}
       </div>
@@ -349,9 +363,11 @@ interface GridProps {
   savedIds: Set<string>
   onToggle: (id: string) => void
   isLandTab: boolean
+  isComparing: (id: string) => boolean
+  onCompare: (id: string, title: string) => void
 }
 
-function SavedGrid({ listings, savedAtMap, savedIds, onToggle, isLandTab }: GridProps) {
+function SavedGrid({ listings, savedAtMap, savedIds, onToggle, isLandTab, isComparing, onCompare }: GridProps) {
   const cols = isLandTab
     ? 'grid-cols-1 sm:grid-cols-2'
     : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
@@ -370,6 +386,8 @@ function SavedGrid({ listings, savedAtMap, savedIds, onToggle, isLandTab }: Grid
             isSaved={savedIds.has(listing.id)}
             onToggle={onToggle}
             index={i}
+            isComparing={isComparing}
+            onCompare={onCompare}
           />
         </div>
       ))}
@@ -384,6 +402,8 @@ function SavedList({
   savedAtMap,
   savedIds,
   onToggle,
+  isComparing,
+  onCompare,
 }: Omit<GridProps, 'isLandTab'>) {
   return (
     <div className="flex flex-col gap-3">
@@ -410,6 +430,8 @@ function SavedList({
                 index={i}
                 isSaved={savedIds.has(listing.id)}
                 onSave={onToggle}
+                isComparing={isComparing(listing.id)}
+                onCompare={onCompare}
               />
               <SavedAtChip savedAt={savedAtMap.get(listing.id) ?? 0} />
             </div>
@@ -428,9 +450,11 @@ interface CardWrapperProps {
   isSaved: boolean
   onToggle: (id: string) => void
   index: number
+  isComparing: (id: string) => boolean
+  onCompare: (id: string, title: string) => void
 }
 
-function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index }: CardWrapperProps) {
+function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isComparing, onCompare }: CardWrapperProps) {
   return (
     <div className="group relative">
       {listing.propertyType === 'LAND' ? (
@@ -448,6 +472,8 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index }: CardWr
           isSaved={isSaved}
           onSave={onToggle}
           priority={index < 4}
+          isComparing={isComparing(listing.id)}
+          onCompare={onCompare}
         />
       )}
       {/* Saved-at timestamp — appears on hover */}

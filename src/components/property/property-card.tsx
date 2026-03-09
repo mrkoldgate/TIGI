@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Heart, MapPin, Zap } from 'lucide-react'
+import { Heart, MapPin, Zap, GitCompare, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import { ValuationBadge } from '@/components/valuation/valuation-badge'
@@ -53,6 +53,9 @@ export interface PropertyCardProps {
   variant?: 'card' | 'row'
   isSaved?: boolean
   onSave?: (id: string) => void
+  /** Compare tray — show compare button when handler is provided */
+  isComparing?: boolean
+  onCompare?: (id: string, title: string) => void
   /** Override href; defaults to /marketplace/:id */
   href?: string
   className?: string
@@ -168,6 +171,44 @@ interface SaveButtonProps {
   className?: string
 }
 
+// ---------------------------------------------------------------------------
+// Compare button
+// ---------------------------------------------------------------------------
+
+interface CompareButtonProps {
+  isComparing: boolean
+  onCompare:   () => void
+  className?:  string
+}
+
+function CompareButton({ isComparing, onCompare, className }: CompareButtonProps) {
+  return (
+    <button
+      type="button"
+      aria-label={isComparing ? 'Remove from comparison' : 'Add to comparison'}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onCompare()
+      }}
+      className={cn(
+        'flex h-7 w-7 items-center justify-center rounded-full transition-all duration-150',
+        isComparing
+          ? 'bg-[#C9A84C]/20 ring-1 ring-[#C9A84C]/40'
+          : 'bg-[#0A0A0F]/70 backdrop-blur-sm ring-1 ring-[#2A2A3A]',
+        'hover:bg-[#1A1A24] hover:ring-[#C9A84C]/50',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]',
+        className,
+      )}
+    >
+      {isComparing
+        ? <Check className="h-3.5 w-3.5 text-[#C9A84C]" />
+        : <GitCompare className="h-3.5 w-3.5 text-[#6B6B80] group-hover:text-[#A0A0B2]" />
+      }
+    </button>
+  )
+}
+
 function SaveButton({ isSaved, onSave, className }: SaveButtonProps) {
   return (
     <button
@@ -226,6 +267,8 @@ function CardVariant({
   data,
   isSaved,
   onSave,
+  isComparing,
+  onCompare,
   href,
   index,
   priority,
@@ -273,6 +316,16 @@ function CardVariant({
               </span>
             )}
           </div>
+
+          {/* Compare button — bottom-left, hidden until hover */}
+          {onCompare && (
+            <div className="absolute bottom-3 left-3 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+              <CompareButton
+                isComparing={isComparing ?? false}
+                onCompare={() => onCompare(data.id, data.title)}
+              />
+            </div>
+          )}
 
           {/* Save button — bottom-right, hidden until hover */}
           {onSave && (
@@ -357,6 +410,8 @@ function RowVariant({
   data,
   isSaved,
   onSave,
+  isComparing,
+  onCompare,
   href,
   index,
   priority,
@@ -445,13 +500,22 @@ function RowVariant({
                 </p>
               )}
             </div>
-            {onSave && (
-              <SaveButton
-                isSaved={isSaved ?? false}
-                onSave={() => onSave(data.id)}
-                className="opacity-0 transition-opacity duration-150 group-hover:opacity-100 mt-0.5"
-              />
-            )}
+            <div className="flex flex-col gap-1 mt-0.5">
+              {onSave && (
+                <SaveButton
+                  isSaved={isSaved ?? false}
+                  onSave={() => onSave(data.id)}
+                  className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                />
+              )}
+              {onCompare && (
+                <CompareButton
+                  isComparing={isComparing ?? false}
+                  onCompare={() => onCompare(data.id, data.title)}
+                  className="opacity-0 transition-opacity duration-150 group-hover:opacity-100"
+                />
+              )}
+            </div>
           </div>
 
           {data.isTokenized && data.tokenInfo && (

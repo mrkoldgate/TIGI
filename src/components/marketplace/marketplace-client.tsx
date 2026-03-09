@@ -22,6 +22,7 @@ import {
 import type { MockListing } from '@/lib/marketplace/mock-data'
 import type { MarketplaceStats } from '@/lib/listings/listing-query'
 import { useSavedListings } from '@/lib/saved/saved-context'
+import { useCompare } from '@/lib/compare/compare-context'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -523,13 +524,17 @@ function ListingCard({
   index,
   savedIds,
   onSave,
+  compareIds,
+  onCompare,
   priority,
 }: {
-  listing: MockListing
-  index: number
-  savedIds: Set<string>
-  onSave: (id: string) => void
-  priority?: boolean
+  listing:    MockListing
+  index:      number
+  savedIds:   Set<string>
+  onSave:     (id: string) => void
+  compareIds: Set<string>
+  onCompare:  (id: string, title: string) => void
+  priority?:  boolean
 }) {
   if (listing.propertyType === 'LAND') {
     return (
@@ -548,6 +553,8 @@ function ListingCard({
       index={index}
       isSaved={savedIds.has(listing.id)}
       onSave={onSave}
+      isComparing={compareIds.has(listing.id)}
+      onCompare={onCompare}
       priority={priority}
     />
   )
@@ -558,13 +565,17 @@ function ListingRow({
   index,
   savedIds,
   onSave,
+  compareIds,
+  onCompare,
   priority,
 }: {
-  listing: MockListing
-  index: number
-  savedIds: Set<string>
-  onSave: (id: string) => void
-  priority?: boolean
+  listing:    MockListing
+  index:      number
+  savedIds:   Set<string>
+  onSave:     (id: string) => void
+  compareIds: Set<string>
+  onCompare:  (id: string, title: string) => void
+  priority?:  boolean
 }) {
   if (listing.propertyType === 'LAND') {
     return (
@@ -583,6 +594,8 @@ function ListingRow({
       index={index}
       isSaved={savedIds.has(listing.id)}
       onSave={onSave}
+      isComparing={compareIds.has(listing.id)}
+      onCompare={onCompare}
       priority={priority}
     />
   )
@@ -603,6 +616,15 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
 
   // Shared save state — persists across marketplace, detail pages, and /saved
   const { savedIds, toggleSave } = useSavedListings()
+
+  // Compare tray — sessionStorage backed, available across all platform pages
+  const { compareIds: compareIdsArr, addToCompare, removeFromCompare, isComparing } = useCompare()
+  const compareIdsSet = useMemo(() => new Set(compareIdsArr), [compareIdsArr])
+
+  const handleCompare = (id: string, title: string) => {
+    if (isComparing(id)) removeFromCompare(id)
+    else addToCompare(id, title)
+  }
 
   function patchFilters(patch: Partial<Filters>) {
     setFilters((prev) => ({ ...prev, ...patch }))
@@ -696,6 +718,8 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
                 index={i}
                 savedIds={savedIds}
                 onSave={handleSave}
+                compareIds={compareIdsSet}
+                onCompare={handleCompare}
                 priority={i < 3}
               />
             </div>
@@ -714,6 +738,8 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
                 index={i}
                 savedIds={savedIds}
                 onSave={handleSave}
+                compareIds={compareIdsSet}
+                onCompare={handleCompare}
                 priority={i < 5}
               />
             </div>

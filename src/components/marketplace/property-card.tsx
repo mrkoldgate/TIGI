@@ -56,11 +56,13 @@ function toCardData(listing: MockListing): PropertyCardData {
 // ---------------------------------------------------------------------------
 
 interface PropertyCardProps {
-  listing: MockListing
-  index?: number
-  isSaved?: boolean
-  onSave?: (id: string) => void
-  priority?: boolean
+  listing:      MockListing
+  index?:       number
+  isSaved?:     boolean
+  onSave?:      (id: string) => void
+  isComparing?: boolean
+  onCompare?:   (id: string, title: string) => void
+  priority?:    boolean
 }
 
 export function MarketplacePropertyCard({
@@ -68,6 +70,8 @@ export function MarketplacePropertyCard({
   index,
   isSaved,
   onSave,
+  isComparing,
+  onCompare,
   priority,
 }: PropertyCardProps) {
   return (
@@ -77,6 +81,8 @@ export function MarketplacePropertyCard({
       index={index}
       isSaved={isSaved}
       onSave={onSave}
+      isComparing={isComparing}
+      onCompare={onCompare}
       priority={priority}
     />
   )
@@ -91,6 +97,8 @@ export function MarketplacePropertyRow({
   index,
   isSaved,
   onSave,
+  isComparing,
+  onCompare,
 }: PropertyCardProps) {
   return (
     <CanonicalPropertyCard
@@ -99,6 +107,8 @@ export function MarketplacePropertyRow({
       index={index}
       isSaved={isSaved}
       onSave={onSave}
+      isComparing={isComparing}
+      onCompare={onCompare}
     />
   )
 }

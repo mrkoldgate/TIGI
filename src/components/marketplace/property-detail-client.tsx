@@ -39,6 +39,7 @@ import {
 } from '@/lib/marketplace/mock-data'
 import { IntentPanel } from '@/components/intents/intent-panel'
 import { InquiryModal } from '@/components/inquiries/inquiry-modal'
+import { InvestModal } from '@/components/marketplace/invest-modal'
 import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
@@ -546,64 +547,76 @@ function QuickStats({ listing }: { listing: MockListing }) {
 }
 
 function InvestmentPanel({ listing }: { listing: MockListing }) {
+  const [modalOpen, setModalOpen] = useState(false)
+
   if (!listing.isTokenized || !listing.tokenTotalSupply || !listing.tokenPricePerFraction) return null
 
-  const soldPct = tokenSoldPercent(listing)
+  const soldPct  = tokenSoldPercent(listing)
   const available = listing.tokenAvailableSupply ?? 0
 
   return (
-    <div className="rounded-xl border border-[#C9A84C]/20 bg-[#0D0D14] p-4">
-      <div className="mb-3 flex items-center gap-2">
-        <Zap className="h-3.5 w-3.5 text-[#C9A84C]" />
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#C9A84C]">
-          Fractional Ownership
-        </span>
-      </div>
+    <>
+      <div className="rounded-xl border border-[#C9A84C]/20 bg-[#0D0D14] p-4">
+        <div className="mb-3 flex items-center gap-2">
+          <Zap className="h-3.5 w-3.5 text-[#C9A84C]" />
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#C9A84C]">
+            Fractional Participation
+          </span>
+        </div>
 
-      {/* Price per fraction */}
-      <div className="mb-4">
-        <p className="text-[10px] text-[#4A4A60]">Entry from</p>
-        <p className="font-heading text-2xl font-bold text-[#C9A84C]">
-          ${listing.tokenPricePerFraction.toLocaleString()}
-          <span className="text-sm font-normal text-[#6B6B80]">/fraction</span>
+        {/* Price per fraction */}
+        <div className="mb-4">
+          <p className="text-[10px] text-[#4A4A60]">Entry from</p>
+          <p className="font-heading text-2xl font-bold text-[#C9A84C]">
+            ${listing.tokenPricePerFraction.toLocaleString()}
+            <span className="text-sm font-normal text-[#6B6B80]">/fraction</span>
+          </p>
+        </div>
+
+        {/* Progress */}
+        <div className="mb-3">
+          <div className="mb-1.5 flex items-center justify-between text-[11px]">
+            <span className="text-[#6B6B80]">{soldPct}% subscribed</span>
+            <span className="text-[#6B6B80]">{available.toLocaleString()} left</span>
+          </div>
+          <div className="h-1.5 overflow-hidden rounded-full bg-[#2A2A3A]">
+            <div
+              className="h-full rounded-full bg-gradient-to-r from-[#B8932F] to-[#C9A84C] transition-all duration-700"
+              style={{ width: `${soldPct}%` }}
+            />
+          </div>
+        </div>
+
+        {/* Investor count */}
+        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#6B6B80]">
+          <Users className="h-3.5 w-3.5" />
+          <span>
+            <span className="font-medium text-[#A0A0B2]">{listing.tokenInvestorCount}</span>{' '}
+            investors have participated
+          </span>
+        </div>
+
+        {/* Invest CTA — opens the full modal */}
+        <button
+          type="button"
+          onClick={() => setModalOpen(true)}
+          className="w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
+        >
+          <Zap className="mr-1.5 inline h-3.5 w-3.5" />
+          Invest from ${listing.tokenPricePerFraction.toLocaleString()}
+        </button>
+
+        <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A4A60]">
+          Fractions represent proportional economic interest. Not a securities offering. See disclosures.
         </p>
       </div>
 
-      {/* Progress */}
-      <div className="mb-3">
-        <div className="mb-1.5 flex items-center justify-between text-[11px]">
-          <span className="text-[#6B6B80]">{soldPct}% subscribed</span>
-          <span className="text-[#6B6B80]">{available.toLocaleString()} left</span>
-        </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-[#2A2A3A]">
-          <div
-            className="h-full rounded-full bg-gradient-to-r from-[#B8932F] to-[#C9A84C] transition-all duration-700"
-            style={{ width: `${soldPct}%` }}
-          />
-        </div>
-      </div>
-
-      {/* Investor count */}
-      <div className="mb-4 flex items-center gap-1.5 text-xs text-[#6B6B80]">
-        <Users className="h-3.5 w-3.5" />
-        <span>
-          <span className="font-medium text-[#A0A0B2]">{listing.tokenInvestorCount}</span> investors have participated
-        </span>
-      </div>
-
-      {/* Invest CTA */}
-      <IntentPanel
-        propertyId={listing.id}
-        listingType={listing.listingType}
-        isTokenized={listing.isTokenized}
-        tokenPricePerFraction={listing.tokenPricePerFraction}
-        only={['PREPARE_INVEST']}
+      <InvestModal
+        listing={listing}
+        isOpen={modalOpen}
+        onClose={() => setModalOpen(false)}
       />
-
-      <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A4A60]">
-        Fractional tokens represent proportional economic interest. Returns distributed quarterly. Not a securities offering. See disclosures.
-      </p>
-    </div>
+    </>
   )
 }
 
