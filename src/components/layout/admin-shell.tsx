@@ -10,6 +10,7 @@ import {
   Flag,
   ShieldCheck,
   ArrowLeftRight,
+  BarChart2,
   LogOut,
 } from 'lucide-react'
 import { Logo } from '@/components/shared/logo'
@@ -23,6 +24,7 @@ import { cn } from '@/lib/utils'
 
 const ADMIN_NAV = [
   { href: '/admin/dashboard',    label: 'Dashboard',    icon: LayoutDashboard },
+  { href: '/admin/analytics',    label: 'Analytics',    icon: BarChart2       },
   { href: '/admin/users',        label: 'Users',        icon: Users           },
   { href: '/admin/listings',     label: 'Listings',     icon: Building2       },
   { href: '/admin/reviews',      label: 'Reviews',      icon: ClipboardList   },

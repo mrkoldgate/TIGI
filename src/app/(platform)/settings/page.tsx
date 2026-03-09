@@ -22,7 +22,7 @@ export default async function SettingsPage() {
 
   const user = await prisma.user.findUnique({
     where: { id: sessionUser.id },
-    select: { subscriptionTier: true, kycStatus: true },
+    select: { subscriptionTier: true, kycStatus: true, name: true },
   })
 
   const tier = (user?.subscriptionTier ?? 'free') as PlanId
@@ -80,9 +80,9 @@ export default async function SettingsPage() {
       href:        '/settings/profile',
       icon:        User,
       title:       'Profile',
-      description: 'Edit your name, avatar, and account preferences.',
-      meta:        'M7',
-      metaColor:   'text-[#4A4A5E]',
+      description: 'Edit your name, avatar, and notification preferences.',
+      meta:        user?.name ?? 'Set up',
+      metaColor:   user?.name ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]',
     },
   ]
 
