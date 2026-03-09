@@ -36,6 +36,8 @@ import { VersionedTransaction } from '@solana/web3.js'
 import { cn } from '@/lib/utils'
 import { useWalletTIGI } from '@/hooks/use-tigi-wallet'
 import { useWalletModal } from './wallet-provider'
+import { getProgramInfo } from '@/lib/solana/transaction-programs'
+import type { TIGIProgramId } from '@/lib/solana/transaction-programs'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -45,7 +47,7 @@ interface WalletPreparationData {
   blockhash:            string
   lastValidBlockHeight: number
   expiresAt:            string
-  program:              string
+  program:              TIGIProgramId
   memoText:             string
 }
 
@@ -229,11 +231,12 @@ export function WalletPreparationPanel({
       )}>
         <div className="flex items-center gap-1.5">
           <AlertTriangle className="h-3.5 w-3.5 text-[#F59E0B]" />
-          <p className="text-sm font-medium text-[#F59E0B]">Transaction expired</p>
+          <p className="text-sm font-medium text-[#F59E0B]">Preparation window expired</p>
         </div>
-        <p className="text-[11px] text-[#6B6B80]">
-          The prepared transaction has expired (Solana blockhash TTL ~90 seconds).
-          Refresh to get a new one.
+        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+          Solana transactions embed a recent block reference that expires after ~90 seconds.
+          This is a network-level safety mechanism — not an error. Refresh to generate a fresh
+          transaction and continue signing.
         </p>
         {error && <p className="text-[11px] text-[#EF4444]">{error}</p>}
         <button
@@ -284,7 +287,7 @@ export function WalletPreparationPanel({
       {/* Program + network */}
       <div className="flex items-center justify-between text-[11px]">
         <span className="text-[#4A4A60]">Program</span>
-        <span className="font-mono text-[#6B6B80]">SPL Memo</span>
+        <span className="font-mono text-[#6B6B80]">{getProgramInfo(preparation.program).displayName}</span>
       </div>
 
       {/* Error */}

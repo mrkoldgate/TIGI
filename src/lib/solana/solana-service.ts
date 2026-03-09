@@ -136,25 +136,32 @@ export class SolanaService {
 
   /**
    * Builds an unsigned VersionedTransaction that writes a UTF-8 memo
-   * to the Solana Memo program.
+   * to the Solana Memo program (or a specified program).
    *
-   * This is the on-chain record for M3 transaction intents.
+   * This is the on-chain record for M6 transaction intents.
    * The memo encodes intent metadata in a compact JSON format.
    * The signer pays a nominal fee (~0.000005 SOL on devnet).
    *
    * After this method: caller serializes, sends to client for signing,
    * then client POSTs signed tx back to /api/intents/[id]/submit.
+   *
+   * @param signerAddress  Wallet public key that will sign and pay the fee
+   * @param memoText       UTF-8 content to write on-chain (TIGI intent JSON)
+   * @param programAddress Override the memo program address (defaults to SPL Memo)
    */
   async buildMemoTransaction(
-    signerAddress:  string,
-    memoText:       string,
+    signerAddress:   string,
+    memoText:        string,
+    programAddress?: string,
   ): Promise<PreparedTransaction> {
-    const signer   = new PublicKey(signerAddress)
+    const signer    = new PublicKey(signerAddress)
+    const programId = programAddress ? new PublicKey(programAddress) : MEMO_PROGRAM_ID
+
     const { blockhash, lastValidBlockHeight } =
       await this.connection.getLatestBlockhash('confirmed')
 
     const memoInstruction = {
-      programId: MEMO_PROGRAM_ID,
+      programId,
       accounts:  [{ pubkey: signer, isSigner: true, isWritable: false }],
       data:      Buffer.from(memoText, 'utf-8'),
     }
@@ -169,7 +176,7 @@ export class SolanaService {
     const serialized = Buffer.from(tx.serialize()).toString('base64')
 
     // TTL: Solana blockhashes are valid for ~150 slots ≈ 60–90 seconds
-    const ttlMs    = (BLOCKHASH_TTL_SLOTS / SLOTS_PER_SECOND) * 1_000
+    const ttlMs     = (BLOCKHASH_TTL_SLOTS / SLOTS_PER_SECOND) * 1_000
     const expiresAt = new Date(Date.now() + ttlMs).toISOString()
 
     return {

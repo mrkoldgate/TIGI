@@ -31,6 +31,8 @@ import {
 import { cn } from '@/lib/utils'
 import type { UserIntent } from '@/lib/intents/intent-query'
 import { WalletPreparationPanel } from '@/components/wallet/wallet-preparation-panel'
+import { IntentReadinessChecklist } from '@/components/wallet/intent-readiness-checklist'
+import { INTENT_STATUS_GUIDANCE } from '@/lib/solana/transaction-programs'
 
 // ── Label maps ─────────────────────────────────────────────────────────────
 
@@ -42,49 +44,41 @@ const INTENT_TYPE_LABELS: Record<string, { label: string; short: string }> = {
 }
 
 const STATUS_CONFIG: Record<string, {
-  label:       string
   icon:        React.ElementType
   badgeClass:  string
   dotClass:    string
 }> = {
   PENDING: {
-    label:      'Pending',
     icon:       Clock,
     badgeClass: 'border-[#F59E0B]/30 bg-[#F59E0B]/10 text-[#F59E0B]',
     dotClass:   'bg-[#F59E0B]',
   },
   REVIEWING: {
-    label:      'Under Review',
     icon:       AlertCircle,
     badgeClass: 'border-[#3B82F6]/30 bg-[#3B82F6]/10 text-[#3B82F6]',
     dotClass:   'bg-[#3B82F6]',
   },
   APPROVED: {
-    label:      'Approved',
     icon:       CheckCircle2,
     badgeClass: 'border-[#22C55E]/30 bg-[#22C55E]/10 text-[#22C55E]',
-    dotClass:   'bg-[#22C55E]',
+    dotClass:   'bg-[#22C55E] animate-pulse',
   },
   READY_TO_SIGN: {
-    label:      'Ready to Sign',
     icon:       PenLine,
     badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
     dotClass:   'bg-[#C9A84C] animate-pulse',
   },
   EXECUTED: {
-    label:      'Executed',
     icon:       CheckCircle2,
     badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
     dotClass:   'bg-[#C9A84C]',
   },
   CANCELLED: {
-    label:      'Cancelled',
     icon:       XCircle,
     badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
     dotClass:   'bg-[#6B6B80]',
   },
   EXPIRED: {
-    label:      'Expired',
     icon:       XCircle,
     badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
     dotClass:   'bg-[#6B6B80]',
@@ -135,9 +129,11 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
     return null
   })
 
-  const statusCfg   = STATUS_CONFIG[localStatus]   ?? STATUS_CONFIG.PENDING
-  const intentLabel = INTENT_TYPE_LABELS[intent.intentType] ?? { label: intent.intentType, short: intent.intentType }
-  const StatusIcon  = statusCfg.icon
+  const statusCfg      = STATUS_CONFIG[localStatus]   ?? STATUS_CONFIG.PENDING
+  const statusGuidance = INTENT_STATUS_GUIDANCE[localStatus as keyof typeof INTENT_STATUS_GUIDANCE]
+                       ?? INTENT_STATUS_GUIDANCE.PENDING
+  const intentLabel    = INTENT_TYPE_LABELS[intent.intentType] ?? { label: intent.intentType, short: intent.intentType }
+  const StatusIcon     = statusCfg.icon
 
   const canCancel  = CANCELLABLE_STATUSES.includes(localStatus)
   const canPrepare = localStatus === 'APPROVED'
@@ -208,7 +204,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
               statusCfg.badgeClass,
             )}>
               <StatusIcon className="h-3 w-3" />
-              {statusCfg.label}
+              {statusGuidance.label}
             </div>
           </div>
 
@@ -281,25 +277,24 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
             <p className="mt-1.5 text-[11px] text-[#EF4444]">{cancelError}</p>
           )}
 
-          {/* Prepare for signing — shown when APPROVED */}
+          {/* Status meaning — shown for active non-terminal statuses */}
+          {statusGuidance.nextStep && localStatus !== 'APPROVED' && localStatus !== 'READY_TO_SIGN' && (
+            <p className="mt-2 text-[11px] leading-relaxed text-[#4A4A60]">
+              {statusGuidance.nextStep}
+            </p>
+          )}
+
+          {/* Readiness checklist — shown when APPROVED (replaces bare prepare button) */}
           {canPrepare && (
             <div className="mt-3 border-t border-[#1A1A24] pt-3">
-              {prepareError && (
-                <p className="mb-2 text-[11px] text-[#EF4444]">{prepareError}</p>
-              )}
-              <button
-                type="button"
-                onClick={handlePrepare}
-                disabled={isPreparing}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C]/15 py-2 text-sm font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25 transition-all hover:bg-[#C9A84C]/25 disabled:opacity-60 active:scale-[0.98]"
-              >
-                {isPreparing ? (
-                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                ) : (
-                  <PenLine className="h-3.5 w-3.5" />
-                )}
-                {isPreparing ? 'Preparing…' : 'Prepare to sign'}
-              </button>
+              <IntentReadinessChecklist
+                intentId={intent.id}
+                intentType={intent.intentType}
+                intentStatus={localStatus}
+                isPreparing={isPreparing}
+                prepareError={prepareError}
+                onPrepare={handlePrepare}
+              />
             </div>
           )}
 

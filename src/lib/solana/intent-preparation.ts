@@ -21,6 +21,8 @@
 
 import { SolanaService } from './solana-service'
 import type { PreparedTransaction } from './solana-service'
+import { TIGI_PROGRAMS, getIntentTypeFull } from './transaction-programs'
+import type { TIGIProgramId, IntentTypeFull } from './transaction-programs'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -28,16 +30,20 @@ import type { PreparedTransaction } from './solana-service'
  * On-chain memo payload for TIGI intent records.
  * Stored as compact JSON in the SPL Memo program instruction data.
  * Provides a human-readable, verifiable on-chain trail.
+ *
+ * v2 changes from v1:
+ *   - `type` now uses full names ('express_interest'|'purchase'|'investment'|'lease')
+ *     instead of abbreviated codes ('int'|'pur'|'inv'|'lea') for on-chain legibility
  */
 export interface IntentMemoPayload {
   /** Schema version — bump when structure changes */
-  v:       1
+  v:       2
   /** Short prefix for TIGI-originated memos */
   app:     'tigi'
   /** Off-chain intent ID (CUID) */
   intent:  string
-  /** Intent type short code */
-  type:    'int' | 'pur' | 'inv' | 'lea'
+  /** Intent type — full name for on-chain legibility */
+  type:    IntentTypeFull
   /** Property ID (first 8 chars for brevity) */
   prop:    string
   /** Fractional qty (PREPARE_INVEST only) */
@@ -51,23 +57,18 @@ export interface IntentMemoPayload {
  * Populated by prepareIntent(), read by WalletPreparationPanel.
  */
 export interface WalletPreparation extends PreparedTransaction {
-  /** Which Solana program handles this transaction */
-  program:         'MEMO'  // 'TOKEN_TRANSFER' | 'ESCROW' in M5
+  /**
+   * Which Solana program handles this transaction.
+   * Uses the TIGIProgramId registry — see transaction-programs.ts.
+   * MEMO for M6; ESCROW / TOKEN_TRANSFER in M7+.
+   */
+  program:    TIGIProgramId
   /** The full memo text written to chain */
-  memoText:        string
+  memoText:   string
   /** UTC ISO string when this preparation was created */
-  preparedAt:      string
+  preparedAt: string
   /** Address that prepared this tx (server-side, for audit) */
-  preparedBy:      'server'
-}
-
-type IntentType = 'EXPRESS_INTEREST' | 'PREPARE_PURCHASE' | 'PREPARE_INVEST' | 'PREPARE_LEASE'
-
-const INTENT_TYPE_SHORT: Record<IntentType, IntentMemoPayload['type']> = {
-  EXPRESS_INTEREST: 'int',
-  PREPARE_PURCHASE: 'pur',
-  PREPARE_INVEST:   'inv',
-  PREPARE_LEASE:    'lea',
+  preparedBy: 'server'
 }
 
 // ── IntentPreparationService ───────────────────────────────────────────────
@@ -105,11 +106,16 @@ export class IntentPreparationService {
     },
     signerAddress: string,
   ): Promise<WalletPreparation> {
+    // Use the program registry to determine the correct program for this intent.
+    // M6: all intents use MEMO. M7: ESCROW for purchase/invest, TOKEN_TRANSFER at issuance.
+    const programId: TIGIProgramId = 'MEMO'
+    const program = TIGI_PROGRAMS[programId]
+
     const memoPayload: IntentMemoPayload = {
-      v:      1,
+      v:      2,
       app:    'tigi',
       intent: intent.id,
-      type:   INTENT_TYPE_SHORT[intent.intentType as IntentType] ?? 'int',
+      type:   getIntentTypeFull(intent.intentType),
       prop:   intent.propertyId.slice(0, 8),
       ts:     Math.floor(Date.now() / 1_000),
       ...(intent.fractionQty != null ? { qty: intent.fractionQty } : {}),
@@ -117,11 +123,15 @@ export class IntentPreparationService {
 
     const memoText = JSON.stringify(memoPayload)
 
-    const prepared = await this.solana.buildMemoTransaction(signerAddress, memoText)
+    const prepared = await this.solana.buildMemoTransaction(
+      signerAddress,
+      memoText,
+      program.address,
+    )
 
     return {
       ...prepared,
-      program:    'MEMO',
+      program:    programId,
       memoText,
       preparedAt: new Date().toISOString(),
       preparedBy: 'server',
@@ -166,11 +176,14 @@ export class IntentPreparationService {
    * Parses an IntentMemoPayload from a raw memo string.
    * Returns null if the memo doesn't match the TIGI schema.
    * Used by audit tooling to decode on-chain intent records.
+   *
+   * Supports both v1 (legacy abbreviated codes) and v2 (full names).
    */
   static parseMemo(memoText: string): IntentMemoPayload | null {
     try {
       const payload = JSON.parse(memoText) as IntentMemoPayload
-      if (payload.v !== 1 || payload.app !== 'tigi') return null
+      if (payload.app !== 'tigi') return null
+      if (payload.v !== 1 && payload.v !== 2) return null
       return payload
     } catch {
       return null
