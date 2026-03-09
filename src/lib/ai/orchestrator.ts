@@ -22,6 +22,7 @@
 import { getAiProvider, getAnthropicClient, AI_MODELS } from './provider'
 import { buildAriaSystemPrompt, buildValuationNarrativePrompt } from './prompt-templates'
 import { getMockResponse } from '@/lib/assistant/mock-assistant-data'
+import { logger } from '@/lib/logger'
 import type { ContentBlock } from '@/lib/assistant/mock-assistant-data'
 import type { AIContext, AIResponse, ChatMessage } from './ai-types'
 import type { AiValuation } from '@/lib/valuation/valuation-types'
@@ -123,7 +124,7 @@ class AIOrchestrator {
           cached:    false,
         }
       } catch (err) {
-        console.error('[orchestrator.chat] Anthropic failed, using mock fallback:', err)
+        logger.error('[orchestrator.chat] Anthropic failed, using mock fallback', { err: (err as Error).message })
       }
     }
 
@@ -170,7 +171,7 @@ class AIOrchestrator {
           cached:    false,
         }
       } catch (err) {
-        console.error('[orchestrator.enrichValuationNarrative] Anthropic failed, using fallback:', err)
+        logger.error('[orchestrator.enrichValuationNarrative] Anthropic failed, using fallback', { err: (err as Error).message })
       }
     }
 

@@ -50,7 +50,8 @@
     "zod": "^3.24.1",
     "react-hook-form": "^7.54.2",
     "@hookform/resolvers": "^3.9.1",
-    "@anthropic-ai/sdk": "^0.39.0"
+    "@anthropic-ai/sdk": "^0.39.0",
+    "stripe": "^17.7.0"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

@@ -86,6 +86,15 @@ export interface TIGIConfig {
     sumsubApiKey:    string | undefined
     sumsubSecretKey: string | undefined
   }
+  billing: {
+    provider:              'mock' | 'stripe'
+    stripeSecretKey:       string | undefined
+    stripeWebhookSecret:   string | undefined
+    priceIdProMonthly:     string | undefined
+    priceIdProAnnual:      string | undefined
+    priceIdProPlusMonthly: string | undefined
+    priceIdProPlusAnnual:  string | undefined
+  }
   features: {
     walletConnect: boolean
     aiFeatures:    boolean
@@ -96,9 +105,10 @@ export interface TIGIConfig {
 // ── Builder ──────────────────────────────────────────────────────────────────
 
 function buildConfig(): TIGIConfig {
-  const aiProvider = (optional('AI_PROVIDER') ?? 'mock') as TIGIConfig['ai']['provider']
+  const aiProvider      = (optional('AI_PROVIDER')      ?? 'mock') as TIGIConfig['ai']['provider']
   const storageProvider = (optional('STORAGE_PROVIDER') ?? 'local') as TIGIConfig['storage']['provider']
-  const kycProvider = (optional('KYC_PROVIDER') ?? 'mock') as TIGIConfig['kyc']['provider']
+  const kycProvider     = (optional('KYC_PROVIDER')     ?? 'mock') as TIGIConfig['kyc']['provider']
+  const billingProvider = (optional('BILLING_PROVIDER') ?? 'mock') as TIGIConfig['billing']['provider']
 
   return {
     app: {
@@ -144,6 +154,15 @@ function buildConfig(): TIGIConfig {
       sumsubApiKey:    optional('SUMSUB_API_KEY'),
       sumsubSecretKey: optional('SUMSUB_SECRET_KEY'),
     },
+    billing: {
+      provider:              billingProvider,
+      stripeSecretKey:       optional('STRIPE_SECRET_KEY'),
+      stripeWebhookSecret:   optional('STRIPE_WEBHOOK_SECRET'),
+      priceIdProMonthly:     optional('STRIPE_PRO_MONTHLY_PRICE_ID'),
+      priceIdProAnnual:      optional('STRIPE_PRO_ANNUAL_PRICE_ID'),
+      priceIdProPlusMonthly: optional('STRIPE_PRO_PLUS_MONTHLY_PRICE_ID'),
+      priceIdProPlusAnnual:  optional('STRIPE_PRO_PLUS_ANNUAL_PRICE_ID'),
+    },
     features: {
       walletConnect: bool('NEXT_PUBLIC_ENABLE_WALLET_CONNECT', true),
       aiFeatures:    bool('NEXT_PUBLIC_ENABLE_AI_FEATURES', false),
@@ -185,6 +204,14 @@ export function assertRequiredConfig(): void {
   if (config.kyc.provider === 'sumsub') {
     if (!config.kyc.sumsubApiKey)    errors.push('SUMSUB_API_KEY — required when KYC_PROVIDER=sumsub')
     if (!config.kyc.sumsubSecretKey) errors.push('SUMSUB_SECRET_KEY — required when KYC_PROVIDER=sumsub')
+  }
+  if (config.billing.provider === 'stripe') {
+    if (!config.billing.stripeSecretKey)     errors.push('STRIPE_SECRET_KEY — required when BILLING_PROVIDER=stripe')
+    if (!config.billing.stripeWebhookSecret) errors.push('STRIPE_WEBHOOK_SECRET — required when BILLING_PROVIDER=stripe')
+    if (!config.billing.priceIdProMonthly)   errors.push('STRIPE_PRO_MONTHLY_PRICE_ID — required when BILLING_PROVIDER=stripe')
+    if (!config.billing.priceIdProAnnual)    errors.push('STRIPE_PRO_ANNUAL_PRICE_ID — required when BILLING_PROVIDER=stripe')
+    if (!config.billing.priceIdProPlusMonthly) errors.push('STRIPE_PRO_PLUS_MONTHLY_PRICE_ID — required when BILLING_PROVIDER=stripe')
+    if (!config.billing.priceIdProPlusAnnual)  errors.push('STRIPE_PRO_PLUS_ANNUAL_PRICE_ID — required when BILLING_PROVIDER=stripe')
   }
 
   if (errors.length > 0) {

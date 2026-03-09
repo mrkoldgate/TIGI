@@ -1,7 +1,7 @@
 # TIGI — Private Beta Readiness Checklist
 
 Last updated: 2026-03-09
-Status: **Pre-beta hardening complete (M7)**
+Status: **Provider activation complete (M8)**
 
 ---
 
@@ -197,9 +197,91 @@ To forward to an external log drain, replace the `emit()` function in `src/lib/l
 
 ---
 
-## 8. Rollback Plan
+## 8. M8 Provider Activation — Stripe Test Mode
+
+### Prerequisites
+
+```bash
+npm install   # installs stripe package (added in M8)
+```
+
+### Stripe test-mode setup
+
+1. Sign in to [https://dashboard.stripe.com](https://dashboard.stripe.com) and switch to **Test mode**.
+2. Create two products: **TIGI Pro** and **TIGI Pro+**. Add monthly + annual prices for each.
+3. Copy the four `price_...` IDs into `.env.local`:
+
+```dotenv
+BILLING_PROVIDER=stripe
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PRO_MONTHLY_PRICE_ID=price_...
+STRIPE_PRO_ANNUAL_PRICE_ID=price_...
+STRIPE_PRO_PLUS_MONTHLY_PRICE_ID=price_...
+STRIPE_PRO_PLUS_ANNUAL_PRICE_ID=price_...
+```
+
+1. Register a webhook endpoint in Stripe dashboard → **Webhooks → Add endpoint**:
+   - URL: `https://your-domain.com/api/billing/webhook`
+   - Events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.payment_failed`
+2. Copy the `whsec_...` signing secret:
+
+```dotenv
+STRIPE_WEBHOOK_SECRET=whsec_...
+```
+
+### Testing locally with Stripe CLI
+
+```bash
+# Install Stripe CLI, then:
+stripe login
+stripe listen --forward-to localhost:3000/api/billing/webhook
+
+# Trigger test events:
+stripe trigger checkout.session.completed
+stripe trigger customer.subscription.deleted
+```
+
+### Verification checklist
+
+- [ ] `npm install` succeeds (stripe package resolves)
+- [ ] `BILLING_PROVIDER=stripe` + all Stripe env vars set
+- [ ] Click "Upgrade to Pro" in the UI → redirects to Stripe Checkout (test card: `4242 4242 4242 4242`)
+- [ ] After successful checkout → user's `subscriptionTier` updated in DB
+- [ ] Webhook receives `checkout.session.completed` → `auditLog` entry created
+- [ ] `BILLING_PROVIDER=mock` still works for local dev without any Stripe keys
+
+---
+
+## 9. M8 Provider Activation — Anthropic
+
+### Setup
+
+```dotenv
+AI_PROVIDER=anthropic
+ANTHROPIC_API_KEY=sk-ant-...
+```
+
+### Anthropic verification checklist
+
+- [ ] Open the Aria assistant → responses come from Claude Haiku (not mock)
+- [ ] Pro+ user requests a deep valuation → narrative enriched by Claude Sonnet
+- [ ] Remove `ANTHROPIC_API_KEY` → app falls back to mock (no crash, no user-visible error)
+- [ ] `AI_PROVIDER=mock` (default) → no Anthropic SDK loaded, no API calls made
+
+### Fallback behaviour (verified in unit tests)
+
+If Anthropic throws at runtime (rate limit, overload, outage):
+
+- `orchestrator.chat` falls back to mock response silently
+- `orchestrator.enrichValuationNarrative` returns the rule-based summary unchanged
+- Both paths log the error via `logger.error` — check logs, not user-facing errors
+
+---
+
+## 10. Rollback Plan
 
 1. All DB changes are Prisma migrations — reversible with `prisma migrate reset` (destructive)
 2. Seed data can be re-applied safely at any time — all upserts are idempotent
 3. Custodial wallets encrypted at rest — wallet data survives DB rollback as long as `PLATFORM_WALLET_SECRET` is unchanged
-4. Git tags: create a `v0.7.0-beta` tag before deploying to make rollback trivial
+4. Git tags: create a `v0.8.0-beta` tag before deploying to make rollback trivial
+5. Stripe: setting `BILLING_PROVIDER=mock` immediately disables Stripe without a redeploy
