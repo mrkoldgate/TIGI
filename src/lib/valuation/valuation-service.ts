@@ -30,6 +30,7 @@ import type { AiValuation, AiConfidence, ValuationDriver, ValuationRange } from 
 import { getMockValuation } from './mock-valuations'
 import type { MockListing } from '@/lib/marketplace/mock-data'
 import type { SellerListing } from '@/lib/listings/seller-mock-data'
+import type { AIContext } from '@/lib/ai/ai-types'
 
 // ---------------------------------------------------------------------------
 // Input contract
@@ -588,6 +589,40 @@ export async function getValuation(listingId: string, input: ValuationInput): Pr
   const prebaked = getMockValuation(listingId)
   if (prebaked) return prebaked
   return createValuationService().valuate(input)
+}
+
+// ---------------------------------------------------------------------------
+// getEnrichedValuation — AI-enhanced narrative for Pro users
+// ---------------------------------------------------------------------------
+
+/**
+ * Returns a valuation with an AI-enriched narrative summary for Pro+ users.
+ *
+ * For free users or when AI_PROVIDER=mock: identical to getValuation() — the
+ * rule-based summary is returned unchanged.
+ *
+ * For Pro+ users with AI_PROVIDER=anthropic: the summary field is replaced
+ * with an LLM-generated institutional-quality prose narrative.
+ *
+ * Uses dynamic import to avoid bundling orchestrator into mock-only builds.
+ */
+export async function getEnrichedValuation(
+  listingId: string,
+  input: ValuationInput,
+  context?: AIContext,
+): Promise<AiValuation> {
+  const base = await getValuation(listingId, input)
+
+  // Dynamic import keeps the orchestrator out of the critical path for
+  // free-tier and mock-mode requests.
+  const { getAIOrchestrator } = await import('@/lib/ai/orchestrator')
+  const narrativeResponse = await getAIOrchestrator().enrichValuationNarrative(base, input, context)
+
+  if (narrativeResponse.provider === 'anthropic') {
+    return { ...base, summary: narrativeResponse.result }
+  }
+
+  return base
 }
 
 // ---------------------------------------------------------------------------

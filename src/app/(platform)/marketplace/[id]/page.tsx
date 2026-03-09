@@ -3,10 +3,11 @@ import type { Metadata } from 'next'
 import { getListingById, getActiveListings } from '@/lib/listings/listing-query'
 import { PropertyDetailClient } from '@/components/marketplace/property-detail-client'
 import { LandDetailClient } from '@/components/marketplace/land-detail-client'
-import { getValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
+import { getEnrichedValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
 import { getTerraListing } from '@/lib/terra/terra-query'
 import { getCurrentUser } from '@/lib/auth/session'
 import { canAccessDeepValuation } from '@/lib/premium/feature-gate'
+import type { AIContext } from '@/lib/ai/ai-types'
 
 // ---------------------------------------------------------------------------
 // /marketplace/[id] — Unified property & land detail route.
@@ -51,11 +52,21 @@ export default async function ListingDetailPage({ params }: PageProps) {
 
   if (!listing) notFound()
 
-  const [valuation] = await Promise.all([
-    getValuation(listing.id, marketplaceListingToInput(listing)),
-  ])
-
   const isProUser = canAccessDeepValuation(sessionUser)
+
+  // Build AI context so Pro users receive an LLM-enriched valuation narrative.
+  // For free users the orchestrator skips the API call entirely.
+  const aiContext: AIContext | undefined = sessionUser
+    ? {
+        userId:           sessionUser.id,
+        subscriptionTier: (sessionUser as { subscriptionTier?: string }).subscriptionTier ?? 'free',
+        role:             (sessionUser as { role?: string }).role ?? 'INVESTOR',
+      }
+    : undefined
+
+  const [valuation] = await Promise.all([
+    getEnrichedValuation(listing.id, marketplaceListingToInput(listing), aiContext),
+  ])
 
   if (listing.propertyType === 'LAND') {
     // Enrich with Terra structured data (lease terms + dev opportunity)
