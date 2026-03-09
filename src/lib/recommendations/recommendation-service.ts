@@ -157,6 +157,64 @@ function landPreference(c: MockListing, prefs: UserPreferences): ScoreContributi
   return { points: 15, reason: r('LAND_PREFERENCE', 'Land parcel', 'Matches your preference for land and development opportunities.') }
 }
 
+function recencySignal(c: MockListing): ScoreContribution {
+  if (!c.createdAt) return { points: 0, reason: null }
+  const daysSinceListed = (Date.now() - new Date(c.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+  if (daysSinceListed <= 14) {
+    return { points: 12, reason: r('NEW_LISTING', 'New to market', `Listed ${Math.round(daysSinceListed)} day${Math.round(daysSinceListed) === 1 ? '' : 's'} ago — fresh inventory, no prior market exposure.`) }
+  }
+  if (daysSinceListed <= 30) {
+    return { points: 6, reason: r('NEW_LISTING', 'Recently listed', 'Listed within the last 30 days — early in the market exposure cycle.') }
+  }
+  return { points: 0, reason: null }
+}
+
+function valueScoreSignal(c: MockListing): ScoreContribution {
+  if (!c.aiEstimatedValue || !c.price || c.price === 0) return { points: 0, reason: null }
+  const upside = (c.aiEstimatedValue - c.price) / c.price
+  if (upside >= 0.12) {
+    return {
+      points: 18,
+      reason: r(
+        'VALUE_SCORE',
+        'Potential upside',
+        `AI estimate is ${Math.round(upside * 100)}% above asking — model sees meaningful value relative to the listed price.`,
+      ),
+    }
+  }
+  if (upside >= 0.06) {
+    return {
+      points: 8,
+      reason: r(
+        'VALUE_SCORE',
+        'Favorable pricing',
+        `AI estimate is ${Math.round(upside * 100)}% above asking — modestly favorable entry price relative to estimated value.`,
+      ),
+    }
+  }
+  return { points: 0, reason: null }
+}
+
+function roleBasedSignal(c: MockListing, prefs: UserPreferences): ScoreContribution {
+  if (!prefs.role) return { points: 0, reason: null }
+
+  if (prefs.role === 'OWNER') {
+    // Owners browsing the platform benefit from commercial/land comps
+    if (c.propertyType === 'COMMERCIAL' || c.propertyType === 'LAND') {
+      return { points: 8, reason: r('CATEGORY_MATCH', 'Owner-relevant asset', 'Commercial and land assets are commonly relevant for owners expanding or diversifying their property portfolio.') }
+    }
+  }
+
+  if (prefs.role === 'INVESTOR') {
+    // Investors benefit from industrial and commercial income-producing assets
+    if (c.propertyType === 'INDUSTRIAL' || c.propertyType === 'COMMERCIAL') {
+      return { points: 6, reason: r('CATEGORY_MATCH', 'Income-producing asset', 'Industrial and commercial properties offer structured lease income — aligns with investment return objectives.') }
+    }
+  }
+
+  return { points: 0, reason: null }
+}
+
 function similarToSaved(
   c: MockListing,
   prefs: UserPreferences,
@@ -274,6 +332,10 @@ class RuleBasedEngine implements IRecommendationEngine {
       tokenizationMatch(c, anchor),
       sqftProximity(c, anchor),
       bedroomProximity(c, anchor),
+      // Quality signals — boost score but surfaced only if they bubble to top 3 reasons
+      highConfidenceSignal(c),
+      valueScoreSignal(c),
+      recencySignal(c),
     ]
     const total = contributions.reduce((s, c) => s + c.points, 0)
     return {
@@ -294,6 +356,9 @@ class RuleBasedEngine implements IRecommendationEngine {
       budgetMatch(c, prefs),
       tokenizedPreference(c, prefs),
       landPreference(c, prefs),
+      roleBasedSignal(c, prefs),
+      valueScoreSignal(c),
+      recencySignal(c),
       highConfidenceSignal(c),
       trendingSignal(c, allListings),
       similarToSaved(c, prefs, allListings),
@@ -347,8 +412,8 @@ export function getSimilarListings(
 }
 
 // ---------------------------------------------------------------------------
-// MVP user preference profile — derived from MOCK_USER + MOCK_SAVED_IDS.
-// M3 upgrade: load from session user profile / onboarding answers.
+// Demo user preference profile — derived from MOCK_USER + MOCK_SAVED_IDS.
+// M6 upgrade: load from session user profile / onboarding answers.
 // ---------------------------------------------------------------------------
 
 export const DEMO_USER_PREFERENCES: UserPreferences = {

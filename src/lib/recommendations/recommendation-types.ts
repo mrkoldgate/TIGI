@@ -24,6 +24,8 @@ export type ReasonType =
   | 'TRENDING'          // High view count relative to cohort
   | 'LAND_PREFERENCE'   // Matches land parcel preference
   | 'OWNERSHIP_MATCH'   // Matches full vs. fractional ownership preference
+  | 'NEW_LISTING'        // Listed within the last 30 days
+  | 'VALUE_SCORE'        // AI estimate meaningfully above asking price (potential upside)
 
 export interface RecommendationReason {
   type: ReasonType

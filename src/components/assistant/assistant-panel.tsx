@@ -248,7 +248,7 @@ function InputBar({ value, onChange, onSend, disabled, showDisclaimer = true, cl
       </div>
       {showDisclaimer && (
         <p className="mt-2 text-center text-[10px] text-[#3A3A4A]">
-          Aria uses mock responses · Real AI integration in M2
+          Aria provides general guidance · Not financial or legal advice
         </p>
       )}
     </div>
