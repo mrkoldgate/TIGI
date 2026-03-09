@@ -83,8 +83,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     ...authConfig.callbacks,
 
-    // Override jwt to also handle OAuth sign-ins (fetch DB fields)
-    async jwt({ token, user, account }) {
+    // Override jwt to also handle OAuth sign-ins and session updates (fetch DB fields)
+    async jwt({ token, user, account, trigger }) {
       // First sign-in — user object present
       if (user) {
         token.id = user.id as string
@@ -99,8 +99,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           (user as { onboardingComplete?: boolean }).onboardingComplete ?? false
       }
 
-      // OAuth sign-in — fetch latest DB fields (role/kyc may have changed)
-      if (account?.provider !== 'credentials' && token.id) {
+      // Re-fetch from DB on: OAuth sign-ins OR explicit session update() call
+      // This ensures subscription tier changes (billing upgrades) reflect immediately
+      const shouldRefresh =
+        (account?.provider !== 'credentials' && !!token.id) ||
+        trigger === 'update'
+
+      if (shouldRefresh && token.id) {
         const dbUser = await prisma.user.findUnique({
           where: { id: token.id as string },
           select: {

@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 // ---------------------------------------------------------------------------
@@ -22,6 +23,23 @@ const TIER_CONFIG: Record<string, { label: string; className: string }> = {
 export function SubscriptionBadge({ tier, className, showFree = false }: SubscriptionBadgeProps) {
   if (tier === 'free' && !showFree) return null
   const config = TIER_CONFIG[tier] ?? TIER_CONFIG.free
+
+  // Free tier badge links to billing to encourage upgrade
+  if (tier === 'free' && showFree) {
+    return (
+      <Link
+        href="/settings/billing"
+        className={cn(
+          'inline-flex items-center rounded border px-2 py-0.5 text-[11px] font-medium transition-opacity hover:opacity-80',
+          config.className,
+          className,
+        )}
+      >
+        {config.label}
+      </Link>
+    )
+  }
+
   return (
     <span
       className={cn(

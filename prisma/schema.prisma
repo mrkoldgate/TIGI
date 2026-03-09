@@ -50,6 +50,11 @@ model User {
   subscriptionTier SubscriptionTier @default(free)
   subscriptionEndsAt DateTime?
 
+  // Billing (Stripe — optional until BILLING_PROVIDER=stripe)
+  stripeCustomerId     String? @unique
+  stripeSubscriptionId String? @unique
+  stripeCurrentPeriodEnd DateTime?
+
   // Relations
   accounts        Account[]
   sessions        Session[]
