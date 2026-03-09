@@ -1,6 +1,9 @@
+'use client'
+
 import Link from 'next/link'
 import { Sparkles, ArrowRight, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
 // UpgradeCta — tasteful Pro upgrade prompt.
@@ -40,6 +43,7 @@ export function UpgradeCta({ className, compact = false }: UpgradeCtaProps) {
         </div>
         <Link
           href="/settings/billing"
+          onClick={() => track({ name: 'upgrade.cta.clicked', properties: { location: 'compact_banner' } })}
           className="flex flex-shrink-0 items-center gap-1 text-[11px] font-semibold text-[#C9A84C] hover:opacity-80"
         >
           Upgrade <ArrowRight className="h-3 w-3" />
@@ -69,6 +73,7 @@ export function UpgradeCta({ className, compact = false }: UpgradeCtaProps) {
         <div className="pt-3">
           <Link
             href="/settings/billing"
+            onClick={() => track({ name: 'upgrade.cta.clicked', properties: { location: 'full_card' } })}
             className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-[#C9A84C] py-2 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
           >
             <Sparkles className="h-3.5 w-3.5" />

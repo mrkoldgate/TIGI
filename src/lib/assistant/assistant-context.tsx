@@ -8,6 +8,7 @@ import {
   newMessageId,
   nowISO,
 } from './mock-assistant-data'
+import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
 // AssistantContext — global state for the TIGI AI assistant (Aria).
@@ -67,9 +68,9 @@ export function AssistantProvider({ children }: AssistantProviderProps) {
 
   const abortRef = useRef<AbortController | null>(null)
 
-  const open    = useCallback(() => setIsOpen(true),          [])
+  const open    = useCallback(() => { setIsOpen(true); track({ name: 'assistant.opened' }) }, [])
   const close   = useCallback(() => setIsOpen(false),         [])
-  const toggle  = useCallback(() => setIsOpen((o) => !o),     [])
+  const toggle  = useCallback(() => setIsOpen((o) => { if (!o) track({ name: 'assistant.opened' }); return !o }), [])
   const clearMessages = useCallback(() => setMessages([]),    [])
 
   const sendMessage = useCallback((text: string) => {

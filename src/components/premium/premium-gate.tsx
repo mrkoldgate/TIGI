@@ -1,8 +1,10 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { Lock } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
 // PremiumGate — wraps Pro-only content with a blur-and-lock overlay.
@@ -32,6 +34,15 @@ export function PremiumGate({
   className,
   minHeight = 160,
 }: PremiumGateProps) {
+  // Track gate impression once on mount (only when blocked)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (!isPro) {
+      track({ name: 'premium.gate.viewed', properties: { feature } })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   if (isPro) return <>{children}</>
 
   return (

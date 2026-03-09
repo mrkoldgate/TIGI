@@ -362,31 +362,32 @@ function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
 }
 
 // ---------------------------------------------------------------------------
-// Portfolio teaser — M4 unlock card in the sidebar column
+// Portfolio teaser — live in M5, links to portfolio page
 // ---------------------------------------------------------------------------
 
 function PortfolioTeaser() {
   return (
-    <div className="rounded-xl border border-dashed border-[#2A2A3A] p-5 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A24] text-[#6B6B80]">
-        <BarChart3 className="h-5 w-5" />
+    <div className="overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] p-5">
+      <div className="mb-3 flex items-center gap-3">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#1A1A24] text-[#C9A84C]">
+          <BarChart3 className="h-5 w-5" />
+        </div>
+        <div>
+          <h3 className="text-sm font-semibold text-[#F5F5F7]">Your Portfolio</h3>
+          <p className="text-[11px] text-[#6B6B80]">Holdings &amp; performance</p>
+        </div>
       </div>
-      <h3 className="text-sm font-semibold text-[#F5F5F7]">Portfolio Analytics</h3>
-      <p className="mt-1.5 text-xs text-[#6B6B80]">
-        Total value, ROI, yield history, and performance charts arrive with wallet integration in Milestone 4.
+      <p className="mb-4 text-xs text-[#6B6B80]">
+        View your token holdings, track P&amp;L, and monitor yield performance
+        across all fractional investments.
       </p>
-      <div className="mt-4 flex items-center justify-center gap-2">
-        <span className="flex items-center gap-1.5 rounded-full border border-[#2A2A3A] bg-[#0A0A0F] px-3 py-1 text-[11px] text-[#6B6B80]">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
-          Milestone 4
-        </span>
-        <Link
-          href="/portfolio"
-          className="text-[11px] text-[#6B6B80] underline-offset-2 hover:text-[#C9A84C] hover:underline"
-        >
-          Learn more
-        </Link>
-      </div>
+      <Link
+        href="/portfolio"
+        className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+      >
+        <BarChart3 className="h-3.5 w-3.5" />
+        View portfolio
+      </Link>
     </div>
   )
 }

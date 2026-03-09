@@ -10,6 +10,7 @@ import {
   ShieldCheck,
   RefreshCw,
   AlertTriangle,
+  MessageSquare,
 } from 'lucide-react'
 import {
   ADMIN_PLATFORM_STATS,
@@ -19,6 +20,7 @@ import {
   MOCK_DEFERRED_COUNTS,
 } from '@/lib/admin/mock-admin-data'
 import type { KycQueueStats } from '@/lib/compliance/kyc-query'
+import type { InquirySummary } from '@/lib/admin/inquiry-admin-query'
 
 import { AdminStatCard } from './admin-stat-card'
 import { ReviewQueue } from './review-queue'
@@ -90,16 +92,20 @@ interface AdminDashboardClientProps {
   pendingReviewCount?: number
   /** Live KYC queue stats (from DB). */
   kycStats?: KycQueueStats
+  /** Live inquiry aggregate counts (from DB). */
+  inquirySummary?: InquirySummary
 }
 
-export function AdminDashboardClient({ pendingReviewCount, kycStats }: AdminDashboardClientProps = {}) {
+export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySummary }: AdminDashboardClientProps = {}) {
   const stats = ADMIN_PLATFORM_STATS
   const criticalFlags   = MOCK_FLAGGED_ITEMS.filter((f) => f.severity === 'CRITICAL').length
   const criticalReviews = MOCK_REVIEW_QUEUE.filter((r) => r.urgency === 'CRITICAL').length
 
   // Use live count when available; fall back to mock
-  const liveReviewCount = pendingReviewCount ?? stats.pendingReviewListings
-  const kycPending      = (kycStats?.pending ?? 0) + (kycStats?.submitted ?? 0)
+  const liveReviewCount  = pendingReviewCount ?? stats.pendingReviewListings
+  const kycPending       = (kycStats?.pending ?? 0) + (kycStats?.submitted ?? 0)
+  const liveInquiries    = inquirySummary?.total    ?? stats.totalInquiries
+  const liveNewInquiries = inquirySummary?.newCount ?? stats.newInquiries
 
   return (
     <div className="space-y-8">
@@ -126,7 +132,7 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats }: AdminDash
           </div>
           <div className="flex items-center gap-1.5 text-[11px] text-[#4A4A5E]">
             <RefreshCw className="h-3 w-3" />
-            {pendingReviewCount !== undefined ? 'Live · KYC & Reviews' : 'Mock data'}
+            {pendingReviewCount !== undefined ? 'Live · KYC, Reviews & Inquiries' : 'Mock data'}
           </div>
         </div>
       </div>
@@ -186,12 +192,16 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats }: AdminDash
             href="/admin/flagged"
           />
           <AdminStatCard
-            label="Transactions"
-            value="—"
-            hint="All time"
-            icon={ArrowLeftRight}
-            urgency="normal"
-            lockedUntil="M5"
+            label="Inquiries"
+            value={liveInquiries}
+            hint={liveNewInquiries > 0 ? `${liveNewInquiries} unread` : 'All time'}
+            icon={MessageSquare}
+            urgency={liveNewInquiries > 20 ? 'warn' : 'normal'}
+            delta={
+              liveNewInquiries > 0
+                ? { value: liveNewInquiries, label: 'unread' }
+                : undefined
+            }
           />
           <AdminStatCard
             label="Platform Revenue"

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { requireAdmin } from '@/lib/auth/session'
 import { getPendingReviewCount } from '@/lib/admin/listing-review-query'
 import { getKycQueueStats } from '@/lib/compliance/kyc-query'
+import { getInquirySummaryForAdmin } from '@/lib/admin/inquiry-admin-query'
 import { AdminDashboardClient } from '@/components/admin/admin-dashboard-client'
 
 export const metadata: Metadata = {
@@ -23,15 +24,17 @@ export const metadata: Metadata = {
 export default async function AdminDashboardPage() {
   await requireAdmin()
 
-  const [pendingReviewCount, kycStats] = await Promise.all([
+  const [pendingReviewCount, kycStats, inquirySummary] = await Promise.all([
     getPendingReviewCount(),
     getKycQueueStats(),
+    getInquirySummaryForAdmin(),
   ])
 
   return (
     <AdminDashboardClient
       pendingReviewCount={pendingReviewCount}
       kycStats={kycStats}
+      inquirySummary={inquirySummary}
     />
   )
 }

@@ -27,7 +27,10 @@ export interface AdminPlatformStats {
   // Flags
   openFlags: number
   criticalFlags: number
-  // Transactions — locked until M5
+  // Inquiries — live in M5
+  totalInquiries: number
+  newInquiries:   number
+  // Transactions — locked until M6
   totalTransactions: number | null
   // Revenue — locked until M12
   platformRevenue: number | null
@@ -44,8 +47,10 @@ export const ADMIN_PLATFORM_STATS: AdminPlatformStats = {
   pausedListings: 12,
   openFlags: 4,
   criticalFlags: 1,
-  totalTransactions: null,  // M5
-  platformRevenue: null,    // M12
+  totalInquiries: 0,
+  newInquiries:   0,
+  totalTransactions: null, // M6
+  platformRevenue: null,   // M12
 }
 
 // ---------------------------------------------------------------------------

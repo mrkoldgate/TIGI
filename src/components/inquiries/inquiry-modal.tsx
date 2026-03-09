@@ -26,6 +26,7 @@ import {
   type InquiryType,
   INQUIRY_TYPE_LABELS,
 } from '@/lib/inquiries/inquiry-types'
+import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -244,6 +245,7 @@ export function InquiryModal({
       }
 
       setSuccess(true)
+      track({ name: 'inquiry.submitted', properties: { listingId: propertyId, inquiryType: selected, propertyTitle } })
     } catch (err) {
       setError((err as Error).message)
     } finally {

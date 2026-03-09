@@ -27,6 +27,7 @@ import React, {
   useMemo,
   useState,
 } from 'react'
+import { track } from '@/lib/analytics/client'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -122,6 +123,12 @@ export function SavedListingsProvider({
         const next = isCurrentlySaved
           ? prev.filter((e) => e.id !== id)
           : [{ id, savedAt: Date.now() }, ...prev]
+
+        // Track favorite save/remove event
+        track({
+          name: isCurrentlySaved ? 'favorite.removed' : 'favorite.saved',
+          properties: { listingId: id },
+        })
 
         if (isApiMode) {
           // Optimistic update already applied via `next`.

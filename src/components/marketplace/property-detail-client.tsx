@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useSavedListings } from '@/lib/saved/saved-context'
 import {
@@ -39,6 +39,7 @@ import {
 } from '@/lib/marketplace/mock-data'
 import { IntentPanel } from '@/components/intents/intent-panel'
 import { InquiryModal } from '@/components/inquiries/inquiry-modal'
+import { track } from '@/lib/analytics/client'
 
 // ---------------------------------------------------------------------------
 // Gallery slot pools — derive additional images from property type
@@ -742,6 +743,19 @@ export function PropertyDetailClient({
   const { isSaved, toggleSave } = useSavedListings()
   const saved = isSaved(listing.id)
   const onSave = () => toggleSave(listing.id)
+
+  useEffect(() => {
+    track({
+      name: 'listing.viewed',
+      properties: {
+        listingId: listing.id,
+        propertyType: listing.propertyType,
+        isLand: listing.propertyType === 'Land',
+        price: listing.price,
+      },
+    })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listing.id])
 
   return (
     <div className="animate-fade-in space-y-6 pt-6 pb-16">
