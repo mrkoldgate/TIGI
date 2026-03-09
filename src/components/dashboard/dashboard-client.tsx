@@ -10,6 +10,7 @@ import {
   Sparkles,
   ShieldCheck,
   Wallet,
+  MessageSquare,
 } from 'lucide-react'
 import { useSavedListings } from '@/lib/saved/saved-context'
 import { type MockListing } from '@/lib/marketplace/mock-data'
@@ -22,6 +23,7 @@ import {
 } from '@/lib/dashboard/mock-dashboard'
 import { getRecommendations, DEMO_USER_PREFERENCES } from '@/lib/recommendations/recommendation-service'
 import { RecommendationRail } from '@/components/recommendations/recommendation-rail'
+import { SubmittedInquiryFeed } from '@/components/inquiries/submitted-inquiry-feed'
 
 import { StatCard } from './stat-card'
 import { SectionHeader } from './section-header'
@@ -214,6 +216,16 @@ export function DashboardClient({ allListings, user, stats: serverStats }: Dashb
               </div>
             </div>
           </section>
+          {/* My Inquiries */}
+          <section aria-label="My inquiries">
+            <SectionHeader
+              title="My Inquiries"
+              description="Questions and interest you've sent to listing owners."
+            />
+            <div className="mt-4">
+              <SubmittedInquiryFeed />
+            </div>
+          </section>
         </div>
 
         {/* ── RIGHT column (1/3) ─────────────────────────────────────────── */}
@@ -235,7 +247,7 @@ export function DashboardClient({ allListings, user, stats: serverStats }: Dashb
             <SectionHeader
               title="Valuation Alerts"
               description="AI-detected price and valuation changes."
-              milestone="M5"
+              milestone="M6"
             />
             <div className="mt-4">
               <ValuationAlerts alerts={MOCK_VALUATION_ALERTS} />

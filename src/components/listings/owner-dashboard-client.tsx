@@ -18,10 +18,12 @@ import {
 import { type SellerListing, getSellerStats, formatPrice } from '@/lib/listings/seller-mock-data'
 import {
   type OwnerUser,
+  type OwnerInquiry,
   MOCK_OWNER_INQUIRIES,
   MOCK_OWNER_PERFORMANCE,
   OWNER_QUICK_ACTIONS,
 } from '@/lib/listings/owner-mock-data'
+import type { InquiryDTO } from '@/lib/inquiries/inquiry-types'
 
 import { cn } from '@/lib/utils'
 import { StatCard } from '@/components/dashboard/stat-card'
@@ -51,13 +53,44 @@ import { SellerListingsClient } from './seller-listings-client'
 // ---------------------------------------------------------------------------
 
 interface OwnerDashboardClientProps {
-  listings: SellerListing[]
-  ownerUser: OwnerUser
+  listings:   SellerListing[]
+  ownerUser:  OwnerUser
+  /** Real inquiries from DB — falls back to mock when not provided */
+  inquiries?: InquiryDTO[]
 }
 
-export function OwnerDashboardClient({ listings, ownerUser }: OwnerDashboardClientProps) {
+// ---------------------------------------------------------------------------
+// Adapter: InquiryDTO (from service) → OwnerInquiry (existing InquiryFeed shape)
+// ---------------------------------------------------------------------------
+function toOwnerInquiry(dto: InquiryDTO): OwnerInquiry {
+  const intentMap: Record<string, OwnerInquiry['intent']> = {
+    GENERAL:              'INFO',
+    INTERESTED_BUYING:    'BUY',
+    INTERESTED_INVESTING: 'INVEST',
+    INTERESTED_LEASING:   'LEASE',
+  }
+  return {
+    id:             dto.id,
+    assetId:        dto.propertyId,
+    assetTitle:     dto.propertyTitle,
+    assetType:      dto.propertyType === 'LAND' ? 'LAND' : 'PROPERTY',
+    fromName:       dto.fromUserName ?? 'Anonymous',
+    fromInitials:   dto.fromInitials,
+    intent:         intentMap[dto.inquiryType] ?? 'INFO',
+    messagePreview: dto.message.slice(0, 120),
+    timestamp:      dto.createdAt,
+    status:         dto.status as OwnerInquiry['status'],
+  }
+}
+
+export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDashboardClientProps) {
   const stats = useMemo(() => getSellerStats(listings), [listings])
-  const newInquiryCount = MOCK_OWNER_INQUIRIES.filter((i) => i.status === 'NEW').length
+  // Prefer real DB inquiries; fall back to mock for dev without DB
+  const displayInquiries = useMemo(
+    () => inquiries ? inquiries.map(toOwnerInquiry) : MOCK_OWNER_INQUIRIES,
+    [inquiries],
+  )
+  const newInquiryCount = displayInquiries.filter((i) => i.status === 'NEW').length
   const greeting = getGreeting(ownerUser.firstName)
 
   return (
@@ -127,10 +160,10 @@ export function OwnerDashboardClient({ listings, ownerUser }: OwnerDashboardClie
           <SectionHeader
             title={newInquiryCount > 0 ? `Inquiries · ${newInquiryCount} new` : 'Inquiries'}
             description="Messages from potential buyers, tenants, and investors."
-            milestone="M3 · Full Inbox"
+            milestone="M6 · Full Inbox"
           />
           <div className="mt-4">
-            <InquiryFeed inquiries={MOCK_OWNER_INQUIRIES} />
+            <InquiryFeed inquiries={displayInquiries} />
           </div>
         </section>
 

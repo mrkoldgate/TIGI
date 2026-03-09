@@ -65,6 +65,7 @@ model User {
   intents         TransactionIntent[]
   legacyPlan      LegacyPlan?
   notifications   Notification[]
+  inquiriesSent   Inquiry[]        @relation("InquiriesSent")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -189,6 +190,7 @@ model Property {
   transactions Transaction[]
   aiValuations AiValuation[]
   intents      TransactionIntent[]
+  inquiries    Inquiry[]
   leaseTerms   LeaseTerms?
   devOpportunity DevelopmentOpportunity?
 
@@ -859,6 +861,10 @@ enum NotificationType {
   INTENT_CREATED
   LEASE_INTEREST_CREATED
 
+  // Inquiry events
+  INQUIRY_RECEIVED    // notifies the property owner
+  INQUIRY_REPLIED     // notifies the inquiry submitter
+
   // Legacy / inheritance events — notifies the plan owner
   LEGACY_SUBMITTED
   LEGACY_APPROVED
@@ -929,6 +935,57 @@ model Notification {
   @@index([userId, readAt])
   @@index([userId, createdAt(sort: Desc)])
   @@map("notifications")
+}
+
+// =============================================================================
+// INQUIRIES
+// =============================================================================
+//
+// Inquiry captures a buyer/investor/tenant message sent from a listing detail
+// page. Sits below TransactionIntent in commitment level — a soft first touch.
+//
+// Lifecycle: NEW → READ → REPLIED
+//
+// Architecture note:
+//   ownerId is denormalized from property.ownerId so the owner inbox query
+//   doesn't require a join through Property (fast index scan on ownerId+status).
+//
+// Future: add InquiryThread / InquiryMessage for reply threads (M6).
+// =============================================================================
+
+model Inquiry {
+  id          String        @id @default(cuid())
+  fromUserId  String
+  propertyId  String
+  ownerId     String        // denormalized — property owner at time of inquiry
+
+  inquiryType InquiryType
+  message     String        @db.Text
+  status      InquiryStatus @default(NEW)
+
+  fromUser    User          @relation("InquiriesSent", fields: [fromUserId], references: [id])
+  property    Property      @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([fromUserId])
+  @@index([ownerId, status])
+  @@index([propertyId])
+  @@map("inquiries")
+}
+
+enum InquiryType {
+  GENERAL
+  INTERESTED_BUYING
+  INTERESTED_INVESTING
+  INTERESTED_LEASING
+}
+
+enum InquiryStatus {
+  NEW
+  READ
+  REPLIED
 }
 
 model TransactionIntent {

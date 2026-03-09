@@ -6,8 +6,8 @@ import { cn } from '@/lib/utils'
 // ---------------------------------------------------------------------------
 // InquiryFeed — Recent buyer/tenant/investor message previews for the owner.
 //
-// Source: MOCK_OWNER_INQUIRIES in MVP; prisma.inquiry.findMany() in M3.
-// Full inbox / message thread UI arrives in M3 (inquiry management feature).
+// Source: real DB inquiries via getOwnerInquiries() (wired in M5).
+// Full inbox / message thread UI planned for M6 (reply threading, read receipts).
 // ---------------------------------------------------------------------------
 
 const STATUS_CONFIG: Record<InquiryStatus, { label: string; dot: string; text: string }> = {
@@ -31,7 +31,7 @@ const INTENT_STYLE: Record<InquiryIntent, string> = {
 }
 
 function formatTimeAgo(isoString: string): string {
-  const now = new Date('2026-03-08T10:00:00Z')
+  const now = new Date()
   const then = new Date(isoString)
   const diffMs = now.getTime() - then.getTime()
   const diffH = Math.floor(diffMs / (1000 * 60 * 60))
@@ -157,10 +157,10 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
         )
       })}
 
-      {/* Full inbox CTA — deferred to M3 */}
+      {/* Full inbox CTA — M6 */}
       <p className="pt-2 text-center text-[11px] text-[#3A3A4A]">
-        Full inbox and reply threading in{' '}
-        <span className="text-[#6B6B80]">Milestone 3</span>
+        Reply threading and read receipts in{' '}
+        <span className="text-[#6B6B80]">Milestone 6</span>
       </p>
     </div>
   )

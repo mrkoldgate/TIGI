@@ -20,6 +20,7 @@ import {
   Clock,
   Check,
   LayoutGrid,
+  MessageSquare,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
@@ -37,6 +38,7 @@ import {
   tokenSoldPercent,
 } from '@/lib/marketplace/mock-data'
 import { IntentPanel } from '@/components/intents/intent-panel'
+import { InquiryModal } from '@/components/inquiries/inquiry-modal'
 
 // ---------------------------------------------------------------------------
 // Gallery slot pools — derive additional images from property type
@@ -613,6 +615,8 @@ function ActionPanel({
   isSaved: boolean
   onSave: () => void
 }) {
+  const [inquiryOpen, setInquiryOpen] = useState(false)
+
   return (
     <div className="space-y-4">
       {/* Price card */}
@@ -652,7 +656,28 @@ function ActionPanel({
           <Heart className={cn('h-4 w-4', isSaved && 'fill-rose-400')} />
           {isSaved ? 'Saved' : 'Save property'}
         </button>
+
+        {/* Inquiry CTA */}
+        <button
+          type="button"
+          onClick={() => setInquiryOpen(true)}
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-[#C9A84C]/30 hover:text-[#C9A84C] active:scale-[0.98]"
+        >
+          <MessageSquare className="h-4 w-4" />
+          Ask a Question
+        </button>
       </div>
+
+      {/* Inquiry modal */}
+      {inquiryOpen && (
+        <InquiryModal
+          propertyId={listing.id}
+          propertyTitle={listing.title}
+          listingType={listing.listingType}
+          isTokenized={listing.isTokenized}
+          onClose={() => setInquiryOpen(false)}
+        />
+      )}
 
       {/* Quick stats */}
       <QuickStats listing={listing} />

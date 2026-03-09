@@ -21,6 +21,7 @@ import {
   Compass,
   TreePine,
   Ruler,
+  MessageSquare,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
@@ -36,6 +37,7 @@ import {
   tokenSoldPercent,
 } from '@/lib/marketplace/mock-data'
 import { IntentPanel } from '@/components/intents/intent-panel'
+import { InquiryModal } from '@/components/inquiries/inquiry-modal'
 import { LeaseTermsPanel } from '@/components/terra/lease-terms-panel'
 import { DevOpportunityPanel as TerraDevOpportunityPanel } from '@/components/terra/dev-opportunity-panel'
 import type { LeaseTerms, DevOpportunity } from '@/lib/terra/terra-types'
@@ -855,6 +857,7 @@ function LandActionPanel({
 }) {
   const acres = listing.lotAcres ?? 0
   const isLeaseOnly = listing.listingType === 'LEASE'
+  const [inquiryOpen, setInquiryOpen] = useState(false)
 
   return (
     <div className="space-y-4">
@@ -925,7 +928,28 @@ function LandActionPanel({
           <Heart className={cn('h-4 w-4', isSaved && 'fill-rose-400')} />
           {isSaved ? 'Saved' : 'Save parcel'}
         </button>
+
+        {/* Inquiry CTA */}
+        <button
+          type="button"
+          onClick={() => setInquiryOpen(true)}
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-[#1E2D1E] py-2.5 text-sm font-medium text-[#5A7060] transition-all hover:border-[#4ADE80]/25 hover:text-[#4ADE80] active:scale-[0.98]"
+        >
+          <MessageSquare className="h-4 w-4" />
+          Ask a Question
+        </button>
       </div>
+
+      {/* Inquiry modal */}
+      {inquiryOpen && (
+        <InquiryModal
+          propertyId={listing.id}
+          propertyTitle={listing.title}
+          listingType={listing.listingType}
+          isTokenized={listing.isTokenized}
+          onClose={() => setInquiryOpen(false)}
+        />
+      )}
 
       {/* Land metrics grid */}
       <LandMetricsGrid listing={listing} landUse={landUse} />

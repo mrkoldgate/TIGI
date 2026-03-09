@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { requireAuth } from '@/lib/auth/session'
 import { getOwnerDashboardData } from '@/lib/listings/owner-query'
+import { getOwnerInquiries } from '@/lib/inquiries/inquiry-service'
 import { OwnerDashboardClient } from '@/components/listings/owner-dashboard-client'
 
 export const metadata: Metadata = {
@@ -20,7 +21,10 @@ export const metadata: Metadata = {
 
 export default async function OwnerListingsPage() {
   const sessionUser = await requireAuth('/listings')
-  const { listings, ownerUser } = await getOwnerDashboardData(sessionUser)
+  const [{ listings, ownerUser }, inquiries] = await Promise.all([
+    getOwnerDashboardData(sessionUser),
+    getOwnerInquiries(sessionUser.id).catch(() => undefined),
+  ])
 
-  return <OwnerDashboardClient listings={listings} ownerUser={ownerUser} />
+  return <OwnerDashboardClient listings={listings} ownerUser={ownerUser} inquiries={inquiries} />
 }
