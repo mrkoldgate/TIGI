@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth'
+import { NextResponse } from 'next/server'
 import { authConfig } from '@/auth.config'
 
 // ---------------------------------------------------------------------------
@@ -10,22 +11,41 @@ import { authConfig } from '@/auth.config'
 //   - JWT strategy means no DB calls in middleware
 //
 // Route protection is defined in authConfig.callbacks.authorized.
-// Security headers added to every response.
+// Security headers injected into every response via NextResponse.next().
 // ---------------------------------------------------------------------------
 
 const { auth } = NextAuth(authConfig)
 
 export default auth((req) => {
-  // Security headers on every response
-  const response = new Response(null, { status: 200 })
+  // Stripe webhook must receive the raw, unmodified request body.
+  // Skip any response mutation for that route.
+  if (req.nextUrl.pathname === '/api/billing/webhook') {
+    return NextResponse.next()
+  }
+
+  // Apply security headers to every response.
+  // Must use NextResponse.next() — headers set on a plain Response are discarded.
+  const response = NextResponse.next()
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('X-Frame-Options', 'DENY')
   response.headers.set('X-XSS-Protection', '1; mode=block')
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin')
+  response.headers.set(
+    'Content-Security-Policy',
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://js.stripe.com",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self'",
+      "connect-src 'self' https://api.stripe.com",
+      "frame-src https://js.stripe.com https://hooks.stripe.com",
+      "object-src 'none'",
+      "base-uri 'self'",
+    ].join('; '),
+  )
 
-  // authorized callback in authConfig handles redirects —
-  // returning undefined here lets Next.js continue with the response
-  return undefined
+  return response
 })
 
 export const config = {

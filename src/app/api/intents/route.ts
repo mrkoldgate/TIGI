@@ -13,6 +13,7 @@
 //   - User cannot have a duplicate PENDING/REVIEWING intent of the same type
 //     for the same listing (prevents accidental double-submission)
 //   - PREPARE_INVEST requires isTokenized = true
+//   - PREPARE_INVEST / PREPARE_PURCHASE require INVESTOR role + VERIFIED KYC
 // ---------------------------------------------------------------------------
 
 import { NextResponse } from 'next/server'
@@ -20,6 +21,7 @@ import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { createNotification } from '@/lib/notifications/notification-service'
+import { isInvestor, hasKyc } from '@/lib/auth/rbac'
 
 const CreateIntentSchema = z.object({
   propertyId:  z.string().min(1),
@@ -66,6 +68,24 @@ export async function POST(req: Request) {
 
   const { propertyId, intentType, fractionQty, offerAmount, note, leaseDetails } = parsed.data
   const userId = session.user.id
+
+  // Investment and purchase intents require INVESTOR role + verified KYC.
+  // EXPRESS_INTEREST and PREPARE_LEASE are open to all authenticated users.
+  const requiresKyc = intentType === 'PREPARE_INVEST' || intentType === 'PREPARE_PURCHASE'
+  if (requiresKyc) {
+    if (!isInvestor(session.user)) {
+      return NextResponse.json(
+        { success: false, error: { code: 'FORBIDDEN', message: 'Investor role required to submit investment intents' } },
+        { status: 403 },
+      )
+    }
+    if (!hasKyc(session.user)) {
+      return NextResponse.json(
+        { success: false, error: { code: 'KYC_REQUIRED', message: 'Identity verification required before submitting investment intents' } },
+        { status: 403 },
+      )
+    }
+  }
 
   try {
     // Verify property is ACTIVE

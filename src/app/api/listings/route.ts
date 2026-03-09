@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { CreateListingSchema } from '@/lib/validations/listing'
 import { createListingService, ListingStateError } from '@/lib/services/listing.service'
+import { isOwner } from '@/lib/auth/rbac'
 
 // ---------------------------------------------------------------------------
 // POST /api/listings
@@ -18,6 +19,13 @@ export async function POST(request: Request) {
   const session = await auth()
   if (!session?.user?.id) {
     return NextResponse.json({ success: false, error: { code: 'UNAUTHORIZED', message: 'Authentication required' } }, { status: 401 })
+  }
+
+  if (!isOwner(session.user)) {
+    return NextResponse.json(
+      { success: false, error: { code: 'FORBIDDEN', message: 'Only property owners may create listings' } },
+      { status: 403 },
+    )
   }
 
   let body: unknown
