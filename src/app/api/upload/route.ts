@@ -4,7 +4,8 @@
 // Receives a multipart/form-data request with:
 //   file     (File)   — the binary file
 //   purpose  (string) — storage namespace: "listing-images" | "listing-docs"
-//                       | "user-docs-kyc" | "user-docs-inheritance" | "misc"
+//                       | "user-docs-kyc" | "user-docs-inheritance"
+//                       | "user-avatar" | "misc"
 //
 // Flow:
 //   1. Authenticate
@@ -19,13 +20,13 @@
 //
 // Body size: Next.js App Router route handlers have no built-in limit, but
 // Vercel's serverless limit is ~4.5 MB. For larger uploads in production,
-// implement presigned URL upload via R2StorageProvider.presignUpload().
+// use R2StorageProvider.presignUpload() to upload directly to R2.
 // ---------------------------------------------------------------------------
 
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
-import {
 import { logger } from '@/lib/logger'
+import {
   getStorageProvider,
   validateUpload,
   safeExtension,
@@ -37,8 +38,12 @@ const VALID_PURPOSES = new Set([
   'listing-docs',
   'user-docs-kyc',
   'user-docs-inheritance',
+  'user-avatar',
   'misc',
 ])
+
+// Avatar-specific size limit (2 MB — smaller than the general 20 MB image limit)
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024
 
 export async function POST(req: Request) {
   // ── Auth ──────────────────────────────────────────────────────────────────
@@ -79,7 +84,7 @@ export async function POST(req: Request) {
   }
 
   // ── Validate ──────────────────────────────────────────────────────────────
-  const isImage = purpose === 'listing-images' || file.type.startsWith('image/')
+  const isImage    = purpose === 'listing-images' || purpose === 'user-avatar' || file.type.startsWith('image/')
   const validation = validateUpload(file, isImage ? 'image' : 'document')
   if (!validation.valid) {
     return NextResponse.json(
@@ -88,22 +93,29 @@ export async function POST(req: Request) {
     )
   }
 
+  // Avatar-specific size enforcement (tighter than general image limit)
+  if (purpose === 'user-avatar' && file.size > MAX_AVATAR_BYTES) {
+    return NextResponse.json(
+      { success: false, error: { code: 'VALIDATION_ERROR', message: 'Avatar must be 2 MB or smaller.' } },
+      { status: 422 },
+    )
+  }
+
   // ── Generate storage key ──────────────────────────────────────────────────
   // Format: {purpose}/{userId}/{uuid}.{ext}
-  // This gives per-user isolation and makes cleanup easy.
-  const ext = safeExtension(file.name, file.type)
+  const ext  = safeExtension(file.name, file.type)
   const uuid = crypto.randomUUID()
-  const key = `${purpose}/${session.user.id}/${uuid}.${ext}`
+  const key  = `${purpose}/${session.user.id}/${uuid}.${ext}`
 
   // ── Upload ────────────────────────────────────────────────────────────────
   let url: string
   try {
-    const buffer = Buffer.from(await file.arrayBuffer())
+    const buffer  = Buffer.from(await file.arrayBuffer())
     const storage = getStorageProvider()
-    const result = await storage.upload({ key, data: buffer, mimeType: file.type })
+    const result  = await storage.upload({ key, data: buffer, mimeType: file.type })
     url = result.url
   } catch (err) {
-    logger.error('[api/upload POST] Storage error:', err)
+    logger.error('[api/upload POST] Storage error', { err: (err as Error).message, purpose })
     return NextResponse.json(
       { success: false, error: { code: 'STORAGE_ERROR', message: 'Upload failed. Please try again.' } },
       { status: 500 },

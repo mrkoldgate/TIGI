@@ -27,6 +27,7 @@ interface ProfilePatchBody {
   phone?:              string | null
   location?:           string | null
   bio?:                string | null
+  avatarUrl?:          string | null
   notificationPrefs?:  Partial<NotificationPrefs>
 }
 
@@ -81,6 +82,7 @@ export async function PATCH(request: Request) {
   if (patch.phone     !== undefined) updateData.phone    = patch.phone     ?? null
   if (patch.location  !== undefined) updateData.location = patch.location  ?? null
   if (patch.bio       !== undefined) updateData.bio      = patch.bio       ?? null
+  if (patch.avatarUrl !== undefined) updateData.avatarUrl = patch.avatarUrl ?? null
 
   try {
     const updated = await prisma.user.update({

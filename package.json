@@ -51,7 +51,9 @@
     "react-hook-form": "^7.54.2",
     "@hookform/resolvers": "^3.9.1",
     "@anthropic-ai/sdk": "^0.39.0",
-    "stripe": "^17.7.0"
+    "stripe": "^17.7.0",
+    "@aws-sdk/client-s3": "^3.799.0",
+    "@aws-sdk/s3-request-presigner": "^3.799.0"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

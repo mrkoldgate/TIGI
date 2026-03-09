@@ -278,7 +278,60 @@ If Anthropic throws at runtime (rate limit, overload, outage):
 
 ---
 
-## 10. Rollback Plan
+## 10. M8 Wallet + Storage Activation
+
+### Phantom wallet signing — test instructions
+
+1. Install [Phantom](https://phantom.app) browser extension and create/import a devnet wallet
+2. Add devnet SOL via `npm run test:devnet` (script airdrops 1 SOL to a test keypair) or use `solana airdrop 1 <your-address>` with the Solana CLI
+3. Sign in to TIGI and navigate to a listing
+4. Create an intent (`EXPRESS_INTEREST` requires no KYC; `PREPARE_INVEST` requires KYC_VERIFIED)
+5. Navigate to the intent detail page — you should see the **Signing requirements** checklist
+6. Connect Phantom via the wallet modal
+7. Click **Prepare to sign** → status advances to READY_TO_SIGN
+8. Click **Sign with Phantom** → Phantom popup appears
+9. Approve in Phantom → status shows "Recording on Solana…" → then "Interest recorded on Solana"
+10. Click "View on Solana Explorer" — transaction should be visible on devnet
+
+**Edge cases to verify:**
+
+- [ ] Click "Sign" then immediately close Phantom popup → error clears, no crash
+- [ ] Wait >90 seconds after prepare → "Preparation window expired" appears with Refresh button
+- [ ] Connect a different Phantom wallet than the one used to prepare → "Wrong wallet connected" warning shown
+- [ ] Disconnect Phantom mid-flow → panel reverts to "Connect wallet to sign"
+
+### R2 storage — test instructions
+
+1. Sign up at [Cloudflare Dashboard](https://dash.cloudflare.com) and create an R2 bucket called `tigi-storage-dev`
+2. Create an R2 API token with Object Read/Write permissions
+3. Set a custom domain or use the R2 public bucket URL
+4. Configure `.env.local`:
+
+```dotenv
+STORAGE_PROVIDER=r2
+R2_ACCOUNT_ID=your_account_id
+R2_ACCESS_KEY_ID=your_r2_access_key_id
+R2_SECRET_ACCESS_KEY=your_r2_secret_access_key
+R2_BUCKET_NAME=tigi-storage-dev
+R2_PUBLIC_URL=https://your-bucket.r2.dev
+```
+
+1. Run `npm install` (adds `@aws-sdk/client-s3`)
+2. Go to Settings → Profile → click the camera icon on your avatar
+3. Select a JPEG/PNG/WebP file ≤ 2 MB
+4. Verify the avatar updates immediately and persists on page reload
+5. Check your R2 bucket dashboard — `user-avatar/{userId}/{uuid}.jpg` should appear
+
+**Verification checklist:**
+
+- [ ] `STORAGE_PROVIDER=r2` + all R2 vars set — upload goes to R2
+- [ ] `STORAGE_PROVIDER=local` (or unset) — upload goes to `public/uploads/` (dev fallback)
+- [ ] File > 2 MB → "Avatar must be 2 MB or smaller" error shown, no upload
+- [ ] Unsupported file type (e.g. PDF) → "Unsupported file type" error shown
+
+---
+
+## 11. Rollback Plan
 
 1. All DB changes are Prisma migrations — reversible with `prisma migrate reset` (destructive)
 2. Seed data can be re-applied safely at any time — all upserts are idempotent

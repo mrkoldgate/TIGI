@@ -14,7 +14,7 @@
 // (S3 / Cloudflare R2) is activated in M10+.
 // ---------------------------------------------------------------------------
 
-import { useState, useTransition, useRef } from 'react'
+import { useState, useTransition } from 'react'
 import Link from 'next/link'
 import {
   User,
@@ -29,13 +29,13 @@ import {
   ChevronRight,
   Check,
   Loader2,
-  Camera,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import {
   DEFAULT_NOTIFICATION_PREFS,
   type NotificationPrefs,
 } from '@/lib/settings/notification-prefs'
+import { AvatarUploadButton } from './avatar-upload-button'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -91,6 +91,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
   const [phone, setPhone]       = useState(user.phone ?? '')
   const [location, setLocation] = useState(user.location ?? '')
   const [bio, setBio]           = useState(user.bio ?? '')
+  const [avatarUrl, setAvatarUrl] = useState(user.avatarUrl)
 
   const [notifPrefs, setNotifPrefs] = useState<NotificationPrefs>(user.notificationPrefs)
 
@@ -142,20 +143,8 @@ export function ProfileClient({ user }: ProfileClientProps) {
       {/* ── Avatar + identity strip ─────────────────────────────────────── */}
       <div className="flex items-center gap-5">
         <div className="relative">
-          <AvatarDisplay initials={initials} avatarUrl={user.avatarUrl} />
-          {/* Upload overlay — activates file storage in M10+ */}
-          <button
-            disabled
-            title="Avatar upload coming soon"
-            className={cn(
-              'absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center',
-              'rounded-full border border-[#2A2A3A] bg-[#1A1A24]',
-              'text-[#4A4A5E] transition-colors',
-              'cursor-not-allowed opacity-50',
-            )}
-          >
-            <Camera className="h-3.5 w-3.5" />
-          </button>
+          <AvatarDisplay initials={initials} avatarUrl={avatarUrl} />
+          <AvatarUploadButton onAvatarChange={setAvatarUrl} />
         </div>
         <div>
           <p className="text-base font-semibold text-[#F5F5F7]">{user.name ?? 'Anonymous'}</p>

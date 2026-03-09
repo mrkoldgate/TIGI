@@ -6,19 +6,22 @@
 // Flow:
 //   1. Component receives intentId + walletPreparation from parent
 //   2. "Sign transaction" button → calls signTransaction() on wallet adapter
-//      (Phantom/Solflare must be connected; custodial signing in M5)
+//      (Phantom/Solflare must be connected; custodial signing in a future update)
 //   3. POSTs signed tx to POST /api/intents/[id]/submit
 //   4. On success: shows confirmation with Solana Explorer link
-//   5. Calls onSuccess(signature) so parent can refresh intent list
+//   5. Calls onSuccess(signature, explorerUrl) so parent can refresh intent list
+//
+// Signing steps shown to user:
+//   signing   — wallet popup open; "Approve in your wallet…"
+//   submitting — signed tx sent to server/network; "Recording on Solana…"
 //
 // Edge cases handled:
 //   - Not connected: shows "Connect a wallet to sign" with WalletButton
-//   - Blockhash expired (>90s since prepare): shows "Refresh" button that
-//     re-calls POST /api/intents/[id]/prepare to get a fresh tx
+//   - Wrong wallet connected: preparation.requiredSigner !== publicKey
+//   - Blockhash expired (>90s since prepare): shows "Refresh" button
+//   - User cancelled wallet popup: error cleared silently
 //   - Tx rejected on-chain: shows error with retry
-//   - Custodial wallet (walletMode === 'custodial'): signing is not yet
-//     supported client-side — shows "Signing available with connected wallet"
-//     with a note that server-side custodial signing arrives in M5
+//   - Custodial wallet: shows info + "Connect external wallet" prompt
 // ---------------------------------------------------------------------------
 
 import { useState, useCallback } from 'react'
@@ -65,6 +68,21 @@ function isExpired(expiresAt: string): boolean {
   return Date.now() > new Date(expiresAt).getTime()
 }
 
+// Wallet error names that indicate deliberate user cancellation (not a bug).
+const USER_CANCELLED_NAMES = new Set([
+  'WalletWindowClosedError',
+  'WalletUserRejectError',
+])
+
+function isUserCancellation(err: unknown): boolean {
+  if (!(err instanceof Error)) return false
+  if (USER_CANCELLED_NAMES.has(err.name)) return true
+  const msg = err.message.toLowerCase()
+  return msg.includes('user rejected') ||
+         msg.includes('transaction cancelled') ||
+         msg.includes('user cancelled')
+}
+
 // ── Component ──────────────────────────────────────────────────────────────
 
 export function WalletPreparationPanel({
@@ -74,10 +92,11 @@ export function WalletPreparationPanel({
   onRefreshed,
   className,
 }: WalletPreparationPanelProps) {
-  const [isSigningAndSubmitting, setIsSigningAndSubmitting] = useState(false)
-  const [isRefreshing,           setIsRefreshing]           = useState(false)
-  const [error,                  setError]                  = useState<string | null>(null)
-  const [confirmed,              setConfirmed]              = useState<{
+  // 'idle' | 'signing' | 'submitting' gives the user step-by-step feedback.
+  const [step,       setStep]       = useState<'idle' | 'signing' | 'submitting'>('idle')
+  const [isRefreshing, setIsRefreshing] = useState(false)
+  const [error,        setError]        = useState<string | null>(null)
+  const [confirmed,    setConfirmed]    = useState<{
     signature:   string
     explorerUrl: string
   } | null>(null)
@@ -86,7 +105,8 @@ export function WalletPreparationPanel({
   const { signTransaction }                    = useWallet()
   const { open: openWalletModal }              = useWalletModal()
 
-  const expired = isExpired(preparation.expiresAt)
+  const expired   = isExpired(preparation.expiresAt)
+  const isBusy    = step !== 'idle'
 
   // ── Refresh preparation ────────────────────────────────────────────────
 
@@ -109,7 +129,17 @@ export function WalletPreparationPanel({
 
   const handleSign = useCallback(async () => {
     if (!signTransaction || !publicKey) return
-    setIsSigningAndSubmitting(true)
+
+    // Guard: wallet must match the signer the server prepared for.
+    // This prevents a confusing "invalid signer" error from Solana.
+    if (preparation.requiredSigner !== publicKey) {
+      setError(
+        `Wrong wallet connected. Please connect the wallet ending in …${preparation.requiredSigner.slice(-6)} to sign.`,
+      )
+      return
+    }
+
+    setStep('signing')
     setError(null)
 
     try {
@@ -118,10 +148,22 @@ export function WalletPreparationPanel({
       const tx      = VersionedTransaction.deserialize(txBytes)
 
       // 2. Ask wallet to sign (opens Phantom/Solflare popup)
-      const signed       = await signTransaction(tx)
+      let signed: VersionedTransaction
+      try {
+        signed = await signTransaction(tx)
+      } catch (err) {
+        if (isUserCancellation(err)) {
+          // Silently clear — user closed the popup, no error to show.
+          setStep('idle')
+          return
+        }
+        throw err
+      }
+
+      // 3. Submit signed tx to server → Solana network
+      setStep('submitting')
       const signedBase64 = Buffer.from(signed.serialize()).toString('base64')
 
-      // 3. Submit signed tx to server → network
       const res  = await fetch(`/api/intents/${intentId}/submit`, {
         method:  'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -136,17 +178,11 @@ export function WalletPreparationPanel({
       })
       onSuccess?.(json.data.solanaSignature, json.data.explorerUrl)
     } catch (err) {
-      const msg = (err as Error).message
-      // Wallet user rejection is expected — don't show as an error
-      if (msg.includes('User rejected') || msg.includes('Transaction cancelled')) {
-        setError(null)
-      } else {
-        setError(msg)
-      }
+      setError((err as Error).message)
     } finally {
-      setIsSigningAndSubmitting(false)
+      setStep('idle')
     }
-  }, [signTransaction, publicKey, preparation.serialized, intentId, onSuccess])
+  }, [signTransaction, publicKey, preparation, intentId, onSuccess])
 
   // ── Success state ──────────────────────────────────────────────────────
 
@@ -201,7 +237,7 @@ export function WalletPreparationPanel({
           <>
             <p className="text-[11px] leading-relaxed text-[#6B6B80]">
               Your transaction is ready to sign. Connect a Phantom or Solflare wallet to sign
-              directly. Server-assisted signing for your platform wallet arrives in a future update.
+              directly. Server-assisted signing for your platform wallet is coming in a future update.
             </p>
             <button
               type="button"
@@ -258,6 +294,9 @@ export function WalletPreparationPanel({
 
   // ── Ready to sign ──────────────────────────────────────────────────────
 
+  // Warn if the connected wallet doesn't match the prepared signer.
+  const signerMismatch = publicKey && preparation.requiredSigner !== publicKey
+
   return (
     <div className={cn(
       'rounded-xl border border-[#C9A84C]/20 bg-[#0D0D14] p-4 space-y-3',
@@ -290,8 +329,31 @@ export function WalletPreparationPanel({
         <span className="font-mono text-[#6B6B80]">{getProgramInfo(preparation.program).displayName}</span>
       </div>
 
+      {/* Signer mismatch warning */}
+      {signerMismatch && (
+        <div className="flex items-start gap-2 rounded-lg border border-[#F59E0B]/30 bg-[#F59E0B]/10 px-3 py-2">
+          <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#F59E0B]" />
+          <div className="text-[11px] text-[#F59E0B]">
+            <p className="font-medium">Wrong wallet connected</p>
+            <p className="mt-0.5 text-[#A07030]">
+              This transaction was prepared for …{preparation.requiredSigner.slice(-8)}.
+              Connect that wallet, or click Refresh below to rebuild for your current wallet.
+            </p>
+            <button
+              type="button"
+              onClick={handleRefresh}
+              disabled={isRefreshing}
+              className="mt-1.5 flex items-center gap-1 text-[11px] font-medium text-[#F59E0B] hover:text-[#FFBF00] disabled:opacity-50"
+            >
+              {isRefreshing ? <Loader2 className="h-3 w-3 animate-spin" /> : <RefreshCw className="h-3 w-3" />}
+              Rebuild for current wallet
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Error */}
-      {error && (
+      {error && !signerMismatch && (
         <div className="flex items-start gap-2 rounded-lg border border-[#EF4444]/30 bg-[#EF4444]/10 px-3 py-2">
           <AlertTriangle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#EF4444]" />
           <p className="text-[11px] text-[#EF4444]">{error}</p>
@@ -302,13 +364,18 @@ export function WalletPreparationPanel({
       <button
         type="button"
         onClick={handleSign}
-        disabled={isSigningAndSubmitting}
+        disabled={isBusy || !!signerMismatch}
         className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
       >
-        {isSigningAndSubmitting ? (
+        {step === 'signing' ? (
           <>
             <Loader2 className="h-4 w-4 animate-spin" />
-            Confirming on Solana…
+            Approve in your wallet…
+          </>
+        ) : step === 'submitting' ? (
+          <>
+            <Loader2 className="h-4 w-4 animate-spin" />
+            Recording on Solana…
           </>
         ) : (
           <>
