@@ -51,6 +51,9 @@
     "@hookform/resolvers": "^3.9.1",
     "@anthropic-ai/sdk": "^0.39.0"
   },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
   "devDependencies": {
     "typescript": "^5.7.3",
     "@types/react": "^19.0.0",

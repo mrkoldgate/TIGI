@@ -10,6 +10,7 @@
 
 import { cache } from 'react'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -82,7 +83,7 @@ export const getIntentsForUser = cache(async (userId: string): Promise<UserInten
       },
     }))
   } catch (err) {
-    console.warn('[intent-query] DB unavailable:', (err as Error).message)
+    logger.warn('[intent-query] DB unavailable', { error: (err as Error).message })
     return []
   }
 })

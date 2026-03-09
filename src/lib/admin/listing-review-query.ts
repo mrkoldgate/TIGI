@@ -10,6 +10,7 @@
 
 import { cache } from 'react'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import type { ReviewQueueItem, ReviewUrgency } from './mock-admin-data'
 
 // ── Review queue ───────────────────────────────────────────────────────────
@@ -56,7 +57,7 @@ export const getListingsUnderReview = cache(async (): Promise<ReviewQueueItem[]>
       }
     })
   } catch (err) {
-    console.warn('[listing-review-query] DB unavailable:', (err as Error).message)
+    logger.warn('[listing-review-query] DB unavailable', { error: (err as Error).message })
     return []
   }
 })

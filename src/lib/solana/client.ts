@@ -1,4 +1,5 @@
 import { Connection, clusterApiUrl } from '@solana/web3.js'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // Solana connection factory — server-side only.
@@ -46,7 +47,7 @@ export async function getHealthyConnection(): Promise<Connection> {
       await primary.getLatestBlockhash({ commitment: 'confirmed' })
       return primary
     } catch {
-      console.warn('[Solana] Primary RPC unreachable — falling back to public endpoint')
+      logger.warn('[Solana] Primary RPC unreachable — falling back to public endpoint')
     }
   }
 

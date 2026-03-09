@@ -12,6 +12,7 @@
  */
 
 import { Keypair } from '@solana/web3.js'
+import { logger } from '@/lib/logger'
 import {
   createCipheriv,
   randomBytes,
@@ -100,11 +101,7 @@ export async function createCustodialWallet(
     const tag = cipher.getAuthTag()
     encryptedSecretKey = Buffer.concat([iv, tag, encrypted]).toString('base64')
 
-    console.warn(
-      '\n⚠️  [TIGI] PLATFORM_WALLET_SECRET is not set.\n' +
-        '   Custodial wallet encrypted with static dev key — NOT SAFE FOR PRODUCTION.\n' +
-        '   Set PLATFORM_WALLET_SECRET in your .env.local before going live.\n',
-    )
+    logger.warn('[TIGI] PLATFORM_WALLET_SECRET is not set — custodial wallet encrypted with static dev key. NOT SAFE FOR PRODUCTION. Set PLATFORM_WALLET_SECRET in .env.local before going live.')
   }
 
   // Keypair is cleared from this scope after the transaction completes.

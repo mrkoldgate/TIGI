@@ -19,6 +19,7 @@
 
 import { cache } from 'react'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import { getExplorerUrl, getNetwork } from './client'
 import type { SolanaNetwork } from './client'
 
@@ -187,7 +188,7 @@ export const getAssetRepresentation = cache(
         },
       }
     } catch (err) {
-      console.warn('[asset-representation] DB unavailable:', (err as Error).message)
+      logger.warn('[asset-representation] DB unavailable', { error: (err as Error).message })
       return null
     }
   },

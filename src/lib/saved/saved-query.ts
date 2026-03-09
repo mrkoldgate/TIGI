@@ -13,6 +13,7 @@
 
 import { cache } from 'react'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import type { SavedEntry } from './saved-context'
 
 /**
@@ -30,7 +31,7 @@ export const getSavedEntriesForUser = cache(
       })
       return rows.map((r) => ({ id: r.listingId, savedAt: r.savedAt.getTime() }))
     } catch (err) {
-      console.warn('[saved-query] DB unavailable:', (err as Error).message)
+      logger.warn('[saved-query] DB unavailable', { error: (err as Error).message })
       return []
     }
   },

@@ -23,6 +23,7 @@
 import { cache } from 'react'
 import type { Property, Token, AiValuation as PrismaAiValuation, PropertyImage, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import {
   MOCK_LISTINGS,
   type MockListing,
@@ -146,7 +147,7 @@ export const getActiveListings = cache(async (): Promise<MockListing[]> => {
     })
     return rows.map(propertyToMockListing)
   } catch (err) {
-    console.warn('[listing-query] DB unavailable, using mock data:', (err as Error).message)
+    logger.warn('[listing-query] DB unavailable, using mock data', { error: (err as Error).message })
     return MOCK_LISTINGS.filter((l) => l.status === 'ACTIVE')
   }
 })
@@ -164,7 +165,7 @@ export const getListingById = cache(async (id: string): Promise<MockListing | nu
     if (!row) return null
     return propertyToMockListing(row)
   } catch (err) {
-    console.warn('[listing-query] DB unavailable, using mock data:', (err as Error).message)
+    logger.warn('[listing-query] DB unavailable, using mock data', { error: (err as Error).message })
     return MOCK_LISTINGS.find((l) => l.id === id) ?? null
   }
 })

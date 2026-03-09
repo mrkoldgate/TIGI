@@ -9,6 +9,7 @@
 // ---------------------------------------------------------------------------
 
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import { getActiveIntentCount } from '@/lib/intents/intent-query'
 import type { DashboardUser, DashboardStats } from './mock-dashboard'
 
@@ -83,7 +84,7 @@ export async function getDashboardData(sessionUser: {
       where: { userId: sessionUser.id },
     })
   } catch (err) {
-    console.warn('[dashboard-query] Failed to fetch investment count:', (err as Error).message)
+    logger.warn('[dashboard-query] Failed to fetch investment count', { error: (err as Error).message })
   }
 
   const activeInterestsCount = await getActiveIntentCount(sessionUser.id)

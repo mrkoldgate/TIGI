@@ -10,6 +10,7 @@
 
 import { cache } from 'react'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import type { KycStatus } from '@prisma/client'
 
 // ── User-facing ───────────────────────────────────────────────────────────────
@@ -61,7 +62,7 @@ export const getKycStatusForUser = cache(
         verification: latest,
       }
     } catch (err) {
-      console.warn('[kyc-query] DB unavailable:', (err as Error).message)
+      logger.warn('[kyc-query] DB unavailable', { error: (err as Error).message })
       return { kycStatus: 'NONE', verification: null }
     }
   },
@@ -105,7 +106,7 @@ export const getKycSubmissionsForAdmin = cache(
       })
       return rows as AdminKycItem[]
     } catch (err) {
-      console.warn('[kyc-query] Admin DB unavailable:', (err as Error).message)
+      logger.warn('[kyc-query] Admin DB unavailable', { error: (err as Error).message })
       return []
     }
   },

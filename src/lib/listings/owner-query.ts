@@ -13,6 +13,7 @@
 import { cache } from 'react'
 import type { Property, Token, AiValuation as PrismaAiValuation, Prisma } from '@prisma/client'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 import {
   MOCK_SELLER_LISTINGS,
   type SellerListing,
@@ -141,7 +142,7 @@ export const getOwnerListings = cache(async (userId: string): Promise<SellerList
     })
     return rows.map(propertyToSellerListing)
   } catch (err) {
-    console.warn('[owner-query] DB unavailable, using mock data:', (err as Error).message)
+    logger.warn('[owner-query] DB unavailable, using mock data', { error: (err as Error).message })
     return MOCK_SELLER_LISTINGS
   }
 })
