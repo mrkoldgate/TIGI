@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { createListingService, ListingNotFoundError, ListingForbiddenError, ListingStateError } from '@/lib/services/listing.service'
 import { isOwner } from '@/lib/auth/rbac'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/listings/[id]/submit
@@ -45,7 +46,7 @@ export async function POST(_request: Request, { params }: Params) {
     if (err instanceof ListingStateError) {
       return NextResponse.json({ success: false, error: { code: 'INVALID_STATE', message: err.message } }, { status: 409 })
     }
-    console.error('[POST /api/listings/[id]/submit]', err)
+    logger.error('[POST /api/listings/[id]/submit]', err)
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to submit listing' } }, { status: 500 })
   }
 }

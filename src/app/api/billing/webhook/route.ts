@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/billing/webhook
@@ -33,7 +34,7 @@ export async function POST(request: NextRequest) {
     await handleStripeWebhook(body, signature)
     return NextResponse.json({ received: true })
   } catch (err) {
-    console.error('[billing/webhook]', err)
+    logger.error('[billing/webhook]', err)
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 400 },

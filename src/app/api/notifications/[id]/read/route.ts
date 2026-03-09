@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 export async function PATCH(
   _req: Request,
@@ -57,7 +58,7 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, data: { id, readAt: new Date() } })
   } catch (err) {
-    console.error('[api/notifications/[id]/read PATCH]', err)
+    logger.error('[api/notifications/[id]/read PATCH]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to mark notification read' } },
       { status: 500 },

@@ -9,6 +9,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { getStorageProvider } from '@/lib/storage'
+import { logger } from '@/lib/logger'
 
 export async function DELETE(
   _req: Request,
@@ -60,7 +61,7 @@ export async function DELETE(
     try {
       await getStorageProvider().delete(doc.storageKey)
     } catch (err) {
-      console.warn('[api/listings/documents DELETE] storage delete failed:', err)
+      logger.warn('[api/listings/documents DELETE] storage delete failed:', err)
     }
   }
 

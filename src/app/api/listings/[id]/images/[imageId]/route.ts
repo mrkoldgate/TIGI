@@ -11,6 +11,7 @@ import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { getStorageProvider } from '@/lib/storage'
+import { logger } from '@/lib/logger'
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
@@ -154,7 +155,7 @@ export async function DELETE(
     try {
       await getStorageProvider().delete(guard.image.storageKey)
     } catch (err) {
-      console.warn('[api/listings/images DELETE] storage delete failed:', err)
+      logger.warn('[api/listings/images DELETE] storage delete failed:', err)
     }
   }
 

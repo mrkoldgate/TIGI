@@ -3,6 +3,7 @@ import { auth } from '@/auth'
 import { CreateListingSchema } from '@/lib/validations/listing'
 import { createListingService, ListingStateError } from '@/lib/services/listing.service'
 import { isOwner } from '@/lib/auth/rbac'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/listings
@@ -48,7 +49,7 @@ export async function POST(request: Request) {
     const listing = await service.createDraft(parsed.data, session.user.id)
     return NextResponse.json({ success: true, data: listing }, { status: 201 })
   } catch (err) {
-    console.error('[POST /api/listings]', err)
+    logger.error('[POST /api/listings]', err)
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to create listing' } }, { status: 500 })
   }
 }
@@ -64,7 +65,7 @@ export async function GET() {
     const listings = await service.getOwnerListings(session.user.id)
     return NextResponse.json({ success: true, data: listings })
   } catch (err) {
-    console.error('[GET /api/listings]', err)
+    logger.error('[GET /api/listings]', err)
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch listings' } }, { status: 500 })
   }
 }

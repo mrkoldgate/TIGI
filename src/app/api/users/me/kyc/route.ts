@@ -19,6 +19,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
@@ -89,7 +90,7 @@ export async function GET() {
       },
     })
   } catch (err) {
-    console.error('[api/users/me/kyc GET]', err)
+    logger.error('[api/users/me/kyc GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch KYC status' } },
       { status: 500 },
@@ -246,7 +247,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, data: result })
     }
   } catch (err) {
-    console.error('[api/users/me/kyc POST]', err)
+    logger.error('[api/users/me/kyc POST]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'KYC operation failed' } },
       { status: 500 },

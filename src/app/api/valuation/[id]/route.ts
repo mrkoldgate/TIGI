@@ -22,6 +22,7 @@ import { auth } from '@/auth'
 import { getListingById } from '@/lib/listings/listing-query'
 import { getEnrichedValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
 import type { AIContext } from '@/lib/ai/ai-types'
+import { logger } from '@/lib/logger'
 
 type Params = { params: Promise<{ id: string }> }
 
@@ -63,7 +64,7 @@ export async function GET(_request: Request, { params }: Params) {
 
     return NextResponse.json({ success: true, data: valuation, enriched })
   } catch (err) {
-    console.error('[GET /api/valuation/[id]]', err)
+    logger.error('[GET /api/valuation/[id]]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to compute valuation' } },
       { status: 500 },

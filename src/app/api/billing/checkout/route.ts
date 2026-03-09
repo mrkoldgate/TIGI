@@ -3,6 +3,7 @@ import { auth } from '@/auth'
 import { getBillingService } from '@/lib/billing/billing-service'
 import { PLANS, isUpgradeFrom } from '@/lib/billing/billing-types'
 import type { PlanId } from '@/lib/billing/billing-types'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/billing/checkout
@@ -64,7 +65,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result)
   } catch (err) {
-    console.error('[billing/checkout]', err)
+    logger.error('[billing/checkout]', err)
     return NextResponse.json(
       { error: 'Failed to create checkout session. Please try again.' },
       { status: 500 },

@@ -23,6 +23,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { runAssistantPipeline, type ChatMessage } from '@/lib/ai/assistant-pipeline'
 import type { AIContext } from '@/lib/ai/ai-types'
+import { logger } from '@/lib/logger'
 
 const MAX_MESSAGES = 20  // Max history depth accepted from client
 
@@ -85,7 +86,7 @@ export async function POST(request: Request) {
     const blocks = await runAssistantPipeline(messages, context)
     return NextResponse.json({ success: true, blocks })
   } catch (err) {
-    console.error('[api/assistant/chat] Pipeline error:', err)
+    logger.error('[api/assistant/chat] Pipeline error:', err)
     return NextResponse.json(
       { success: false, error: 'Failed to generate response' },
       { status: 500 },

@@ -25,6 +25,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import {
+import { logger } from '@/lib/logger'
   getStorageProvider,
   validateUpload,
   safeExtension,
@@ -102,7 +103,7 @@ export async function POST(req: Request) {
     const result = await storage.upload({ key, data: buffer, mimeType: file.type })
     url = result.url
   } catch (err) {
-    console.error('[api/upload POST] Storage error:', err)
+    logger.error('[api/upload POST] Storage error:', err)
     return NextResponse.json(
       { success: false, error: { code: 'STORAGE_ERROR', message: 'Upload failed. Please try again.' } },
       { status: 500 },

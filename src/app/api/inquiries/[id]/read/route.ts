@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { markInquiryRead } from '@/lib/inquiries/inquiry-service'
+import { logger } from '@/lib/logger'
 
 export async function PATCH(
   _request: Request,
@@ -24,7 +25,7 @@ export async function PATCH(
     await markInquiryRead(id, session.user.id)
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('[inquiries/read] PATCH failed:', err)
+    logger.error('[inquiries/read] PATCH failed:', err)
     return NextResponse.json({ error: 'Failed to update inquiry' }, { status: 500 })
   }
 }

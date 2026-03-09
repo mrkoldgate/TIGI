@@ -7,6 +7,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 export async function DELETE(
   _req: Request,
@@ -28,7 +29,7 @@ export async function DELETE(
     })
     return NextResponse.json({ success: true })
   } catch (err) {
-    console.error('[api/saved DELETE]', err)
+    logger.error('[api/saved DELETE]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to unsave listing' } },
       { status: 500 },

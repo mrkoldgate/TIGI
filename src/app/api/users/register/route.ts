@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/db'
 import { registerSchema } from '@/lib/validations/auth'
 import { createCustodialWallet } from '@/lib/solana/custodial'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/users/register
@@ -85,7 +86,7 @@ export async function POST(request: Request) {
       { status: 201 },
     )
   } catch (error) {
-    console.error('[register] Error:', error)
+    logger.error('[register] Error:', error)
     return NextResponse.json(
       { error: 'Registration failed. Please try again.' },
       { status: 500 },

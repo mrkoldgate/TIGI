@@ -15,6 +15,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { SolanaService } from '@/lib/solana/solana-service'
 import { getNetwork } from '@/lib/solana/client'
+import { logger } from '@/lib/logger'
 
 export async function GET() {
   const session = await auth()
@@ -54,7 +55,7 @@ export async function GET() {
       },
     })
   } catch (err) {
-    console.error('[api/wallet/balance GET]', err)
+    logger.error('[api/wallet/balance GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'RPC_ERROR', message: 'Failed to fetch balance from Solana network' } },
       { status: 502 },

@@ -32,6 +32,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { IntentPreparationService } from '@/lib/solana/intent-preparation'
+import { logger } from '@/lib/logger'
 
 const PREPARABLE_STATUSES = ['APPROVED', 'READY_TO_SIGN'] as const
 
@@ -153,7 +154,7 @@ export async function POST(
       },
     })
   } catch (err) {
-    console.error('[api/intents/[id]/prepare POST]', err)
+    logger.error('[api/intents/[id]/prepare POST]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to prepare transaction' } },
       { status: 500 },

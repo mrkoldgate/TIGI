@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { UpdateListingSchema } from '@/lib/validations/listing'
 import { createListingService, ListingNotFoundError, ListingForbiddenError, ListingStateError } from '@/lib/services/listing.service'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // GET /api/listings/[id]
@@ -34,7 +35,7 @@ export async function GET(_request: Request, { params }: Params) {
     }
     return NextResponse.json({ success: true, data: listing })
   } catch (err) {
-    console.error('[GET /api/listings/[id]]', err)
+    logger.error('[GET /api/listings/[id]]', err)
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch listing' } }, { status: 500 })
   }
 }
@@ -76,7 +77,7 @@ export async function PATCH(request: Request, { params }: Params) {
     if (err instanceof ListingStateError) {
       return NextResponse.json({ success: false, error: { code: 'INVALID_STATE', message: err.message } }, { status: 409 })
     }
-    console.error('[PATCH /api/listings/[id]]', err)
+    logger.error('[PATCH /api/listings/[id]]', err)
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to update listing' } }, { status: 500 })
   }
 }

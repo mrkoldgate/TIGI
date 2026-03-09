@@ -23,6 +23,7 @@ import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { createNotification } from '@/lib/notifications/notification-service'
+import { logger } from '@/lib/logger'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'escalate', 'request_update']),
@@ -172,7 +173,7 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, data: result })
   } catch (err) {
-    console.error('[api/admin/kyc PATCH]', err)
+    logger.error('[api/admin/kyc PATCH]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to process KYC decision' } },
       { status: 500 },

@@ -14,6 +14,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 // ── Validation ────────────────────────────────────────────────────────────────
 
@@ -42,7 +43,7 @@ export async function GET(
     })
     return NextResponse.json({ success: true, data: images })
   } catch (err) {
-    console.error('[api/listings/images GET]', err)
+    logger.error('[api/listings/images GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch images' } },
       { status: 500 },

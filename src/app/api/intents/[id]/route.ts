@@ -12,6 +12,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 const PatchIntentSchema = z.object({
   action: z.enum(['cancel']),
@@ -103,7 +104,7 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, data: { id: updated.id, status: updated.status } })
   } catch (err) {
-    console.error('[api/intents/[id] PATCH]', err)
+    logger.error('[api/intents/[id] PATCH]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to update intent' } },
       { status: 500 },

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { getBillingService } from '@/lib/billing/billing-service'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // POST /api/billing/manage
@@ -30,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result)
   } catch (err) {
-    console.error('[billing/manage]', err)
+    logger.error('[billing/manage]', err)
     return NextResponse.json(
       { error: 'Failed to open billing portal. Please try again.' },
       { status: 500 },

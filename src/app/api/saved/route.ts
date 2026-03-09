@@ -9,6 +9,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 export async function GET() {
   const session = await auth()
@@ -32,7 +33,7 @@ export async function GET() {
       },
     })
   } catch (err) {
-    console.error('[api/saved GET]', err)
+    logger.error('[api/saved GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch saved listings' } },
       { status: 500 },
@@ -78,7 +79,7 @@ export async function POST(req: Request) {
       { status: 201 },
     )
   } catch (err) {
-    console.error('[api/saved POST]', err)
+    logger.error('[api/saved POST]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to save listing' } },
       { status: 500 },

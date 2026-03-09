@@ -14,6 +14,7 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { createInquiry, getUserInquiries, getOwnerInquiries } from '@/lib/inquiries/inquiry-service'
 import type { SubmitInquiryPayload, InquiryType } from '@/lib/inquiries/inquiry-types'
+import { logger } from '@/lib/logger'
 
 const VALID_INQUIRY_TYPES: InquiryType[] = [
   'GENERAL',
@@ -66,7 +67,7 @@ export async function POST(request: Request) {
     if (msg.includes('own listing')) {
       return NextResponse.json({ error: msg }, { status: 403 })
     }
-    console.error('[inquiries] POST failed:', err)
+    logger.error('[inquiries] POST failed:', err)
     return NextResponse.json({ error: 'Failed to submit inquiry' }, { status: 500 })
   }
 }
@@ -92,7 +93,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, inquiries })
   } catch (err) {
-    console.error('[inquiries] GET failed:', err)
+    logger.error('[inquiries] GET failed:', err)
     return NextResponse.json({ error: 'Failed to fetch inquiries' }, { status: 500 })
   }
 }

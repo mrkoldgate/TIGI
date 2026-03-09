@@ -3,6 +3,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { onboardingStepSchema } from '@/lib/validations/onboarding'
 import { getDbRole } from '@/lib/onboarding/config'
+import { logger } from '@/lib/logger'
 
 // ---------------------------------------------------------------------------
 // PATCH /api/users/me/onboarding
@@ -104,7 +105,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ success: true, step: 4 })
     }
   } catch (error) {
-    console.error('[onboarding PATCH] Error:', error)
+    logger.error('[onboarding PATCH] Error:', error)
     return NextResponse.json(
       { error: 'Failed to save. Please try again.' },
       { status: 500 },

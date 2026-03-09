@@ -27,6 +27,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { SolanaService } from '@/lib/solana/solana-service'
 import type { WalletPreparation } from '@/lib/solana/intent-preparation'
+import { logger } from '@/lib/logger'
 
 const SubmitSchema = z.object({
   signedTransaction: z.string().min(1),
@@ -161,7 +162,7 @@ export async function POST(
       },
     })
   } catch (err) {
-    console.error('[api/intents/[id]/submit POST]', err)
+    logger.error('[api/intents/[id]/submit POST]', err)
 
     // If tx was rejected by the network, give a clean message
     const errMsg = (err as Error).message ?? ''

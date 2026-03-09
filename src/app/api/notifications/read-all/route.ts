@@ -8,6 +8,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 export async function PATCH() {
   const session = await auth()
@@ -28,7 +29,7 @@ export async function PATCH() {
 
     return NextResponse.json({ success: true, data: { markedRead: result.count } })
   } catch (err) {
-    console.error('[api/notifications/read-all PATCH]', err)
+    logger.error('[api/notifications/read-all PATCH]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to mark all notifications read' } },
       { status: 500 },

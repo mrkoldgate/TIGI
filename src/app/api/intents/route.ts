@@ -22,6 +22,7 @@ import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { createNotification } from '@/lib/notifications/notification-service'
 import { isInvestor, hasKyc } from '@/lib/auth/rbac'
+import { logger } from '@/lib/logger'
 
 const CreateIntentSchema = z.object({
   propertyId:  z.string().min(1),
@@ -193,7 +194,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ success: true, data: intent }, { status: 201 })
   } catch (err) {
-    console.error('[api/intents POST]', err)
+    logger.error('[api/intents POST]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to create intent' } },
       { status: 500 },
@@ -225,7 +226,7 @@ export async function GET() {
 
     return NextResponse.json({ success: true, data: intents })
   } catch (err) {
-    console.error('[api/intents GET]', err)
+    logger.error('[api/intents GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch intents' } },
       { status: 500 },

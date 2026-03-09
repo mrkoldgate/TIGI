@@ -12,6 +12,7 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
+import { logger } from '@/lib/logger'
 
 export async function GET(req: Request) {
   const session = await auth()
@@ -73,7 +74,7 @@ export async function GET(req: Request) {
       },
     })
   } catch (err) {
-    console.error('[api/admin/kyc GET]', err)
+    logger.error('[api/admin/kyc GET]', err)
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch KYC submissions' } },
       { status: 500 },
