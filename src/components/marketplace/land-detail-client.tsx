@@ -844,6 +844,7 @@ function LandActionPanel({
   leaseTerms,
   leaseRateMonthly,
   valuation,
+  isPro,
 }: {
   listing: MockListing
   landUse: LandUseType
@@ -854,6 +855,7 @@ function LandActionPanel({
   leaseTerms: LeaseTerms | null
   leaseRateMonthly: number | null
   valuation?: AiValuation | null
+  isPro?: boolean
 }) {
   const acres = listing.lotAcres ?? 0
   const isLeaseOnly = listing.listingType === 'LEASE'
@@ -988,6 +990,7 @@ function LandActionPanel({
           valuation={valuation}
           assetType="land"
           lotAcres={listing.lotAcres ?? undefined}
+          isPro={isPro}
         />
       )}
 
@@ -1025,6 +1028,7 @@ export function LandDetailClient({
   leaseTerms = null,
   devOpportunity = null,
   leaseRateMonthly = null,
+  isPro = false,
 }: {
   listing: MockListing
   allListings: MockListing[]
@@ -1032,6 +1036,7 @@ export function LandDetailClient({
   leaseTerms?: LeaseTerms | null
   devOpportunity?: DevOpportunity | null
   leaseRateMonthly?: number | null
+  isPro?: boolean
 }) {
   const { isSaved, toggleSave } = useSavedListings()
   const saved = isSaved(listing.id)
@@ -1084,6 +1089,7 @@ export function LandDetailClient({
               leaseTerms={leaseTerms}
               leaseRateMonthly={leaseRateMonthly}
               valuation={valuation}
+              isPro={isPro}
             />
           </div>
         </div>

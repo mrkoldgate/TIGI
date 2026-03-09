@@ -34,6 +34,7 @@ import {
   DIRECTION_CONFIG,
   IMPACT_LABEL,
 } from '@/lib/valuation/valuation-types'
+import { PremiumGate } from '@/components/premium/premium-gate'
 
 // ── Props ──────────────────────────────────────────────────────────────────
 
@@ -46,6 +47,8 @@ interface ValuationPanelProps {
   assetType?: 'property' | 'land'
   /** For land: $/ac display alongside total */
   lotAcres?: number
+  /** Whether the current user has a Pro subscription. Gates rich sections. */
+  isPro?: boolean
 }
 
 // ── Theme helpers ──────────────────────────────────────────────────────────
@@ -341,6 +344,7 @@ export function ValuationPanel({
   valuation,
   assetType = 'property',
   lotAcres,
+  isPro = false,
 }: ValuationPanelProps) {
   const t = theme(assetType)
   const conf = CONFIDENCE_CONFIG[confidence]
@@ -412,42 +416,43 @@ export function ValuationPanel({
           </div>
         </div>
 
-        {/* ── Rich: range bar ── */}
-        {isRich && valuation && (
-          <RangeBar
-            listPrice={listPrice}
-            low={valuation.range.low}
-            mid={valuation.range.mid}
-            high={valuation.range.high}
-            t={t}
-          />
-        )}
-
         {/* ── Confidence meter (always shown) ── */}
         <ConfidenceMeter confidence={confidence} t={t} />
 
-        {/* ── Rich: value drivers ── */}
-        {isRich && valuation && valuation.drivers.length > 0 && (
-          <div className={cn('border-t pt-4', t.divider)}>
-            <DriversSection drivers={valuation.drivers} t={t} />
-          </div>
-        )}
-
-        {/* ── Rich: comparable sales ── */}
-        {isRich && valuation && valuation.comparables.length > 0 && (
-          <div className={cn('border-t pt-4', t.divider)}>
-            <CompsSection comps={valuation.comparables} assetType={assetType} t={t} />
-          </div>
-        )}
-
-        {/* ── Rich: methodology note ── */}
+        {/* ── Rich sections — Pro gated ── */}
         {isRich && valuation && (
-          <div className={cn('border-t pt-3', t.divider)}>
-            <p className={cn('text-[9px] leading-relaxed', t.labelColor)}>
-              <span className="font-semibold">Methodology:</span>{' '}
-              {valuation.methodology}
-            </p>
-          </div>
+          <PremiumGate
+            isPro={isPro}
+            feature="deep valuation analysis"
+            minHeight={200}
+          >
+            <RangeBar
+              listPrice={listPrice}
+              low={valuation.range.low}
+              mid={valuation.range.mid}
+              high={valuation.range.high}
+              t={t}
+            />
+
+            {valuation.drivers.length > 0 && (
+              <div className={cn('border-t pt-4', t.divider)}>
+                <DriversSection drivers={valuation.drivers} t={t} />
+              </div>
+            )}
+
+            {valuation.comparables.length > 0 && (
+              <div className={cn('border-t pt-4', t.divider)}>
+                <CompsSection comps={valuation.comparables} assetType={assetType} t={t} />
+              </div>
+            )}
+
+            <div className={cn('border-t pt-3', t.divider)}>
+              <p className={cn('text-[9px] leading-relaxed', t.labelColor)}>
+                <span className="font-semibold">Methodology:</span>{' '}
+                {valuation.methodology}
+              </p>
+            </div>
+          </PremiumGate>
         )}
 
         {/* ── Disclaimer ── */}

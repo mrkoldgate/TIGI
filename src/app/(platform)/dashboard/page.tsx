@@ -3,6 +3,7 @@ import { requireAuth } from '@/lib/auth/session'
 import { getActiveListings } from '@/lib/listings/listing-query'
 import { getDashboardData } from '@/lib/dashboard/dashboard-query'
 import { DashboardClient } from '@/components/dashboard/dashboard-client'
+import { canAccessAdvancedInsights } from '@/lib/premium/feature-gate'
 
 export const metadata: Metadata = {
   title: 'Dashboard — TIGI',
@@ -32,6 +33,8 @@ export default async function DashboardPage() {
       allListings={allListings}
       user={dashboardData.user}
       stats={dashboardData.stats}
+      isPro={canAccessAdvancedInsights(sessionUser)}
+      subscriptionTier={sessionUser.subscriptionTier ?? 'free'}
     />
   )
 }

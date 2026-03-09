@@ -5,6 +5,8 @@ import { PropertyDetailClient } from '@/components/marketplace/property-detail-c
 import { LandDetailClient } from '@/components/marketplace/land-detail-client'
 import { getValuation, marketplaceListingToInput } from '@/lib/valuation/valuation-service'
 import { getTerraListing } from '@/lib/terra/terra-query'
+import { getCurrentUser } from '@/lib/auth/session'
+import { canAccessDeepValuation } from '@/lib/premium/feature-gate'
 
 // ---------------------------------------------------------------------------
 // /marketplace/[id] — Unified property & land detail route.
@@ -41,14 +43,19 @@ export default async function ListingDetailPage({ params }: PageProps) {
   const { id } = await params
 
   // Both queries are React-cached — parallel calls are deduplicated.
-  const [listing, allListings] = await Promise.all([
+  const [listing, allListings, sessionUser] = await Promise.all([
     getListingById(id),
     getActiveListings(),
+    getCurrentUser(),
   ])
 
   if (!listing) notFound()
 
-  const valuation = await getValuation(listing.id, marketplaceListingToInput(listing))
+  const [valuation] = await Promise.all([
+    getValuation(listing.id, marketplaceListingToInput(listing)),
+  ])
+
+  const isProUser = canAccessDeepValuation(sessionUser)
 
   if (listing.propertyType === 'LAND') {
     // Enrich with Terra structured data (lease terms + dev opportunity)
@@ -61,9 +68,17 @@ export default async function ListingDetailPage({ params }: PageProps) {
         leaseTerms={terraListing?.leaseTerms ?? null}
         devOpportunity={terraListing?.devOpportunity ?? null}
         leaseRateMonthly={terraListing?.leaseRateMonthly ?? null}
+        isPro={isProUser}
       />
     )
   }
 
-  return <PropertyDetailClient listing={listing} allListings={allListings} valuation={valuation} />
+  return (
+    <PropertyDetailClient
+      listing={listing}
+      allListings={allListings}
+      valuation={valuation}
+      isPro={isProUser}
+    />
+  )
 }

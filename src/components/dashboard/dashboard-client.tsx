@@ -24,6 +24,9 @@ import {
 import { getRecommendations, DEMO_USER_PREFERENCES } from '@/lib/recommendations/recommendation-service'
 import { RecommendationRail } from '@/components/recommendations/recommendation-rail'
 import { SubmittedInquiryFeed } from '@/components/inquiries/submitted-inquiry-feed'
+import { PremiumGate } from '@/components/premium/premium-gate'
+import { UpgradeCta } from '@/components/premium/upgrade-cta'
+import { SubscriptionBadge } from '@/components/premium/subscription-badge'
 
 import { StatCard } from './stat-card'
 import { SectionHeader } from './section-header'
@@ -52,9 +55,11 @@ interface DashboardClientProps {
   allListings: MockListing[]
   user: DashboardUser
   stats: DashboardStats
+  isPro?: boolean
+  subscriptionTier?: string
 }
 
-export function DashboardClient({ allListings, user, stats: serverStats }: DashboardClientProps) {
+export function DashboardClient({ allListings, user, stats: serverStats, isPro = false, subscriptionTier = 'free' }: DashboardClientProps) {
   const { savedIds, savedCount } = useSavedListings()
 
   // Recommended: scored by recommendation engine (saved-signal + tokenization + AI confidence)
@@ -91,6 +96,7 @@ export function DashboardClient({ allListings, user, stats: serverStats }: Dashb
         userName={user.name}
         role={user.role}
         kycStatus={user.kycStatus}
+        subscriptionTier={subscriptionTier}
       />
 
       {/* ── Stats row ───────────────────────────────────────────────────── */}
@@ -145,10 +151,21 @@ export function DashboardClient({ allListings, user, stats: serverStats }: Dashb
               viewAllLabel="All insights"
               milestone="M6"
             />
-            <div className="mt-4 space-y-3">
-              {MOCK_INSIGHTS.map((insight) => (
-                <InsightCard key={insight.id} insight={insight} />
-              ))}
+            <div className="mt-4">
+              <PremiumGate
+                isPro={isPro}
+                feature="advanced AI insights"
+                minHeight={220}
+              >
+                <div className="space-y-3">
+                  {MOCK_INSIGHTS.map((insight) => (
+                    <InsightCard key={insight.id} insight={insight} />
+                  ))}
+                </div>
+              </PremiumGate>
+              {!isPro && (
+                <UpgradeCta compact className="mt-3" />
+              )}
             </div>
           </section>
 
@@ -271,9 +288,10 @@ interface WelcomeBarProps {
   userName: string
   role: string
   kycStatus: 'UNVERIFIED' | 'PENDING' | 'VERIFIED'
+  subscriptionTier?: string
 }
 
-function WelcomeBar({ greeting, userName, role, kycStatus }: WelcomeBarProps) {
+function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'free' }: WelcomeBarProps) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       {/* Left: greeting */}
@@ -287,6 +305,8 @@ function WelcomeBar({ greeting, userName, role, kycStatus }: WelcomeBarProps) {
           </span>
           {/* KYC status */}
           <KycBadge status={kycStatus} />
+          {/* Subscription tier */}
+          <SubscriptionBadge tier={subscriptionTier} />
         </div>
       </div>
 

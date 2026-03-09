@@ -610,10 +610,14 @@ function ActionPanel({
   listing,
   isSaved,
   onSave,
+  valuation,
+  isPro,
 }: {
   listing: MockListing
   isSaved: boolean
   onSave: () => void
+  valuation?: AiValuation | null
+  isPro?: boolean
 }) {
   const [inquiryOpen, setInquiryOpen] = useState(false)
 
@@ -693,6 +697,7 @@ function ActionPanel({
           confidence={valuation.confidence}
           valuation={valuation}
           assetType="property"
+          isPro={isPro}
         />
       )}
 
@@ -727,10 +732,12 @@ export function PropertyDetailClient({
   listing,
   allListings,
   valuation,
+  isPro = false,
 }: {
   listing: MockListing
   allListings: MockListing[]
   valuation?: AiValuation | null
+  isPro?: boolean
 }) {
   const { isSaved, toggleSave } = useSavedListings()
   const saved = isSaved(listing.id)
@@ -760,7 +767,7 @@ export function PropertyDetailClient({
         {/* Right — sticky action panel */}
         <div className="lg:col-span-5 xl:col-span-4">
           <div className="lg:sticky lg:top-6">
-            <ActionPanel listing={listing} isSaved={saved} onSave={onSave} />
+            <ActionPanel listing={listing} isSaved={saved} onSave={onSave} valuation={valuation} isPro={isPro} />
           </div>
         </div>
       </div>

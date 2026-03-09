@@ -31,6 +31,8 @@ const REASON_CHIP: Record<ReasonType, { className: string; dot: string }> = {
   TRENDING:         { className: 'border-[#F97316]/30 bg-[#F97316]/6 text-[#FCA876]',          dot: 'bg-[#F97316]' },
   LAND_PREFERENCE:  { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',         dot: 'bg-[#4ADE80]' },
   OWNERSHIP_MATCH:  { className: 'border-[#C9A84C]/30 bg-[#C9A84C]/6 text-[#C9A84C]',         dot: 'bg-[#C9A84C]' },
+  NEW_LISTING:      { className: 'border-[#818CF8]/30 bg-[#818CF8]/6 text-[#818CF8]',          dot: 'bg-[#818CF8]' },
+  VALUE_SCORE:      { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',          dot: 'bg-[#4ADE80]' },
 }
 
 // ── ReasonChip ──────────────────────────────────────────────────────────────
