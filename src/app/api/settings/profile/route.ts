@@ -12,22 +12,15 @@ import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/db'
 import { logger } from '@/lib/logger'
+import {
+  DEFAULT_NOTIFICATION_PREFS,
+  type NotificationPrefs,
+} from '@/lib/settings/notification-prefs'
 
-export interface NotificationPrefs {
-  emailInquiries:       boolean
-  emailListingUpdates:  boolean
-  emailTokenUpdates:    boolean
-  emailMarketing:       boolean
-  inAppAll:             boolean
-}
-
-export const DEFAULT_NOTIFICATION_PREFS: NotificationPrefs = {
-  emailInquiries:      true,
-  emailListingUpdates: true,
-  emailTokenUpdates:   true,
-  emailMarketing:      false,
-  inAppAll:            true,
-}
+// Re-export so server-only consumers (tests, page) can import from here if
+// they prefer — but client components must always import from the shared lib.
+export type { NotificationPrefs }
+export { DEFAULT_NOTIFICATION_PREFS }
 
 interface ProfilePatchBody {
   name?:               string

@@ -32,8 +32,10 @@ import {
   Camera,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import type { NotificationPrefs } from '@/app/api/settings/profile/route'
-import { DEFAULT_NOTIFICATION_PREFS } from '@/app/api/settings/profile/route'
+import {
+  DEFAULT_NOTIFICATION_PREFS,
+  type NotificationPrefs,
+} from '@/lib/settings/notification-prefs'
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

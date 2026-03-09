@@ -38,7 +38,8 @@ export default auth((req) => {
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self'",
-      "connect-src 'self' https://api.stripe.com",
+      // Stripe + Solana RPC (Helius + public devnet/mainnet + WebSocket for confirmations)
+      "connect-src 'self' https://api.stripe.com https://*.helius-rpc.com https://api.devnet.solana.com https://api.mainnet-beta.solana.com wss://*.helius-rpc.com wss://api.devnet.solana.com",
       "frame-src https://js.stripe.com https://hooks.stripe.com",
       "object-src 'none'",
       "base-uri 'self'",

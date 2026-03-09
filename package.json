@@ -15,7 +15,8 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:seed": "tsx prisma/seed.ts",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "test:devnet": "tsx scripts/test-devnet.ts"
   },
   "dependencies": {
     "@solana/web3.js": "^1.98.0",

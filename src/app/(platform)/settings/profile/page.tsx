@@ -3,8 +3,10 @@ import { requireAuth } from '@/lib/auth/session'
 import { prisma } from '@/lib/db'
 import { PageHeader } from '@/components/shared/page-header'
 import { ProfileClient } from '@/components/settings/profile-client'
-import { DEFAULT_NOTIFICATION_PREFS } from '@/app/api/settings/profile/route'
-import type { NotificationPrefs } from '@/app/api/settings/profile/route'
+import {
+  DEFAULT_NOTIFICATION_PREFS,
+  type NotificationPrefs,
+} from '@/lib/settings/notification-prefs'
 
 export const metadata: Metadata = {
   title: 'Profile — Settings',
