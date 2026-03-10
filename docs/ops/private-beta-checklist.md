@@ -109,17 +109,30 @@ npm run test:coverage # coverage report
 ```
 
 Current coverage areas:
+
+### Library / logic
+
 - Auth session helpers
 - RBAC role checks
 - Solana transaction readiness checks (`evaluateReadiness`)
 - Solana intent preparation (memo parsing, round-trips)
 - Solana transaction programs registry
 - Premium feature gates
-- Intents API (POST + GET)
-- Listings API
-- Health API
-- Settings profile PATCH API
 - SolanaService address validation
+- AI orchestrator (mock + Anthropic paths, fallback behaviour)
+
+### API routes
+
+- `GET /api/health`
+- `POST /api/listings`, `GET /api/listings`
+- `GET /api/listings/[id]`, `PATCH /api/listings/[id]`
+- `POST /api/intents`, `GET /api/intents`
+- `POST /api/intents/[id]/prepare`
+- `POST /api/intents/[id]/submit` (including TX_FAILED + blockhash expiry)
+- `POST /api/billing/checkout`, `POST /api/billing/webhook`
+- `PATCH /api/settings/profile`
+- `POST /api/upload` (auth, purpose validation, size limits, storage errors)
+- `POST /api/inquiries`, `GET /api/inquiries`
 
 ---
 
@@ -175,10 +188,10 @@ These are intentional limitations, not bugs:
 | Area | Limitation | Planned fix |
 |---|---|---|
 | KYC | `KYC_PROVIDER=mock` auto-approves all submissions | Real SumSub / Onfido integration in M9 |
-| Investment | Intent creates an on-chain memo record only — no funds move, no escrow | Escrow program in M8 |
-| Token execution | `EXECUTED` status requires manual admin approval — no automated Solana tx submission yet | M8 client-side signing flow |
+| Investment | Intent creates an on-chain memo record only — no funds move, no escrow | Escrow program in M9 |
+| Token execution | Phantom signing active (M8). Client signs and submits to devnet. ADMIN approval still required for status advance. | Admin workflow in M9 |
 | Emails | Transactional emails only log to console unless `RESEND_API_KEY` is set | Set Resend key for beta |
-| Avatar upload | Upload UI is disabled — `Camera` button is visible but inactive | File storage activation in M10 |
+| Avatar upload | Upload UI active — requires `STORAGE_PROVIDER=r2` with R2 vars set. Falls back gracefully when unset. | Configure R2 vars for beta |
 | Revenue analytics | Admin analytics `/admin/analytics` shows placeholder for revenue | Stripe integration in M10 |
 | AI valuation | Uses mock/seed data unless `AI_PROVIDER=anthropic` and `ANTHROPIC_API_KEY` is set | Configure API key to enable |
 | Rate limiting | Redis-backed rate limits inactive until `REDIS_URL` is set | Set Upstash Redis for beta |
@@ -197,7 +210,47 @@ To forward to an external log drain, replace the `emit()` function in `src/lib/l
 
 ---
 
-## 8. M8 Provider Activation — Stripe Test Mode
+## 8. Device and Browser Compatibility
+
+Test these specific combinations before inviting beta users. The app uses Solana wallet adapters and `navigator.clipboard` — both require modern browsers.
+
+### Minimum supported environments
+
+| Environment | Minimum version | Notes |
+|---|---|---|
+| Chrome / Edge | 115+ | Primary target — wallet adapters best supported |
+| Firefox | 119+ | Phantom extension available; test wallet modal |
+| Safari (macOS) | 17+ | No Phantom extension — test "Connect wallet" flow gracefully degrades |
+| Safari (iOS) | 17+ | Mobile browser — no wallet extension; wallet-dependent UI must hide cleanly |
+| Chrome (Android) | 115+ | Phantom mobile in-app browser is separate — test basic flows only |
+
+### Required browser checks
+
+- [ ] Sign in with Google OAuth — Chrome, Firefox, Safari
+- [ ] Sign in with email/password — all three browsers
+- [ ] Marketplace loads and property cards render correctly on mobile (375 px viewport)
+- [ ] Inquiry modal slides up correctly on mobile (bottom sheet) and centres on desktop
+- [ ] Investment modal scroll works on mobile (max-height + overflow-y-auto)
+- [ ] Phantom wallet modal opens and closes on Chrome/Firefox (extension required)
+- [ ] "No wallet" state renders cleanly on Safari (extension unavailable)
+- [ ] Avatar upload: file picker opens, image updates immediately after upload
+- [ ] Settings save button feedback (Saving… / Saved / Error) visible and readable
+- [ ] `/api/health` accessible without JS (curl check)
+
+### Phantom-specific compatibility
+
+- [ ] Phantom v24+ required for VersionedTransaction support (the prepare/submit flow uses `VersionedTransaction`)
+- [ ] Instruct beta users to update Phantom if the signing step fails silently
+- [ ] Test with Solflare extension as a secondary wallet option
+
+### Known limitations
+
+- **No mobile wallet support** — Phantom mobile in-app browser is out of scope for beta. Users on mobile should use desktop Chrome/Firefox to sign transactions.
+- **Safari clipboard** — the `navigator.clipboard.writeText` call in the wallet display requires a user gesture in Safari. If copy-to-clipboard for wallet addresses fails, this is expected.
+
+---
+
+## 9. M8 Provider Activation — Stripe Test Mode
 
 ### Prerequisites
 
@@ -252,7 +305,7 @@ stripe trigger customer.subscription.deleted
 
 ---
 
-## 9. M8 Provider Activation — Anthropic
+## 10. M8 Provider Activation — Anthropic
 
 ### Setup
 
@@ -278,7 +331,7 @@ If Anthropic throws at runtime (rate limit, overload, outage):
 
 ---
 
-## 10. M8 Wallet + Storage Activation
+## 11. M8 Wallet + Storage Activation
 
 ### Phantom wallet signing — test instructions
 
@@ -331,7 +384,7 @@ R2_PUBLIC_URL=https://your-bucket.r2.dev
 
 ---
 
-## 11. M8 Deployment and Environment Activation
+## 12. M8 Deployment and Environment Activation
 
 ### Build pipeline changes (M8)
 
@@ -443,7 +496,7 @@ Config failures are logged with a prominent banner but do not crash the process 
 
 ---
 
-## 12. Rollback Plan
+## 13. Rollback Plan
 
 1. All DB changes are Prisma migrations — reversible with `prisma migrate reset` (destructive)
 2. Seed data can be re-applied safely at any time — all upserts are idempotent

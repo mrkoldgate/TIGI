@@ -219,6 +219,14 @@ export function InquiryModal({
     return () => clearTimeout(t)
   }, [])
 
+  // Close on Escape key
+  useEffect(() => {
+    if (loading) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [loading, onClose])
+
   const handleSubmit = useCallback(async () => {
     if (message.trim().length < 10) {
       setError('Please write at least 10 characters.')
@@ -251,7 +259,7 @@ export function InquiryModal({
     } finally {
       setLoading(false)
     }
-  }, [propertyId, selected, message])
+  }, [propertyId, selected, message, propertyTitle])
 
   const charCount    = message.length
   const charMax      = 2000
