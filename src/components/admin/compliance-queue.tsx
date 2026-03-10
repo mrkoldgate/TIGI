@@ -25,7 +25,7 @@ import { cn } from '@/lib/utils'
 
 const TYPE_CONFIG: Record<
   ComplianceItemType,
-  { label: string; icon: React.ElementType; color: string; bg: string; badgeBg: string; badgeText: string }
+  { label: string; icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; bg: string; badgeBg: string; badgeText: string }
 > = {
   KYC: {
     label: 'KYC',

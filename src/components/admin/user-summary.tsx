@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 // DB path: prisma counts + prisma.user.findMany({ orderBy: createdAt, take: 5 })
 // ---------------------------------------------------------------------------
 
-const KYC_CONFIG: Record<UserKycStatus, { icon: React.ElementType; color: string; label: string }> = {
+const KYC_CONFIG: Record<UserKycStatus, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; label: string }> = {
   VERIFIED:   { icon: ShieldCheck, color: 'text-[#4ADE80]', label: 'Verified'   },
   PENDING:    { icon: Clock,       color: 'text-[#F59E0B]', label: 'Pending'    },
   UNVERIFIED: { icon: ShieldOff,   color: 'text-[#6B6B80]', label: 'Unverified' },
@@ -123,7 +123,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
                 <span className="hidden text-[11px] text-[#4A4A5E] sm:block">{user.country}</span>
 
                 {/* KYC */}
-                <KycIcon className={cn('h-3.5 w-3.5 flex-shrink-0', kyc.color)} title={kyc.label} />
+                <KycIcon className={cn('h-3.5 w-3.5 flex-shrink-0', kyc.color)} aria-label={kyc.label} />
 
                 {/* Time */}
                 <span className="w-12 flex-shrink-0 text-right text-[11px] text-[#4A4A5E]">

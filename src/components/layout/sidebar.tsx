@@ -44,7 +44,7 @@ interface SidebarProps {
 interface NavItem {
   href: string
   label: string
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   milestone?: string
 }
 

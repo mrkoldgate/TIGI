@@ -53,7 +53,7 @@ interface PendingIntent {
 
 // ── Config ─────────────────────────────────────────────────────────────────
 
-const INTENT_CONFIG: Record<IntentType, { label: string; confirmText: string; color: string; icon?: React.ElementType }> = {
+const INTENT_CONFIG: Record<IntentType, { label: string; confirmText: string; color: string; icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> }> = {
   PREPARE_PURCHASE:  { label: 'Prepare Purchase',  confirmText: 'Confirm purchase intent',  color: '#C9A84C' },
   PREPARE_LEASE:     { label: 'Prepare Lease',      confirmText: 'Confirm lease intent',      color: '#C9A84C' },
   PREPARE_INVEST:    { label: 'Invest',             confirmText: 'Confirm investment intent', color: '#C9A84C', icon: Zap },

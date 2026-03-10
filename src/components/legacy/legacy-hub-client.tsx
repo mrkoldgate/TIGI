@@ -515,7 +515,7 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
   )
 }
 
-function StepHeader({ icon: Icon, title, subtitle }: { icon: React.ElementType; title: string; subtitle: string }) {
+function StepHeader({ icon: Icon, title, subtitle }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3">
       <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#A78BFA]/10">

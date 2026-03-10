@@ -119,7 +119,7 @@ function ExplainerRow({
   title,
   body,
 }: {
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   title: string
   body: string
 }) {

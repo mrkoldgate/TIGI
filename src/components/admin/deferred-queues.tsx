@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils'
 // ---------------------------------------------------------------------------
 
 interface QueueRowProps {
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   title: string
   primaryCount: number
   primaryLabel: string

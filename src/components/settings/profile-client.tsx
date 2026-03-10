@@ -392,7 +392,7 @@ function FieldRow({
   align = 'center',
 }: {
   label: string
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   children: React.ReactNode
   required?: boolean
   align?: 'center' | 'top'
@@ -475,7 +475,7 @@ function AccountLink({
   valueColor,
 }: {
   href: string
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   label: string
   value: string
   valueColor?: string

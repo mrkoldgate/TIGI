@@ -309,7 +309,7 @@ function QuickActionsStrip() {
     },
   }
 
-  const ACTION_ICONS: Record<string, React.ElementType> = {
+  const ACTION_ICONS: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
     'qa-new-property': Building2,
     'qa-new-land':     Map,
     'qa-tokenize':     Coins,

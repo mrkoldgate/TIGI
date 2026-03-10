@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils'
 // ---------------------------------------------------------------------------
 
 interface PerformanceMetricProps {
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   label: string
   value: string | number
   iconColor: string

@@ -1,24 +1,17 @@
 import type { Metadata, Viewport } from 'next'
-import { Playfair_Display, Syne } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { Providers } from '@/components/providers'
 import './globals.css'
 
 // ---------------------------------------------------------------------------
-// Font loading — distinctive premium typography
+// Font — Inter: geometric sans-serif, premium tech aesthetic
 // ---------------------------------------------------------------------------
 
-const playfair = Playfair_Display({
+const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-inter',
   display: 'swap',
-  weight: ['400', '500', '600', '700', '800', '900'],
-})
-
-const syne = Syne({
-  subsets: ['latin'],
-  variable: '--font-syne',
-  display: 'swap',
-  weight: ['400', '500', '600', '700', '800'],
+  weight: ['300', '400', '500', '600', '700', '800', '900'],
 })
 
 // ---------------------------------------------------------------------------
@@ -65,7 +58,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#050508',
+  themeColor: '#020409',
   colorScheme: 'dark',
 }
 
@@ -82,7 +75,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${playfair.variable} ${syne.variable}`}
+      className={inter.variable}
     >
       <head>
         {/* JetBrains Mono via Google Fonts CDN — code / mono contexts */}
@@ -93,7 +86,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#050508] text-[#F0EDE6] antialiased">
+      <body className="min-h-screen bg-[#020409] text-[#F8FAFC] antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -51,10 +51,10 @@ function AdminComingSoon({
   description,
   features,
 }: {
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   heading: string
   description: string
-  features: { icon: React.ElementType; label: string; milestone: string }[]
+  features: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; milestone: string }[]
 }) {
   return (
     <div className="rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] p-8">

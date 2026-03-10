@@ -31,7 +31,7 @@ import { ComplianceQueue, type KycAction, type LegacyAction } from './compliance
 const TYPE_SUMMARY_CONFIG: Array<{
   type: ComplianceItemType
   label: string
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   color: string
   activeBorder: string
   bg: string

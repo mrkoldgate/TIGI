@@ -44,7 +44,7 @@ const INTENT_TYPE_LABELS: Record<string, { label: string; short: string }> = {
 }
 
 const STATUS_CONFIG: Record<string, {
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   badgeClass: string
   dotClass: string
 }> = {

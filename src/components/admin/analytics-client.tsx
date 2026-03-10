@@ -388,7 +388,7 @@ function KpiTile({
   label: string
   value: number
   sub: string
-  icon: React.ElementType
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
   accent: string
 }) {
   return (

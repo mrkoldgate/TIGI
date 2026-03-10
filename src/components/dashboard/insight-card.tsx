@@ -22,7 +22,7 @@ import { cn } from '@/lib/utils'
 
 const INSIGHT_CONFIG: Record<
   InsightType,
-  { icon: React.ElementType; color: string; bg: string }
+  { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; bg: string }
 > = {
   PRICE_DROP:         { icon: TrendingDown, color: 'text-[#4ADE80]',  bg: 'bg-[#4ADE80]/10'  },
   PRICE_RISE:         { icon: TrendingUp,   color: 'text-[#F87171]',  bg: 'bg-[#F87171]/10'  },

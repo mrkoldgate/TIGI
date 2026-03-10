@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 
 const ACTIVITY_CONFIG: Record<
   ActivityType,
-  { icon: React.ElementType; color: string; bg: string }
+  { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; bg: string }
 > = {
   SAVED:            { icon: Heart,       color: 'text-rose-400',   bg: 'bg-rose-500/10'    },
   UNSAVED:          { icon: HeartOff,    color: 'text-[#6B6B80]',  bg: 'bg-[#2A2A3A]'      },

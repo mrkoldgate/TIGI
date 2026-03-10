@@ -127,7 +127,7 @@ export default async function CompletePage() {
   )
 }
 
-function FeatureChip({ icon: Icon, label }: { icon: React.ElementType; label: string }) {
+function FeatureChip({ icon: Icon, label }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string }) {
   return (
     <div className="flex items-center gap-2 rounded-xl border border-[#1E1E2A] bg-[#111118] px-4 py-3">
       <Icon className="h-4 w-4 shrink-0 text-[#C9A84C]" />

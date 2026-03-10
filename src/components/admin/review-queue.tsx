@@ -240,7 +240,7 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
 
 const ACTION_CONFIG: Record<
   ListingAction,
-  { icon: React.ElementType; label: string; confirmLabel: string; color: string; hoverBorder: string; hoverText: string; confirmBg: string }
+  { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; confirmLabel: string; color: string; hoverBorder: string; hoverText: string; confirmBg: string }
 > = {
   approve: {
     icon:         CheckCircle2,

@@ -24,7 +24,7 @@ import type { NotificationRecord } from '@/lib/notifications/notification-query'
 
 // ── Icon map ─────────────────────────────────────────────────────────────────
 
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+const ICON_MAP: Record<string, React.ComponentType<React.SVGProps<SVGSVGElement>>> = {
   CheckCircle2: CheckCircle2,
   XCircle:      XCircle,
   AlertCircle:  AlertCircle,

@@ -47,7 +47,7 @@ const SEVERITY_CONFIG: Record<
   },
 }
 
-const TYPE_CONFIG: Record<FlaggedItemType, { icon: React.ElementType; label: string; color: string }> = {
+const TYPE_CONFIG: Record<FlaggedItemType, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; color: string }> = {
   USER:        { icon: User,            label: 'User',        color: 'text-[#818CF8]' },
   LISTING:     { icon: Building2,       label: 'Listing',     color: 'text-[#C9A84C]' },
   TRANSACTION: { icon: ArrowLeftRight,  label: 'Transaction', color: 'text-[#A0A0B2]' },

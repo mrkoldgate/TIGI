@@ -86,7 +86,7 @@ function DevOpportunityCompact({ opp }: { opp: DevOpportunity }) {
 
 // ── Full panel (detail tab) ──────────────────────────────────────────────────
 
-function Section({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) {
+function Section({ icon: Icon, title, children }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; children: React.ReactNode }) {
   return (
     <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-5">
       <div className="mb-4 flex items-center gap-2">
