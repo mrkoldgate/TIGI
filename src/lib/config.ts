@@ -214,6 +214,17 @@ export function assertRequiredConfig(): void {
     if (!config.billing.priceIdProPlusAnnual)  errors.push('STRIPE_PRO_PLUS_ANNUAL_PRICE_ID — required when BILLING_PROVIDER=stripe')
   }
 
+  // Production sanity checks
+  if (process.env.NODE_ENV === 'production') {
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? ''
+    if (!appUrl || appUrl.includes('localhost') || appUrl.includes('127.0.0.1')) {
+      errors.push('NEXT_PUBLIC_APP_URL — must be set to a real HTTPS URL in production (currently resolves to localhost)')
+    }
+    if (!process.env.AUTH_SECRET) {
+      // Already caught above; no duplicate — just a note that this is critical in prod
+    }
+  }
+
   if (errors.length > 0) {
     const list = errors.map(e => `  • ${e}`).join('\n')
     throw new Error(

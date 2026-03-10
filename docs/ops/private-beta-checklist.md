@@ -1,7 +1,7 @@
 # TIGI — Private Beta Readiness Checklist
 
 Last updated: 2026-03-09
-Status: **Provider activation complete (M8)**
+Status: **Deployment-ready (M8)**
 
 ---
 
@@ -331,7 +331,119 @@ R2_PUBLIC_URL=https://your-bucket.r2.dev
 
 ---
 
-## 11. Rollback Plan
+## 11. M8 Deployment and Environment Activation
+
+### Build pipeline changes (M8)
+
+The build script now runs `prisma generate` before `next build`. This ensures the Prisma client is always regenerated from `schema.prisma` — required when the schema has changed since `node_modules` was last populated.
+
+```bash
+# What "npm run build" now does:
+prisma generate && next build
+```
+
+**Never use `prisma migrate dev` in production.** It creates new migration files and is interactive. Use `db:deploy` instead:
+
+```bash
+# Development: create migrations from schema changes
+npm run db:migrate   # prisma migrate dev
+
+# Production: apply pending migrations without creating new ones
+npm run db:deploy    # prisma migrate deploy
+```
+
+### First deploy to Vercel — step by step
+
+1. Push the repo to GitHub.
+2. Import the project in [vercel.com/new](https://vercel.com/new).
+3. Vercel auto-detects Next.js — no framework configuration needed (`vercel.json` is present).
+4. Set all required environment variables in Vercel → Settings → Environment Variables (see Section 1). At minimum:
+   - `AUTH_SECRET`
+   - `DATABASE_URL`
+   - `NEXT_PUBLIC_APP_URL` (set to `https://your-project.vercel.app` or your custom domain)
+5. Add optional provider vars (`BILLING_PROVIDER`, `AI_PROVIDER`, `STORAGE_PROVIDER`, etc.).
+6. **Before the first deploy**, run migrations against your hosted database:
+
+```bash
+# Run from your local machine against the hosted DB:
+DATABASE_URL="postgresql://..." npm run db:deploy
+
+# Or use the Vercel CLI post-build hook (see below).
+```
+
+1. Click **Deploy**. The build will run `prisma generate && next build`.
+1. After deploy, verify the health check:
+
+```bash
+curl https://your-project.vercel.app/api/health
+# Expected: {"status":"ok","checks":{"database":"ok"},...}
+```
+
+### Running `db:deploy` as part of Vercel deploy
+
+To run migrations automatically on each Vercel deploy, add a **post-build** command in the Vercel project settings:
+
+```bash
+npm run db:deploy
+```
+
+Or set it as the build command override in `vercel.json`:
+
+```json
+{
+  "buildCommand": "npm run db:deploy && npm run build"
+}
+```
+
+> **Note:** The `vercel.json` currently uses `npm run build` only (which includes `prisma generate`). Update to `npm run db:deploy && npm run build` if you want migrations to run automatically on every deploy. Only do this if your DB user has migration permissions.
+
+### Environment validation at startup
+
+`src/instrumentation.ts` calls `assertRequiredConfig()` on every cold start. It checks:
+
+- `AUTH_SECRET` is set
+- `DATABASE_URL` is set
+- Provider-specific vars are set (Anthropic key, Stripe keys, R2 creds, etc.)
+- In production: `NEXT_PUBLIC_APP_URL` is not `localhost`
+
+Config failures are logged with a prominent banner but do not crash the process (to keep `/api/health` responsive). Check logs immediately after first deploy.
+
+### `next.config.ts` — R2 image domains
+
+`next.config.ts` now reads `R2_PUBLIC_URL` at build time and dynamically adds the hostname to `images.remotePatterns`. This means:
+
+- `R2_PUBLIC_URL=https://pub-abc.r2.dev` → `pub-abc.r2.dev` added to `remotePatterns`
+- `R2_PUBLIC_URL=https://assets.tigi.com` → `assets.tigi.com` added to `remotePatterns`
+- `R2_PUBLIC_URL` unset → only the wildcard `*.r2.cloudflarestorage.com` and `*.r2.dev` patterns apply
+
+**Important:** `R2_PUBLIC_URL` must be set at build time (not just runtime) because `next.config.ts` runs during the build. Set it in Vercel's environment variables before deploying.
+
+### Deployment readiness checklist
+
+#### Build
+
+- [ ] `npm run build` succeeds locally with `DATABASE_URL` pointing to a local or staging DB
+- [ ] `prisma generate` runs (now part of build) — no `PrismaClientInitializationError` in logs
+- [ ] `npm run db:deploy` run against hosted DB before first deploy
+
+#### Vercel configuration
+
+- [ ] `vercel.json` is present — Vercel uses `npm run build` and 30s function timeout
+- [ ] `NEXT_PUBLIC_APP_URL` is set to the real HTTPS URL (not localhost)
+- [ ] `R2_PUBLIC_URL` is set at build time if using R2 with a custom domain
+- [ ] All `*_SECRET` and `*_KEY` vars added to Vercel Environment Variables (not committed to git)
+
+#### Post-deploy verification
+
+- [ ] `/api/health` returns `{ "status": "ok" }` — confirms DB connectivity
+- [ ] Config validation banner is NOT in logs (all required vars set)
+- [ ] Sign in works (Google OAuth callback URL registered with correct `NEXT_PUBLIC_APP_URL`)
+- [ ] Avatar upload works (if `STORAGE_PROVIDER=r2`, uploaded image renders in the UI)
+- [ ] Stripe checkout redirects correctly (if `BILLING_PROVIDER=stripe`)
+
+---
+
+## 12. Rollback Plan
 
 1. All DB changes are Prisma migrations — reversible with `prisma migrate reset` (destructive)
 2. Seed data can be re-applied safely at any time — all upserts are idempotent
