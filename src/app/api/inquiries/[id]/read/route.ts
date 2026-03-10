@@ -25,7 +25,7 @@ export async function PATCH(
     await markInquiryRead(id, session.user.id)
     return NextResponse.json({ success: true })
   } catch (err) {
-    logger.error('[inquiries/read] PATCH failed:', err)
+    logger.error('[inquiries/read] PATCH failed:', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ error: 'Failed to update inquiry' }, { status: 500 })
   }
 }

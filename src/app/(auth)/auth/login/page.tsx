@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from 'next-auth/react'
@@ -14,7 +14,7 @@ import { loginSchema, type LoginInput } from '@/lib/validations/auth'
 // Sign in page — email/password + Google OAuth
 // ---------------------------------------------------------------------------
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callbackUrl') ?? '/marketplace'
@@ -183,6 +183,14 @@ export default function LoginPage() {
         </Link>
       </p>
     </div>
+  )
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin text-[#C9A84C]" /></div>}>
+      <LoginContent />
+    </Suspense>
   )
 }
 

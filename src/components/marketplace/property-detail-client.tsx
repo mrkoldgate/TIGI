@@ -48,10 +48,10 @@ import { track } from '@/lib/analytics/client'
 
 const GALLERY_POOLS: Record<ImagePropertyType, string[]> = {
   residential: ['residential-1', 'residential-2', 'residential-3', 'residential-4', 'residential-5'],
-  commercial:  ['commercial-1', 'commercial-2', 'commercial-3', 'commercial-4'],
-  land:        ['land-1', 'land-2', 'land-3'],
-  industrial:  ['industrial-1', 'industrial-2'],
-  mixed:       ['mixed-1', 'commercial-1', 'commercial-2'],
+  commercial: ['commercial-1', 'commercial-2', 'commercial-3', 'commercial-4'],
+  land: ['land-1', 'land-2', 'land-3'],
+  industrial: ['industrial-1', 'industrial-2'],
+  mixed: ['mixed-1', 'commercial-1', 'commercial-2'],
 }
 
 function getGallerySlots(listing: MockListing): string[] {
@@ -66,18 +66,18 @@ function getGallerySlots(listing: MockListing): string[] {
 
 const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
   RESIDENTIAL: 'Residential',
-  COMMERCIAL:  'Commercial',
-  LAND:        'Land',
-  INDUSTRIAL:  'Industrial',
-  MIXED_USE:   'Mixed Use',
+  COMMERCIAL: 'Commercial',
+  LAND: 'Land',
+  INDUSTRIAL: 'Industrial',
+  MIXED_USE: 'Mixed Use',
 }
 
 const TYPE_BADGE: Record<PropertyType, string> = {
   RESIDENTIAL: 'bg-[#1A1A24]/90 text-[#A0A0B2] ring-[#2A2A3A]',
-  COMMERCIAL:  'bg-[#3B82F6]/15 text-[#60A5FA] ring-[#3B82F6]/25',
-  LAND:        'bg-[#22C55E]/15 text-[#4ADE80] ring-[#22C55E]/25',
-  INDUSTRIAL:  'bg-[#F59E0B]/15 text-[#FCD34D] ring-[#F59E0B]/25',
-  MIXED_USE:   'bg-[#C9A84C]/15 text-[#C9A84C] ring-[#C9A84C]/25',
+  COMMERCIAL: 'bg-[#3B82F6]/15 text-[#60A5FA] ring-[#3B82F6]/25',
+  LAND: 'bg-[#22C55E]/15 text-[#4ADE80] ring-[#22C55E]/25',
+  INDUSTRIAL: 'bg-[#F59E0B]/15 text-[#FCD34D] ring-[#F59E0B]/25',
+  MIXED_USE: 'bg-[#C9A84C]/15 text-[#C9A84C] ring-[#C9A84C]/25',
 }
 
 function formatNumber(n: number): string {
@@ -436,13 +436,13 @@ function TabContent({
               <span
                 className={cn(
                   'inline-flex items-center rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
-                  doc.status === 'available'     && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
-                  doc.status === 'pending'       && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
+                  doc.status === 'available' && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
+                  doc.status === 'pending' && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
                   doc.status === 'not_available' && 'bg-[#2A2A3A] text-[#6B6B80] ring-[#3A3A48]',
                 )}
               >
-                {doc.status === 'available'     ? 'Available'     : null}
-                {doc.status === 'pending'       ? 'Pending'       : null}
+                {doc.status === 'available' ? 'Available' : null}
+                {doc.status === 'pending' ? 'Pending' : null}
                 {doc.status === 'not_available' ? 'Not available' : null}
               </span>
             </div>
@@ -480,10 +480,10 @@ function DetailTabs({
   const [activeTab, setActiveTab] = useState<DetailTab>('overview')
 
   const tabs: { key: DetailTab; label: string }[] = [
-    { key: 'overview',  label: 'Overview'  },
-    { key: 'details',   label: 'Details'   },
+    { key: 'overview', label: 'Overview' },
+    { key: 'details', label: 'Details' },
     { key: 'documents', label: 'Documents' },
-    { key: 'similar',   label: 'Similar'   },
+    { key: 'similar', label: 'Similar' },
   ]
 
   return (
@@ -524,10 +524,10 @@ function QuickStats({ listing }: { listing: MockListing }) {
   if (isLand) {
     if (listing.lotAcres) stats.push({ icon: <Ruler className="h-3.5 w-3.5" />, label: 'Acres', value: `${listing.lotAcres.toLocaleString()}` })
   } else {
-    if (listing.sqft)      stats.push({ icon: <Ruler className="h-3.5 w-3.5" />, label: 'Sq ft', value: formatNumber(listing.sqft) })
-    if (listing.bedrooms)  stats.push({ icon: <Bed className="h-3.5 w-3.5" />, label: 'Beds', value: String(listing.bedrooms) })
+    if (listing.sqft) stats.push({ icon: <Ruler className="h-3.5 w-3.5" />, label: 'Sq ft', value: formatNumber(listing.sqft) })
+    if (listing.bedrooms) stats.push({ icon: <Bed className="h-3.5 w-3.5" />, label: 'Beds', value: String(listing.bedrooms) })
     if (listing.bathrooms) stats.push({ icon: <Bath className="h-3.5 w-3.5" />, label: 'Baths', value: String(listing.bathrooms) })
-    if (listing.lotAcres)  stats.push({ icon: <Ruler className="h-3.5 w-3.5" />, label: 'Lot', value: `${listing.lotAcres} ac` })
+    if (listing.lotAcres) stats.push({ icon: <Ruler className="h-3.5 w-3.5" />, label: 'Lot', value: `${listing.lotAcres} ac` })
   }
   if (listing.yearBuilt) stats.push({ icon: <Calendar className="h-3.5 w-3.5" />, label: 'Built', value: String(listing.yearBuilt) })
 
@@ -551,7 +551,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
 
   if (!listing.isTokenized || !listing.tokenTotalSupply || !listing.tokenPricePerFraction) return null
 
-  const soldPct  = tokenSoldPercent(listing)
+  const soldPct = tokenSoldPercent(listing)
   const available = listing.tokenAvailableSupply ?? 0
 
   return (
@@ -763,11 +763,11 @@ export function PropertyDetailClient({
       properties: {
         listingId: listing.id,
         propertyType: listing.propertyType,
-        isLand: listing.propertyType === 'Land',
+        isLand: listing.propertyType === 'LAND',
         price: listing.price,
       },
     })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [listing.id])
 
   return (

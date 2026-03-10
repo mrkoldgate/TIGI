@@ -39,6 +39,7 @@ export interface MockListing {
   // Meta
   createdAt: string
   viewCount: number
+  isNew?: boolean
   // AI valuation (MockValuationService — real model plugs in at M6)
   aiEstimatedValue: number | null
   aiConfidence: AiConfidence | null

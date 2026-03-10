@@ -105,7 +105,7 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ success: true, step: 4 })
     }
   } catch (error) {
-    logger.error('[onboarding PATCH] Error:', error)
+    logger.error('[onboarding PATCH] Error:', { error: error instanceof Error ? error.message : String(error) })
     return NextResponse.json(
       { error: 'Failed to save. Please try again.' },
       { status: 500 },

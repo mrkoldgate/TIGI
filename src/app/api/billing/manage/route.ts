@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(result)
   } catch (err) {
-    logger.error('[billing/manage]', err)
+    logger.error('[billing/manage]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { error: 'Failed to open billing portal. Please try again.' },
       { status: 500 },

@@ -38,11 +38,11 @@ export async function POST(request: Request) {
   if (session?.user?.id) {
     void prisma.auditLog.create({
       data: {
-        userId:       session.user.id,
-        action:       event.name,
+        userId: session.user.id,
+        action: event.name,
         resourceType: 'Event',
-        resourceId:   event.properties?.listingId as string ?? 'n/a',
-        metadata:     event.properties ?? {},
+        resourceId: event.properties?.listingId as string ?? 'n/a',
+        metadata: (event.properties ?? {}) as import('@prisma/client').Prisma.InputJsonValue,
       },
     }).catch(() => { /* non-critical */ })
   }

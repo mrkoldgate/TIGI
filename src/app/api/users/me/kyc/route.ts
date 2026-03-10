@@ -28,21 +28,21 @@ const StartKycSchema = z.object({
   // Personal info — stored in User.preferences.kycPersonalInfo
   personalInfo: z
     .object({
-      legalName:   z.string().min(2).max(200),
+      legalName: z.string().min(2).max(200),
       dateOfBirth: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Must be YYYY-MM-DD format'),
       addressLine1: z.string().min(3).max(300),
-      city:        z.string().min(1).max(100),
-      state:       z.string().min(1).max(100),
-      country:     z.string().min(2).max(100),
+      city: z.string().min(1).max(100),
+      state: z.string().min(1).max(100),
+      country: z.string().min(2).max(100),
     })
     .optional(),
   // Document keys — populated after uploading via POST /api/upload
   idFrontKey: z.string().optional(),
   idFrontUrl: z.string().url().optional(),
-  idBackKey:  z.string().optional(),
-  idBackUrl:  z.string().url().optional(),
-  selfieKey:  z.string().optional(),
-  selfieUrl:  z.string().url().optional(),
+  idBackKey: z.string().optional(),
+  idBackUrl: z.string().url().optional(),
+  selfieKey: z.string().optional(),
+  selfieUrl: z.string().url().optional(),
 })
 
 // ── GET — fetch current verification status ──────────────────────────────────
@@ -59,25 +59,25 @@ export async function GET() {
   try {
     const [user, latest] = await Promise.all([
       prisma.user.findUnique({
-        where:  { id: session.user.id },
+        where: { id: session.user.id },
         select: { kycStatus: true, preferences: true },
       }),
       prisma.kycVerification.findFirst({
-        where:   { userId: session.user.id },
+        where: { userId: session.user.id },
         orderBy: { submittedAt: 'desc' },
         select: {
-          id:          true,
-          status:      true,
-          provider:    true,
+          id: true,
+          status: true,
+          provider: true,
           providerRef: true,
-          idFrontUrl:  true,
-          idBackUrl:   true,
-          selfieUrl:   true,
-          reviewedBy:  true,
-          reviewNote:  true,
-          reviewedAt:  true,
+          idFrontUrl: true,
+          idBackUrl: true,
+          selfieUrl: true,
+          reviewedBy: true,
+          reviewNote: true,
+          reviewedAt: true,
           submittedAt: true,
-          updatedAt:   true,
+          updatedAt: true,
         },
       }),
     ])
@@ -85,12 +85,12 @@ export async function GET() {
     return NextResponse.json({
       success: true,
       data: {
-        kycStatus:   user?.kycStatus ?? 'NONE',
+        kycStatus: user?.kycStatus ?? 'NONE',
         verification: latest,
       },
     })
   } catch (err) {
-    logger.error('[api/users/me/kyc GET]', err)
+    logger.error('[api/users/me/kyc GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch KYC status' } },
       { status: 500 },
@@ -136,7 +136,7 @@ export async function POST(req: Request) {
     if (action === 'start') {
       // Idempotent: if already verified, do not regress
       const currentUser = await prisma.user.findUnique({
-        where:  { id: userId },
+        where: { id: userId },
         select: { kycStatus: true },
       })
       if (currentUser?.kycStatus === 'VERIFIED') {
@@ -149,7 +149,7 @@ export async function POST(req: Request) {
       const verification = await prisma.$transaction(async (tx) => {
         // Upsert: re-use existing PENDING record so users can pick up where they left off
         const existing = await tx.kycVerification.findFirst({
-          where:  { userId, status: 'PENDING' },
+          where: { userId, status: 'PENDING' },
           select: { id: true },
         })
 
@@ -160,14 +160,14 @@ export async function POST(req: Request) {
         })
         await tx.user.update({
           where: { id: userId },
-          data:  { kycStatus: 'PENDING' },
+          data: { kycStatus: 'PENDING' },
         })
         await tx.auditLog.create({
           data: {
             userId,
-            action:       'kyc.start',
+            action: 'kyc.start',
             resourceType: 'KycVerification',
-            resourceId:   created.id,
+            resourceId: created.id,
           },
         })
         return created
@@ -189,7 +189,7 @@ export async function POST(req: Request) {
       const result = await prisma.$transaction(async (tx) => {
         // Find the active PENDING record for this user
         const verification = await tx.kycVerification.findFirst({
-          where:  { userId, status: 'PENDING' },
+          where: { userId, status: 'PENDING' },
           select: { id: true },
         })
 
@@ -203,40 +203,40 @@ export async function POST(req: Request) {
         // Upsert the verification record
         const updated = verificationId
           ? await tx.kycVerification.update({
-              where: { id: verificationId },
-              data:  {
-                status:     'SUBMITTED',
-                idFrontUrl: idFrontUrl ?? undefined,
-                idBackUrl:  idBackUrl  ?? undefined,
-                selfieUrl:  selfieUrl  ?? undefined,
-              },
-            })
+            where: { id: verificationId },
+            data: {
+              status: 'SUBMITTED',
+              idFrontUrl: idFrontUrl ?? undefined,
+              idBackUrl: idBackUrl ?? undefined,
+              selfieUrl: selfieUrl ?? undefined,
+            },
+          })
           : await tx.kycVerification.create({
-              data: {
-                userId,
-                status:     'SUBMITTED',
-                provider:   'manual',
-                idFrontUrl: idFrontUrl ?? undefined,
-                idBackUrl:  idBackUrl  ?? undefined,
-                selfieUrl:  selfieUrl  ?? undefined,
-              },
-            })
+            data: {
+              userId,
+              status: 'SUBMITTED',
+              provider: 'manual',
+              idFrontUrl: idFrontUrl ?? undefined,
+              idBackUrl: idBackUrl ?? undefined,
+              selfieUrl: selfieUrl ?? undefined,
+            },
+          })
 
         await tx.user.update({
           where: { id: userId },
-          data:  { kycStatus: 'SUBMITTED', ...prefsUpdate },
+          data: { kycStatus: 'SUBMITTED', ...(prefsUpdate ? { preferences: prefsUpdate.preferences as import('@prisma/client').Prisma.InputJsonValue } : {}) },
         })
 
         await tx.auditLog.create({
           data: {
             userId,
-            action:       'kyc.submit',
+            action: 'kyc.submit',
             resourceType: 'KycVerification',
-            resourceId:   updated.id,
+            resourceId: updated.id,
             metadata: {
-              hasIdFront:  !!idFrontUrl,
-              hasIdBack:   !!idBackUrl,
-              hasSelfie:   !!selfieUrl,
+              hasIdFront: !!idFrontUrl,
+              hasIdBack: !!idBackUrl,
+              hasSelfie: !!selfieUrl,
             },
           },
         })
@@ -247,7 +247,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, data: result })
     }
   } catch (err) {
-    logger.error('[api/users/me/kyc POST]', err)
+    logger.error('[api/users/me/kyc POST]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'KYC operation failed' } },
       { status: 500 },

@@ -155,7 +155,7 @@ export async function DELETE(
     try {
       await getStorageProvider().delete(guard.image.storageKey)
     } catch (err) {
-      logger.warn('[api/listings/images DELETE] storage delete failed:', err)
+      logger.warn('[api/listings/images DELETE] storage delete failed:', { error: err instanceof Error ? err.message : String(err) })
     }
   }
 

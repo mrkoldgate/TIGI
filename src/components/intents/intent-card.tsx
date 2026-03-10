@@ -32,56 +32,56 @@ import { cn } from '@/lib/utils'
 import type { UserIntent } from '@/lib/intents/intent-query'
 import { WalletPreparationPanel } from '@/components/wallet/wallet-preparation-panel'
 import { IntentReadinessChecklist } from '@/components/wallet/intent-readiness-checklist'
-import { INTENT_STATUS_GUIDANCE } from '@/lib/solana/transaction-programs'
+import { INTENT_STATUS_GUIDANCE, type TIGIProgramId } from '@/lib/solana/transaction-programs'
 
 // ── Label maps ─────────────────────────────────────────────────────────────
 
 const INTENT_TYPE_LABELS: Record<string, { label: string; short: string }> = {
-  EXPRESS_INTEREST:  { label: 'Express Interest',  short: 'Interest'  },
-  PREPARE_PURCHASE:  { label: 'Purchase Intent',   short: 'Purchase'  },
-  PREPARE_INVEST:    { label: 'Investment Intent', short: 'Investment' },
-  PREPARE_LEASE:     { label: 'Lease Intent',      short: 'Lease'     },
+  EXPRESS_INTEREST: { label: 'Express Interest', short: 'Interest' },
+  PREPARE_PURCHASE: { label: 'Purchase Intent', short: 'Purchase' },
+  PREPARE_INVEST: { label: 'Investment Intent', short: 'Investment' },
+  PREPARE_LEASE: { label: 'Lease Intent', short: 'Lease' },
 }
 
 const STATUS_CONFIG: Record<string, {
-  icon:        React.ElementType
-  badgeClass:  string
-  dotClass:    string
+  icon: React.ElementType
+  badgeClass: string
+  dotClass: string
 }> = {
   PENDING: {
-    icon:       Clock,
+    icon: Clock,
     badgeClass: 'border-[#F59E0B]/30 bg-[#F59E0B]/10 text-[#F59E0B]',
-    dotClass:   'bg-[#F59E0B]',
+    dotClass: 'bg-[#F59E0B]',
   },
   REVIEWING: {
-    icon:       AlertCircle,
+    icon: AlertCircle,
     badgeClass: 'border-[#3B82F6]/30 bg-[#3B82F6]/10 text-[#3B82F6]',
-    dotClass:   'bg-[#3B82F6]',
+    dotClass: 'bg-[#3B82F6]',
   },
   APPROVED: {
-    icon:       CheckCircle2,
+    icon: CheckCircle2,
     badgeClass: 'border-[#22C55E]/30 bg-[#22C55E]/10 text-[#22C55E]',
-    dotClass:   'bg-[#22C55E] animate-pulse',
+    dotClass: 'bg-[#22C55E] animate-pulse',
   },
   READY_TO_SIGN: {
-    icon:       PenLine,
+    icon: PenLine,
     badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
-    dotClass:   'bg-[#C9A84C] animate-pulse',
+    dotClass: 'bg-[#C9A84C] animate-pulse',
   },
   EXECUTED: {
-    icon:       CheckCircle2,
+    icon: CheckCircle2,
     badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
-    dotClass:   'bg-[#C9A84C]',
+    dotClass: 'bg-[#C9A84C]',
   },
   CANCELLED: {
-    icon:       XCircle,
+    icon: XCircle,
     badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
-    dotClass:   'bg-[#6B6B80]',
+    dotClass: 'bg-[#6B6B80]',
   },
   EXPIRED: {
-    icon:       XCircle,
+    icon: XCircle,
     badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
-    dotClass:   'bg-[#6B6B80]',
+    dotClass: 'bg-[#6B6B80]',
   },
 }
 
@@ -100,27 +100,27 @@ function formatDate(iso: string): string {
 // ── Component ──────────────────────────────────────────────────────────────
 
 interface IntentCardProps {
-  intent:    UserIntent
+  intent: UserIntent
   onCancel?: (id: string) => void
 }
 
 interface WalletPreparationData {
-  serialized:           string
-  requiredSigner:       string
-  blockhash:            string
+  serialized: string
+  requiredSigner: string
+  blockhash: string
   lastValidBlockHeight: number
-  expiresAt:            string
-  program:              string
-  memoText:             string
+  expiresAt: string
+  program: TIGIProgramId
+  memoText: string
 }
 
 export function IntentCard({ intent, onCancel }: IntentCardProps) {
-  const [isCancelling,    setIsCancelling]    = useState(false)
-  const [cancelError,     setCancelError]     = useState<string | null>(null)
-  const [localStatus,     setLocalStatus]     = useState(intent.status)
-  const [isPreparing,     setIsPreparing]     = useState(false)
-  const [prepareError,    setPrepareError]    = useState<string | null>(null)
-  const [preparation,     setPreparation]     = useState<WalletPreparationData | null>(() => {
+  const [isCancelling, setIsCancelling] = useState(false)
+  const [cancelError, setCancelError] = useState<string | null>(null)
+  const [localStatus, setLocalStatus] = useState(intent.status)
+  const [isPreparing, setIsPreparing] = useState(false)
+  const [prepareError, setPrepareError] = useState<string | null>(null)
+  const [preparation, setPreparation] = useState<WalletPreparationData | null>(() => {
     // If the intent was already prepared (READY_TO_SIGN), hydrate from metadata
     if (intent.status === 'READY_TO_SIGN') {
       const meta = intent.metadata as Record<string, unknown> | null
@@ -129,21 +129,21 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
     return null
   })
 
-  const statusCfg      = STATUS_CONFIG[localStatus]   ?? STATUS_CONFIG.PENDING
+  const statusCfg = STATUS_CONFIG[localStatus] ?? STATUS_CONFIG.PENDING
   const statusGuidance = INTENT_STATUS_GUIDANCE[localStatus as keyof typeof INTENT_STATUS_GUIDANCE]
-                       ?? INTENT_STATUS_GUIDANCE.PENDING
-  const intentLabel    = INTENT_TYPE_LABELS[intent.intentType] ?? { label: intent.intentType, short: intent.intentType }
-  const StatusIcon     = statusCfg.icon
+    ?? INTENT_STATUS_GUIDANCE.PENDING
+  const intentLabel = INTENT_TYPE_LABELS[intent.intentType] ?? { label: intent.intentType, short: intent.intentType }
+  const StatusIcon = statusCfg.icon
 
-  const canCancel  = CANCELLABLE_STATUSES.includes(localStatus)
+  const canCancel = CANCELLABLE_STATUSES.includes(localStatus)
   const canPrepare = localStatus === 'APPROVED'
-  const showPanel  = localStatus === 'READY_TO_SIGN' && preparation !== null
+  const showPanel = localStatus === 'READY_TO_SIGN' && preparation !== null
 
   const handlePrepare = useCallback(async () => {
     setIsPreparing(true)
     setPrepareError(null)
     try {
-      const res  = await fetch(`/api/intents/${intent.id}/prepare`, { method: 'POST' })
+      const res = await fetch(`/api/intents/${intent.id}/prepare`, { method: 'POST' })
       const json = await res.json()
       if (!res.ok) throw new Error(json?.error?.message ?? `Request failed (${res.status})`)
       setPreparation(json.data.preparation as WalletPreparationData)
@@ -160,9 +160,9 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
     setCancelError(null)
     try {
       const res = await fetch(`/api/intents/${intent.id}`, {
-        method:  'PATCH',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ action: 'cancel' }),
+        body: JSON.stringify({ action: 'cancel' }),
       })
       const json = await res.json()
       if (!res.ok) throw new Error(json?.error?.message ?? `Request failed (${res.status})`)

@@ -58,7 +58,7 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, data: { id, readAt: new Date() } })
   } catch (err) {
-    logger.error('[api/notifications/[id]/read PATCH]', err)
+    logger.error('[api/notifications/[id]/read PATCH]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to mark notification read' } },
       { status: 500 },

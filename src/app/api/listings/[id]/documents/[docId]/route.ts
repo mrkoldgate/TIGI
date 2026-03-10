@@ -61,7 +61,7 @@ export async function DELETE(
     try {
       await getStorageProvider().delete(doc.storageKey)
     } catch (err) {
-      logger.warn('[api/listings/documents DELETE] storage delete failed:', err)
+      logger.warn('[api/listings/documents DELETE] storage delete failed:', { error: err instanceof Error ? err.message : String(err) })
     }
   }
 

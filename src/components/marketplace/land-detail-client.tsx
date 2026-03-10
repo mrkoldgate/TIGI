@@ -119,12 +119,12 @@ function inferInfrastructure(features: string[]): InfraItem[] {
   const lower = features.map((f) => f.toLowerCase()).join(' ')
   const check = (kw: string) => lower.includes(kw)
   return [
-    { label: 'Utilities on site',     available: check('utilities at site') },
-    { label: 'Utilities at road',     available: check('utilities at road') || check('at road') },
-    { label: 'Road / site access',    available: check('road access') || check('graded') || check('transit adjacent') },
-    { label: 'Water rights',          available: check('water rights') || check('irrigation') },
+    { label: 'Utilities on site', available: check('utilities at site') },
+    { label: 'Utilities at road', available: check('utilities at road') || check('at road') },
+    { label: 'Road / site access', available: check('road access') || check('graded') || check('transit adjacent') },
+    { label: 'Water rights', available: check('water rights') || check('irrigation') },
     { label: 'Site graded & cleared', available: check('graded') || check('shovel-ready') || check('graded & ready') },
-    { label: 'Entitlements filed',    available: check('permits') || check('shovel-ready') || check('zoning') },
+    { label: 'Entitlements filed', available: check('permits') || check('shovel-ready') || check('zoning') },
   ].filter((i) => i.available || i.label === 'Road / site access') // always show access
 }
 
@@ -133,23 +133,23 @@ function inferPermittedUses(features: string[], landUse: LandUseType): string[] 
   const uses: string[] = []
 
   const USE_MAP: [string, string][] = [
-    ['agricultural',  'Agricultural production'],
-    ['vineyard',      'Viticulture & winery operations'],
-    ['irrigation',    'Irrigated farming'],
-    ['water rights',  'Water extraction & irrigation rights'],
-    ['cattle',        'Livestock grazing'],
-    ['grazing',       'Livestock grazing'],
-    ['hunting',       'Hunting & wildlife management'],
-    ['mixed-use',     'Mixed residential & commercial development'],
-    ['buildable',     'Residential or commercial construction'],
-    ['septic',        'On-site septic development'],
-    ['vacation rental','Short-term / vacation rental'],
-    ['industrial',    'Industrial operations & manufacturing'],
-    ['rail spur',     'Rail-served industrial logistics'],
-    ['transit',       'Transit-oriented development'],
-    ['ocean frontage','Waterfront residential or hospitality'],
-    ['waterfront',    'Waterfront development'],
-    ['conservation',  'Conservation easement'],
+    ['agricultural', 'Agricultural production'],
+    ['vineyard', 'Viticulture & winery operations'],
+    ['irrigation', 'Irrigated farming'],
+    ['water rights', 'Water extraction & irrigation rights'],
+    ['cattle', 'Livestock grazing'],
+    ['grazing', 'Livestock grazing'],
+    ['hunting', 'Hunting & wildlife management'],
+    ['mixed-use', 'Mixed residential & commercial development'],
+    ['buildable', 'Residential or commercial construction'],
+    ['septic', 'On-site septic development'],
+    ['vacation rental', 'Short-term / vacation rental'],
+    ['industrial', 'Industrial operations & manufacturing'],
+    ['rail spur', 'Rail-served industrial logistics'],
+    ['transit', 'Transit-oriented development'],
+    ['ocean frontage', 'Waterfront residential or hospitality'],
+    ['waterfront', 'Waterfront development'],
+    ['conservation', 'Conservation easement'],
   ]
 
   for (const [kw, use] of USE_MAP) {
@@ -159,14 +159,14 @@ function inferPermittedUses(features: string[], landUse: LandUseType): string[] 
   // Fallback by land use type
   if (uses.length === 0) {
     const fallbacks: Record<LandUseType, string[]> = {
-      AGRICULTURAL:    ['General farming & agricultural use'],
+      AGRICULTURAL: ['General farming & agricultural use'],
       RESIDENTIAL_DEV: ['Residential development (subject to entitlement)'],
-      COMMERCIAL_DEV:  ['Commercial development (subject to entitlement)'],
-      INDUSTRIAL:      ['Industrial & logistics operations'],
-      MIXED_USE:       ['Mixed-use residential & commercial'],
-      RECREATIONAL:    ['Recreational & outdoor activities'],
-      WATERFRONT:      ['Waterfront development & recreation'],
-      RURAL:           ['Grazing, hunting & rural activities'],
+      COMMERCIAL_DEV: ['Commercial development (subject to entitlement)'],
+      INDUSTRIAL: ['Industrial & logistics operations'],
+      MIXED_USE: ['Mixed-use residential & commercial'],
+      RECREATIONAL: ['Recreational & outdoor activities'],
+      WATERFRONT: ['Waterfront development & recreation'],
+      RURAL: ['Grazing, hunting & rural activities'],
     }
     return fallbacks[landUse] ?? []
   }
@@ -179,7 +179,7 @@ function inferPermittedUses(features: string[], landUse: LandUseType): string[] 
 
 function formatAcres(acres: number): string {
   if (acres >= 1000) return `${(acres / 1000).toFixed(1)}K`
-  if (acres >= 100)  return `${Math.round(acres)}`
+  if (acres >= 100) return `${Math.round(acres)}`
   if (acres % 1 === 0) return `${acres}`
   return `${acres.toFixed(1)}`
 }
@@ -446,14 +446,14 @@ function BreadcrumbNav({ listing }: { listing: MockListing }) {
 type LandTab = 'overview' | 'zoning' | 'documents' | 'similar'
 
 const LAND_DOCUMENTS = [
-  { name: 'Parcel Deed & Title',        type: 'Legal',      status: 'available'     },
-  { name: 'Survey & Boundary Report',   type: 'Survey',     status: 'available'     },
-  { name: 'Zoning Classification',      type: 'Regulatory', status: 'available'     },
-  { name: 'Soil Assessment Report',     type: 'Assessment', status: 'available'     },
-  { name: 'Environmental Phase I',      type: 'Assessment', status: 'pending'       },
-  { name: 'Topographic Survey',         type: 'Survey',     status: 'pending'       },
-  { name: 'Water Rights Documentation', type: 'Legal',      status: 'not_available' },
-  { name: 'Mineral Rights Record',      type: 'Legal',      status: 'not_available' },
+  { name: 'Parcel Deed & Title', type: 'Legal', status: 'available' },
+  { name: 'Survey & Boundary Report', type: 'Survey', status: 'available' },
+  { name: 'Zoning Classification', type: 'Regulatory', status: 'available' },
+  { name: 'Soil Assessment Report', type: 'Assessment', status: 'available' },
+  { name: 'Environmental Phase I', type: 'Assessment', status: 'pending' },
+  { name: 'Topographic Survey', type: 'Survey', status: 'pending' },
+  { name: 'Water Rights Documentation', type: 'Legal', status: 'not_available' },
+  { name: 'Mineral Rights Record', type: 'Legal', status: 'not_available' },
 ] as const
 
 function FeatureChip({ label }: { label: string }) {
@@ -524,7 +524,7 @@ function ZoningTab({
           <div className="mb-3 flex items-center gap-3">
             <span
               className="flex h-9 w-9 items-center justify-center rounded-xl ring-1"
-              style={{ backgroundColor: `${config.accentColor}18`, ringColor: `${config.accentColor}30` }}
+              style={{ backgroundColor: `${config.accentColor}18`, '--tw-ring-color': `${config.accentColor}30` } as React.CSSProperties}
             >
               <TreePine className="h-4 w-4" style={{ color: config.accentColor }} />
             </span>
@@ -648,12 +648,12 @@ function DocumentsTab() {
             </div>
             <span className={cn(
               'inline-flex items-center rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
-              doc.status === 'available'     && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
-              doc.status === 'pending'       && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
+              doc.status === 'available' && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
+              doc.status === 'pending' && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
               doc.status === 'not_available' && 'bg-[#1A2B1A] text-[#4A6A4A] ring-[#1E2D1E]',
             )}>
-              {doc.status === 'available'     ? 'Available'     : null}
-              {doc.status === 'pending'       ? 'Pending'       : null}
+              {doc.status === 'available' ? 'Available' : null}
+              {doc.status === 'pending' ? 'Pending' : null}
               {doc.status === 'not_available' ? 'Not available' : null}
             </span>
           </div>
@@ -701,10 +701,10 @@ function LandDetailTabs({
   const [activeTab, setActiveTab] = useState<LandTab>('overview')
 
   const tabs: { key: LandTab; label: string }[] = [
-    { key: 'overview', label: 'Overview'      },
-    { key: 'zoning',   label: 'Zoning & Use'  },
-    { key: 'documents', label: 'Documents'    },
-    { key: 'similar',   label: 'Similar'      },
+    { key: 'overview', label: 'Overview' },
+    { key: 'zoning', label: 'Zoning & Use' },
+    { key: 'documents', label: 'Documents' },
+    { key: 'similar', label: 'Similar' },
   ]
 
   return (
@@ -729,10 +729,10 @@ function LandDetailTabs({
       </div>
 
       <div className="mt-6">
-        {activeTab === 'overview'  && <OverviewTab listing={listing} />}
-        {activeTab === 'zoning'    && <ZoningTab listing={listing} landUse={landUse} isDevOpportunity={isDevOpportunity} devOpportunity={devOpportunity} leaseTerms={leaseTerms} />}
+        {activeTab === 'overview' && <OverviewTab listing={listing} />}
+        {activeTab === 'zoning' && <ZoningTab listing={listing} landUse={landUse} isDevOpportunity={isDevOpportunity} devOpportunity={devOpportunity} leaseTerms={leaseTerms} />}
         {activeTab === 'documents' && <DocumentsTab />}
-        {activeTab === 'similar'   && <SimilarTab listing={listing} allListings={allListings} landUse={landUse} />}
+        {activeTab === 'similar' && <SimilarTab listing={listing} allListings={allListings} landUse={landUse} />}
       </div>
     </div>
   )

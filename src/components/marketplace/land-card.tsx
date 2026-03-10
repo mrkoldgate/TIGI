@@ -29,7 +29,7 @@ const DEV_OPPORTUNITY_SIGNALS = [
   'transit adjacent',
 ]
 
-function inferLandUse(features: string[]): LandUseType {
+export function inferLandUse(features: string[]): LandUseType {
   const lower = features.map((f) => f.toLowerCase())
   const has = (kw: string) => lower.some((f) => f.includes(kw))
 
@@ -81,17 +81,17 @@ function toCardData(listing: MockListing): LandCardData {
     tokenInfo:
       listing.isTokenized && listing.tokenTotalSupply
         ? {
-            pricePerFraction: listing.tokenPricePerFraction ?? 0,
-            totalSupply: listing.tokenTotalSupply,
-            availableSupply: listing.tokenAvailableSupply ?? 0,
-            investorCount: listing.tokenInvestorCount ?? undefined,
-          }
+          pricePerFraction: listing.tokenPricePerFraction ?? 0,
+          totalSupply: listing.tokenTotalSupply,
+          availableSupply: listing.tokenAvailableSupply ?? 0,
+          investorCount: listing.tokenInvestorCount ?? undefined,
+        }
         : undefined,
     aiValuation: listing.aiEstimatedValue
       ? {
-          estimatedValue: listing.aiEstimatedValue,
-          confidence: listing.aiConfidence ?? 'LOW',
-        }
+        estimatedValue: listing.aiEstimatedValue,
+        confidence: listing.aiConfidence ?? 'LOW',
+      }
       : undefined,
   }
 }

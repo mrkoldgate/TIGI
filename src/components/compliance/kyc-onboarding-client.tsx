@@ -32,20 +32,20 @@ import type { KycStatusData } from '@/lib/compliance/kyc-query'
 // ── Types ──────────────────────────────────────────────────────────────────
 
 interface PersonalInfo {
-  legalName:    string
-  dateOfBirth:  string
+  legalName: string
+  dateOfBirth: string
   addressLine1: string
-  city:         string
-  state:        string
-  country:      string
+  city: string
+  state: string
+  country: string
 }
 
 interface DocSlot {
-  file:        File | null
-  preview:     string | null
-  status:      'idle' | 'uploading' | 'done' | 'error'
-  storageKey:  string | null
-  url:         string | null
+  file: File | null
+  preview: string | null
+  status: 'idle' | 'uploading' | 'done' | 'error'
+  storageKey: string | null
+  url: string | null
   errorMessage: string | null
 }
 
@@ -54,18 +54,18 @@ const EMPTY_DOC_SLOT: DocSlot = {
   storageKey: null, url: null, errorMessage: null,
 }
 
-const GOLD  = '#C9A84C'
+const GOLD = '#C9A84C'
 const GREEN = '#4ADE80'
 
 // ── Step config ────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { id: 1, label: 'Welcome'  },
+  { id: 1, label: 'Welcome' },
   { id: 2, label: 'Overview' },
   { id: 3, label: 'Identity' },
-  { id: 4, label: 'Documents'},
-  { id: 5, label: 'Selfie'   },
-  { id: 6, label: 'Submit'   },
+  { id: 4, label: 'Documents' },
+  { id: 5, label: 'Selfie' },
+  { id: 6, label: 'Submit' },
 ]
 
 // ── Props ──────────────────────────────────────────────────────────────────
@@ -83,23 +83,23 @@ export function KYCOnboardingClient({
   userDisplayName,
   userRole,
 }: KYCOnboardingClientProps) {
-  const [kycData, setKycData]   = useState<KycStatusData>(initialData)
-  const [step, setStep]         = useState(1)
+  const [kycData, setKycData] = useState<KycStatusData>(initialData)
+  const [step, setStep] = useState(1)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitError, setSubmitError]   = useState<string | null>(null)
-  const [submitted, setSubmitted]       = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [submitted, setSubmitted] = useState(false)
 
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({
     legalName: userDisplayName ?? '',
-    dateOfBirth:  '',
+    dateOfBirth: '',
     addressLine1: '',
-    city:         '',
-    state:        '',
-    country:      'US',
+    city: '',
+    state: '',
+    country: 'US',
   })
 
   const [idFront, setIdFront] = useState<DocSlot>(EMPTY_DOC_SLOT)
-  const [idBack,  setIdBack]  = useState<DocSlot>(EMPTY_DOC_SLOT)
+  const [idBack, setIdBack] = useState<DocSlot>(EMPTY_DOC_SLOT)
 
   const status = kycData.kycStatus
 
@@ -126,7 +126,7 @@ export function KYCOnboardingClient({
         const fd = new FormData()
         fd.append('file', file)
         fd.append('purpose', 'user-docs-kyc')
-        const res  = await fetch('/api/upload', { method: 'POST', body: fd })
+        const res = await fetch('/api/upload', { method: 'POST', body: fd })
         const json = await res.json()
         if (!res.ok) throw new Error(json.error?.message ?? 'Upload failed')
         const { key, url } = json.data as { key: string; url: string }
@@ -149,15 +149,15 @@ export function KYCOnboardingClient({
     setSubmitError(null)
     try {
       const res = await fetch('/api/users/me/kyc', {
-        method:  'POST',
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          action:      'submit',
+          action: 'submit',
           personalInfo,
-          idFrontUrl:  idFront.url,
-          idFrontKey:  idFront.storageKey,
-          idBackUrl:   idBack.url  ?? undefined,
-          idBackKey:   idBack.storageKey ?? undefined,
+          idFrontUrl: idFront.url,
+          idFrontKey: idFront.storageKey,
+          idBackUrl: idBack.url ?? undefined,
+          idBackKey: idBack.storageKey ?? undefined,
         }),
       })
       const json = await res.json()
@@ -201,9 +201,9 @@ export function KYCOnboardingClient({
             onStart={async () => {
               // Create PENDING record
               await fetch('/api/users/me/kyc', {
-                method:  'POST',
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ action: 'start' }),
+                body: JSON.stringify({ action: 'start' }),
               })
               goNext()
             }}
@@ -223,9 +223,9 @@ export function KYCOnboardingClient({
             idFront={idFront}
             idBack={idBack}
             onUploadFront={(f) => uploadDoc(f, setIdFront)}
-            onUploadBack={(f)  => uploadDoc(f, setIdBack)}
+            onUploadBack={(f) => uploadDoc(f, setIdBack)}
             onRemoveFront={() => setIdFront(EMPTY_DOC_SLOT)}
-            onRemoveBack={()  => setIdBack(EMPTY_DOC_SLOT)}
+            onRemoveBack={() => setIdBack(EMPTY_DOC_SLOT)}
             onNext={goNext}
             onBack={goBack}
           />
@@ -279,8 +279,8 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
     <div className="flex items-center gap-0">
       {STEPS.map((step, i) => {
         const isCompleted = step.id < currentStep
-        const isActive    = step.id === currentStep
-        const isLast      = i === STEPS.length - 1
+        const isActive = step.id === currentStep
+        const isLast = i === STEPS.length - 1
 
         return (
           <React.Fragment key={step.id}>
@@ -288,9 +288,9 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
               <div
                 className={cn(
                   'flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-semibold transition-all',
-                  isCompleted ? 'border-transparent text-[#0A0A0F]'   :
-                  isActive    ? 'border-[#C9A84C] text-[#C9A84C]'     :
-                                'border-[#2A2A3A] text-[#4A4A5E]',
+                  isCompleted ? 'border-transparent text-[#0A0A0F]' :
+                    isActive ? 'border-[#C9A84C] text-[#C9A84C]' :
+                      'border-[#2A2A3A] text-[#4A4A5E]',
                 )}
                 style={isCompleted ? { backgroundColor: GOLD } : {}}
               >
@@ -319,10 +319,10 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
 // ── Step 1: Welcome ────────────────────────────────────────────────────────
 
 const ROLE_REQUIREMENTS: Record<string, string[]> = {
-  INVESTOR:  ['Government-issued photo ID', 'Proof of address', 'Selfie / liveness check'],
-  OWNER:     ['Government-issued photo ID', 'Proof of address', 'Business documentation (if applicable)'],
-  BOTH:      ['Government-issued photo ID', 'Proof of address', 'Selfie / liveness check'],
-  default:   ['Government-issued photo ID', 'Proof of address'],
+  INVESTOR: ['Government-issued photo ID', 'Proof of address', 'Selfie / liveness check'],
+  OWNER: ['Government-issued photo ID', 'Proof of address', 'Business documentation (if applicable)'],
+  BOTH: ['Government-issued photo ID', 'Proof of address', 'Selfie / liveness check'],
+  default: ['Government-issued photo ID', 'Proof of address'],
 }
 
 function WelcomeStep({
@@ -366,9 +366,9 @@ function WelcomeStep({
       {/* Trust badges */}
       <div className="mb-6 grid grid-cols-3 gap-3">
         {[
-          { label: 'Encrypted',   sub: 'AES-256-GCM' },
-          { label: 'Secure',      sub: 'Access controlled' },
-          { label: 'Compliant',   sub: 'GDPR aligned' },
+          { label: 'Encrypted', sub: 'AES-256-GCM' },
+          { label: 'Secure', sub: 'Access controlled' },
+          { label: 'Compliant', sub: 'GDPR aligned' },
         ].map(({ label, sub }) => (
           <div key={label} className="rounded-lg border border-[#2A2A3A] bg-[#14141E] px-3 py-2.5 text-center">
             <p className="text-xs font-semibold text-[#F5F5F7]">{label}</p>
@@ -409,17 +409,17 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
         {[
           {
             title: 'Personal Information',
-            desc:  'Legal name, date of birth, and residential address. Required to match against government-issued ID.',
+            desc: 'Legal name, date of birth, and residential address. Required to match against government-issued ID.',
             notice: null,
           },
           {
             title: 'Government-Issued Photo ID',
-            desc:  'A valid passport, national ID card, or driver\'s license. Both sides may be required.',
+            desc: 'A valid passport, national ID card, or driver\'s license. Both sides may be required.',
             notice: null,
           },
           {
             title: 'Selfie / Liveness Check',
-            desc:  'A live photo to confirm you are the document holder. Performed via a secure third-party verification provider.',
+            desc: 'A live photo to confirm you are the document holder. Performed via a secure third-party verification provider.',
             notice: 'Vendor integration in progress. Currently a placeholder step.',
           },
         ].map(({ title, desc, notice }) => (
@@ -460,10 +460,10 @@ function PersonalInfoStep({
   onNext,
   onBack,
 }: {
-  info:     PersonalInfo
+  info: PersonalInfo
   onChange: React.Dispatch<React.SetStateAction<PersonalInfo>>
-  onNext:   () => void
-  onBack:   () => void
+  onNext: () => void
+  onBack: () => void
 }) {
   const f = (field: keyof PersonalInfo) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     onChange((prev) => ({ ...prev, [field]: e.target.value }))
@@ -542,7 +542,7 @@ function PersonalInfoStep({
         </div>
       </div>
 
-      <StepActions onBack={onBack} onNext={onNext} canNext={canProceed} />
+      <StepActions onBack={onBack} onNext={onNext} canNext={!!canProceed} />
     </div>
   )
 }
@@ -560,11 +560,11 @@ function DocumentUploadStep({
   onBack,
 }: {
   idFront: DocSlot
-  idBack:  DocSlot
+  idBack: DocSlot
   onUploadFront: (f: File) => void
-  onUploadBack:  (f: File) => void
+  onUploadBack: (f: File) => void
   onRemoveFront: () => void
-  onRemoveBack:  () => void
+  onRemoveBack: () => void
   onNext: () => void
   onBack: () => void
 }) {
@@ -685,12 +685,12 @@ function ReviewSubmitStep({
   onBack,
 }: {
   personalInfo: PersonalInfo
-  idFront:      DocSlot
-  idBack:       DocSlot
+  idFront: DocSlot
+  idBack: DocSlot
   isSubmitting: boolean
-  submitError:  string | null
-  onSubmit:     () => void
-  onBack:       () => void
+  submitError: string | null
+  onSubmit: () => void
+  onBack: () => void
 }) {
   return (
     <div className="animate-fade-in">
@@ -707,9 +707,9 @@ function ReviewSubmitStep({
         </div>
         <div className="divide-y divide-[#1A1A24] px-4">
           {[
-            { label: 'Legal Name',   value: personalInfo.legalName     || '—' },
-            { label: 'Date of Birth', value: personalInfo.dateOfBirth   || '—' },
-            { label: 'Address',      value: [personalInfo.addressLine1, personalInfo.city, personalInfo.state, personalInfo.country].filter(Boolean).join(', ') || '—' },
+            { label: 'Legal Name', value: personalInfo.legalName || '—' },
+            { label: 'Date of Birth', value: personalInfo.dateOfBirth || '—' },
+            { label: 'Address', value: [personalInfo.addressLine1, personalInfo.city, personalInfo.state, personalInfo.country].filter(Boolean).join(', ') || '—' },
           ].map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <span className="text-xs text-[#6B6B80]">{label}</span>
@@ -727,7 +727,7 @@ function ReviewSubmitStep({
         <div className="divide-y divide-[#1A1A24] px-4">
           {[
             { label: 'ID Front', slot: idFront },
-            { label: 'ID Back',  slot: idBack  },
+            { label: 'ID Back', slot: idBack },
           ].map(({ label, slot }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <span className="text-xs text-[#6B6B80]">{label}</span>
@@ -787,11 +787,11 @@ function StatusScreen({
   justSubmitted,
   onRestart,
 }: {
-  status:        string
-  reviewNote:    string | null
-  submittedAt:   Date | null
+  status: string
+  reviewNote: string | null
+  submittedAt: Date | null
   justSubmitted: boolean
-  onRestart:     () => void
+  onRestart: () => void
 }) {
   if (status === 'VERIFIED') {
     return (
@@ -900,9 +900,9 @@ function StepActions({
   canNext,
   nextLabel = 'Continue',
 }: {
-  onBack:    () => void
-  onNext:    () => void
-  canNext:   boolean
+  onBack: () => void
+  onNext: () => void
+  canNext: boolean
   nextLabel?: string
 }) {
   return (
@@ -926,11 +926,11 @@ function StepActions({
 
 function StatusBadge({ status }: { status: string }) {
   const cfg: Record<string, { label: string; color: string; dot: string }> = {
-    NONE:      { label: 'Not Started', color: 'text-[#6B6B80]',  dot: 'bg-[#3A3A4A]' },
-    PENDING:   { label: 'In Progress', color: 'text-[#F59E0B]',  dot: 'bg-[#F59E0B]' },
+    NONE: { label: 'Not Started', color: 'text-[#6B6B80]', dot: 'bg-[#3A3A4A]' },
+    PENDING: { label: 'In Progress', color: 'text-[#F59E0B]', dot: 'bg-[#F59E0B]' },
     SUBMITTED: { label: 'Under Review', color: 'text-[#818CF8]', dot: 'bg-[#818CF8]' },
-    VERIFIED:  { label: 'Verified',    color: 'text-[#4ADE80]',  dot: 'bg-[#4ADE80]' },
-    REJECTED:  { label: 'Not Approved', color: 'text-[#EF4444]', dot: 'bg-[#EF4444]' },
+    VERIFIED: { label: 'Verified', color: 'text-[#4ADE80]', dot: 'bg-[#4ADE80]' },
+    REJECTED: { label: 'Not Approved', color: 'text-[#EF4444]', dot: 'bg-[#EF4444]' },
   }
   const c = cfg[status] ?? cfg.NONE
   return (

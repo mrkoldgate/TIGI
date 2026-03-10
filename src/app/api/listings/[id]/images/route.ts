@@ -43,7 +43,7 @@ export async function GET(
     })
     return NextResponse.json({ success: true, data: images })
   } catch (err) {
-    logger.error('[api/listings/images GET]', err)
+    logger.error('[api/listings/images GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch images' } },
       { status: 500 },

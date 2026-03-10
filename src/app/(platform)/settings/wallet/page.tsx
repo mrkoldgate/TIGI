@@ -53,7 +53,7 @@ export default async function WalletSettingsPage() {
         <section>
           <SectionLabel>Active wallet</SectionLabel>
           <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
-            <WalletDisplay size="lg" showDetails />
+            <WalletDisplay />
           </div>
         </section>
 

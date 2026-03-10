@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 export default async function OwnerListingsPage() {
   const sessionUser = await requireAuth('/listings')
   const [{ listings, ownerUser }, inquiries] = await Promise.all([
-    getOwnerDashboardData(sessionUser),
+    getOwnerDashboardData({ ...sessionUser, email: sessionUser.email || '' }),
     getOwnerInquiries(sessionUser.id).catch(() => undefined),
   ])
 

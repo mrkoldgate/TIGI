@@ -66,7 +66,7 @@ export async function GET(req: Request) {
       data: { notifications, unreadCount, total },
     })
   } catch (err) {
-    logger.error('[api/notifications GET]', err)
+    logger.error('[api/notifications GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch notifications' } },
       { status: 500 },

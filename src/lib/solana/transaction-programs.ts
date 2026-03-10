@@ -25,37 +25,37 @@ export type ProgramStatus = 'live' | 'planned'
 
 export interface TIGIProgramInfo {
   /** Short identifier used in WalletPreparation.program */
-  id:          TIGIProgramId
+  id: TIGIProgramId
   /** On-chain program address */
-  address:     string
+  address: string
   /** Human-readable name shown in the signing UI */
   displayName: string
   /** One-line description of what this program does */
   description: string
   /** Deployment status — 'live' = usable now, 'planned' = future milestone */
-  status:      ProgramStatus
+  status: ProgramStatus
   /** Plain-English explanation for users seeing this in the signing panel */
   userExplanation: string
 }
 
 export const TIGI_PROGRAMS: Record<TIGIProgramId, TIGIProgramInfo> = {
   MEMO: {
-    id:          'MEMO',
-    address:     'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr',
+    id: 'MEMO',
+    address: 'MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr',
     displayName: 'SPL Memo',
     description: 'Writes a structured record of your intent to the Solana blockchain.',
-    status:      'live',
+    status: 'live',
     userExplanation:
       'This creates an immutable, publicly verifiable record that you expressed this intent ' +
       'at this moment. No funds move and no legal transfer occurs at this step.',
   },
 
   ESCROW: {
-    id:          'ESCROW',
-    address:     '',  // assigned when program is deployed
+    id: 'ESCROW',
+    address: '',  // assigned when program is deployed
     displayName: 'TIGI Escrow',
     description: 'Holds funds in a Solana Program Derived Address (PDA) pending compliance clearance.',
-    status:      'planned',
+    status: 'planned',
     userExplanation:
       'Your committed funds are locked in a smart contract escrow. ' +
       'Neither party can access them until all compliance conditions are met. ' +
@@ -63,11 +63,11 @@ export const TIGI_PROGRAMS: Record<TIGIProgramId, TIGIProgramInfo> = {
   },
 
   TOKEN_TRANSFER: {
-    id:          'TOKEN_TRANSFER',
-    address:     '',  // assigned when program is deployed
+    id: 'TOKEN_TRANSFER',
+    address: '',  // assigned when program is deployed
     displayName: 'Fractional Interest Issuance',
-    description: 'Issues fractional economic interest tokens to the investor's wallet.',
-    status:      'planned',
+    description: "Issues fractional economic interest tokens to the investor's wallet.",
+    status: 'planned',
     userExplanation:
       'Digital records representing your proportional economic interest in this property ' +
       'are transferred to your wallet. These are not legal title — see full disclosures.',
@@ -95,8 +95,8 @@ export type IntentTypeFull = 'express_interest' | 'purchase' | 'investment' | 'l
 export const INTENT_TYPE_FULL: Record<string, IntentTypeFull> = {
   EXPRESS_INTEREST: 'express_interest',
   PREPARE_PURCHASE: 'purchase',
-  PREPARE_INVEST:   'investment',
-  PREPARE_LEASE:    'lease',
+  PREPARE_INVEST: 'investment',
+  PREPARE_LEASE: 'lease',
 }
 
 /**
@@ -130,38 +130,38 @@ export interface IntentStatusGuidance {
 
 export const INTENT_STATUS_GUIDANCE: Record<IntentStatus, IntentStatusGuidance> = {
   PENDING: {
-    label:    'Submitted',
-    meaning:  'Your intent has been received and is in the queue for review.',
+    label: 'Submitted',
+    meaning: 'Your intent has been received and is in the queue for review.',
     nextStep: 'No action needed. Our compliance team typically reviews within 1–2 business days.',
   },
   REVIEWING: {
-    label:    'Under Review',
-    meaning:  'A compliance officer is reviewing your intent.',
+    label: 'Under Review',
+    meaning: 'A compliance officer is reviewing your intent.',
     nextStep: 'No action needed. You will be notified when a decision is made.',
   },
   APPROVED: {
-    label:    'Approved — Action Required',
-    meaning:  'Your intent has been approved. You can now prepare your wallet to sign the on-chain record.',
+    label: 'Approved — Action Required',
+    meaning: 'Your intent has been approved. You can now prepare your wallet to sign the on-chain record.',
     nextStep: 'Connect your Solana wallet and click "Prepare to sign" to create your transaction.',
   },
   READY_TO_SIGN: {
-    label:    'Ready to Sign',
-    meaning:  'A transaction has been prepared for your wallet to sign.',
+    label: 'Ready to Sign',
+    meaning: 'A transaction has been prepared for your wallet to sign.',
     nextStep: 'Open your wallet (Phantom or Solflare) and sign the transaction to record your intent on Solana.',
   },
   EXECUTED: {
-    label:    'Recorded On-Chain',
-    meaning:  'Your intent has been recorded on the Solana blockchain.',
+    label: 'Recorded On-Chain',
+    meaning: 'Your intent has been recorded on the Solana blockchain.',
     nextStep: 'Our team will follow up within 1–2 business days to discuss next steps.',
   },
   CANCELLED: {
-    label:    'Cancelled',
-    meaning:  'This intent was cancelled.',
+    label: 'Cancelled',
+    meaning: 'This intent was cancelled.',
     nextStep: null,
   },
   EXPIRED: {
-    label:    'Expired',
-    meaning:  'This intent was not acted upon within the allowed time.',
+    label: 'Expired',
+    meaning: 'This intent was not acted upon within the allowed time.',
     nextStep: 'You may submit a new intent for this property.',
   },
 }

@@ -45,14 +45,14 @@ import { inferLandUse } from '@/components/marketplace/land-card'
 // ── Land use display config (compact, for card badges) ─────────────────────
 
 const LAND_USE_BADGE: Record<string, { label: string; cls: string }> = {
-  AGRICULTURAL:    { label: 'Agricultural',    cls: 'bg-[#166534]/20 text-[#4ADE80]' },
+  AGRICULTURAL: { label: 'Agricultural', cls: 'bg-[#166534]/20 text-[#4ADE80]' },
   RESIDENTIAL_DEV: { label: 'Residential Dev', cls: 'bg-[#1D4ED8]/15 text-[#93C5FD]' },
-  COMMERCIAL_DEV:  { label: 'Commercial Dev',  cls: 'bg-[#C9A84C]/15 text-[#C9A84C]' },
-  INDUSTRIAL:      { label: 'Industrial',       cls: 'bg-[#92400E]/20 text-[#FCD34D]' },
-  MIXED_USE:       { label: 'Mixed Use',        cls: 'bg-[#4C1D95]/20 text-[#C4B5FD]' },
-  RECREATIONAL:    { label: 'Recreational',     cls: 'bg-[#1E3A5F]/20 text-[#7DD3FC]' },
-  WATERFRONT:      { label: 'Waterfront',       cls: 'bg-[#164E63]/20 text-[#67E8F9]' },
-  RURAL:           { label: 'Rural',            cls: 'bg-[#374151]/20 text-[#D1D5DB]' },
+  COMMERCIAL_DEV: { label: 'Commercial Dev', cls: 'bg-[#C9A84C]/15 text-[#C9A84C]' },
+  INDUSTRIAL: { label: 'Industrial', cls: 'bg-[#92400E]/20 text-[#FCD34D]' },
+  MIXED_USE: { label: 'Mixed Use', cls: 'bg-[#4C1D95]/20 text-[#C4B5FD]' },
+  RECREATIONAL: { label: 'Recreational', cls: 'bg-[#1E3A5F]/20 text-[#7DD3FC]' },
+  WATERFRONT: { label: 'Waterfront', cls: 'bg-[#164E63]/20 text-[#67E8F9]' },
+  RURAL: { label: 'Rural', cls: 'bg-[#374151]/20 text-[#D1D5DB]' },
 }
 
 // ── Terra stats strip ───────────────────────────────────────────────────────
@@ -64,14 +64,14 @@ function TerraStatsStrip({
   totalAcres,
 }: {
   totalParcels: number
-  leaseCount:   number
-  devCount:     number
-  totalAcres:   number
+  leaseCount: number
+  devCount: number
+  totalAcres: number
 }) {
   const stats = [
     { value: String(totalParcels), label: 'Active parcels' },
-    { value: String(leaseCount),   label: 'Lease opportunities' },
-    { value: String(devCount),     label: 'Development sites' },
+    { value: String(leaseCount), label: 'Lease opportunities' },
+    { value: String(devCount), label: 'Development sites' },
     { value: `${totalAcres.toLocaleString()}+`, label: 'Total acres' },
   ]
 
@@ -93,12 +93,12 @@ function TerraStatsStrip({
 // ── Terra parcel card ───────────────────────────────────────────────────────
 
 function TerraParcelCard({ listing }: { listing: TerraListing }) {
-  const landUse    = inferLandUse(listing.features)
-  const useBadge   = LAND_USE_BADGE[landUse] ?? { label: landUse, cls: 'bg-[#1A2D1A] text-[#5A7060]' }
-  const acres      = listing.lotAcres ?? 0
-  const hasLease   = listing.listingType === 'LEASE' || listing.listingType === 'BOTH'
-  const hasDev     = listing.devOpportunity !== null
-  const stageCfg   = listing.devOpportunity ? DEV_STAGE_CONFIG[listing.devOpportunity.stage] : null
+  const landUse = inferLandUse(listing.features)
+  const useBadge = LAND_USE_BADGE[landUse] ?? { label: landUse, cls: 'bg-[#1A2D1A] text-[#5A7060]' }
+  const acres = listing.lotAcres ?? 0
+  const hasLease = listing.listingType === 'LEASE' || listing.listingType === 'BOTH'
+  const hasDev = listing.devOpportunity !== null
+  const stageCfg = listing.devOpportunity ? DEV_STAGE_CONFIG[listing.devOpportunity.stage] : null
 
   return (
     <Link
@@ -108,6 +108,7 @@ function TerraParcelCard({ listing }: { listing: TerraListing }) {
       {/* Image */}
       <div className="relative h-48 overflow-hidden">
         <PlaceholderImage
+          alt={listing.title}
           slot={listing.imageSlot}
           propertyType={listing.imagePropertyType}
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -251,25 +252,25 @@ interface TerraHubClientProps {
   initialListings: TerraListing[]
   stats: {
     totalParcels: number
-    leaseCount:   number
-    devCount:     number
-    totalAcres:   number
+    leaseCount: number
+    devCount: number
+    totalAcres: number
   }
 }
 
 export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) {
-  const [search,     setSearch]     = useState('')
+  const [search, setSearch] = useState('')
   const [typeFilter, setTypeFilter] = useState<TerraListingTypeFilter>('ALL')
-  const [devFilter,  setDevFilter]  = useState<'ALL' | 'DEV_ONLY'>('ALL')
-  const [sortBy,     setSortBy]     = useState<TerraSortOption>('NEWEST')
+  const [devFilter, setDevFilter] = useState<'ALL' | 'DEV_ONLY'>('ALL')
+  const [sortBy, setSortBy] = useState<TerraSortOption>('NEWEST')
 
   const filtered = useMemo(() => {
     let r = [...initialListings]
 
     // Type filter
     if (typeFilter === 'LEASE') r = r.filter((l) => l.listingType === 'LEASE' || l.listingType === 'BOTH')
-    if (typeFilter === 'BUY')   r = r.filter((l) => l.listingType === 'BUY'   || l.listingType === 'BOTH')
-    if (typeFilter === 'BOTH')  r = r.filter((l) => l.listingType === 'BOTH')
+    if (typeFilter === 'BUY') r = r.filter((l) => l.listingType === 'BUY' || l.listingType === 'BOTH')
+    if (typeFilter === 'BOTH') r = r.filter((l) => l.listingType === 'BOTH')
 
     // Dev filter
     if (devFilter === 'DEV_ONLY') r = r.filter((l) => l.devOpportunity !== null)
@@ -289,8 +290,8 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
 
     // Sort
     switch (sortBy) {
-      case 'PRICE_ASC':    r.sort((a, b) => a.price - b.price); break
-      case 'PRICE_DESC':   r.sort((a, b) => b.price - a.price); break
+      case 'PRICE_ASC': r.sort((a, b) => a.price - b.price); break
+      case 'PRICE_DESC': r.sort((a, b) => b.price - a.price); break
       case 'ACREAGE_DESC': r.sort((a, b) => (b.lotAcres ?? 0) - (a.lotAcres ?? 0)); break
       case 'RATE_ASC':
         r.sort((a, b) => {
@@ -306,10 +307,10 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
   }, [initialListings, typeFilter, devFilter, search, sortBy])
 
   const TYPE_FILTERS: Array<{ value: TerraListingTypeFilter; label: string }> = [
-    { value: 'ALL',   label: 'All parcels' },
-    { value: 'LEASE', label: 'For Lease'   },
-    { value: 'BUY',   label: 'For Sale'    },
-    { value: 'BOTH',  label: 'Buy or Lease'},
+    { value: 'ALL', label: 'All parcels' },
+    { value: 'LEASE', label: 'For Lease' },
+    { value: 'BUY', label: 'For Sale' },
+    { value: 'BOTH', label: 'Buy or Lease' },
   ]
 
   return (
@@ -359,7 +360,7 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
               )}
             >
               {value === 'LEASE' && <Clock className="h-3 w-3" />}
-              {value === 'BUY'   && <ArrowUpRight className="h-3 w-3" />}
+              {value === 'BUY' && <ArrowUpRight className="h-3 w-3" />}
               {label}
             </button>
           ))}

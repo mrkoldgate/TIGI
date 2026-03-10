@@ -25,10 +25,10 @@ function toCardData(listing: MockListing): PropertyCardData {
     propertyType: listing.propertyType,
     listingType: listing.listingType,
     sqft: listing.sqft,
-    bedrooms: listing.bedrooms,
-    bathrooms: listing.bathrooms,
-    lotAcres: listing.lotAcres,
-    yearBuilt: listing.yearBuilt,
+    bedrooms: listing.bedrooms ?? undefined,
+    bathrooms: listing.bathrooms ?? undefined,
+    lotAcres: listing.lotAcres ?? undefined,
+    yearBuilt: listing.yearBuilt ?? undefined,
     imageUrl: listing.imageUrl ?? null,
     imageSlot: listing.imageSlot,
     imagePropertyType: listing.imagePropertyType,
@@ -36,17 +36,17 @@ function toCardData(listing: MockListing): PropertyCardData {
     isTokenized: listing.isTokenized,
     tokenInfo: listing.isTokenized && listing.tokenTotalSupply
       ? {
-          pricePerFraction: listing.tokenPricePerFraction ?? 0,
-          totalSupply: listing.tokenTotalSupply,
-          availableSupply: listing.tokenAvailableSupply ?? 0,
-          investorCount: listing.tokenInvestorCount,
-        }
+        pricePerFraction: listing.tokenPricePerFraction ?? 0,
+        totalSupply: listing.tokenTotalSupply,
+        availableSupply: listing.tokenAvailableSupply ?? 0,
+        investorCount: listing.tokenInvestorCount ?? undefined,
+      }
       : undefined,
     aiValuation: listing.aiEstimatedValue
       ? {
-          estimatedValue: listing.aiEstimatedValue,
-          confidence: listing.aiConfidence ?? 'LOW',
-        }
+        estimatedValue: listing.aiEstimatedValue,
+        confidence: listing.aiConfidence ?? 'LOW',
+      }
       : undefined,
   }
 }
@@ -56,13 +56,13 @@ function toCardData(listing: MockListing): PropertyCardData {
 // ---------------------------------------------------------------------------
 
 interface PropertyCardProps {
-  listing:      MockListing
-  index?:       number
-  isSaved?:     boolean
-  onSave?:      (id: string) => void
+  listing: MockListing
+  index?: number
+  isSaved?: boolean
+  onSave?: (id: string) => void
   isComparing?: boolean
-  onCompare?:   (id: string, title: string) => void
-  priority?:    boolean
+  onCompare?: (id: string, title: string) => void
+  priority?: boolean
 }
 
 export function MarketplacePropertyCard({

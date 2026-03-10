@@ -60,13 +60,13 @@ export async function POST(
 
   try {
     const intent = await prisma.transactionIntent.findUnique({
-      where:  { id },
+      where: { id },
       select: {
-        id:          true,
-        userId:      true,
-        status:      true,
-        intentType:  true,
-        propertyId:  true,
+        id: true,
+        userId: true,
+        status: true,
+        intentType: true,
+        propertyId: true,
         fractionQty: true,
       },
     })
@@ -99,12 +99,12 @@ export async function POST(
     }
 
     // Build the unsigned Solana transaction
-    const svc         = await IntentPreparationService.create()
+    const svc = await IntentPreparationService.create()
     const preparation = await svc.prepareIntent(
       {
-        id:          intent.id,
-        intentType:  intent.intentType,
-        propertyId:  intent.propertyId,
+        id: intent.id,
+        intentType: intent.intentType,
+        propertyId: intent.propertyId,
         fractionQty: intent.fractionQty,
       },
       walletAddress,
@@ -114,47 +114,47 @@ export async function POST(
     const existing = (intent as { metadata?: Record<string, unknown> }).metadata ?? {}
     await prisma.transactionIntent.update({
       where: { id },
-      data:  {
-        status:   'READY_TO_SIGN' as never,
+      data: {
+        status: 'READY_TO_SIGN' as never,
         metadata: {
           ...(existing as object),
-          walletPreparation: preparation,
-        },
+          walletPreparation: preparation as unknown,
+        } as import('@prisma/client').Prisma.InputJsonValue,
       },
     })
 
     await prisma.auditLog.create({
       data: {
-        userId:       session.user.id,
-        action:       'intent.prepare',
+        userId: session.user.id,
+        action: 'intent.prepare',
         resourceType: 'TransactionIntent',
-        resourceId:   id,
+        resourceId: id,
         metadata: {
-          intentType:    intent.intentType,
+          intentType: intent.intentType,
           signerAddress: walletAddress,
-          program:       preparation.program,
-          blockhash:     preparation.blockhash,
+          program: preparation.program,
+          blockhash: preparation.blockhash,
         },
       },
     })
 
     return NextResponse.json({
       success: true,
-      data:    {
-        intentId:    id,
+      data: {
+        intentId: id,
         preparation: {
-          serialized:           preparation.serialized,
-          requiredSigner:       preparation.requiredSigner,
-          blockhash:            preparation.blockhash,
+          serialized: preparation.serialized,
+          requiredSigner: preparation.requiredSigner,
+          blockhash: preparation.blockhash,
           lastValidBlockHeight: preparation.lastValidBlockHeight,
-          expiresAt:            preparation.expiresAt,
-          program:              preparation.program,
-          memoText:             preparation.memoText,
+          expiresAt: preparation.expiresAt,
+          program: preparation.program,
+          memoText: preparation.memoText,
         },
       },
     })
   } catch (err) {
-    logger.error('[api/intents/[id]/prepare POST]', err)
+    logger.error('[api/intents/[id]/prepare POST]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to prepare transaction' } },
       { status: 500 },

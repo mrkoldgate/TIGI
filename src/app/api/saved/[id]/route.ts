@@ -29,7 +29,7 @@ export async function DELETE(
     })
     return NextResponse.json({ success: true })
   } catch (err) {
-    logger.error('[api/saved DELETE]', err)
+    logger.error('[api/saved DELETE]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to unsave listing' } },
       { status: 500 },

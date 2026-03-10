@@ -101,10 +101,10 @@ export const authConfig: NextAuthConfig = {
     session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string
-        session.user.role = token.role as string
-        session.user.userType = token.userType as string | null
-        session.user.kycStatus = token.kycStatus as string
-        session.user.subscriptionTier = token.subscriptionTier as string
+        session.user.role = token.role as 'INVESTOR' | 'OWNER' | 'BOTH' | 'ADMIN' | 'COMPLIANCE_OFFICER'
+        session.user.userType = token.userType as 'INVESTOR' | 'BUYER' | 'SELLER' | 'PROPERTY_OWNER' | 'LAND_OWNER' | 'DEVELOPER' | 'LEGAL_PROFESSIONAL' | 'FINANCIAL_PROFESSIONAL' | null
+        session.user.kycStatus = token.kycStatus as 'NONE' | 'PENDING' | 'SUBMITTED' | 'VERIFIED' | 'REJECTED'
+        session.user.subscriptionTier = token.subscriptionTier as 'free' | 'pro' | 'pro_plus' | 'enterprise'
         session.user.walletAddress = token.walletAddress as string | null
         session.user.onboardingComplete = token.onboardingComplete as boolean
       }

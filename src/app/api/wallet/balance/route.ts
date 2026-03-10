@@ -55,7 +55,7 @@ export async function GET() {
       },
     })
   } catch (err) {
-    logger.error('[api/wallet/balance GET]', err)
+    logger.error('[api/wallet/balance GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'RPC_ERROR', message: 'Failed to fetch balance from Solana network' } },
       { status: 502 },

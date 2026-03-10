@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     const listing = await service.createDraft(parsed.data, session.user.id)
     return NextResponse.json({ success: true, data: listing }, { status: 201 })
   } catch (err) {
-    logger.error('[POST /api/listings]', err)
+    logger.error('[POST /api/listings]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to create listing' } }, { status: 500 })
   }
 }
@@ -65,7 +65,7 @@ export async function GET() {
     const listings = await service.getOwnerListings(session.user.id)
     return NextResponse.json({ success: true, data: listings })
   } catch (err) {
-    logger.error('[GET /api/listings]', err)
+    logger.error('[GET /api/listings]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch listings' } }, { status: 500 })
   }
 }

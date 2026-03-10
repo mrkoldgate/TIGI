@@ -41,32 +41,32 @@ export const BLOCKHASH_TTL_SLOTS = 150
 
 export interface SolBalance {
   lamports: number
-  sol:      number
-  display:  string // "1.234 SOL"
+  sol: number
+  display: string // "1.234 SOL"
 }
 
 export interface PreparedTransaction {
   /** Base64-encoded VersionedTransaction (unsigned). */
-  serialized:           string
+  serialized: string
   /** Address that must sign this transaction. */
-  requiredSigner:       string
+  requiredSigner: string
   /** Blockhash embedded in the transaction. */
-  blockhash:            string
+  blockhash: string
   /** Last valid block height — reject if chain surpasses this. */
   lastValidBlockHeight: number
   /** UTC ISO string — approximate when this preparation expires. */
-  expiresAt:            string
+  expiresAt: string
 }
 
 export interface SubmittedTransaction {
-  signature:   string
+  signature: string
   explorerUrl: string
 }
 
 // ── SolanaService ──────────────────────────────────────────────────────────
 
 export class SolanaService {
-  private constructor(private readonly connection: Connection) {}
+  private constructor(private readonly connection: Connection) { }
 
   /**
    * Creates a SolanaService with a health-checked connection.
@@ -91,9 +91,9 @@ export class SolanaService {
    * Throws if the address is not a valid base58 public key.
    */
   async getBalance(address: string): Promise<SolBalance> {
-    const pubkey   = new PublicKey(address)
+    const pubkey = new PublicKey(address)
     const lamports = await this.connection.getBalance(pubkey, 'confirmed')
-    const sol      = lamports / LAMPORTS_PER_SOL
+    const sol = lamports / LAMPORTS_PER_SOL
 
     return {
       lamports,
@@ -116,8 +116,8 @@ export class SolanaService {
       throw new Error('[SolanaService] Airdrop is only available on devnet')
     }
 
-    const pubkey    = new PublicKey(address)
-    const lamports  = solAmount * LAMPORTS_PER_SOL
+    const pubkey = new PublicKey(address)
+    const lamports = solAmount * LAMPORTS_PER_SOL
     const signature = await this.connection.requestAirdrop(pubkey, lamports)
 
     // Wait for confirmation before returning
@@ -150,11 +150,11 @@ export class SolanaService {
    * @param programAddress Override the memo program address (defaults to SPL Memo)
    */
   async buildMemoTransaction(
-    signerAddress:   string,
-    memoText:        string,
+    signerAddress: string,
+    memoText: string,
     programAddress?: string,
   ): Promise<PreparedTransaction> {
-    const signer    = new PublicKey(signerAddress)
+    const signer = new PublicKey(signerAddress)
     const programId = programAddress ? new PublicKey(programAddress) : MEMO_PROGRAM_ID
 
     const { blockhash, lastValidBlockHeight } =
@@ -162,21 +162,21 @@ export class SolanaService {
 
     const memoInstruction = {
       programId,
-      accounts:  [{ pubkey: signer, isSigner: true, isWritable: false }],
-      data:      Buffer.from(memoText, 'utf-8'),
+      keys: [{ pubkey: signer, isSigner: true, isWritable: false }],
+      data: Buffer.from(memoText, 'utf-8'),
     }
 
     const message = new TransactionMessage({
-      payerKey:           signer,
-      recentBlockhash:    blockhash,
-      instructions:       [memoInstruction],
+      payerKey: signer,
+      recentBlockhash: blockhash,
+      instructions: [memoInstruction],
     }).compileToV0Message()
 
-    const tx         = new VersionedTransaction(message)
+    const tx = new VersionedTransaction(message)
     const serialized = Buffer.from(tx.serialize()).toString('base64')
 
     // TTL: Solana blockhashes are valid for ~150 slots ≈ 60–90 seconds
-    const ttlMs     = (BLOCKHASH_TTL_SLOTS / SLOTS_PER_SECOND) * 1_000
+    const ttlMs = (BLOCKHASH_TTL_SLOTS / SLOTS_PER_SECOND) * 1_000
     const expiresAt = new Date(Date.now() + ttlMs).toISOString()
 
     return {
@@ -213,15 +213,15 @@ export class SolanaService {
    */
   async submitSignedTransaction(signedBase64: string): Promise<SubmittedTransaction> {
     const buf = Buffer.from(signedBase64, 'base64')
-    const tx  = VersionedTransaction.deserialize(buf)
+    const tx = VersionedTransaction.deserialize(buf)
 
     const { blockhash, lastValidBlockHeight } =
       await this.connection.getLatestBlockhash('confirmed')
 
     const signature = await this.connection.sendRawTransaction(tx.serialize(), {
-      skipPreflight:        false,
-      preflightCommitment:  'confirmed',
-      maxRetries:           3,
+      skipPreflight: false,
+      preflightCommitment: 'confirmed',
+      maxRetries: 3,
     })
 
     await this.connection.confirmTransaction(

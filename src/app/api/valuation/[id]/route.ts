@@ -64,7 +64,7 @@ export async function GET(_request: Request, { params }: Params) {
 
     return NextResponse.json({ success: true, data: valuation, enriched })
   } catch (err) {
-    logger.error('[GET /api/valuation/[id]]', err)
+    logger.error('[GET /api/valuation/[id]]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to compute valuation' } },
       { status: 500 },

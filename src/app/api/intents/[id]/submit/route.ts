@@ -162,7 +162,7 @@ export async function POST(
       },
     })
   } catch (err) {
-    logger.error('[api/intents/[id]/submit POST]', err)
+    logger.error('[api/intents/[id]/submit POST]', { error: err instanceof Error ? err.message : String(err) })
 
     // If tx was rejected by the network, give a clean message
     const errMsg = (err as Error).message ?? ''

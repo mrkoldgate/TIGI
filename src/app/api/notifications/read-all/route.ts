@@ -29,7 +29,7 @@ export async function PATCH() {
 
     return NextResponse.json({ success: true, data: { markedRead: result.count } })
   } catch (err) {
-    logger.error('[api/notifications/read-all PATCH]', err)
+    logger.error('[api/notifications/read-all PATCH]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to mark all notifications read' } },
       { status: 500 },

@@ -24,7 +24,7 @@ export default async function DashboardPage() {
   const sessionUser = await requireAuth('/dashboard')
 
   const [dashboardData, allListings] = await Promise.all([
-    getDashboardData(sessionUser),
+    getDashboardData({ ...sessionUser, email: sessionUser.email || '' }),
     getActiveListings(),
   ])
 

@@ -17,18 +17,14 @@ import {
   type NotificationPrefs,
 } from '@/lib/settings/notification-prefs'
 
-// Re-export so server-only consumers (tests, page) can import from here if
-// they prefer — but client components must always import from the shared lib.
-export type { NotificationPrefs }
-export { DEFAULT_NOTIFICATION_PREFS }
 
 interface ProfilePatchBody {
-  name?:               string
-  phone?:              string | null
-  location?:           string | null
-  bio?:                string | null
-  avatarUrl?:          string | null
-  notificationPrefs?:  Partial<NotificationPrefs>
+  name?: string
+  phone?: string | null
+  location?: string | null
+  bio?: string | null
+  avatarUrl?: string | null
+  notificationPrefs?: Partial<NotificationPrefs>
 }
 
 export async function PATCH(request: Request) {
@@ -78,10 +74,10 @@ export async function PATCH(request: Request) {
     preferences: { ...currentPrefs, notificationPrefs: updatedNotifPrefs },
   }
 
-  if (patch.name      !== undefined) updateData.name     = patch.name.trim()
-  if (patch.phone     !== undefined) updateData.phone    = patch.phone     ?? null
-  if (patch.location  !== undefined) updateData.location = patch.location  ?? null
-  if (patch.bio       !== undefined) updateData.bio      = patch.bio       ?? null
+  if (patch.name !== undefined) updateData.name = patch.name.trim()
+  if (patch.phone !== undefined) updateData.phone = patch.phone ?? null
+  if (patch.location !== undefined) updateData.location = patch.location ?? null
+  if (patch.bio !== undefined) updateData.bio = patch.bio ?? null
   if (patch.avatarUrl !== undefined) updateData.avatarUrl = patch.avatarUrl ?? null
 
   try {

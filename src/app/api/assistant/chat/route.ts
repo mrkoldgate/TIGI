@@ -39,9 +39,9 @@ export async function POST(request: Request) {
 
   // 2. Build user context for personalised AI responses
   const context: AIContext = {
-    userId:           session.user.id,
+    userId: session.user.id,
     subscriptionTier: (session.user as { subscriptionTier?: string }).subscriptionTier ?? 'free',
-    role:             (session.user as { role?: string }).role ?? 'INVESTOR',
+    role: (session.user as { role?: string }).role ?? 'INVESTOR',
   }
 
   // 3. Parse body
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     const blocks = await runAssistantPipeline(messages, context)
     return NextResponse.json({ success: true, blocks })
   } catch (err) {
-    logger.error('[api/assistant/chat] Pipeline error:', err)
+    logger.error('[api/assistant/chat] Pipeline error:', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: 'Failed to generate response' },
       { status: 500 },

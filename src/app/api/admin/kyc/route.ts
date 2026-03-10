@@ -45,11 +45,11 @@ export async function GET(req: Request) {
       include: {
         user: {
           select: {
-            id:       true,
-            name:     true,
-            email:    true,
+            id: true,
+            name: true,
+            email: true,
             userType: true,
-            role:     true,
+            role: true,
           },
         },
       },
@@ -59,7 +59,7 @@ export async function GET(req: Request) {
     })
 
     const hasMore = verifications.length > limit
-    const items   = hasMore ? verifications.slice(0, limit) : verifications
+    const items = hasMore ? verifications.slice(0, limit) : verifications
     const nextCursor = hasMore ? items[items.length - 1].id : null
 
     return NextResponse.json({
@@ -74,7 +74,7 @@ export async function GET(req: Request) {
       },
     })
   } catch (err) {
-    logger.error('[api/admin/kyc GET]', err)
+    logger.error('[api/admin/kyc GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch KYC submissions' } },
       { status: 500 },

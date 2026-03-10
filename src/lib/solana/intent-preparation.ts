@@ -37,19 +37,19 @@ import type { TIGIProgramId, IntentTypeFull } from './transaction-programs'
  */
 export interface IntentMemoPayload {
   /** Schema version — bump when structure changes */
-  v:       2
+  v: 1 | 2
   /** Short prefix for TIGI-originated memos */
-  app:     'tigi'
+  app: 'tigi'
   /** Off-chain intent ID (CUID) */
-  intent:  string
+  intent: string
   /** Intent type — full name for on-chain legibility */
-  type:    IntentTypeFull
+  type: IntentTypeFull
   /** Property ID (first 8 chars for brevity) */
-  prop:    string
+  prop: string
   /** Fractional qty (PREPARE_INVEST only) */
-  qty?:    number
+  qty?: number
   /** UTC seconds timestamp */
-  ts:      number
+  ts: number
 }
 
 /**
@@ -62,9 +62,9 @@ export interface WalletPreparation extends PreparedTransaction {
    * Uses the TIGIProgramId registry — see transaction-programs.ts.
    * MEMO for M6; ESCROW / TOKEN_TRANSFER in M7+.
    */
-  program:    TIGIProgramId
+  program: TIGIProgramId
   /** The full memo text written to chain */
-  memoText:   string
+  memoText: string
   /** UTC ISO string when this preparation was created */
   preparedAt: string
   /** Address that prepared this tx (server-side, for audit) */
@@ -74,7 +74,7 @@ export interface WalletPreparation extends PreparedTransaction {
 // ── IntentPreparationService ───────────────────────────────────────────────
 
 export class IntentPreparationService {
-  private constructor(private readonly solana: SolanaService) {}
+  private constructor(private readonly solana: SolanaService) { }
 
   static async create(): Promise<IntentPreparationService> {
     const solana = await SolanaService.create()
@@ -99,9 +99,9 @@ export class IntentPreparationService {
    */
   async prepareIntent(
     intent: {
-      id:          string
-      intentType:  string
-      propertyId:  string
+      id: string
+      intentType: string
+      propertyId: string
       fractionQty: number | null
     },
     signerAddress: string,
@@ -112,12 +112,12 @@ export class IntentPreparationService {
     const program = TIGI_PROGRAMS[programId]
 
     const memoPayload: IntentMemoPayload = {
-      v:      2,
-      app:    'tigi',
+      v: 2,
+      app: 'tigi',
       intent: intent.id,
-      type:   getIntentTypeFull(intent.intentType),
-      prop:   intent.propertyId.slice(0, 8),
-      ts:     Math.floor(Date.now() / 1_000),
+      type: getIntentTypeFull(intent.intentType),
+      prop: intent.propertyId.slice(0, 8),
+      ts: Math.floor(Date.now() / 1_000),
       ...(intent.fractionQty != null ? { qty: intent.fractionQty } : {}),
     }
 
@@ -131,7 +131,7 @@ export class IntentPreparationService {
 
     return {
       ...prepared,
-      program:    programId,
+      program: programId,
       memoText,
       preparedAt: new Date().toISOString(),
       preparedBy: 'server',
@@ -149,13 +149,13 @@ export class IntentPreparationService {
    * re-prepare rather than presenting a stale transaction.
    */
   async validatePreparation(prep: WalletPreparation): Promise<{
-    valid:   boolean
+    valid: boolean
     reason?: string
   }> {
     // Local check first: preparation timestamp + TTL heuristic
     const preparedAt = new Date(prep.preparedAt).getTime()
-    const ageMs      = Date.now() - preparedAt
-    const ttlMs      = 90_000 // 90 seconds conservative TTL
+    const ageMs = Date.now() - preparedAt
+    const ttlMs = 90_000 // 90 seconds conservative TTL
 
     if (ageMs > ttlMs) {
       return { valid: false, reason: 'Preparation expired. Please prepare again.' }

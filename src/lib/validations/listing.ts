@@ -15,7 +15,7 @@ const OWNERSHIP_MODELS = ['FULL', 'FRACTIONAL', 'BOTH'] as const
 
 // ── Create (full payload from the multi-step form) ───────────────────────────
 
-export const CreateListingSchema = z.object({
+export const BaseListingSchema = z.object({
   // Basic info
   title: z.string().min(3, 'Title must be at least 3 characters').max(120),
   description: z.string().max(5000).default(''),
@@ -51,7 +51,9 @@ export const CreateListingSchema = z.object({
   isTokenized: z.boolean().default(false),
   tokenTotalSupply: z.number().int().positive().optional(),
   tokenPricePerFraction: z.number().positive().optional(),
-}).superRefine((data, ctx) => {
+})
+
+export const CreateListingSchema = BaseListingSchema.superRefine((data, ctx) => {
   // A listing needs at least a sale price or a lease rate
   if (!data.price && !data.leaseRateMonthly) {
     ctx.addIssue({
@@ -73,7 +75,7 @@ export const CreateListingSchema = z.object({
 
 // ── Update (all fields optional — PATCH semantics) ───────────────────────────
 
-export const UpdateListingSchema = CreateListingSchema.partial()
+export const UpdateListingSchema = BaseListingSchema.partial()
 
 // ── TypeScript types ─────────────────────────────────────────────────────────
 

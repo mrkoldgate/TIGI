@@ -27,7 +27,7 @@ import { logger } from '@/lib/logger'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'escalate', 'request_update']),
-  note:   z.string().max(2000).optional(),
+  note: z.string().max(2000).optional(),
 })
 
 export async function PATCH(
@@ -75,7 +75,7 @@ export async function PATCH(
 
   try {
     const verification = await prisma.kycVerification.findUnique({
-      where:  { id: submissionId },
+      where: { id: submissionId },
       select: { id: true, userId: true, status: true },
     })
     if (!verification) {
@@ -87,42 +87,42 @@ export async function PATCH(
 
     // Map action → KycVerification status
     const newVerifStatus =
-      action === 'approve'         ? 'VERIFIED'            :
-      action === 'reject'          ? 'REJECTED'            :
-      action === 'request_update'  ? 'PENDING'             :
+      action === 'approve' ? 'VERIFIED' :
+        action === 'reject' ? 'REJECTED' :
+          action === 'request_update' ? 'PENDING' :
       /* escalate */                 verification.status   // keep current status, just log it
 
     // Map action → User.kycStatus
     const newUserStatus =
-      action === 'approve'        ? 'VERIFIED' :
-      action === 'reject'         ? 'REJECTED' :
-      action === 'request_update' ? 'PENDING'  :
-      null // escalate doesn't change the user's visible status
+      action === 'approve' ? 'VERIFIED' :
+        action === 'reject' ? 'REJECTED' :
+          action === 'request_update' ? 'PENDING' :
+            null // escalate doesn't change the user's visible status
 
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.kycVerification.update({
         where: { id: submissionId },
-        data:  {
-          status:      newVerifStatus as never,
-          reviewedBy:  session.user.id,
-          reviewNote:  note ?? null,
-          reviewedAt:  new Date(),
+        data: {
+          status: newVerifStatus as never,
+          reviewedBy: session.user.id,
+          reviewNote: note ?? null,
+          reviewedAt: new Date(),
         },
       })
 
       if (newUserStatus) {
         await tx.user.update({
           where: { id: verification.userId },
-          data:  { kycStatus: newUserStatus as never },
+          data: { kycStatus: newUserStatus as never },
         })
       }
 
       await tx.auditLog.create({
         data: {
-          userId:       session.user.id,
-          action:       `kyc.${action}`,
+          userId: session.user.id,
+          action: `kyc.${action}`,
           resourceType: 'KycVerification',
-          resourceId:   submissionId,
+          resourceId: submissionId,
           metadata: {
             targetUserId: verification.userId,
             previousStatus: verification.status,
@@ -139,21 +139,21 @@ export async function PATCH(
     if (action !== 'escalate') {
       const kycNotifMap: Record<string, { type: string; title: string; body: string }> = {
         approve: {
-          type:  'KYC_APPROVED',
+          type: 'KYC_APPROVED',
           title: 'Identity verified',
-          body:  'Your KYC verification has been approved. You now have full access to transact on TIGI.',
+          body: 'Your KYC verification has been approved. You now have full access to transact on TIGI.',
         },
         reject: {
-          type:  'KYC_REJECTED',
+          type: 'KYC_REJECTED',
           title: 'Verification declined',
-          body:  note
+          body: note
             ? `Your identity verification was not approved. ${note}`
             : 'Your identity verification was not approved. Please contact support.',
         },
         request_update: {
-          type:  'KYC_UPDATE_REQUESTED',
+          type: 'KYC_UPDATE_REQUESTED',
           title: 'Update required for your KYC submission',
-          body:  note
+          body: note
             ? `Please update your KYC documents. ${note}`
             : 'Please review and resubmit your identity documents.',
         },
@@ -161,19 +161,19 @@ export async function PATCH(
       const notif = kycNotifMap[action]
       if (notif) {
         void createNotification({
-          userId:    verification.userId,
-          type:      notif.type as never,
-          title:     notif.title,
-          body:      notif.body,
+          userId: verification.userId,
+          type: notif.type as never,
+          title: notif.title,
+          body: notif.body,
           actionUrl: '/settings',
-          metadata:  { submissionId },
+          metadata: { submissionId },
         })
       }
     }
 
     return NextResponse.json({ success: true, data: result })
   } catch (err) {
-    logger.error('[api/admin/kyc PATCH]', err)
+    logger.error('[api/admin/kyc PATCH]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to process KYC decision' } },
       { status: 500 },

@@ -25,7 +25,7 @@ import { logger } from '@/lib/logger'
 
 const DecisionSchema = z.object({
   action: z.enum(['approve', 'reject', 'archive', 'request_update']),
-  note:   z.string().max(2000).optional(),
+  note: z.string().max(2000).optional(),
 })
 
 export async function PATCH(
@@ -71,7 +71,7 @@ export async function PATCH(
 
   try {
     const listing = await prisma.property.findUnique({
-      where:  { id },
+      where: { id },
       select: { id: true, status: true, ownerId: true, title: true },
     })
     if (!listing) {
@@ -83,9 +83,9 @@ export async function PATCH(
 
     // Map action → new ListingStatus
     const newStatus =
-      action === 'approve'        ? 'ACTIVE'    :
-      action === 'reject'         ? 'DELISTED'  :
-      action === 'archive'        ? 'DELISTED'  :
+      action === 'approve' ? 'ACTIVE' :
+        action === 'reject' ? 'DELISTED' :
+          action === 'archive' ? 'DELISTED' :
       /* request_update */          'DRAFT'
 
     const now = new Date()
@@ -93,8 +93,8 @@ export async function PATCH(
     const result = await prisma.$transaction(async (tx) => {
       const updated = await tx.property.update({
         where: { id },
-        data:  {
-          status:     newStatus as never,
+        data: {
+          status: newStatus as never,
           reviewedBy: session.user.id,
           reviewedAt: now,
           reviewNote: note ?? null,
@@ -105,16 +105,16 @@ export async function PATCH(
 
       await tx.auditLog.create({
         data: {
-          userId:       session.user.id,
-          action:       `listing.${action}`,
+          userId: session.user.id,
+          action: `listing.${action}`,
           resourceType: 'Property',
-          resourceId:   id,
+          resourceId: id,
           metadata: {
-            title:          listing.title,
-            ownerId:        listing.ownerId,
+            title: listing.title,
+            ownerId: listing.ownerId,
             previousStatus: listing.status,
             newStatus,
-            note:           note ?? null,
+            note: note ?? null,
           },
         },
       })
@@ -124,34 +124,34 @@ export async function PATCH(
 
     // Notify the listing owner — non-blocking, never throws
     const notifType =
-      action === 'approve'         ? 'LISTING_APPROVED'          :
-      action === 'reject'          ? 'LISTING_REJECTED'          :
-      action === 'request_update'  ? 'LISTING_UPDATE_REQUESTED'  :
-      null  // archive → no dedicated type, skip
+      action === 'approve' ? 'LISTING_APPROVED' :
+        action === 'reject' ? 'LISTING_REJECTED' :
+          action === 'request_update' ? 'LISTING_UPDATE_REQUESTED' :
+            null  // archive → no dedicated type, skip
 
     if (notifType) {
       const bodyMap: Record<string, string> = {
-        approve:        `"${listing.title}" is now live on the marketplace.`,
-        reject:         note
+        approve: `"${listing.title}" is now live on the marketplace.`,
+        reject: note
           ? `"${listing.title}" was not approved. ${note}`
           : `"${listing.title}" was not approved. Please contact support for details.`,
         request_update: `Please update "${listing.title}" and resubmit for review.`,
       }
       void createNotification({
-        userId:    listing.ownerId,
-        type:      notifType as never,
-        title:     notifType === 'LISTING_APPROVED' ? 'Listing approved'
-                 : notifType === 'LISTING_REJECTED' ? 'Listing rejected'
-                 : 'Update requested on your listing',
-        body:      bodyMap[action] ?? '',
+        userId: listing.ownerId,
+        type: notifType as never,
+        title: notifType === 'LISTING_APPROVED' ? 'Listing approved'
+          : notifType === 'LISTING_REJECTED' ? 'Listing rejected'
+            : 'Update requested on your listing',
+        body: bodyMap[action] ?? '',
         actionUrl: '/listings',
-        metadata:  { propertyId: id, propertyTitle: listing.title },
+        metadata: { propertyId: id, propertyTitle: listing.title },
       })
     }
 
     return NextResponse.json({ success: true, data: { id: result.id, status: result.status } })
   } catch (err) {
-    logger.error('[api/admin/listings PATCH]', err)
+    logger.error('[api/admin/listings PATCH]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to process listing decision' } },
       { status: 500 },

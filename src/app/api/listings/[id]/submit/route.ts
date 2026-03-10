@@ -46,7 +46,7 @@ export async function POST(_request: Request, { params }: Params) {
     if (err instanceof ListingStateError) {
       return NextResponse.json({ success: false, error: { code: 'INVALID_STATE', message: err.message } }, { status: 409 })
     }
-    logger.error('[POST /api/listings/[id]/submit]', err)
+    logger.error('[POST /api/listings/[id]/submit]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to submit listing' } }, { status: 500 })
   }
 }

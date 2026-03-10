@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
     await handleStripeWebhook(body, signature)
     return NextResponse.json({ received: true })
   } catch (err) {
-    logger.error('[billing/webhook]', err)
+    logger.error('[billing/webhook]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { error: 'Webhook processing failed' },
       { status: 400 },

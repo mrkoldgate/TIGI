@@ -86,7 +86,7 @@ export async function POST(request: Request) {
       { status: 201 },
     )
   } catch (error) {
-    logger.error('[register] Error:', error)
+    logger.error('[register] Error:', { error: error instanceof Error ? error.message : String(error) })
     return NextResponse.json(
       { error: 'Registration failed. Please try again.' },
       { status: 500 },

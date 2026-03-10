@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     if (msg.includes('own listing')) {
       return NextResponse.json({ error: msg }, { status: 403 })
     }
-    logger.error('[inquiries] POST failed:', err)
+    logger.error('[inquiries] POST failed:', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ error: 'Failed to submit inquiry' }, { status: 500 })
   }
 }
@@ -93,7 +93,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ success: true, inquiries })
   } catch (err) {
-    logger.error('[inquiries] GET failed:', err)
+    logger.error('[inquiries] GET failed:', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json({ error: 'Failed to fetch inquiries' }, { status: 500 })
   }
 }

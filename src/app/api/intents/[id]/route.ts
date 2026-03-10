@@ -104,7 +104,7 @@ export async function PATCH(
 
     return NextResponse.json({ success: true, data: { id: updated.id, status: updated.status } })
   } catch (err) {
-    logger.error('[api/intents/[id] PATCH]', err)
+    logger.error('[api/intents/[id] PATCH]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to update intent' } },
       { status: 500 },

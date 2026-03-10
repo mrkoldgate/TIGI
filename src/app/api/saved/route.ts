@@ -33,7 +33,7 @@ export async function GET() {
       },
     })
   } catch (err) {
-    logger.error('[api/saved GET]', err)
+    logger.error('[api/saved GET]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to fetch saved listings' } },
       { status: 500 },
@@ -79,7 +79,7 @@ export async function POST(req: Request) {
       { status: 201 },
     )
   } catch (err) {
-    logger.error('[api/saved POST]', err)
+    logger.error('[api/saved POST]', { error: err instanceof Error ? err.message : String(err) })
     return NextResponse.json(
       { success: false, error: { code: 'INTERNAL_ERROR', message: 'Failed to save listing' } },
       { status: 500 },

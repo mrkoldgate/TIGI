@@ -24,8 +24,7 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable React 19 features
     reactCompiler: false,
-    // Enable src/instrumentation.ts for startup config validation
-    instrumentationHook: true,
+
   },
   images: {
     remotePatterns: [
