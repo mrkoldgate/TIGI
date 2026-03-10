@@ -26,10 +26,10 @@ const ACTIVITY_CONFIG: Record<
   UNSAVED:          { icon: HeartOff,    color: 'text-[#6B6B80]',  bg: 'bg-[#2A2A3A]'      },
   VIEWED:           { icon: Eye,         color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'   },
   INVESTED:         { icon: TrendingUp,  color: 'text-[#4ADE80]',  bg: 'bg-[#4ADE80]/10'   },
-  PRICE_CHANGE:     { icon: TrendingDown,color: 'text-[#C9A84C]',  bg: 'bg-[#C9A84C]/10'   },
+  PRICE_CHANGE:     { icon: TrendingDown,color: 'text-[#3B82F6]',  bg: 'bg-[#3B82F6]/10'   },
   NEW_INVESTOR:     { icon: Users,       color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'   },
   VALUATION_UPDATE: { icon: BarChart3,   color: 'text-[#A0A0B2]',  bg: 'bg-[#A0A0B2]/10'   },
-  INTEREST_SENT:    { icon: Send,        color: 'text-[#C9A84C]',  bg: 'bg-[#C9A84C]/10'   },
+  INTEREST_SENT:    { icon: Send,        color: 'text-[#8B5CF6]',  bg: 'bg-[#8B5CF6]/10'   },
 }
 
 function formatTimeAgo(isoString: string): string {
@@ -85,7 +85,7 @@ export function ActivityFeed({ items, className }: ActivityFeedProps) {
                 {' '}
                 <Link
                   href={`/marketplace/${item.assetId}`}
-                  className="text-[#C9A84C] hover:underline"
+                  className="text-[#60A5FA] hover:underline"
                 >
                   {item.assetTitle}
                 </Link>

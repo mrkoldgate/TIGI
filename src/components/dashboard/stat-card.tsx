@@ -33,7 +33,7 @@ interface StatCardProps {
 }
 
 const ACCENT_STYLES: Record<AccentColor, { icon: string; ring: string }> = {
-  gold:  { icon: 'text-[#C9A84C]',  ring: 'bg-[#C9A84C]/10' },
+  gold:  { icon: 'text-[#3B82F6]',  ring: 'bg-[#3B82F6]/10' },
   green: { icon: 'text-[#4ADE80]',  ring: 'bg-[#4ADE80]/10' },
   blue:  { icon: 'text-[#818CF8]',  ring: 'bg-[#818CF8]/10' },
   rose:  { icon: 'text-rose-400',    ring: 'bg-rose-500/10'  },
@@ -56,8 +56,8 @@ export function StatCard({
   const content = (
     <div
       className={cn(
-        'group relative flex flex-col gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] p-5 transition-colors',
-        href && 'cursor-pointer hover:border-[#3A3A4A] hover:bg-[#151520]',
+        'group relative flex flex-col gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 backdrop-blur-sm transition-colors',
+        href && 'cursor-pointer hover:border-white/[0.10] hover:bg-white/[0.05]',
         className
       )}
     >
@@ -68,7 +68,7 @@ export function StatCard({
         </div>
 
         {lockedUntil && (
-          <span className="flex items-center gap-1.5 rounded-full border border-[#2A2A3A] bg-[#0A0A0F] px-2 py-0.5">
+          <span className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-2 py-0.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
             <span className="text-[10px] text-[#6B6B80]">{lockedUntil}</span>
           </span>

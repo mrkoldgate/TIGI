@@ -57,7 +57,7 @@ function LoginContent() {
   }
 
   return (
-    <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-8 shadow-2xl">
+    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.04] p-8 shadow-2xl backdrop-blur-xl" style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.06) inset, 0 32px 64px rgba(0,0,0,0.5)' }}>
       <div className="mb-8">
         <h1 className="font-heading text-2xl font-bold text-white">
           Welcome back
@@ -112,7 +112,7 @@ function LoginContent() {
             placeholder="you@example.com"
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
+              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
               errors.email ? 'border-red-500/50' : 'border-[#2A2A3A]',
             )}
           />
@@ -129,7 +129,7 @@ function LoginContent() {
             </label>
             <Link
               href="/auth/forgot-password"
-              className="text-xs text-[#C9A84C] hover:text-[#D4B86A] transition-colors"
+              className="text-xs text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
             >
               Forgot password?
             </Link>
@@ -143,7 +143,7 @@ function LoginContent() {
               placeholder="••••••••"
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
+                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
                 errors.password ? 'border-red-500/50' : 'border-[#2A2A3A]',
               )}
             />
@@ -165,7 +165,7 @@ function LoginContent() {
         <button
           type="submit"
           disabled={isSubmitting || googleLoading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-4 py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98] disabled:opacity-60"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3B82F6] to-[#2563EB] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all hover:from-[#2563EB] hover:to-[#1D4ED8] hover:shadow-[0_0_28px_rgba(59,130,246,0.45)] active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           Sign in
@@ -177,7 +177,7 @@ function LoginContent() {
         Don&apos;t have an account?{' '}
         <Link
           href="/auth/register"
-          className="font-medium text-[#C9A84C] hover:text-[#D4B86A] transition-colors"
+          className="font-medium text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
         >
           Create one
         </Link>
@@ -188,7 +188,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin text-[#C9A84C]" /></div>}>
+    <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin text-[#3B82F6]" /></div>}>
       <LoginContent />
     </Suspense>
   )

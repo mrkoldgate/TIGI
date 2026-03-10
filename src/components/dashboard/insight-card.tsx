@@ -26,10 +26,10 @@ const INSIGHT_CONFIG: Record<
 > = {
   PRICE_DROP:         { icon: TrendingDown, color: 'text-[#4ADE80]',  bg: 'bg-[#4ADE80]/10'  },
   PRICE_RISE:         { icon: TrendingUp,   color: 'text-[#F87171]',  bg: 'bg-[#F87171]/10'  },
-  NEW_MATCH:          { icon: Sparkles,     color: 'text-[#C9A84C]',  bg: 'bg-[#C9A84C]/10'  },
+  NEW_MATCH:          { icon: Sparkles,     color: 'text-[#3B82F6]',  bg: 'bg-[#3B82F6]/10'  },
   VALUATION_CHANGE:   { icon: BarChart3,    color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'  },
   MARKET_TREND:       { icon: TrendingUp,   color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'  },
-  TOKEN_ALERT:        { icon: Coins,        color: 'text-[#C9A84C]',  bg: 'bg-[#C9A84C]/10'  },
+  TOKEN_ALERT:        { icon: Coins,        color: 'text-[#8B5CF6]',  bg: 'bg-[#8B5CF6]/10'  },
   INVESTMENT_UPDATE:  { icon: AlertCircle,  color: 'text-[#A0A0B2]',  bg: 'bg-[#A0A0B2]/10'  },
 }
 
@@ -57,15 +57,15 @@ export function InsightCard({ insight }: InsightCardProps) {
   return (
     <div
       className={cn(
-        'relative flex gap-3 rounded-xl border bg-[#111118] p-4 transition-colors',
+        'relative flex gap-3 rounded-xl border bg-white/[0.03] p-4 backdrop-blur-sm transition-colors',
         isHigh
-          ? 'border-[#C9A84C]/30 hover:border-[#C9A84C]/50'
-          : 'border-[#2A2A3A] hover:border-[#3A3A4A]'
+          ? 'border-[#3B82F6]/30 hover:border-[#3B82F6]/50'
+          : 'border-white/[0.06] hover:border-white/[0.10]'
       )}
     >
       {/* High priority gold left accent */}
       {isHigh && (
-        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-[#C9A84C]/60" />
+        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-[#3B82F6]/60" />
       )}
 
       {/* Icon */}
@@ -85,7 +85,7 @@ export function InsightCard({ insight }: InsightCardProps) {
           {insight.actionHref && insight.actionLabel && (
             <Link
               href={insight.actionHref}
-              className="text-xs font-medium text-[#C9A84C] transition-opacity hover:opacity-70"
+              className="text-xs font-medium text-[#60A5FA] transition-opacity hover:opacity-70"
             >
               {insight.actionLabel} →
             </Link>

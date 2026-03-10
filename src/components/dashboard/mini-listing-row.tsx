@@ -59,7 +59,7 @@ export function MiniListingRow({
     <Link
       href={`/marketplace/${listing.id}`}
       className={cn(
-        'group flex items-center gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-[#2A2A3A] hover:bg-[#111118]',
+        'group flex items-center gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-white/[0.06] hover:bg-white/[0.03]',
         className
       )}
     >
@@ -77,7 +77,7 @@ export function MiniListingRow({
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-[#F5F5F7] group-hover:text-[#C9A84C] transition-colors">
+        <p className="truncate text-sm font-medium text-[#F5F5F7] group-hover:text-[#60A5FA] transition-colors">
           {listing.title}
         </p>
         <p className="mt-0.5 truncate text-xs text-[#6B6B80]">
@@ -91,12 +91,12 @@ export function MiniListingRow({
 
         {/* Badges row */}
         <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
-          <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#A0A0B2]">
+          <span className="rounded border border-white/[0.06] bg-white/[0.03] px-1.5 py-0.5 text-[10px] text-[#A0A0B2]">
             {PROPERTY_TYPE_LABEL[listing.propertyType] ?? listing.propertyType}
           </span>
 
           {listing.isTokenized && (
-            <span className="flex items-center gap-0.5 rounded border border-[#C9A84C]/25 bg-[#C9A84C]/8 px-1.5 py-0.5 text-[10px] text-[#C9A84C]">
+            <span className="flex items-center gap-0.5 rounded border border-[#3B82F6]/25 bg-[#3B82F6]/10 px-1.5 py-0.5 text-[10px] text-[#60A5FA]">
               <Coins className="h-2.5 w-2.5" />
               Tokenized
             </span>

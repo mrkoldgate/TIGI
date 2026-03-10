@@ -198,14 +198,14 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               viewAllHref="/saved"
               viewAllLabel="View all saved"
             />
-            <div className="mt-4 overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118]">
+            <div className="mt-4 overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-sm">
               {watchlistIsEmpty ? (
                 <div className="px-2 py-1">
                   {/* Show featured listings as inspiration when watchlist is empty */}
                   <p className="px-2 py-2 text-xs text-[#6B6B80]">
                     You haven't saved anything yet. Here are some to get you started:
                   </p>
-                  <div className="divide-y divide-[#1F1F2E]">
+                  <div className="divide-y divide-white/[0.04]">
                     {watchlistDisplay.map((listing, i) => (
                       <div key={listing.id} className="px-2 py-1">
                         <MiniListingRow listing={listing} index={i} />
@@ -214,7 +214,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
                   </div>
                 </div>
               ) : (
-                <div className="divide-y divide-[#1F1F2E]">
+                <div className="divide-y divide-white/[0.04]">
                   {watchlistDisplay.map((listing, i) => (
                     <div key={listing.id} className="px-2 py-1">
                       <MiniListingRow listing={listing} index={i} />
@@ -222,10 +222,10 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
                   ))}
                 </div>
               )}
-              <div className="border-t border-[#1F1F2E] px-4 py-3">
+              <div className="border-t border-white/[0.04] px-4 py-3">
                 <Link
                   href="/saved"
-                  className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+                  className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#60A5FA]"
                 >
                   {watchlistIsEmpty ? 'Browse marketplace' : 'View full watchlist'}
                   <ArrowRight className="h-3 w-3" />
@@ -300,7 +300,7 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
         <h1 className="text-h1 mt-0.5">{userName}</h1>
         <div className="mt-2 flex flex-wrap items-center gap-2">
           {/* Role badge */}
-          <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-2 py-0.5 text-[11px] text-[#A0A0B2]">
+          <span className="rounded border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[11px] text-[#A0A0B2]">
             {role}
           </span>
           {/* KYC status */}
@@ -314,14 +314,14 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
       <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
         <Link
           href="/marketplace"
-          className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#F5F5F7]"
+          className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] backdrop-blur-sm transition-colors hover:border-[#3B82F6]/40 hover:text-[#F5F5F7]"
         >
-          <Sparkles className="h-3.5 w-3.5 text-[#C9A84C]" />
+          <Sparkles className="h-3.5 w-3.5 text-[#3B82F6]" />
           Browse marketplace
         </Link>
         <Link
           href="/settings/wallet"
-          className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#F5F5F7]"
+          className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] backdrop-blur-sm transition-colors hover:border-[#3B82F6]/40 hover:text-[#F5F5F7]"
         >
           <Wallet className="h-3.5 w-3.5 text-[#6B6B80]" />
           Connect wallet
@@ -367,9 +367,9 @@ function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
 
 function PortfolioTeaser() {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] p-5">
+    <div className="overflow-hidden rounded-xl border border-white/[0.06] bg-white/[0.03] p-5 backdrop-blur-sm">
       <div className="mb-3 flex items-center gap-3">
-        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#1A1A24] text-[#C9A84C]">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#3B82F6]/10 text-[#3B82F6]">
           <BarChart3 className="h-5 w-5" />
         </div>
         <div>
@@ -383,7 +383,7 @@ function PortfolioTeaser() {
       </p>
       <Link
         href="/portfolio"
-        className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+        className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#3B82F6]/40 hover:text-[#60A5FA]"
       >
         <BarChart3 className="h-3.5 w-3.5" />
         View portfolio
@@ -413,7 +413,7 @@ function EmptySection({
       <p className="text-xs text-[#3A3A4A]">{hint}</p>
       <Link
         href={href}
-        className="text-xs font-medium text-[#C9A84C] hover:opacity-70"
+        className="text-xs font-medium text-[#60A5FA] hover:opacity-70"
       >
         {cta} →
       </Link>
