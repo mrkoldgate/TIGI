@@ -173,6 +173,15 @@ describe('PATCH /api/listings/[id]', () => {
     expect(json.data.title).toBe('Updated Title')
   })
 
+  it('returns 422 when a field fails schema validation (title too short)', async () => {
+    mockAuth.mockResolvedValueOnce(makeSession())
+    // UpdateListingSchema.partial() still enforces min(3) on title when present
+    const res = await PATCH(makePatchRequest({ title: 'ab' }), makeParams())
+    expect(res.status).toBe(422)
+    const json = await res.json()
+    expect(json.error.code).toBe('VALIDATION_FAILED')
+  })
+
   it('returns 200 with no-op update (empty patch is valid)', async () => {
     mockAuth.mockResolvedValueOnce(makeSession())
     mockCreateListingService.mockReturnValueOnce({

@@ -1,28 +1,25 @@
 import type { Metadata, Viewport } from 'next'
-import { Outfit, Inter } from 'next/font/google'
+import { Playfair_Display, Syne } from 'next/font/google'
 import { Providers } from '@/components/providers'
 import './globals.css'
 
 // ---------------------------------------------------------------------------
-// Font loading — Google Fonts with display=swap for performance
+// Font loading — distinctive premium typography
 // ---------------------------------------------------------------------------
 
-const outfit = Outfit({
+const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-outfit',
+  variable: '--font-playfair',
   display: 'swap',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800', '900'],
 })
 
-const inter = Inter({
+const syne = Syne({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-syne',
   display: 'swap',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '600', '700', '800'],
 })
-
-// JetBrains Mono loaded via next/font/local or via @font-face in CSS
-// (Google Fonts doesn't host JetBrains Mono — use local or CDN)
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -68,7 +65,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#0A0A0F',
+  themeColor: '#050508',
   colorScheme: 'dark',
 }
 
@@ -85,10 +82,10 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${outfit.variable} ${inter.variable}`}
+      className={`${playfair.variable} ${syne.variable}`}
     >
       <head>
-        {/* JetBrains Mono via Google Fonts CDN */}
+        {/* JetBrains Mono via Google Fonts CDN — code / mono contexts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
@@ -96,7 +93,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#0A0A0F] text-[#F5F5F7] antialiased">
+      <body className="min-h-screen bg-[#050508] text-[#F0EDE6] antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -1,84 +1,92 @@
 @import "tailwindcss";
 
 /* =============================================================================
-   TIGI Design System — Global Styles & Design Tokens
-   Dark-only. No light mode. This is a deliberate brand decision.
+   TIGI Design System v2 — Premium Glass Morphism
+   Dark-only. Luxury fintech aesthetic. 2025/2026 web design language.
    ============================================================================= */
 
 @theme {
   /* ---------------------------------------------------------------------------
-     Background Layers (darkest → lightest)
-     Purpose: Creates visual depth without shadows
+     Background Layers — ultra-deep blacks with warm undertone
      --------------------------------------------------------------------------- */
-  --color-bg-root: #0A0A0F;
-  --color-bg-surface: #111118;
-  --color-bg-elevated: #1A1A24;
-  --color-bg-muted: #22222E;
+  --color-bg-root: #050508;
+  --color-bg-surface: #0A0A10;
+  --color-bg-elevated: #0F0F18;
+  --color-bg-muted: #141420;
+
+  /* ---------------------------------------------------------------------------
+     Glass Surfaces
+     --------------------------------------------------------------------------- */
+  --color-glass-bg: rgba(255, 255, 255, 0.025);
+  --color-glass-bg-heavy: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.06);
+  --color-glass-border-hover: rgba(255, 255, 255, 0.12);
 
   /* ---------------------------------------------------------------------------
      Border & Dividers
      --------------------------------------------------------------------------- */
-  --color-border-default: #2A2A3A;
-  --color-border-subtle: #1F1F2E;
-  --color-border-focus: #C9A84C;
+  --color-border-default: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.03);
+  --color-border-focus: #D4A843;
 
   /* ---------------------------------------------------------------------------
-     Text
+     Text — warm ivory tones instead of pure white
      --------------------------------------------------------------------------- */
-  --color-text-primary: #F5F5F7;
-  --color-text-secondary: #A0A0B2;
-  --color-text-muted: #6B6B80;
-  --color-text-inverse: #0A0A0F;
+  --color-text-primary: #F0EDE6;
+  --color-text-secondary: #9B9687;
+  --color-text-muted: #5E5A50;
+  --color-text-inverse: #050508;
 
   /* ---------------------------------------------------------------------------
-     Gold Palette — Primary brand accent
-     Rule: ≤ 3 gold elements visible on any screen (excluding nav)
+     Gold Palette — luminous warm amber
      --------------------------------------------------------------------------- */
-  --color-gold-50: #FBF7EB;
-  --color-gold-100: #F5ECCC;
-  --color-gold-200: #E8D590;
-  --color-gold-300: #DBBD57;
-  --color-gold-400: #C9A84C;
-  --color-gold-500: #B8932F;
-  --color-gold-600: #9A7A22;
-  --color-gold-700: #7A6018;
-  --color-gold-800: #5C4810;
-  --color-gold-900: #3E3008;
+  --color-gold-50: #FDF8ED;
+  --color-gold-100: #F8ECCC;
+  --color-gold-200: #EDD78F;
+  --color-gold-300: #E2C157;
+  --color-gold-400: #D4A843;
+  --color-gold-500: #C49630;
+  --color-gold-600: #A37D22;
+  --color-gold-700: #826318;
+  --color-gold-800: #614A10;
+  --color-gold-900: #403108;
 
   /* ---------------------------------------------------------------------------
-     Semantic Colors — Contextual only. Never decorative.
+     Accent Orb Colors — for floating background gradients
      --------------------------------------------------------------------------- */
-  --color-success: #22C55E;
-  --color-success-dark: #16A34A;
-  --color-success-muted: oklch(30% 0.09 142);
+  --color-orb-amber: rgba(212, 168, 67, 0.12);
+  --color-orb-teal: rgba(45, 212, 191, 0.08);
+  --color-orb-violet: rgba(139, 92, 246, 0.08);
+  --color-orb-rose: rgba(244, 63, 94, 0.06);
 
-  --color-warning: #F59E0B;
+  /* ---------------------------------------------------------------------------
+     Semantic Colors
+     --------------------------------------------------------------------------- */
+  --color-success: #34D399;
+  --color-success-dark: #10B981;
+  --color-warning: #FBBF24;
   --color-warning-dark: #D97706;
-  --color-warning-muted: oklch(28% 0.07 55);
-
-  --color-error: #EF4444;
-  --color-error-dark: #DC2626;
-  --color-error-muted: oklch(27% 0.09 25);
-
-  --color-info: #3B82F6;
-  --color-info-dark: #2563EB;
-  --color-info-muted: oklch(27% 0.07 250);
+  --color-error: #F87171;
+  --color-error-dark: #EF4444;
+  --color-info: #60A5FA;
+  --color-info-dark: #3B82F6;
 
   /* ---------------------------------------------------------------------------
      Typography
      --------------------------------------------------------------------------- */
-  --font-heading: var(--font-outfit), 'Outfit', sans-serif;
-  --font-body: var(--font-inter), 'Inter', sans-serif;
-  --font-mono: var(--font-jetbrains), 'JetBrains Mono', 'Fira Code', monospace;
+  --font-heading: var(--font-playfair), 'Playfair Display', 'Georgia', serif;
+  --font-body: var(--font-syne), 'Syne', system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), 'JetBrains Mono', monospace;
 
   /* ---------------------------------------------------------------------------
-     Border Radius
+     Border Radius — generous, organic shapes
      --------------------------------------------------------------------------- */
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  --radius-pill: 999px;
 
   /* ---------------------------------------------------------------------------
      Spacing — 4px base grid
@@ -96,58 +104,62 @@
   --spacing-20: 80px;
 
   /* ---------------------------------------------------------------------------
-     Layout Constants
+     Layout
      --------------------------------------------------------------------------- */
   --sidebar-width: 240px;
   --sidebar-collapsed-width: 64px;
   --topnav-height: 64px;
-  --content-max-width: 1280px;
+  --content-max-width: 1320px;
 
   /* ---------------------------------------------------------------------------
-     Shadows — Minimal. Depth via layered backgrounds, not shadow.
+     Shadows — luminous glow effects
      --------------------------------------------------------------------------- */
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.5);
-  --shadow-gold: 0 0 20px rgba(201, 168, 76, 0.15), 0 0 40px rgba(201, 168, 76, 0.05);
+  --shadow-card: 0 8px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.03);
+  --shadow-modal: 0 32px 80px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 30px rgba(212, 168, 67, 0.15), 0 0 60px rgba(212, 168, 67, 0.05);
+  --shadow-glow-teal: 0 0 40px rgba(45, 212, 191, 0.1);
+  --shadow-glow-violet: 0 0 40px rgba(139, 92, 246, 0.1);
 
   /* ---------------------------------------------------------------------------
      Transitions
      --------------------------------------------------------------------------- */
-  --transition-fast: 150ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 300ms ease;
+  --transition-fast: 150ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-base: 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-slow: 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --transition-spring: 600ms cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* ---------------------------------------------------------------------------
      shadcn/ui CSS Variable Aliases
-     Maps TIGI tokens to shadcn naming convention for component compatibility
      --------------------------------------------------------------------------- */
-  --background: #0A0A0F;
-  --foreground: #F5F5F7;
-  --card: #111118;
-  --card-foreground: #F5F5F7;
-  --popover: #1A1A24;
-  --popover-foreground: #F5F5F7;
-  --primary: #C9A84C;
-  --primary-foreground: #0A0A0F;
-  --secondary: #1A1A24;
-  --secondary-foreground: #F5F5F7;
-  --muted: #22222E;
-  --muted-foreground: #6B6B80;
-  --accent: #1A1A24;
-  --accent-foreground: #F5F5F7;
-  --destructive: #EF4444;
-  --destructive-foreground: #F5F5F7;
-  --border: #2A2A3A;
-  --input: #22222E;
-  --ring: #C9A84C;
-  --radius: 8px;
+  --background: #050508;
+  --foreground: #F0EDE6;
+  --card: rgba(255, 255, 255, 0.025);
+  --card-foreground: #F0EDE6;
+  --popover: #0F0F18;
+  --popover-foreground: #F0EDE6;
+  --primary: #D4A843;
+  --primary-foreground: #050508;
+  --secondary: #0F0F18;
+  --secondary-foreground: #F0EDE6;
+  --muted: #141420;
+  --muted-foreground: #5E5A50;
+  --accent: #0F0F18;
+  --accent-foreground: #F0EDE6;
+  --destructive: #F87171;
+  --destructive-foreground: #F0EDE6;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: #141420;
+  --ring: #D4A843;
+  --radius: 12px;
 }
 
 /* =============================================================================
    Base Styles
    ============================================================================= */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -155,7 +167,6 @@
 
 :root {
   color-scheme: dark;
-  /* No light mode override. TIGI is dark-only. */
 }
 
 html {
@@ -164,168 +175,436 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   font-variant-numeric: tabular-nums;
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: #0A0A0F;
-  color: #F5F5F7;
-  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
-  font-size: 0.9375rem; /* 15px body */
+  background-color: #050508;
+  color: #F0EDE6;
+  font-family: var(--font-syne), 'Syne', system-ui, sans-serif;
+  font-size: 0.9375rem;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* =============================================================================
-   Typography Utilities
+   Typography
    ============================================================================= */
 
 .font-heading {
-  font-family: var(--font-outfit), 'Outfit', sans-serif;
+  font-family: var(--font-playfair), 'Playfair Display', 'Georgia', serif;
+}
+
+.font-body {
+  font-family: var(--font-syne), 'Syne', system-ui, sans-serif;
 }
 
 .font-mono {
   font-family: var(--font-jetbrains), 'JetBrains Mono', monospace;
 }
 
-/* Type scale */
+/* Massive hero headline */
+.text-hero {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+/* Page-level display */
 .text-display {
   font-family: var(--font-heading);
-  font-size: 3rem;
-  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 600;
   line-height: 1.1;
   letter-spacing: -0.02em;
 }
 
 .text-h1 {
   font-family: var(--font-heading);
-  font-size: 2rem;
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-h2 {
+  font-family: var(--font-heading);
+  font-size: 1.75rem;
   font-weight: 600;
   line-height: 1.2;
   letter-spacing: -0.015em;
 }
 
-.text-h2 {
+.text-h3 {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.375rem;
+  font-weight: 500;
   line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
-.text-h3 {
-  font-family: var(--font-heading);
-  font-size: 1.25rem;
-  font-weight: 500;
-  line-height: 1.4;
-  letter-spacing: -0.005em;
-}
-
 .text-h4 {
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .text-label {
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
   line-height: 1.2;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #A0A0B2;
+  color: #9B9687;
 }
 
 .text-caption {
   font-size: 0.6875rem;
   line-height: 1.4;
   letter-spacing: 0.02em;
-  color: #6B6B80;
+  color: #5E5A50;
 }
 
 /* =============================================================================
-   Gold Gradient Text — Hero headings ONLY
+   Gold Gradient Text — animated shimmer for hero headings
    ============================================================================= */
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, #C9A84C 0%, #E8D590 50%, #C9A84C 100%);
+  background: linear-gradient(135deg,
+      #D4A843 0%,
+      #F0D68A 30%,
+      #D4A843 50%,
+      #C49630 70%,
+      #D4A843 100%);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: goldShimmer 6s ease-in-out infinite;
+}
+
+@keyframes goldShimmer {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 /* =============================================================================
-   Animations
+   Glass Morphism System
+   ============================================================================= */
+
+.glass {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-heavy {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-subtle {
+  background: rgba(255, 255, 255, 0.015);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
+  transition: border-color 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    box-shadow 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+/* =============================================================================
+   Animations — Rich, orchestrated reveals
    ============================================================================= */
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes shimmer {
-  from { background-position: -200% 0; }
-  to   { background-position: 200% 0; }
+  from {
+    background-position: -200% 0;
+  }
+
+  to {
+    background-position: 200% 0;
+  }
 }
 
-@keyframes pulse-gold {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0); }
-  50%       { box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.1); }
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(12px, -16px) scale(1.03);
+  }
+
+  66% {
+    transform: translate(-8px, 8px) scale(0.97);
+  }
+}
+
+@keyframes floatSlow {
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-20px, 20px) scale(1.05);
+  }
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+
+  50% {
+    opacity: 0.15;
+  }
+}
+
+@keyframes borderGlow {
+
+  0%,
+  100% {
+    border-color: rgba(212, 168, 67, 0.1);
+  }
+
+  50% {
+    border-color: rgba(212, 168, 67, 0.3);
+  }
 }
 
 .animate-fade-in {
-  animation: fadeIn 200ms ease-out both;
+  animation: fadeIn 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
 .animate-slide-up {
-  animation: slideUp 250ms ease-out both;
+  animation: slideUp 700ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-scale-in {
+  animation: scaleIn 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-float {
+  animation: float 12s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 18s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 4s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: borderGlow 3s ease-in-out infinite;
 }
 
 /* Stagger children — use with .animate-slide-up on children */
-.stagger-children > *:nth-child(1)  { animation-delay: 0ms; }
-.stagger-children > *:nth-child(2)  { animation-delay: 50ms; }
-.stagger-children > *:nth-child(3)  { animation-delay: 100ms; }
-.stagger-children > *:nth-child(4)  { animation-delay: 150ms; }
-.stagger-children > *:nth-child(5)  { animation-delay: 200ms; }
-.stagger-children > *:nth-child(6)  { animation-delay: 250ms; }
+.stagger-children>*:nth-child(1) {
+  animation-delay: 0ms;
+}
+
+.stagger-children>*:nth-child(2) {
+  animation-delay: 80ms;
+}
+
+.stagger-children>*:nth-child(3) {
+  animation-delay: 160ms;
+}
+
+.stagger-children>*:nth-child(4) {
+  animation-delay: 240ms;
+}
+
+.stagger-children>*:nth-child(5) {
+  animation-delay: 320ms;
+}
+
+.stagger-children>*:nth-child(6) {
+  animation-delay: 400ms;
+}
+
+/* =============================================================================
+   Scroll-Triggered Reveal — works with IntersectionObserver
+   ============================================================================= */
+
+.reveal {
+  opacity: 0;
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(48px);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(48px);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-scale {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    transform 800ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal.is-visible,
+.reveal-up.is-visible,
+.reveal-left.is-visible,
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* =============================================================================
+   Floating Orbs — atmospheric background elements
+   ============================================================================= */
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+}
+
+.orb-amber {
+  background: radial-gradient(circle, rgba(212, 168, 67, 0.15) 0%, transparent 70%);
+}
+
+.orb-teal {
+  background: radial-gradient(circle, rgba(45, 212, 191, 0.10) 0%, transparent 70%);
+}
+
+.orb-violet {
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.10) 0%, transparent 70%);
+}
+
+.orb-rose {
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.08) 0%, transparent 70%);
+}
 
 /* =============================================================================
    Skeleton Shimmer
    ============================================================================= */
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #22222E 25%,
-    #1A1A24 50%,
-    #22222E 75%
-  );
+  background: linear-gradient(90deg, #141420 25%, #0F0F18 50%, #141420 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
-  border-radius: 6px;
+  border-radius: 8px;
 }
 
 /* =============================================================================
-   Card System
+   Card System — glass-based
    ============================================================================= */
 
 .card-base {
-  background-color: #111118;
-  border: 1px solid #2A2A3A;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 20px;
   padding: 16px;
-  transition: border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
+  transition: border-color 300ms ease, transform 300ms ease, box-shadow 300ms ease;
 }
 
 .card-hover:hover {
-  border-color: #C9A84C;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card-interactive {
@@ -333,51 +612,103 @@ body {
 }
 
 .card-interactive:hover {
-  border-color: #C9A84C;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  border-color: rgba(212, 168, 67, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(212, 168, 67, 0.06);
 }
 
 /* =============================================================================
-   Gold Glow — Primary CTA hover
+   Gold Glow — primary CTA hover
    ============================================================================= */
 
+.gold-glow {
+  transition: box-shadow 400ms ease, transform 200ms ease;
+}
+
 .gold-glow:hover {
-  box-shadow: 0 0 20px rgba(201, 168, 76, 0.2),
-              0 0 40px rgba(201, 168, 76, 0.08);
-  transition: box-shadow 300ms ease;
+  box-shadow: 0 0 30px rgba(212, 168, 67, 0.25),
+    0 0 60px rgba(212, 168, 67, 0.10);
 }
 
 /* =============================================================================
-   Focus Styles — Accessible
+   Glass Button Variants
+   ============================================================================= */
+
+.btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 12px 28px;
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: #F0EDE6;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #D4A843 0%, #C49630 100%);
+  border: none;
+  border-radius: 999px;
+  padding: 14px 32px;
+  font-family: var(--font-syne), 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: #050508;
+  cursor: pointer;
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 30px rgba(212, 168, 67, 0.3),
+    0 0 60px rgba(212, 168, 67, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-gold:active {
+  transform: scale(0.98);
+}
+
+/* =============================================================================
+   Focus Styles
    ============================================================================= */
 
 :focus-visible {
-  outline: 2px solid #C9A84C;
+  outline: 2px solid #D4A843;
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 /* =============================================================================
-   Scrollbar — Minimal dark style
+   Scrollbar — ultra-minimal
    ============================================================================= */
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0A0F;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2A2A3A;
-  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3A3A4E;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* =============================================================================
@@ -385,8 +716,8 @@ body {
    ============================================================================= */
 
 ::selection {
-  background-color: rgba(201, 168, 76, 0.2);
-  color: #F5F5F7;
+  background-color: rgba(212, 168, 67, 0.25);
+  color: #F0EDE6;
 }
 
 /* =============================================================================
@@ -394,13 +725,13 @@ body {
    ============================================================================= */
 
 .page-content {
-  max-width: 1280px;
+  max-width: 1320px;
   margin: 0 auto;
   padding: 32px;
 }
 
 .page-enter {
-  animation: fadeIn 200ms ease-out;
+  animation: fadeIn 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* =============================================================================
@@ -408,17 +739,37 @@ body {
    ============================================================================= */
 
 .bg-hero-gradient {
-  background: linear-gradient(135deg, #0A0A0F 0%, #141420 50%, #1A1528 100%);
+  background: linear-gradient(160deg, #050508 0%, #0A0A14 40%, #0D0B16 100%);
 }
 
 .bg-card-hover-gradient {
-  background: linear-gradient(135deg, #111118 0%, #16161F 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.04) 100%);
+}
+
+/* Gradient mesh — ambient atmosphere */
+.bg-mesh {
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(212, 168, 67, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 70%, rgba(139, 92, 246, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(45, 212, 191, 0.03) 0%, transparent 50%),
+    #050508;
 }
 
 /* =============================================================================
-   Utility: Number formatting
+   Utility
    ============================================================================= */
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+/* Noise overlay for texture */
+.noise::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.4;
 }

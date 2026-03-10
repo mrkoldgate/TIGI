@@ -4,17 +4,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
-import { Menu, X, LayoutDashboard } from 'lucide-react'
+import { Menu, X, LayoutDashboard, ArrowUpRight } from 'lucide-react'
 import { Logo } from '@/components/shared/logo'
 import { MAIN_NAV } from '@/lib/nav-config'
 import { cn } from '@/lib/utils'
 
 // ---------------------------------------------------------------------------
-// MarketingNav — Public-facing navigation
-//
-// States:
-//   Unauthenticated: logo | nav links | Sign In · Get Started
-//   Authenticated:   logo | nav links | Dashboard (gold pill)
+// MarketingNav — Premium glass morphism navigation
 // ---------------------------------------------------------------------------
 
 export function MarketingNav() {
@@ -24,14 +20,12 @@ export function MarketingNav() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  // Add background opacity when scrolled
   useEffect(() => {
-    const handler = () => setScrolled(window.scrollY > 8)
+    const handler = () => setScrolled(window.scrollY > 12)
     window.addEventListener('scroll', handler, { passive: true })
     return () => window.removeEventListener('scroll', handler)
   }, [])
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false)
   }, [pathname])
@@ -39,102 +33,115 @@ export function MarketingNav() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b transition-colors duration-200',
+        'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
         scrolled
-          ? 'border-[#1F1F2E] bg-[#0A0A0F]/95 backdrop-blur-md'
-          : 'border-transparent bg-[#0A0A0F]/60 backdrop-blur-sm'
+          ? 'py-3'
+          : 'py-5'
       )}
     >
-      <div className="mx-auto flex h-16 max-w-[1280px] items-center gap-8 px-6 lg:px-8">
-        {/* Logo */}
-        <Logo />
-
-        {/* Desktop nav — centered primary links */}
-        <nav className="hidden flex-1 items-center justify-center gap-1 md:flex" aria-label="Main navigation">
-          {MAIN_NAV.map((item) => {
-            const active =
-              pathname === item.marketingHref ||
-              pathname.startsWith(`${item.marketingHref}/`)
-
-            return (
-              <Link
-                key={item.key}
-                href={item.marketingHref}
-                aria-label={item.description}
-                className={cn(
-                  'group relative px-3.5 py-2 text-sm font-medium transition-colors',
-                  active
-                    ? 'text-[#F5F5F7]'
-                    : 'text-[#A0A0B2] hover:text-[#F5F5F7]'
-                )}
-              >
-                {item.label}
-                {/* Active/hover underline */}
-                <span
-                  className={cn(
-                    'absolute bottom-0 left-3.5 right-3.5 h-px rounded-full transition-all duration-200',
-                    active
-                      ? 'bg-[#C9A84C] opacity-100'
-                      : 'bg-[#C9A84C] opacity-0 group-hover:opacity-40'
-                  )}
-                />
-              </Link>
-            )
-          })}
-        </nav>
-
-        {/* Desktop auth CTAs */}
-        <div className="hidden items-center gap-3 md:flex">
-          {isAuthenticated ? (
-            // Authenticated state — single Dashboard CTA
-            <Link
-              href="/dashboard"
-              className="gold-glow flex items-center gap-2 rounded-lg bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#0A0A0F] transition-colors hover:bg-[#B8932F]"
-            >
-              <LayoutDashboard className="h-3.5 w-3.5" />
-              Dashboard
-            </Link>
-          ) : (
-            // Unauthenticated state — Sign in + Get started
-            <>
-              <Link
-                href="/auth/login"
-                className="text-sm font-medium text-[#A0A0B2] transition-colors hover:text-[#F5F5F7]"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/auth/register"
-                className="gold-glow rounded-lg bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#0A0A0F] transition-colors hover:bg-[#B8932F]"
-              >
-                Get started
-              </Link>
-            </>
-          )}
-        </div>
-
-        {/* Mobile hamburger */}
-        <button
-          className="ml-auto flex h-9 w-9 items-center justify-center rounded-lg text-[#A0A0B2] transition-colors hover:bg-[#111118] hover:text-[#F5F5F7] md:hidden"
-          onClick={() => setMobileOpen((o) => !o)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-
-      {/* Mobile menu — slide down */}
+      {/* Glass container — floats inside the viewport with rounded edges */}
       <div
         className={cn(
-          'overflow-hidden transition-all duration-200 ease-in-out md:hidden',
-          mobileOpen ? 'max-h-[480px] opacity-100' : 'max-h-0 opacity-0'
+          'mx-auto max-w-[1320px] px-4 transition-all duration-500',
+          scrolled
+            ? 'px-4 lg:px-6'
+            : 'px-6 lg:px-8'
+        )}
+      >
+        <div
+          className={cn(
+            'flex items-center gap-6 rounded-full px-6 py-3 transition-all duration-500',
+            scrolled
+              ? 'glass-heavy shadow-[0_8px_32px_rgba(0,0,0,0.3)]'
+              : 'bg-transparent'
+          )}
+        >
+          {/* Logo */}
+          <Logo />
+
+          {/* Desktop nav — centered links */}
+          <nav className="hidden flex-1 items-center justify-center gap-1 md:flex" aria-label="Main navigation">
+            {MAIN_NAV.map((item) => {
+              const active =
+                pathname === item.marketingHref ||
+                pathname.startsWith(`${item.marketingHref}/`)
+
+              return (
+                <Link
+                  key={item.key}
+                  href={item.marketingHref}
+                  aria-label={item.description}
+                  className={cn(
+                    'relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300',
+                    active
+                      ? 'text-[#F0EDE6]'
+                      : 'text-[#9B9687] hover:text-[#F0EDE6]'
+                  )}
+                >
+                  {item.label}
+                  {/* Active glow indicator */}
+                  {active && (
+                    <span
+                      className="absolute inset-0 rounded-full opacity-100"
+                      style={{ background: 'rgba(212,168,67,0.08)', border: '1px solid rgba(212,168,67,0.12)' }}
+                    />
+                  )}
+                </Link>
+              )
+            })}
+          </nav>
+
+          {/* Desktop auth CTAs */}
+          <div className="hidden items-center gap-3 md:flex">
+            {isAuthenticated ? (
+              <Link
+                href="/dashboard"
+                className="btn-gold gold-glow flex items-center gap-2 !py-2 !px-5 text-sm no-underline"
+              >
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <Link
+                  href="/auth/login"
+                  className="text-sm font-medium text-[#9B9687] transition-colors hover:text-[#F0EDE6]"
+                >
+                  Sign in
+                </Link>
+                <Link
+                  href="/auth/register"
+                  className="btn-gold gold-glow flex items-center gap-2 !py-2 !px-5 text-sm no-underline"
+                >
+                  Get started
+                  <ArrowUpRight className="h-3 w-3 opacity-60" />
+                </Link>
+              </>
+            )}
+          </div>
+
+          {/* Mobile hamburger */}
+          <button
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full glass text-[#9B9687] transition-colors hover:text-[#F0EDE6] md:hidden"
+            onClick={() => setMobileOpen((o) => !o)}
+            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu — glass slide-down */}
+      <div
+        className={cn(
+          'overflow-hidden transition-all duration-400 ease-in-out md:hidden mx-4 mt-2',
+          mobileOpen ? 'max-h-[520px] opacity-100' : 'max-h-0 opacity-0'
         )}
         aria-hidden={!mobileOpen}
       >
-        <div className="border-t border-[#1F1F2E] bg-[#0A0A0F] px-6 pb-6">
-          {/* Nav links */}
-          <nav className="mt-4 space-y-0.5" aria-label="Mobile navigation">
+        <div className="glass-heavy rounded-3xl px-6 pb-6">
+          <nav className="mt-4 space-y-1" aria-label="Mobile navigation">
             {MAIN_NAV.map((item) => {
               const active =
                 pathname === item.marketingHref ||
@@ -145,27 +152,26 @@ export function MarketingNav() {
                   key={item.key}
                   href={item.marketingHref}
                   className={cn(
-                    'flex items-center justify-between rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                    'flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300',
                     active
-                      ? 'bg-[#111118] text-[#C9A84C]'
-                      : 'text-[#A0A0B2] hover:bg-[#111118] hover:text-[#F5F5F7]'
+                      ? 'glass text-[#D4A843]'
+                      : 'text-[#9B9687] hover:text-[#F0EDE6]'
                   )}
                 >
                   <span>{item.label}</span>
                   {active && (
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#C9A84C]" />
+                    <span className="h-2 w-2 rounded-full bg-[#D4A843]" />
                   )}
                 </Link>
               )
             })}
           </nav>
 
-          {/* Auth CTAs */}
-          <div className="mt-4 flex flex-col gap-2 border-t border-[#1F1F2E] pt-4">
+          <div className="mt-4 flex flex-col gap-2 border-t border-white/[0.04] pt-4">
             {isAuthenticated ? (
               <Link
                 href="/dashboard"
-                className="flex items-center justify-center gap-2 rounded-lg bg-[#C9A84C] px-4 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-colors hover:bg-[#B8932F]"
+                className="btn-gold flex items-center justify-center gap-2 text-sm no-underline"
               >
                 <LayoutDashboard className="h-3.5 w-3.5" />
                 Dashboard
@@ -174,13 +180,13 @@ export function MarketingNav() {
               <>
                 <Link
                   href="/auth/login"
-                  className="rounded-lg border border-[#2A2A3A] px-4 py-2.5 text-center text-sm font-medium text-[#F5F5F7] transition-colors hover:bg-[#111118]"
+                  className="btn-glass text-center text-sm no-underline"
                 >
                   Sign in
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="rounded-lg bg-[#C9A84C] px-4 py-2.5 text-center text-sm font-semibold text-[#0A0A0F] transition-colors hover:bg-[#B8932F]"
+                  className="btn-gold text-center text-sm no-underline"
                 >
                   Get started
                 </Link>
