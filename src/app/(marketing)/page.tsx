@@ -13,9 +13,12 @@ import {
   ArrowUpRight,
   Shield,
   Zap,
+  Building2,
+  LineChart,
 } from 'lucide-react'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
-import { ScrollReveal } from '@/components/shared/scroll-reveal'
+import { Magnetic, TextReveal, MouseTiltCard, MotionReveal, ClipReveal } from '@/components/ui/interactions'
+import { HeroParallaxCol } from '@/components/shared/hero-parallax-col'
 import { PLATFORM_STATS } from '@/lib/constants'
 
 // ---------------------------------------------------------------------------
@@ -68,11 +71,11 @@ function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[1320px] px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-[1fr_460px] xl:grid-cols-[1fr_500px]">
+      <div className="relative z-10 mx-auto w-full max-w-[100%] 2xl:max-w-none px-6 lg:px-12 2xl:px-24">
+        <div className="mx-auto grid max-w-[1536px] items-center gap-12 lg:gap-20 lg:grid-cols-[1fr_500px] xl:grid-cols-[1fr_550px]">
 
           {/* ── Left — copy ── */}
-          <div className="py-28 lg:py-36">
+          <div className="py-24 lg:py-36">
             {/* Eyebrow chip */}
             <div className="animate-fade-in mb-8 inline-flex items-center gap-2.5 rounded-full glass px-4 py-2">
               <span className="h-1.5 w-1.5 rounded-full bg-[#3B82F6] animate-pulse-glow" aria-hidden="true" />
@@ -82,23 +85,28 @@ function HeroSection() {
             </div>
 
             {/* Headline */}
-            <h1
-              className="animate-slide-up mb-8"
-              style={{
-                fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif',
-                fontSize: 'clamp(3.5rem, 8.5vw, 7.5rem)',
-                fontWeight: 800,
-                lineHeight: 0.95,
-                letterSpacing: '-0.05em',
-                animationDelay: '80ms',
-              }}
-            >
-              Own The
-              <br />
-              <span className="text-gold-gradient">Future</span>
-              <br />
-              of Real Estate
-            </h1>
+            <div className="mb-8">
+              <TextReveal
+                text="Own The"
+                by="word"
+                className="text-[clamp(2.75rem,6.5vw+1rem,7.5rem)] font-[800] leading-[0.95] tracking-[-0.05em] text-[#F8FAFC]"
+                style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
+              />
+              <TextReveal
+                text="Future"
+                by="char"
+                delay={0.3}
+                className="text-[clamp(2.75rem,6.5vw+1rem,7.5rem)] font-[800] leading-[0.95] tracking-[-0.05em] text-gold-gradient"
+                style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
+              />
+              <TextReveal
+                text="of Real Estate"
+                by="word"
+                delay={0.7}
+                className="text-[clamp(2.75rem,6.5vw+1rem,7.5rem)] font-[800] leading-[0.95] tracking-[-0.05em] text-[#F8FAFC]"
+                style={{ fontFamily: 'var(--font-inter), Inter, system-ui, sans-serif' }}
+              />
+            </div>
 
             {/* Subtext */}
             <p
@@ -111,17 +119,21 @@ function HeroSection() {
 
             {/* CTAs */}
             <div
-              className="animate-slide-up flex flex-col gap-3 sm:flex-row"
+              className="animate-slide-up flex flex-col gap-3 sm:flex-row items-center"
               style={{ animationDelay: '280ms' }}
             >
-              <Link href="/marketplace" className="btn-gold gold-glow inline-flex items-center gap-3 no-underline">
-                Explore Properties
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link href="/auth/register" className="btn-glass inline-flex items-center gap-3 no-underline">
-                Start Investing Free
-                <ArrowUpRight className="h-4 w-4 opacity-50" />
-              </Link>
+              <Magnetic strength={0.3}>
+                <Link href="/marketplace" className="btn-gold gold-glow inline-flex items-center gap-3 no-underline">
+                  Explore Properties
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Magnetic>
+              <Magnetic strength={0.3}>
+                <Link href="/auth/register" className="btn-glass inline-flex items-center gap-3 no-underline">
+                  Start Investing Free
+                  <ArrowUpRight className="h-4 w-4 opacity-50" />
+                </Link>
+              </Magnetic>
             </div>
 
             {/* Trust badges */}
@@ -144,22 +156,48 @@ function HeroSection() {
             </div>
           </div>
 
-          {/* ── Right — floating product panel ── */}
-          <div className="hidden lg:block py-28 lg:py-36">
-            <div className="perspective-panel">
+          {/* ── Right — floating product panel with scroll parallax ── */}
+          <HeroParallaxCol className="flex w-full justify-center py-12 lg:justify-end lg:py-36">
+            <MouseTiltCard
+              className="w-full max-w-[520px]"
+              maxTilt={8}
+              spotlightColor="rgba(59,130,246,0.10)"
+            >
+              {/* Floating orbit badge — fills vertical dead space above */}
+              <div
+                className="absolute -top-8 -left-6 z-20 flex items-center gap-2 glass-heavy rounded-full px-3.5 py-2 pointer-events-none"
+                style={{ boxShadow: '0 4px 24px rgba(16,185,129,0.15)' }}
+                aria-hidden="true"
+              >
+                <span className="h-1.5 w-1.5 rounded-full bg-[#10B981] animate-pulse-glow" />
+                <span className="text-[11px] font-semibold text-[#34D399]">+8.2% yield</span>
+              </div>
+
+              {/* Floating orbit badge — bottom-left dead space */}
+              <div
+                className="absolute -bottom-6 -left-8 z-20 flex items-center gap-2.5 glass-heavy rounded-2xl px-3.5 py-2.5 pointer-events-none"
+                style={{ boxShadow: '0 4px 24px rgba(139,92,246,0.15)' }}
+                aria-hidden="true"
+              >
+                <div className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#8B5CF6]/20">
+                  <BarChart3 className="h-3.5 w-3.5 text-[#A78BFA]" />
+                </div>
+                <div>
+                  <p className="text-[10px] text-[#64748B]">AI Confidence</p>
+                  <p className="text-xs font-bold text-[#F8FAFC]">High · 0.82</p>
+                </div>
+              </div>
+
               <HeroProductPanel />
-            </div>
-          </div>
+            </MouseTiltCard>
+          </HeroParallaxCol>
         </div>
 
         {/* Stats row */}
-        <div
-          className="animate-slide-up pb-16 border-t border-white/[0.05] pt-12"
-          style={{ animationDelay: '460ms' }}
-        >
-          <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
-            {PLATFORM_STATS.map((stat) => (
-              <div key={stat.label}>
+        <MotionReveal direction="up" delay={0.5} className="pb-16 border-t border-white/[0.05] pt-12">
+          <div className="flex flex-wrap justify-center gap-10 sm:gap-16 md:gap-24">
+            {PLATFORM_STATS.map((stat, i) => (
+              <MotionReveal key={stat.label} direction="up" delay={0.55 + i * 0.07} className="text-center">
                 <div
                   className="mb-1"
                   style={{
@@ -176,10 +214,10 @@ function HeroSection() {
                   {stat.value}
                 </div>
                 <div className="text-xs font-medium tracking-wide text-[#475569]">{stat.label}</div>
-              </div>
+              </MotionReveal>
             ))}
           </div>
-        </div>
+        </MotionReveal>
       </div>
     </section>
   )
@@ -192,7 +230,7 @@ function HeroProductPanel() {
       {/* Property card */}
       <div className="glass-glossy overflow-hidden" style={{ borderRadius: '20px' }}>
         <div className="relative h-44 overflow-hidden" style={{ borderRadius: '20px 20px 0 0' }}>
-          <PlaceholderImage slot="residential-1" alt="Featured property" priority />
+          <PlaceholderImage slot="residential-1" alt="Featured property" priority className="absolute inset-0 h-full w-full" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#020409]/90 via-transparent to-transparent" />
           <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between">
             <div>
@@ -318,29 +356,35 @@ function MarqueeSection() {
 function FeaturedPropertiesSection() {
   return (
     <section className="relative z-10 px-6 py-32 lg:px-8 overflow-hidden">
-      <div className="mx-auto max-w-[1320px]">
-        <ScrollReveal animation="up">
-          <div className="mb-16 flex items-end justify-between">
-            <div className="relative">
-              <span className="section-num absolute -top-8 -left-2 pointer-events-none select-none" aria-hidden="true">01</span>
-              <p className="text-label mb-3 relative">Featured Listings</p>
-              <h2 className="text-display relative">Properties Available Now</h2>
-            </div>
+      <div className="mx-auto w-full max-w-none 2xl:px-16">
+        <div className="mb-16 flex flex-col items-center justify-center text-center">
+          <div className="relative mb-6">
+            <MotionReveal direction="fade">
+              <span className="section-num absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen" style={{ fontSize: 'clamp(5rem, 15vw, 12rem)' }} aria-hidden="true">01</span>
+            </MotionReveal>
+            <MotionReveal direction="up" delay={0.05}>
+              <p className="text-label relative z-10 mx-auto my-3 text-center">Featured Listings</p>
+            </MotionReveal>
+            <ClipReveal delay={0.14} className="relative z-10">
+              <h2 className="text-display mx-auto max-w-2xl text-center">Properties Available Now</h2>
+            </ClipReveal>
+          </div>
+          <MotionReveal direction="up" delay={0.28}>
             <Link
               href="/marketplace"
-              className="hidden items-center gap-2 text-sm font-semibold text-[#60A5FA] transition-colors hover:text-[#93C5FD] sm:flex"
+              className="mt-6 hidden items-center justify-center gap-2 text-sm font-semibold text-[#60A5FA] transition-colors hover:text-[#93C5FD] sm:flex"
             >
               View all
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-          </div>
-        </ScrollReveal>
+          </MotionReveal>
+        </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURED_PROPERTIES.map((property, i) => (
-            <ScrollReveal key={property.id} delay={i * 100}>
+            <MotionReveal key={property.id} direction="up" delay={i * 0.1}>
               <FeaturedPropertyCard property={property} />
-            </ScrollReveal>
+            </MotionReveal>
           ))}
         </div>
 
@@ -366,30 +410,37 @@ interface PlatformArea {
   href: string
   glowColor: string
   ctaLabel: string
+  image?: string
 }
 
 function PlatformAreasSection() {
   return (
     <section className="relative z-10 px-6 py-32 lg:px-8 overflow-hidden">
-      <div className="mx-auto max-w-[1320px]">
-        <ScrollReveal animation="up">
-          <div className="mb-16">
-            <div className="relative inline-block">
-              <span className="section-num absolute -top-8 -left-2 pointer-events-none select-none" aria-hidden="true">02</span>
-              <p className="text-label mb-3 relative">One Platform</p>
-              <h2 className="text-display relative max-w-lg">Every dimension of real estate</h2>
-            </div>
-            <p className="mt-5 max-w-lg text-[#64748B]">
+      <div className="mx-auto w-full max-w-none 2xl:px-16">
+        <div className="mb-16 flex flex-col items-center justify-center text-center">
+          <div className="relative mb-6">
+            <MotionReveal direction="fade">
+              <span className="section-num absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen" style={{ fontSize: 'clamp(5rem, 15vw, 12rem)' }} aria-hidden="true">02</span>
+            </MotionReveal>
+            <MotionReveal direction="up" delay={0.05}>
+              <p className="text-label relative z-10 mx-auto my-3 text-center">One Platform</p>
+            </MotionReveal>
+            <ClipReveal delay={0.14} className="relative z-10">
+              <h2 className="text-display mx-auto max-w-3xl text-center">Every dimension of real estate</h2>
+            </ClipReveal>
+          </div>
+          <MotionReveal direction="up" delay={0.28}>
+            <p className="mt-5 mx-auto max-w-xl text-center text-[1.125rem] text-[#64748B]">
               From fractional investing to land development, estate planning, and AI market intelligence.
             </p>
-          </div>
-        </ScrollReveal>
+          </MotionReveal>
+        </div>
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PLATFORM_AREAS.map((area, i) => (
-            <ScrollReveal key={area.key} delay={i * 90}>
+            <MotionReveal key={area.key} direction="up" delay={i * 0.09}>
               <PlatformAreaCard area={area} />
-            </ScrollReveal>
+            </MotionReveal>
           ))}
         </div>
       </div>
@@ -399,26 +450,34 @@ function PlatformAreasSection() {
 
 function PlatformAreaCard({ area }: { area: PlatformArea }) {
   return (
-    <Link href={area.href} className="group block gradient-border">
-      <article className="glass-card relative h-full overflow-hidden p-7" style={{ borderRadius: '20px' }}>
-        <div
-          className="absolute -top-24 -right-24 h-48 w-48 rounded-full opacity-0 transition-opacity duration-700 group-hover:opacity-100"
-          style={{ background: `radial-gradient(circle, ${area.glowColor}, transparent 70%)` }}
-          aria-hidden="true"
-        />
+    <Link href={area.href} className="group block" style={{ borderRadius: '20px' }}>
+      <MouseTiltCard
+        maxTilt={6}
+        spotlightColor={area.glowColor}
+        className="glass-card overflow-hidden"
+      >
+        <div className="relative p-7 hover:border-white/20">
+          {/* Photographic Background */}
+          {area.image && (
+            <div className="absolute inset-0 opacity-[0.12] mix-blend-luminosity transition-opacity duration-500 group-hover:opacity-[0.25]">
+              <img src={area.image} alt="" className="h-full w-full object-cover filter grayscale" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#020409] via-[#020409]/80 to-transparent" />
+            </div>
+          )}
 
-        <div className="relative">
-          <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-xl glass-heavy">
-            <area.icon className="h-[1.125rem] w-[1.125rem] text-[#60A5FA]" />
-          </div>
-          <h3 className="text-h4 mb-3 text-[#F8FAFC]">{area.title}</h3>
-          <p className="text-sm leading-relaxed text-[#64748B]">{area.description}</p>
-          <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#334155] transition-colors duration-300 group-hover:text-[#60A5FA]">
-            {area.ctaLabel}
-            <ChevronRight className="h-3 w-3 transition-transform group-hover:translate-x-1" />
+          <div className="relative">
+            <div className="mb-7 flex h-11 w-11 items-center justify-center rounded-xl glass-heavy">
+              <area.icon className="h-[1.125rem] w-[1.125rem] text-[#60A5FA]" />
+            </div>
+            <h3 className="text-h4 mb-3 text-[#F8FAFC]">{area.title}</h3>
+            <p className="text-sm leading-relaxed text-[#64748B]">{area.description}</p>
+            <div className="mt-7 flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-[#334155] transition-colors duration-300 group-hover:text-[#60A5FA]">
+              {area.ctaLabel}
+              <ChevronRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-1.5" />
+            </div>
           </div>
         </div>
-      </article>
+      </MouseTiltCard>
     </Link>
   )
 }
@@ -430,14 +489,31 @@ function PlatformAreaCard({ area }: { area: PlatformArea }) {
 function AiAndInvestSection() {
   return (
     <section className="relative z-10 px-6 py-32 lg:px-8 overflow-hidden">
-      <div className="mx-auto max-w-[1320px]">
+      <div className="mx-auto w-full max-w-none 2xl:px-16">
+        {/* Centered Section Header */}
+        <div className="mb-20 flex flex-col items-center justify-center text-center">
+          <div className="relative mb-6">
+            <MotionReveal direction="fade">
+              <span className="section-num absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen" style={{ fontSize: 'clamp(5rem, 15vw, 12rem)' }} aria-hidden="true">03</span>
+            </MotionReveal>
+            <MotionReveal direction="up" delay={0.05}>
+              <p className="text-label relative z-10 mx-auto my-3 text-center">AI Insights</p>
+            </MotionReveal>
+            <ClipReveal delay={0.14} className="relative z-10">
+              <h2 className="text-display mx-auto max-w-3xl text-center">
+                Intelligence in <span className="text-gold-gradient">every decision</span>
+              </h2>
+            </ClipReveal>
+          </div>
+        </div>
+
         <div className="grid gap-20 lg:grid-cols-2 lg:items-center">
           {/* Left — AI mock */}
-          <ScrollReveal animation="left" className="order-2 lg:order-1">
+          <MotionReveal direction="left">
             <div className="relative">
               <div className="mb-4 overflow-hidden rounded-2xl glass-card">
                 <div className="relative h-48">
-                  <PlaceholderImage slot="residential-1" alt="Property valuation preview" priority />
+                  <PlaceholderImage slot="residential-1" alt="Property valuation preview" priority className="absolute inset-0 h-full w-full" />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#020409]/80 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-5 right-5 flex items-end justify-between">
                     <div>
@@ -450,60 +526,57 @@ function AiAndInvestSection() {
               </div>
               <MockAiValuationCard />
             </div>
-          </ScrollReveal>
+          </MotionReveal>
 
-          {/* Right — copy */}
-          <ScrollReveal className="order-1 lg:order-2">
+          {/* Right — copy info */}
+          <MotionReveal direction="right" className="order-2 lg:pl-10">
             <div className="relative">
-              <span className="section-num absolute -top-10 -right-4 pointer-events-none select-none" aria-hidden="true">03</span>
-              <p className="text-label mb-4 relative">AI Insights</p>
-              <h2 className="text-display mb-6 relative">
-                Intelligence in
-                <br />
-                <span className="text-gold-gradient">every decision</span>
-              </h2>
-            </div>
-            <p className="mb-8 text-lg text-[#64748B]">
-              Every property on TIGI comes with an AI-estimated value, confidence
-              score, and comparable sales analysis — updated continuously.
-            </p>
+              <p className="mb-8 text-lg leading-relaxed text-[#64748B]">
+                Every property on TIGI comes with an AI-estimated value, confidence
+                score, and comparable sales analysis — updated continuously.
+              </p>
 
-            <ul className="mb-10 space-y-4">
-              {AI_FEATURES.map((feature) => (
-                <li key={feature} className="flex items-start gap-3">
-                  <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#3B82F6]" />
-                  <span className="text-sm text-[#64748B]">{feature}</span>
-                </li>
-              ))}
-            </ul>
+              <ul className="mb-10 space-y-4">
+                {AI_FEATURES.map((feature) => (
+                  <li key={feature} className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#3B82F6]" />
+                    <span className="text-sm text-[#64748B]">{feature}</span>
+                  </li>
+                ))}
+              </ul>
 
-            <div className="flex flex-wrap items-center gap-4">
-              <Link href="/insights" className="btn-gold gold-glow inline-flex items-center gap-2 no-underline text-sm">
-                Explore Insights
-              </Link>
-              <Link href="/pricing" className="text-sm font-semibold text-[#64748B] transition-colors hover:text-[#F8FAFC]">
-                View AI plans →
-              </Link>
+              <div className="flex flex-wrap items-center gap-4">
+                <Link href="/insights" className="btn-gold gold-glow inline-flex items-center gap-2 no-underline text-sm">
+                  Explore Insights
+                </Link>
+                <Link href="/pricing" className="text-sm font-semibold text-[#64748B] transition-colors hover:text-[#F8FAFC]">
+                  View AI plans →
+                </Link>
+              </div>
             </div>
-          </ScrollReveal>
+          </MotionReveal>
         </div>
 
         {/* How it works */}
         <div className="mt-32 pt-20 border-t border-white/[0.05]">
-          <ScrollReveal animation="up">
-            <div className="mb-16 text-center">
+          <div className="mb-16 text-center">
+            <MotionReveal direction="up">
               <p className="text-label mb-4">How It Works</p>
+            </MotionReveal>
+            <ClipReveal delay={0.1}>
               <h2 className="text-display">Invest from $100</h2>
+            </ClipReveal>
+            <MotionReveal direction="up" delay={0.22}>
               <p className="mx-auto mt-5 max-w-lg text-[#64748B]">
                 No wallets. No complexity. Find a property you believe in and invest.
               </p>
-            </div>
-          </ScrollReveal>
+            </MotionReveal>
+          </div>
 
           <div className="grid gap-10 sm:grid-cols-3">
             {HOW_IT_WORKS.map((step, i) => (
-              <ScrollReveal key={step.title} delay={i * 150}>
-                <div className="relative text-center group">
+              <MotionReveal key={step.title} direction="up" delay={i * 0.15}>
+                <div className="relative flex flex-col items-center text-center group">
                   {i < HOW_IT_WORKS.length - 1 && (
                     <div
                       className="absolute top-8 left-[calc(50%+32px)] hidden h-px w-full sm:block"
@@ -512,10 +585,10 @@ function AiAndInvestSection() {
                     />
                   )}
 
-                  <div className="relative mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl glass-heavy">
+                  <div className="relative mb-5 flex h-16 w-16 items-center justify-center shrink-0 rounded-2xl glass-heavy">
                     <div
-                      className="absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                      style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%)' }}
+                      className="absolute inset-0 rounded-[inherit] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      style={{ background: 'radial-gradient(circle at center, rgba(59,130,246,0.3) 0%, transparent 80%)' }}
                       aria-hidden="true"
                     />
                     <span
@@ -528,29 +601,31 @@ function AiAndInvestSection() {
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
+                        position: 'relative',
+                        zIndex: 10
                       }}
                     >
                       {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
 
-                  <div className="mx-auto mb-4 flex h-8 w-8 items-center justify-center">
+                  <div className="mb-4 flex h-8 w-8 items-center justify-center">
                     <step.icon className="h-4 w-4 text-[#334155]" />
                   </div>
 
                   <h3 className="text-h4 mb-3">{step.title}</h3>
                   <p className="text-sm leading-relaxed text-[#64748B]">{step.description}</p>
                 </div>
-              </ScrollReveal>
+              </MotionReveal>
             ))}
           </div>
 
-          <ScrollReveal className="mt-14 text-center">
+          <MotionReveal direction="up" delay={0.45} className="mt-14 text-center">
             <Link href="/auth/register" className="btn-glass inline-flex items-center gap-2 no-underline">
               Get started — it&apos;s free
               <ArrowRight className="h-3.5 w-3.5" />
             </Link>
-          </ScrollReveal>
+          </MotionReveal>
         </div>
       </div>
     </section>
@@ -564,22 +639,28 @@ function AiAndInvestSection() {
 function LandLegacySection() {
   return (
     <section className="relative z-10 px-6 py-32 lg:px-8 overflow-hidden">
-      <div className="mx-auto max-w-[1320px]">
-        <ScrollReveal animation="up">
-          <div className="mb-16">
-            <div className="relative inline-block">
-              <span className="section-num absolute -top-8 -left-2 pointer-events-none select-none" aria-hidden="true">04</span>
-              <p className="text-label mb-3 relative">What Makes TIGI Different</p>
-              <h2 className="text-display relative">Beyond buying and selling</h2>
-            </div>
-            <p className="mt-5 max-w-lg text-[#64748B]">
+      <div className="mx-auto w-full max-w-none 2xl:px-16">
+        <div className="mb-16 flex flex-col items-center justify-center text-center">
+          <div className="relative mb-6">
+            <MotionReveal direction="fade">
+              <span className="section-num absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-40 mix-blend-screen" style={{ fontSize: 'clamp(5rem, 15vw, 12rem)' }} aria-hidden="true">04</span>
+            </MotionReveal>
+            <MotionReveal direction="up" delay={0.05}>
+              <p className="text-label relative z-10 mx-auto my-3 text-center">What Makes TIGI Different</p>
+            </MotionReveal>
+            <ClipReveal delay={0.14} className="relative z-10">
+              <h2 className="text-display mx-auto max-w-2xl text-center">Beyond buying and selling</h2>
+            </ClipReveal>
+          </div>
+          <MotionReveal direction="up" delay={0.28}>
+            <p className="mt-5 mx-auto max-w-xl text-center text-[#64748B]">
               TIGI extends into dimensions of real estate that no other platform touches.
             </p>
-          </div>
-        </ScrollReveal>
+          </MotionReveal>
+        </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          <ScrollReveal delay={0}>
+          <MotionReveal direction="left" delay={0.05}>
             <FeatureShowcaseCard
               imageSlot="land-1"
               imageAlt="Land and development assets"
@@ -590,9 +671,9 @@ function LandLegacySection() {
               ctaLabel="Explore land assets"
               icon={Map}
             />
-          </ScrollReveal>
+          </MotionReveal>
 
-          <ScrollReveal delay={120}>
+          <MotionReveal direction="right" delay={0.15}>
             <FeatureShowcaseCard
               imageSlot="residential-4"
               imageAlt="Legacy and estate planning"
@@ -603,7 +684,7 @@ function LandLegacySection() {
               ctaLabel="Set up your estate plan"
               icon={Landmark}
             />
-          </ScrollReveal>
+          </MotionReveal>
         </div>
 
         <p className="mt-8 text-center text-xs text-[#334155]">
@@ -670,8 +751,8 @@ function FeatureShowcaseCard({
 function CtaBannerSection() {
   return (
     <section className="relative z-10 px-6 py-32 lg:px-8">
-      <div className="mx-auto max-w-[1320px]">
-        <ScrollReveal animation="scale">
+      <div className="mx-auto w-full max-w-none lg:px-6 2xl:px-16">
+        <MotionReveal direction="scale">
           <div
             className="relative overflow-hidden rounded-3xl px-8 py-24 text-center lg:px-24 glass-glossy"
             style={{ border: '1px solid rgba(59,130,246,0.15)' }}
@@ -704,12 +785,16 @@ function CtaBannerSection() {
             />
 
             <div className="relative">
-              <p className="text-label mb-5">Start Today</p>
-              <h2 className="text-display mx-auto mb-5 max-w-2xl">
-                Ready to own your
-                <br />
-                <span className="text-gold-gradient">first fraction?</span>
-              </h2>
+              <MotionReveal direction="fade">
+                <p className="text-label mb-5">Start Today</p>
+              </MotionReveal>
+              <ClipReveal delay={0.08} className="mb-5">
+                <h2 className="text-display mx-auto max-w-2xl">
+                  Ready to own your
+                  <br />
+                  <span className="text-gold-gradient">first fraction?</span>
+                </h2>
+              </ClipReveal>
               <p className="mx-auto mb-12 max-w-md text-[#64748B]">
                 Join thousands of investors building real estate portfolios with
                 TIGI — starting from $100, with AI intelligence at every step.
@@ -730,7 +815,7 @@ function CtaBannerSection() {
               </p>
             </div>
           </div>
-        </ScrollReveal>
+        </MotionReveal>
       </div>
     </section>
   )
@@ -742,67 +827,68 @@ function CtaBannerSection() {
 
 function MockAiValuationCard() {
   return (
-    <div className="glass-glossy p-6" style={{ borderRadius: '20px' }}>
-      <div className="mb-5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-[#A78BFA]" />
-          <span className="text-sm font-semibold text-[#A78BFA]">AI Estimate</span>
-        </div>
-        <span className="text-[11px] text-[#475569]">Not a licensed appraisal</span>
-      </div>
-
-      <div className="mb-5">
-        <div
-          style={{
-            fontFamily: 'Inter, system-ui, sans-serif',
-            fontSize: '2.25rem',
-            fontWeight: 800,
-            letterSpacing: '-0.04em',
-            color: '#F8FAFC',
-          }}
-        >
-          $485,000
-        </div>
-        <div className="mt-1 text-sm text-[#64748B]">Estimated market value</div>
-      </div>
-
-      <div className="mb-5">
-        <div className="mb-2 flex items-center justify-between text-xs">
-          <span className="text-[#475569]">Confidence</span>
-          <span className="font-semibold text-[#60A5FA]">High (0.82)</span>
-        </div>
-        <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
-          <div
-            className="h-full rounded-full"
-            style={{ width: '82%', background: 'linear-gradient(90deg, #3B82F6, #8B5CF6)' }}
-            role="progressbar"
-            aria-valuenow={82}
-            aria-valuemin={0}
-            aria-valuemax={100}
-          />
-        </div>
-      </div>
-
-      <p className="mb-5 text-xs text-[#475569]">
-        Based on 3 comparable sales within 0.5 miles · Updated 2 hours ago
-      </p>
-
-      <div className="space-y-2">
-        {['Comparable properties (3)', 'Positive factors (4)', 'Risk factors (2)'].map((item) => (
-          <div key={item} className="flex items-center justify-between rounded-xl glass px-4 py-2.5">
-            <span className="text-xs text-[#94A3B8]">{item}</span>
-            <ChevronRight className="h-3 w-3 text-[#475569]" />
+    <div className="relative">
+      <div className="glass-glossy p-6" style={{ borderRadius: '20px' }}>
+        <div className="mb-5">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4 text-[#A78BFA]" />
+              <span className="text-sm font-semibold text-[#A78BFA]">AI Estimate</span>
+            </div>
+            <span className="text-[10px] text-[#475569]">Not a licensed appraisal</span>
           </div>
-        ))}
-      </div>
+          <div
+            style={{
+              fontFamily: 'Inter, system-ui, sans-serif',
+              fontSize: '2.25rem',
+              fontWeight: 800,
+              letterSpacing: '-0.04em',
+              color: '#F8FAFC',
+            }}
+          >
+            $485,000
+          </div>
+          <div className="mt-1 text-sm text-[#64748B]">Estimated market value</div>
+        </div>
 
-      <div className="mt-5 rounded-xl glass px-4 py-3" style={{ borderColor: 'rgba(59,130,246,0.15)' }}>
-        <div className="flex items-center gap-2 text-xs">
-          <Sparkles className="h-3 w-3 flex-shrink-0 text-[#A78BFA]" />
-          <span className="text-[#64748B]">Full report: value range + comparables</span>
-          <Link href="/pricing" className="ml-auto flex-shrink-0 font-semibold text-[#60A5FA] hover:text-[#93C5FD]">
-            TIGI Pro →
-          </Link>
+        <div className="mb-5">
+          <div className="mb-2 flex items-center justify-between text-xs">
+            <span className="text-[#475569]">Confidence</span>
+            <span className="font-semibold text-[#60A5FA]">High (0.82)</span>
+          </div>
+          <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
+            <div
+              className="h-full rounded-full"
+              style={{ width: '82%', background: 'linear-gradient(90deg, #3B82F6, #8B5CF6)' }}
+              role="progressbar"
+              aria-valuenow={82}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            />
+          </div>
+        </div>
+
+        <p className="mb-5 text-xs text-[#475569]">
+          Based on 3 comparable sales within 0.5 miles · Updated 2 hours ago
+        </p>
+
+        <div className="space-y-2">
+          {['Comparable properties (3)', 'Positive factors (4)', 'Risk factors (2)'].map((item) => (
+            <div key={item} className="flex items-center justify-between rounded-xl glass px-4 py-2.5">
+              <span className="text-xs text-[#94A3B8]">{item}</span>
+              <ChevronRight className="h-3 w-3 text-[#475569]" />
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5 rounded-xl glass px-4 py-3" style={{ borderColor: 'rgba(59,130,246,0.15)' }}>
+          <div className="flex items-center gap-2 text-xs">
+            <Sparkles className="h-3 w-3 flex-shrink-0 text-[#A78BFA]" />
+            <span className="text-[#64748B]">Full report: value range + comparables</span>
+            <Link href="/pricing" className="ml-auto flex-shrink-0 font-semibold text-[#60A5FA] hover:text-[#93C5FD]">
+              TIGI Pro →
+            </Link>
+          </div>
         </div>
       </div>
     </div>
@@ -827,72 +913,74 @@ interface FeaturedProperty {
 function FeaturedPropertyCard({ property }: { property: FeaturedProperty }) {
   return (
     <Link href={`/marketplace/${property.id}`} className="gradient-border block">
-      <article className="group glass-card overflow-hidden">
-        <div className="relative h-56 overflow-hidden">
-          <PlaceholderImage
-            slot={property.imageSlot}
-            propertyType={
-              property.imageSlot.startsWith('residential') ? 'residential'
-                : property.imageSlot.startsWith('commercial') ? 'commercial'
-                  : 'land'
-            }
-            alt={property.title}
-            className="h-full w-full transition-transform duration-700 group-hover:scale-[1.05]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#020409]/70 via-transparent to-transparent" />
-
-          <span className="absolute left-3.5 top-3.5 rounded-full glass px-2.5 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#94A3B8]">
-            {property.type}
-          </span>
-
-          <span className="absolute right-3.5 top-3.5 flex items-center gap-1.5 rounded-full glass px-2.5 py-1 text-[11px] font-semibold text-[#34D399]">
-            <TrendingUp className="h-3 w-3" />
-            {property.annualYield}
-          </span>
-        </div>
-
-        <div className="p-5">
-          <h3
-            className="mb-1 truncate transition-colors group-hover:text-[#60A5FA]"
-            style={{
-              fontFamily: 'Inter, system-ui, sans-serif',
-              fontSize: '1.0625rem',
-              fontWeight: 600,
-              letterSpacing: '-0.02em',
-            }}
-          >
-            {property.title}
-          </h3>
-          <p className="mb-5 text-sm text-[#475569]">{property.location}</p>
-
-          <div className="flex items-center justify-between text-sm">
-            <div>
-              <p className="text-xs text-[#475569]">Per fraction</p>
-              <p className="font-semibold tabular-nums text-[#F8FAFC]">
-                ${property.pricePerFraction.toLocaleString()}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs text-[#475569]">Funded</p>
-              <p className="font-semibold tabular-nums text-[#60A5FA]">{property.soldPercent}%</p>
-            </div>
-          </div>
-
-          <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/[0.04]">
-            <div
-              className="h-full rounded-full transition-all"
-              style={{
-                width: `${property.soldPercent}%`,
-                background: 'linear-gradient(90deg, #3B82F6, #8B5CF6)',
-              }}
-              role="progressbar"
-              aria-valuenow={property.soldPercent}
-              aria-valuemin={0}
-              aria-valuemax={100}
+      <MouseTiltCard maxTilt={5} spotlightColor="rgba(167,139,250,0.12)" className="overflow-hidden">
+        <article className="group glass-card overflow-hidden transition-all duration-500 hover:shadow-[0_0_50px_-12px_rgba(167,139,250,0.4)] hover:border-white/20">
+          <div className="relative h-56 overflow-hidden">
+            <PlaceholderImage
+              slot={property.imageSlot}
+              propertyType={
+                property.imageSlot.startsWith('residential') ? 'residential'
+                  : property.imageSlot.startsWith('commercial') ? 'commercial'
+                    : 'land'
+              }
+              alt={property.title}
+              className="h-full w-full transition-transform duration-700 group-hover:scale-[1.15]"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#020409]/70 via-transparent to-transparent group-hover:opacity-75 transition-opacity duration-500" />
+
+            <span className="absolute left-3.5 top-3.5 rounded-full glass px-2.5 py-1 text-[11px] font-semibold uppercase tracking-widest text-[#94A3B8]">
+              {property.type}
+            </span>
+
+            <span className="absolute right-3.5 top-3.5 flex items-center gap-1.5 rounded-full glass px-2.5 py-1 text-[11px] font-semibold text-[#34D399]">
+              <TrendingUp className="h-3 w-3" />
+              {property.annualYield}
+            </span>
           </div>
-        </div>
-      </article>
+
+          <div className="p-5">
+            <h3
+              className="mb-1 truncate transition-colors group-hover:text-[#60A5FA]"
+              style={{
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: '1.0625rem',
+                fontWeight: 600,
+                letterSpacing: '-0.02em',
+              }}
+            >
+              {property.title}
+            </h3>
+            <p className="mb-5 text-sm text-[#475569]">{property.location}</p>
+
+            <div className="flex items-center justify-between text-sm">
+              <div>
+                <p className="text-xs text-[#475569]">Per fraction</p>
+                <p className="font-semibold tabular-nums text-[#F8FAFC]">
+                  ${property.pricePerFraction.toLocaleString()}
+                </p>
+              </div>
+              <div className="text-right">
+                <p className="text-xs text-[#475569]">Funded</p>
+                <p className="font-semibold tabular-nums text-[#60A5FA]">{property.soldPercent}%</p>
+              </div>
+            </div>
+
+            <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-white/[0.04]">
+              <div
+                className="h-full rounded-full transition-all"
+                style={{
+                  width: `${property.soldPercent}%`,
+                  background: 'linear-gradient(90deg, #3B82F6, #8B5CF6)',
+                }}
+                role="progressbar"
+                aria-valuenow={property.soldPercent}
+                aria-valuemin={0}
+                aria-valuemax={100}
+              />
+            </div>
+          </div>
+        </article>
+      </MouseTiltCard>
     </Link>
   )
 }
@@ -937,21 +1025,23 @@ const FEATURED_PROPERTIES: FeaturedProperty[] = [
 const PLATFORM_AREAS: PlatformArea[] = [
   {
     key: 'explore',
-    icon: Compass,
+    icon: Building2,
     title: 'Explore',
     description: 'Browse tokenized properties across residential, commercial, and industrial asset classes — with AI valuations on every listing.',
     href: '/marketplace',
-    ctaLabel: 'Browse properties',
-    glowColor: 'rgba(59, 130, 246, 0.18)',
+    ctaLabel: 'Browse Properties',
+    glowColor: 'rgba(59, 130, 246, 0.15)',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop'
   },
   {
     key: 'invest',
-    icon: TrendingUp,
+    icon: LineChart,
     title: 'Invest',
     description: 'Purchase fractional ownership from $100. Build a diversified portfolio across cities, property types, and risk profiles.',
-    href: '/invest',
-    ctaLabel: 'Start investing',
-    glowColor: 'rgba(139, 92, 246, 0.16)',
+    href: '/auth/register',
+    ctaLabel: 'Start Investing',
+    glowColor: 'rgba(168, 85, 247, 0.15)',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop'
   },
   {
     key: 'land',
@@ -959,8 +1049,9 @@ const PLATFORM_AREAS: PlatformArea[] = [
     title: 'Land',
     description: 'Lease agricultural plots, development sites, and commercial land. Earn from the ground up while developers build the future.',
     href: '/land',
-    ctaLabel: 'Explore land',
-    glowColor: 'rgba(16, 185, 129, 0.14)',
+    ctaLabel: 'Explore Land',
+    glowColor: 'rgba(16, 185, 129, 0.15)',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=2032&auto=format&fit=crop'
   },
   {
     key: 'legacy',
@@ -968,8 +1059,9 @@ const PLATFORM_AREAS: PlatformArea[] = [
     title: 'Legacy',
     description: 'Designate beneficiaries for your holdings with conditional transfer rules. Digital estate planning for modern owners.',
     href: '/legacy',
-    ctaLabel: 'Plan your estate',
-    glowColor: 'rgba(139, 92, 246, 0.20)',
+    ctaLabel: 'Plan Your Estate',
+    glowColor: 'rgba(245, 158, 11, 0.15)',
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?q=80&w=2070&auto=format&fit=crop'
   },
 ]
 

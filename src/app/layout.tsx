@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import { Providers } from '@/components/providers'
+import { CustomCursor } from '@/components/ui/custom-cursor'
 import './globals.css'
 
 // ---------------------------------------------------------------------------
@@ -87,6 +88,7 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen bg-[#020409] text-[#F8FAFC] antialiased">
+        <CustomCursor />
         <Providers>{children}</Providers>
       </body>
     </html>
