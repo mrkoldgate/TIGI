@@ -27,7 +27,7 @@ export default async function PortfolioPage() {
   const summary  = computePortfolioSummary(holdings)
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <PageHeader
         title="Portfolio"
         description="Your holdings, performance, and investment history."

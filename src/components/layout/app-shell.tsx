@@ -5,6 +5,7 @@ import { Sidebar } from './sidebar'
 import { TopNav } from './top-nav'
 import { AssistantPanel } from '@/components/assistant/assistant-panel'
 import { AssistantTrigger } from '@/components/assistant/assistant-trigger'
+import { cn } from '@/lib/utils'
 
 // ---------------------------------------------------------------------------
 // AppShell — Platform layout container
@@ -18,13 +19,13 @@ import { AssistantTrigger } from '@/components/assistant/assistant-trigger'
 // ---------------------------------------------------------------------------
 
 export interface ShellUser {
-  name:  string | null
+  name: string | null
   email: string
 }
 
 interface AppShellProps {
   children: React.ReactNode
-  user?:    ShellUser | null
+  user?: ShellUser | null
 }
 
 export function AppShell({ children, user }: AppShellProps) {
@@ -32,7 +33,14 @@ export function AppShell({ children, user }: AppShellProps) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   return (
-    <div className="flex min-h-screen bg-[#0A0A0F]">
+    <div className="relative flex min-h-screen bg-[#020409] text-white selection:bg-[#3B82F6]/30">
+      {/* Background Atmosphere */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 mix-blend-screen" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 mix-blend-screen" />
+        <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
+      </div>
+
       {/* Sidebar — fixed left column (desktop) / overlay (mobile) */}
       <Sidebar
         collapsed={sidebarCollapsed}
@@ -43,8 +51,10 @@ export function AppShell({ children, user }: AppShellProps) {
 
       {/* Main content column — offset by sidebar width on desktop only */}
       <div
-        className="flex flex-1 flex-col transition-all duration-200 md:ml-[--sidebar-w]"
-        style={{ '--sidebar-w': sidebarCollapsed ? '64px' : '240px' } as React.CSSProperties}
+        className={cn(
+          'flex flex-1 flex-col transition-all duration-200',
+          sidebarCollapsed ? 'md:pl-16' : 'md:pl-60'
+        )}
       >
         <div className="flex flex-1 flex-col">
           {/* TopNav — sticky, spans content width */}

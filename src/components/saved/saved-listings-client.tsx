@@ -129,7 +129,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
   // ── Empty: no saved listings at all ─────────────────────────────────────
   if (savedCount === 0) {
     return (
-      <div className="px-4 py-10 md:px-8 md:py-12">
+      <div className="pt-8 pb-16 space-y-6">
         <SavedHeader count={0} onClearAll={handleClearAll} confirmClear={confirmClear} />
         <EmptyAll />
       </div>
@@ -137,7 +137,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
   }
 
   return (
-    <div className="px-4 py-10 md:px-8 md:py-12">
+    <div className="pt-8 pb-16 space-y-6">
       {/* ── Header ── */}
       <SavedHeader
         count={savedCount}
@@ -171,7 +171,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
       {/* ── Tabs + toolbar ── */}
       <div className="mt-8 space-y-3">
         {/* Tab bar */}
-        <div className="flex items-center gap-0 overflow-x-auto border-b border-[#2A2A3A]">
+        <div className="flex items-center gap-0 overflow-x-auto border-b border-white/[0.08]">
           {(
             [
               { id: 'ALL' as AssetTab, label: 'All Saved', count: savedCount },
@@ -220,7 +220,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             value={sort}
             onChange={(e) => setSort(e.target.value as SortMode)}
             className={cn(
-              'rounded-lg border border-[#2A2A3A] bg-[#22222E]',
+              'rounded-lg border border-white/[0.08] bg-[#22222E]',
               'px-3 py-2 text-sm text-[#A0A0B2]',
               'outline-none focus:border-[#C9A84C]',
               'transition-colors duration-150',
@@ -233,7 +233,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
           </select>
 
           {/* View toggle */}
-          <div className="flex overflow-hidden rounded-lg border border-[#2A2A3A]">
+          <div className="flex overflow-hidden rounded-lg border border-white/[0.08]">
             <ViewBtn active={view === 'grid'} onClick={() => setView('grid')} title="Grid">
               <GridIcon />
             </ViewBtn>
@@ -289,37 +289,35 @@ function SavedHeader({
   confirmClear: boolean
 }) {
   return (
-    <div className="flex items-start justify-between gap-4">
-      <div>
-        <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
-          Favorites
-        </p>
-        <h1 className="text-3xl font-bold text-[#F5F5F7]">
-          Saved{' '}
-          {count > 0 && (
-            <span className="text-2xl font-medium text-[#6B6B80]">· {count}</span>
-          )}
-        </h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
-          {count === 0
-            ? 'Save properties and land to revisit them later.'
-            : 'Your saved properties and land parcels.'}
-        </p>
-      </div>
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] sm:p-6">
+      {/* Top accent hairline */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-rose-400/40 to-transparent" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-rose-400/[0.04] blur-[50px]" aria-hidden="true" />
 
-      {count > 0 && (
-        <button
-          onClick={onClearAll}
-          className={cn(
-            'mt-1 shrink-0 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-200',
-            confirmClear
-              ? 'border-[#EF4444]/40 bg-[#EF4444]/10 text-[#EF4444]'
-              : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#EF4444]/30 hover:text-[#EF4444]',
-          )}
-        >
-          {confirmClear ? 'Confirm clear all?' : 'Clear all'}
-        </button>
-      )}
+      <div className="relative flex items-start justify-between gap-4">
+        <div>
+          <p className="text-label mb-1">Favorites</p>
+          <h1 className="text-h1">
+            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-[#6B6B80]">· {count}</span>}
+          </h1>
+          <p className="mt-1 text-[#A0A0B2]">
+            {count === 0 ? 'Save properties and land to revisit them later.' : 'Your saved properties and land parcels.'}
+          </p>
+        </div>
+        {count > 0 && (
+          <button
+            onClick={onClearAll}
+            className={cn(
+              'mt-1 shrink-0 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-200',
+              confirmClear
+                ? 'border-[#EF4444]/40 bg-[#EF4444]/10 text-[#EF4444]'
+                : 'border-white/[0.08] text-[#6B6B80] hover:border-[#EF4444]/30 hover:text-[#EF4444]',
+            )}
+          >
+            {confirmClear ? 'Confirm clear all?' : 'Clear all'}
+          </button>
+        )}
+      </div>
     </div>
   )
 }
@@ -340,7 +338,7 @@ function StatCard({
   wide?: boolean
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-[#2A2A3A] bg-[#111118] px-5 py-4">
+    <div className="flex items-center gap-4 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-5 py-4">
       <div
         className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl"
         style={{ backgroundColor: `${accent}15` }}
@@ -478,7 +476,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
       )}
       {/* Saved-at timestamp — appears on hover */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between rounded-b-xl px-3 py-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-        <span className="rounded-full bg-[#0A0A0F]/80 px-2.5 py-1 text-[10px] text-[#A0A0B2] backdrop-blur-sm">
+        <span className="rounded-full bg-[#020409]/80/80 px-2.5 py-1 text-[10px] text-[#A0A0B2] backdrop-blur-sm">
           Saved {formatSavedAt(savedAt)}
         </span>
       </div>
@@ -491,7 +489,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
 function SavedAtChip({ savedAt }: { savedAt: number }) {
   return (
     <div className="pointer-events-none absolute right-3 top-3 z-10">
-      <span className="rounded-full bg-[#0A0A0F]/80 px-2 py-0.5 text-[10px] text-[#6B6B80] backdrop-blur-sm">
+      <span className="rounded-full bg-[#020409]/80/80 px-2 py-0.5 text-[10px] text-[#6B6B80] backdrop-blur-sm">
         {formatSavedAt(savedAt)}
       </span>
     </div>
@@ -505,17 +503,17 @@ function EmptyAll() {
     <div className="mt-16 flex flex-col items-center text-center">
       {/* Animated heart illustration */}
       <div className="relative mb-6">
-        <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#2A2A3A] bg-[#111118]">
+        <div className="flex h-24 w-24 items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl">
           <HeartOutlineIcon />
         </div>
         {/* Orbit ring */}
-        <div className="absolute inset-0 rounded-full border border-dashed border-[#2A2A3A] animate-[spin_12s_linear_infinite]" />
+        <div className="absolute inset-0 rounded-full border border-dashed border-white/[0.08] animate-[spin_12s_linear_infinite]" />
       </div>
 
       <h2 className="mb-2 text-xl font-semibold text-[#F5F5F7]">Nothing saved yet</h2>
       <p className="mb-8 max-w-sm text-sm leading-relaxed text-[#6B6B80]">
         Tap the{' '}
-        <span className="inline-flex items-center gap-1 rounded-full border border-[#2A2A3A] bg-[#1A1A24] px-2 py-0.5 text-xs text-[#A0A0B2]">
+        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-xs text-[#A0A0B2]">
           <HeartSmallIcon /> save
         </span>{' '}
         icon on any property or land listing to add it here. Saved assets persist across
@@ -526,7 +524,7 @@ function EmptyAll() {
       <div className="grid w-full max-w-sm grid-cols-2 gap-3">
         <Link
           href="/marketplace"
-          className="flex flex-col items-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#111118] p-5 transition-all hover:border-[#C9A84C]/40 hover:bg-[#1A1A24]"
+          className="flex flex-col items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-5 transition-all hover:border-[#C9A84C]/40 hover:bg-white/[0.04]"
         >
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#C9A84C]/10">
             <BuildingGoldIcon />
@@ -556,7 +554,7 @@ function EmptyTab({ tab }: { tab: AssetTab }) {
       <div
         className={cn(
           'mb-4 flex h-14 w-14 items-center justify-center rounded-2xl border',
-          isLand ? 'border-[#1E2D1E] bg-[#0D110D]' : 'border-[#2A2A3A] bg-[#111118]',
+          isLand ? 'border-[#1E2D1E] bg-[#0D110D]' : 'border-white/[0.08] bg-white/[0.04] backdrop-blur-xl',
         )}
       >
         {isLand ? <LandGreenIcon /> : <BuildingGoldIcon />}
@@ -597,7 +595,7 @@ function ViewBtn({
       onClick={onClick}
       className={cn(
         'flex h-9 w-9 items-center justify-center transition-colors',
-        active ? 'bg-[#1A1A24] text-[#C9A84C]' : 'bg-transparent text-[#6B6B80] hover:text-[#A0A0B2]',
+        active ? 'bg-white/[0.04] text-[#C9A84C]' : 'bg-transparent text-[#6B6B80] hover:text-[#A0A0B2]',
       )}
     >
       {children}

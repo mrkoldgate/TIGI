@@ -24,7 +24,7 @@ export default async function NotificationsPage() {
   })
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <NotificationsClient
         initialNotifications={notifications}
         initialUnreadCount={unreadCount}

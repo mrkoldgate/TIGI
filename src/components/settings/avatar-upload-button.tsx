@@ -112,7 +112,7 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
             aria-label="Upload profile photo"
             className={cn(
               'absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center',
-              'rounded-full border border-[#2A2A3A] bg-[#1A1A24]',
+              'rounded-full border border-white/[0.08] bg-white/[0.04]',
               'transition-colors hover:border-[#C9A84C]/50 hover:bg-[#252530]',
               'disabled:cursor-not-allowed disabled:opacity-60',
               state === 'error' && 'border-[#EF4444]/40',
@@ -133,7 +133,7 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
           <Tooltip.Content
             side="bottom"
             sideOffset={6}
-            className="z-50 rounded-lg border border-[#2A2A3A] bg-[#111118] px-2.5 py-1.5 text-[11px] text-[#A0A0B2] shadow-xl"
+            className="z-50 rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-2.5 py-1.5 text-[11px] text-[#A0A0B2] shadow-xl"
           >
             {state === 'error' && errorMsg
               ? errorMsg

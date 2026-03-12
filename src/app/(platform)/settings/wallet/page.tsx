@@ -42,7 +42,7 @@ export default async function WalletSettingsPage() {
     hasCustodialWallet && walletAddress !== custodialWallet?.publicKey
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <PageHeader
         title="Wallet"
         description="Your on-chain identity for tokenized real estate transactions."

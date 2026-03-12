@@ -26,7 +26,7 @@ export default async function MarketplacePage() {
   const stats = computeMarketplaceStats(listings)
 
   return (
-    <div className="animate-fade-in pt-6 pb-16">
+    <div className="animate-fade-in pt-8 pb-16">
       <PageHeader
         title="Marketplace"
         description="Browse and invest in tokenized real estate, globally."

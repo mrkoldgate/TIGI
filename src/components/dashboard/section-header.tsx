@@ -34,10 +34,10 @@ export function SectionHeader({
     <div className={cn('flex items-center justify-between gap-4', className)}>
       <div>
         <div className="flex items-center gap-2">
-          <h2 className="text-h4 text-[#F5F5F7]">{title}</h2>
+          <h2 className="text-h4 text-white tracking-tight">{title}</h2>
           {milestone && (
-            <span className="flex items-center gap-1 rounded border border-white/[0.06] bg-white/[0.03] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
+            <span className="flex items-center gap-1.5 rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               {milestone}
             </span>
           )}

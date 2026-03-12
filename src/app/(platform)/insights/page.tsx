@@ -17,7 +17,7 @@ export default async function InsightsPage() {
   await requireAuth('/insights')
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <PageHeader
         title="Insights"
         description="Market trends, price analytics, and investment intelligence."

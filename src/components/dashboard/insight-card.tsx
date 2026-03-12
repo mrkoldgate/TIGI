@@ -24,13 +24,13 @@ const INSIGHT_CONFIG: Record<
   InsightType,
   { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; bg: string }
 > = {
-  PRICE_DROP:         { icon: TrendingDown, color: 'text-[#4ADE80]',  bg: 'bg-[#4ADE80]/10'  },
-  PRICE_RISE:         { icon: TrendingUp,   color: 'text-[#F87171]',  bg: 'bg-[#F87171]/10'  },
-  NEW_MATCH:          { icon: Sparkles,     color: 'text-[#3B82F6]',  bg: 'bg-[#3B82F6]/10'  },
-  VALUATION_CHANGE:   { icon: BarChart3,    color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'  },
-  MARKET_TREND:       { icon: TrendingUp,   color: 'text-[#818CF8]',  bg: 'bg-[#818CF8]/10'  },
-  TOKEN_ALERT:        { icon: Coins,        color: 'text-[#8B5CF6]',  bg: 'bg-[#8B5CF6]/10'  },
-  INVESTMENT_UPDATE:  { icon: AlertCircle,  color: 'text-[#A0A0B2]',  bg: 'bg-[#A0A0B2]/10'  },
+  PRICE_DROP: { icon: TrendingDown, color: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]', bg: 'bg-emerald-400/10 border border-emerald-400/20' },
+  PRICE_RISE: { icon: TrendingUp, color: 'text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.5)]', bg: 'bg-rose-500/10 border border-rose-500/20' },
+  NEW_MATCH: { icon: Sparkles, color: 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]', bg: 'bg-cyan-400/10 border border-cyan-400/20' },
+  VALUATION_CHANGE: { icon: BarChart3, color: 'text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-indigo-400/10 border border-indigo-400/20' },
+  MARKET_TREND: { icon: TrendingUp, color: 'text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-indigo-400/10 border border-indigo-400/20' },
+  TOKEN_ALERT: { icon: Coins, color: 'text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]', bg: 'bg-purple-500/10 border border-purple-500/20' },
+  INVESTMENT_UPDATE: { icon: AlertCircle, color: 'text-slate-400 drop-shadow-[0_0_8px_rgba(148,163,184,0.5)]', bg: 'bg-slate-400/10 border border-slate-400/20' },
 }
 
 function formatTimeAgo(isoString: string): string {
@@ -57,15 +57,15 @@ export function InsightCard({ insight }: InsightCardProps) {
   return (
     <div
       className={cn(
-        'relative flex gap-3 rounded-xl border bg-white/[0.03] p-4 backdrop-blur-sm transition-colors',
+        'relative flex gap-3 rounded-2xl border bg-white/5 p-4 backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:bg-white/10 hover:-translate-y-0.5',
         isHigh
-          ? 'border-[#3B82F6]/30 hover:border-[#3B82F6]/50'
-          : 'border-white/[0.06] hover:border-white/[0.10]'
+          ? 'border-indigo-500/30 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] bg-gradient-to-r from-indigo-500/5 to-transparent'
+          : 'border-white/10 hover:border-white/20'
       )}
     >
-      {/* High priority gold left accent */}
+      {/* High priority accent */}
       {isHigh && (
-        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-[#3B82F6]/60" />
+        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
       )}
 
       {/* Icon */}
@@ -75,8 +75,8 @@ export function InsightCard({ insight }: InsightCardProps) {
 
       {/* Body */}
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium leading-snug text-[#F5F5F7]">{insight.title}</p>
-        <p className="mt-1 text-xs leading-relaxed text-[#A0A0B2]">{insight.description}</p>
+        <p className="text-sm font-medium leading-snug text-white">{insight.title}</p>
+        <p className="mt-1 text-xs leading-relaxed text-[#94A3B8]">{insight.description}</p>
 
         {/* Footer: time + action */}
         <div className="mt-2.5 flex items-center justify-between gap-2">

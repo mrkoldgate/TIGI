@@ -27,7 +27,7 @@ export default async function TransactionsPage() {
   ).length
 
   return (
-    <div className="animate-fade-in space-y-6">
+    <div className="animate-fade-in pt-8 pb-16 space-y-6">
       <div className="flex items-start justify-between gap-4">
         <PageHeader
           title="Transactions"

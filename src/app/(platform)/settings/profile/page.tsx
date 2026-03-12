@@ -65,7 +65,7 @@ export default async function ProfileSettingsPage() {
   }
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <PageHeader
         title="Profile"
         description="Manage your personal information and notification preferences."

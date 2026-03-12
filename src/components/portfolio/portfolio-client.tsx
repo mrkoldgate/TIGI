@@ -88,10 +88,10 @@ function SummaryCard({
     neutral: 'text-[#F5F5F7]',
   }
   return (
-    <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
       <p className="text-[11px] text-[#6B6B80]">{label}</p>
       <p className={cn('mt-1 font-heading text-xl font-bold', colors[accent])}>{value}</p>
-      <p className="mt-0.5 text-[10px] text-[#3A3A4A]">{sub}</p>
+      <p className="mt-0.5 text-[10px] text-[#6B6B80]">{sub}</p>
     </div>
   )
 }
@@ -107,16 +107,16 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
   const positive      = gainLoss >= 0
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] transition-colors hover:border-[#3A3A4A]">
+    <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-[#C9A84C]/30 hover:bg-white/[0.07] hover:shadow-[0_0_30px_rgba(201,168,76,0.05)]">
       {/* Header image strip */}
-      <div className="relative h-24 overflow-hidden bg-[#1A1A24]">
+      <div className="relative h-24 overflow-hidden bg-white/[0.04]">
         <PlaceholderImage
           slot={holding.imageSlot}
           alt={holding.propertyTitle}
           className="h-full w-full object-cover opacity-60"
         />
         {/* Type badge */}
-        <span className="absolute right-2 top-2 rounded border border-[#2A2A3A] bg-[#0A0A0F]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#6B6B80] backdrop-blur-sm">
+        <span className="absolute right-2 top-2 rounded border border-white/[0.08] bg-[#0A0A0F]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#6B6B80] backdrop-blur-sm">
           {holding.propertyType.replace('_', ' ')}
         </span>
         {/* Ownership badge */}
@@ -141,7 +141,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
         </div>
 
         {/* Token quantity bar */}
-        <div className="mb-3 rounded-lg bg-[#1A1A24] px-3 py-2.5">
+        <div className="mb-3 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-[#6B6B80]">Tokens held</span>
             <span className="text-[10px] text-[#3A3A4A]">of {holding.totalTokens.toLocaleString()} total</span>
@@ -155,7 +155,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
             </span>
           </div>
           {/* Ownership progress bar */}
-          <div className="mt-2 h-1 overflow-hidden rounded-full bg-[#2A2A3A]">
+          <div className="mt-2 h-1 overflow-hidden rounded-full bg-white/[0.06]">
             <div
               className="h-full rounded-full bg-[#C9A84C]"
               style={{ width: `${Math.min(ownershipPct * 20, 100)}%` }}
@@ -193,8 +193,8 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
 
 function EmptyHoldings() {
   return (
-    <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] py-14 text-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A24] text-[#3A3A4A]">
+    <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-14 text-center">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#3A3A4A]">
         <Coins className="h-5 w-5" />
       </div>
       <div>
@@ -205,7 +205,7 @@ function EmptyHoldings() {
       </div>
       <Link
         href="/marketplace?tokenized=true"
-        className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+        className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
       >
         Browse tokenized assets <ArrowRight className="h-3 w-3" />
       </Link>
@@ -217,8 +217,8 @@ function EmptyHoldings() {
 
 function WalletTeaser() {
   return (
-    <div className="rounded-xl border border-dashed border-[#2A2A3A] p-6 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A24] text-[#6B6B80]">
+    <div className="rounded-xl border border-dashed border-white/[0.08] p-6 text-center">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#6B6B80]">
         <Wallet className="h-5 w-5" />
       </div>
       <h3 className="text-sm font-semibold text-[#F5F5F7]">Connect Your Wallet</h3>
@@ -228,7 +228,7 @@ function WalletTeaser() {
       </p>
       <Link
         href="/settings/wallet"
-        className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-4 py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+        className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
       >
         <Wallet className="h-3.5 w-3.5" />
         Connect wallet
@@ -328,15 +328,15 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
           title="Performance History"
           sub="Value over time across all holdings."
         />
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] py-12 text-center">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A24] text-[#3A3A4A]">
+        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-12 text-center">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#3A3A4A]">
             <BarChart3 className="h-5 w-5" />
           </div>
           <p className="text-sm text-[#6B6B80]">Performance charts coming in M6.</p>
           <p className="max-w-xs text-xs text-[#3A3A4A]">
             Historical portfolio value, yield distributions, and ROI trends.
           </p>
-          <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-[#2A2A3A] bg-[#0A0A0F] px-3 py-1 text-[11px] text-[#6B6B80]">
+          <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#0A0A0F] px-3 py-1 text-[11px] text-[#6B6B80]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#818CF8]" />
             Milestone 6
           </div>

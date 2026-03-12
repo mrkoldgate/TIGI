@@ -102,10 +102,10 @@ export function NotificationItem({ notification, onRead, compact = false }: Noti
         isUnread
           ? compact
             ? 'bg-[#1A1A28] hover:bg-[#1E1E30]'
-            : 'border-[#2A2A3A] bg-[#1A1A28] hover:bg-[#1E1E30]'
+            : 'border-white/[0.08] bg-[#1A1A28] hover:bg-[#1E1E30]'
           : compact
-            ? 'hover:bg-[#111118]'
-            : 'border-[#1F1F2E] bg-[#111118] hover:bg-[#141420]',
+            ? 'hover:bg-white/[0.04] backdrop-blur-xl'
+            : 'border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl hover:bg-[#141420]',
       )}
     >
       {/* Icon */}

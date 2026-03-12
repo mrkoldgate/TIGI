@@ -256,7 +256,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
       <SectionCard title="Account">
         <div className="space-y-2">
           {/* Email — not editable */}
-          <div className="flex items-center gap-3 rounded-xl border border-[#1E1E2A] bg-[#0D0D14] px-4 py-3">
+          <div className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-[#0D0D14] px-4 py-3">
             <Mail className="h-4 w-4 shrink-0 text-[#4A4A5E]" />
             <div className="flex-1 min-w-0">
               <p className="text-xs text-[#6B6B80]">Email address</p>
@@ -300,7 +300,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
 
       {/* ── Save bar ────────────────────────────────────────────────────── */}
       <div className="sticky bottom-6 flex justify-end">
-        <div className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118]/95 px-4 py-3 shadow-xl backdrop-blur-sm">
+        <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl/95 px-4 py-3 shadow-xl backdrop-blur-sm">
           {saveState === 'error' && (
             <p className="text-xs text-[#EF4444]">{errorMsg || 'Save failed'}</p>
           )}
@@ -344,12 +344,12 @@ function AvatarDisplay({
       <img
         src={avatarUrl}
         alt="Avatar"
-        className="h-16 w-16 rounded-2xl object-cover border border-[#2A2A3A]"
+        className="h-16 w-16 rounded-2xl object-cover border border-white/[0.08]"
       />
     )
   }
   return (
-    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-[#2A2A3A] bg-[#1A1A24]">
+    <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04]">
       <span className="text-xl font-semibold text-[#C9A84C]">{initials || '?'}</span>
     </div>
   )
@@ -369,7 +369,7 @@ function SectionCard({
       <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#4A4A60]">
         {title}
       </p>
-      <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
+      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.04] backdrop-blur-xl p-5">
         {children}
       </div>
     </div>
@@ -379,7 +379,7 @@ function SectionCard({
 // ── Field row ──────────────────────────────────────────────────────────────
 
 const inputClass = cn(
-  'w-full rounded-xl border border-[#2A2A3A] bg-[#0D0D14]',
+  'w-full rounded-xl border border-white/[0.08] bg-[#0D0D14]',
   'px-3 py-2.5 text-sm text-[#F5F5F7] placeholder-[#4A4A5E]',
   'outline-none transition-colors focus:border-[#C9A84C]/60',
 )
@@ -401,7 +401,7 @@ function FieldRow({
     <div className={cn('flex gap-3', align === 'top' ? 'items-start' : 'items-center')}>
       <div
         className={cn(
-          'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#2A2A3A] bg-[#1A1A24]',
+          'flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]',
           align === 'top' && 'mt-0.5',
         )}
       >
@@ -451,7 +451,7 @@ function NotifToggle({
         aria-checked={enabled}
         className={cn(
           'relative mt-0.5 h-5 w-9 shrink-0 rounded-full transition-colors duration-200',
-          enabled ? 'bg-[#C9A84C]' : 'bg-[#2A2A3A]',
+          enabled ? 'bg-[#C9A84C]' : 'bg-white/[0.06]',
         )}
       >
         <span
@@ -483,9 +483,9 @@ function AccountLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-[#1E1E2A] bg-transparent px-4 py-3 transition-colors hover:border-[#2A2A3A] hover:bg-[#0D0D14]"
+      className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-transparent px-4 py-3 transition-colors hover:border-white/[0.08] hover:bg-[#0D0D14]"
     >
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#2A2A3A] bg-[#1A1A24]">
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
         <Icon className="h-3.5 w-3.5 text-[#6B6B80]" />
       </div>
       <p className="flex-1 text-sm text-[#A0A0B2]">{label}</p>

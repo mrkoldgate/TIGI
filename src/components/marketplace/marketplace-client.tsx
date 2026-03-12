@@ -173,7 +173,7 @@ function StatChip({
         'inline-flex items-center gap-2 rounded-full border px-3 py-1.5',
         gold  && 'border-[#C9A84C]/20 bg-[#C9A84C]/5',
         green && 'border-[#4ADE80]/20 bg-[#4ADE80]/5',
-        !gold && !green && 'border-[#2A2A3A] bg-[#111118]',
+        !gold && !green && 'border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
         onClick && 'cursor-pointer transition-opacity hover:opacity-80',
       )}
     >
@@ -210,7 +210,7 @@ function CategoryTabs({
   ]
 
   return (
-    <div className="flex overflow-x-auto border-b border-[#2A2A3A] scrollbar-none">
+    <div className="flex overflow-x-auto border-b border-white/[0.08] scrollbar-none">
       {tabs.map(({ key, label, icon }) => (
         <button
           key={key}
@@ -267,11 +267,11 @@ function SearchBar({
         onChange={(e) => onChange(e.target.value)}
         placeholder={getSearchPlaceholder(category)}
         className={cn(
-          'w-full rounded-xl border bg-[#111118] py-2.5 pl-10 pr-10 text-sm text-[#F5F5F7]',
+          'w-full rounded-xl border bg-white/[0.04] backdrop-blur-2xl py-2.5 pl-10 pr-10 text-sm text-[#F5F5F7]',
           'placeholder-[#4A4A60] outline-none transition-colors focus:ring-0',
           category === 'LAND'
-            ? 'border-[#1E2D1E] focus:border-[#4ADE80]/30'
-            : 'border-[#2A2A3A] focus:border-[#C9A84C]/40',
+            ? 'border-white/[0.06] focus:border-[#4ADE80]/30'
+            : 'border-white/[0.08] focus:border-[#C9A84C]/40',
         )}
       />
       {value && (
@@ -315,7 +315,7 @@ function FilterBar({
   return (
     <div className="flex flex-wrap items-center gap-2">
       {/* Listing type pills */}
-      <div className="flex items-center rounded-lg border border-[#2A2A3A] p-0.5">
+      <div className="flex items-center rounded-lg border border-white/[0.08] p-0.5">
         {listingTypeOptions.map(({ key, label }) => (
           <button
             key={key}
@@ -324,7 +324,7 @@ function FilterBar({
             className={cn(
               'rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-150',
               filters.listingType === key
-                ? 'bg-[#1A1A24] text-[#F5F5F7]'
+                ? 'bg-white/[0.08] text-[#F5F5F7]'
                 : 'text-[#6B6B80] hover:text-[#A0A0B2]',
             )}
           >
@@ -341,7 +341,7 @@ function FilterBar({
           'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
           filters.tokenizedOnly
             ? 'border-[#C9A84C]/40 bg-[#C9A84C]/10 text-[#C9A84C]'
-            : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]',
+            : 'border-white/[0.08] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]',
         )}
       >
         <Zap className="h-3.5 w-3.5" />
@@ -357,7 +357,7 @@ function FilterBar({
             'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
             filters.devOpportunityOnly
               ? 'border-[#4ADE80]/30 bg-[#4ADE80]/10 text-[#4ADE80]'
-              : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#1E2D1E] hover:text-[#A0A0B2]',
+              : 'border-white/[0.08] text-[#6B6B80] hover:border-white/[0.06] hover:text-[#A0A0B2]',
           )}
         >
           <Layers className="h-3.5 w-3.5" />
@@ -411,7 +411,7 @@ function ResultsHeader({
           <select
             value={filters.sort}
             onChange={(e) => onChange({ sort: e.target.value as SortOption })}
-            className="appearance-none rounded-lg border border-[#2A2A3A] bg-[#111118] py-2 pl-3 pr-8 text-xs text-[#A0A0B2] outline-none transition-colors hover:border-[#3A3A4A] focus:border-[#C9A84C]/40"
+            className="appearance-none rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-2 pl-3 pr-8 text-xs text-[#A0A0B2] outline-none transition-colors hover:border-[#3A3A4A] focus:border-[#C9A84C]/40"
           >
             <option value="NEWEST">Newest</option>
             <option value="PRICE_ASC">Price: Low → High</option>
@@ -426,7 +426,7 @@ function ResultsHeader({
         </div>
 
         {/* View toggle */}
-        <div className="flex overflow-hidden rounded-lg border border-[#2A2A3A]">
+        <div className="flex overflow-hidden rounded-lg border border-white/[0.08]">
           <button
             type="button"
             onClick={() => onChange({ view: 'grid' })}
@@ -434,7 +434,7 @@ function ResultsHeader({
             className={cn(
               'px-2.5 py-2 transition-colors',
               filters.view === 'grid'
-                ? 'bg-[#1A1A24] text-[#F5F5F7]'
+                ? 'bg-white/[0.08] text-[#F5F5F7]'
                 : 'text-[#4A4A60] hover:text-[#A0A0B2]',
             )}
           >
@@ -445,9 +445,9 @@ function ResultsHeader({
             onClick={() => onChange({ view: 'list' })}
             title="List view"
             className={cn(
-              'border-l border-[#2A2A3A] px-2.5 py-2 transition-colors',
+              'border-l border-white/[0.08] px-2.5 py-2 transition-colors',
               filters.view === 'list'
-                ? 'bg-[#1A1A24] text-[#F5F5F7]'
+                ? 'bg-white/[0.08] text-[#F5F5F7]'
                 : 'text-[#4A4A60] hover:text-[#A0A0B2]',
             )}
           >
@@ -479,8 +479,8 @@ function EmptyState({
         className={cn(
           'mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border',
           isLand
-            ? 'border-[#1E2D1E] bg-[#0D110D]'
-            : 'border-[#2A2A3A] bg-[#111118]',
+            ? 'border-white/[0.06] bg-[#0D110D]'
+            : 'border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
         )}
       >
         {isLand ? (
@@ -505,8 +505,8 @@ function EmptyState({
         className={cn(
           'mt-5 rounded-xl border px-5 py-2.5 text-sm text-[#A0A0B2] transition-all hover:text-white',
           isLand
-            ? 'border-[#1E2D1E] hover:border-[#4ADE80]/30'
-            : 'border-[#2A2A3A] hover:border-[#C9A84C]/40',
+            ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
+            : 'border-white/[0.08] hover:border-[#C9A84C]/40',
         )}
       >
         Clear all filters
@@ -757,8 +757,8 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
               'flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-medium',
               'text-[#A0A0B2] transition-all hover:text-white active:scale-[0.98]',
               filters.category === 'LAND'
-                ? 'border-[#1E2D1E] hover:border-[#4ADE80]/30'
-                : 'border-[#2A2A3A] hover:border-[#C9A84C]/40',
+                ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
+                : 'border-white/[0.08] hover:border-[#C9A84C]/40',
             )}
           >
             <ChevronDown className="h-4 w-4" />

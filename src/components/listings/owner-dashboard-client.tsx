@@ -174,7 +174,7 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
             description="Engagement across your portfolio."
             milestone="M3 · Advanced"
           />
-          <div className="mt-4 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+          <div className="mt-4 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-4">
             <PerformancePanel stats={MOCK_OWNER_PERFORMANCE} />
           </div>
         </section>
@@ -215,7 +215,7 @@ function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: Ow
         <p className="text-label text-[#6B6B80]">{greeting}</p>
         <h1 className="text-h1 mt-0.5">{user.name}</h1>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-2 py-0.5 text-[11px] text-[#A0A0B2]">
+          <span className="rounded border border-white/[0.08] bg-[#020409]/80 px-2 py-0.5 text-[11px] text-[#A0A0B2]">
             {user.role}
           </span>
           <KycBadge status={user.kycStatus} />
@@ -302,8 +302,8 @@ function QuickActionsStrip() {
       icon:   'text-[#4ADE80]',
     },
     default: {
-      border: 'border-[#2A2A3A] hover:border-[#3A3A4A]',
-      bg:     'bg-[#111118]',
+      border: 'border-white/[0.08] hover:border-white/[0.10]',
+      bg:     'bg-white/[0.04] backdrop-blur-xl',
       text:   'text-[#A0A0B2]',
       icon:   'text-[#6B6B80]',
     },
@@ -338,7 +338,7 @@ function QuickActionsStrip() {
                 <Icon className={`h-4 w-4 ${style.icon}`} />
               </div>
               {action.milestone && (
-                <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-[#020409]/80 px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
                   {action.milestone}
                 </span>

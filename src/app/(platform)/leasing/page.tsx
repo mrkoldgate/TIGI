@@ -28,7 +28,7 @@ export default async function LeasingPage() {
   ])
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <TerraHubClient initialListings={listings} stats={stats} />
     </div>
   )

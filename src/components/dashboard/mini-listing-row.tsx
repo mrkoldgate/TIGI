@@ -27,22 +27,22 @@ interface MiniListingRowProps {
 }
 
 const CONFIDENCE_COLORS = {
-  LOW:    'text-[#6B6B80] border-[#3A3A4A]',
-  MEDIUM: 'text-[#F59E0B] border-[#F59E0B]/30',
-  HIGH:   'text-[#4ADE80] border-[#4ADE80]/30',
+  LOW: 'text-[#94A3B8] border-white/10 bg-white/5',
+  MEDIUM: 'text-[#F59E0B] border-[#F59E0B]/30 bg-[#F59E0B]/10 shadow-[inset_0_0_8px_rgba(245,158,11,0.2)]',
+  HIGH: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10 shadow-[inset_0_0_8px_rgba(52,211,153,0.2)]',
 }
 
 const PROPERTY_TYPE_LABEL: Record<string, string> = {
   RESIDENTIAL: 'Residential',
-  COMMERCIAL:  'Commercial',
-  LAND:        'Land',
-  INDUSTRIAL:  'Industrial',
-  MIXED_USE:   'Mixed Use',
+  COMMERCIAL: 'Commercial',
+  LAND: 'Land',
+  INDUSTRIAL: 'Industrial',
+  MIXED_USE: 'Mixed Use',
 }
 
 function formatPrice(price: number): string {
   if (price >= 1_000_000) return `$${(price / 1_000_000).toFixed(1)}M`
-  if (price >= 1_000)     return `$${(price / 1_000).toFixed(0)}K`
+  if (price >= 1_000) return `$${(price / 1_000).toFixed(0)}K`
   return `$${price}`
 }
 
@@ -59,7 +59,7 @@ export function MiniListingRow({
     <Link
       href={`/marketplace/${listing.id}`}
       className={cn(
-        'group flex items-center gap-3 rounded-lg border border-transparent p-2 transition-colors hover:border-white/[0.06] hover:bg-white/[0.03]',
+        'group flex items-center gap-3 rounded-xl border border-transparent p-2 transition-all duration-300 hover:border-white/10 hover:bg-white/5 hover:shadow-[0_0_20px_rgba(255,255,255,0.03)]',
         className
       )}
     >
@@ -77,26 +77,26 @@ export function MiniListingRow({
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-[#F5F5F7] group-hover:text-[#60A5FA] transition-colors">
+        <p className="truncate text-sm font-medium text-white transition-all group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
           {listing.title}
         </p>
-        <p className="mt-0.5 truncate text-xs text-[#6B6B80]">
+        <p className="mt-0.5 truncate text-xs text-[#94A3B8]">
           {listing.city}, {listing.state}
           {listing.lotAcres && listing.propertyType === 'LAND'
             ? ` · ${listing.lotAcres} ac`
             : listing.sqft
-            ? ` · ${listing.sqft.toLocaleString()} sqft`
-            : ''}
+              ? ` · ${listing.sqft.toLocaleString()} sqft`
+              : ''}
         </p>
 
         {/* Badges row */}
         <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
-          <span className="rounded border border-white/[0.06] bg-white/[0.03] px-1.5 py-0.5 text-[10px] text-[#A0A0B2]">
+          <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
             {PROPERTY_TYPE_LABEL[listing.propertyType] ?? listing.propertyType}
           </span>
 
           {listing.isTokenized && (
-            <span className="flex items-center gap-0.5 rounded border border-[#3B82F6]/25 bg-[#3B82F6]/10 px-1.5 py-0.5 text-[10px] text-[#60A5FA]">
+            <span className="flex items-center gap-0.5 rounded border border-cyan-400/30 bg-cyan-400/10 px-1.5 py-0.5 text-[10px] text-cyan-400 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
               <Coins className="h-2.5 w-2.5" />
               Tokenized
             </span>
@@ -112,11 +112,11 @@ export function MiniListingRow({
 
       {/* Price */}
       <div className="flex-shrink-0 text-right">
-        <p className="font-heading text-sm font-semibold tabular-nums text-[#F5F5F7]">
+        <p className="font-heading text-sm font-semibold tabular-nums text-white">
           {formatPrice(listing.price)}
         </p>
         {listing.isTokenized && listing.tokenPricePerFraction && (
-          <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] text-[#94A3B8]">
             from ${listing.tokenPricePerFraction.toLocaleString()}
           </p>
         )}

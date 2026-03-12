@@ -115,7 +115,7 @@ export function NotificationsClient({
   const hasMore = offset < total
 
   return (
-    <div className="animate-fade-in space-y-6">
+    <div className="animate-fade-in pt-8 pb-16 space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <PageHeader
@@ -128,7 +128,7 @@ export function NotificationsClient({
             type="button"
             onClick={handleMarkAllRead}
             disabled={markingAll}
-            className="flex shrink-0 items-center gap-1.5 rounded-lg border border-[#2A2A3A] px-3 py-1.5 text-xs text-[#6B6B80] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C] disabled:opacity-50"
+            className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-[#6B6B80] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C] disabled:opacity-50"
           >
             {markingAll
               ? <Loader2 className="h-3 w-3 animate-spin" />
@@ -160,7 +160,7 @@ export function NotificationsClient({
                 'rounded-full px-1.5 py-0.5 text-[10px] font-bold',
                 tab === key
                   ? 'bg-[#C9A84C]/20 text-[#C9A84C]'
-                  : 'bg-[#2A2A3A] text-[#6B6B80]',
+                  : 'bg-white/[0.06] text-[#6B6B80]',
               )}>
                 {count > 99 ? '99+' : count}
               </span>
@@ -174,7 +174,7 @@ export function NotificationsClient({
 
       {/* Feed */}
       {displayed.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-[#1F1F2E] bg-[#111118] py-16">
+        <div className="flex flex-col items-center justify-center rounded-xl border border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl py-16">
           <Bell className="mb-3 h-10 w-10 text-[#2A2A3A]" />
           <p className="text-sm font-medium text-[#4A4A5E]">
             {tab === 'unread' ? 'All caught up' : 'No notifications yet'}
@@ -211,7 +211,7 @@ export function NotificationsClient({
               type="button"
               onClick={handleLoadMore}
               disabled={loadingMore}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#1F1F2E] bg-[#111118] py-3 text-sm text-[#6B6B80] transition-colors hover:border-[#2A2A3A] hover:text-[#A0A0B2] disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl py-3 text-sm text-[#6B6B80] transition-colors hover:border-white/[0.08] hover:text-[#A0A0B2] disabled:opacity-50"
             >
               {loadingMore
                 ? <><Loader2 className="h-4 w-4 animate-spin" /> Loading…</>

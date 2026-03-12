@@ -25,7 +25,7 @@ export default async function KycPage() {
   const initialData = await getKycStatusForUser(user.id)
 
   return (
-    <div className="animate-fade-in">
+    <div className="animate-fade-in pt-8 pb-16">
       <KYCOnboardingClient
         initialData={initialData}
         userDisplayName={user.name}

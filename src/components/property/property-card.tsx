@@ -249,7 +249,7 @@ function TokenProgress({ info }: { info: PropertyTokenInfo }) {
         <span>{soldPct}% subscribed</span>
         {info.investorCount !== undefined && <span>{info.investorCount} investors</span>}
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-[#2A2A3A]">
+      <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
         <div
           className="h-full rounded-full bg-gradient-to-r from-[#B8932F] to-[#C9A84C] transition-all duration-700"
           style={{ width: `${soldPct}%` }}
@@ -278,7 +278,7 @@ function CardVariant({
   return (
     <Link href={resolvedHref} className="group block h-full" tabIndex={0}>
       <article
-        className="flex h-full flex-col overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#C9A84C]/40 hover:shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
+        className="flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:-translate-y-0.5 hover:border-[#C9A84C]/40 hover:bg-white/[0.07] hover:shadow-[0_8px_32px_rgba(0,0,0,0.35),0_0_30px_rgba(201,168,76,0.05)]"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 50}ms` }}
       >
         {/* ── Image ── */}
@@ -369,7 +369,7 @@ function CardVariant({
           <div className="flex-1" />
 
           {/* Divider */}
-          <div className="my-3 border-t border-[#1E1E2A]" />
+          <div className="my-3 border-t border-white/[0.06]" />
 
           {/* Price row */}
           <div className="flex items-end justify-between gap-2">
@@ -421,7 +421,7 @@ function RowVariant({
   return (
     <Link href={resolvedHref} className="group block" tabIndex={0}>
       <article
-        className="flex gap-4 overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] p-3 transition-all duration-200 hover:border-[#C9A84C]/40 hover:shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+        className="flex gap-4 overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-3 transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] hover:border-[#C9A84C]/40 hover:bg-white/[0.07] hover:shadow-[0_4px_20px_rgba(0,0,0,0.3),0_0_20px_rgba(201,168,76,0.04)]"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 40}ms` }}
       >
         {/* Thumbnail */}
@@ -523,7 +523,7 @@ function RowVariant({
               <p className="mb-1 text-[10px] text-[#6B6B80]">
                 {tokenSoldPercent(data.tokenInfo)}% subscribed
               </p>
-              <div className="h-0.5 overflow-hidden rounded-full bg-[#2A2A3A]">
+              <div className="h-0.5 overflow-hidden rounded-full bg-white/[0.06]">
                 <div
                   className="h-full rounded-full bg-[#C9A84C]"
                   style={{ width: `${tokenSoldPercent(data.tokenInfo)}%` }}
