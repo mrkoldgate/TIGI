@@ -139,7 +139,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
         {/* Groups */}
         <nav className="relative flex-1 overflow-y-auto overflow-x-hidden px-3 pb-4 pt-2" aria-label="Platform navigation">
           {NAV_GROUPS.map((group, gi) => (
-            <div key={group.label} className={cn(gi > 0 && 'mt-5')}>
+            <div key={group.label} className={cn(gi > 0 && 'mt-4')}>
               {isCollapsed ? (
                 gi > 0 && <div className="mx-auto mb-3 h-px w-6 bg-white/[0.08]" aria-hidden="true" />
               ) : (
@@ -159,7 +159,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
         {/* Bottom */}
         <div className="relative flex-shrink-0 border-t border-white/[0.06] px-3 py-3">
           {!isCollapsed && (
-            <div className="mb-3 rounded-2xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
+            <div className="mb-3 hidden rounded-2xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3 [@media(min-height:900px)]:block">
               <p className="flex items-center gap-2 text-[12px] font-medium text-[#F5F5F7]">
                 <span className="live-dot" aria-hidden="true" />
                 Private beta
@@ -216,7 +216,7 @@ function SidebarLink({
       aria-current={active ? 'page' : undefined}
       onClick={onClick}
       className={cn(
-        'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] no-underline transition-all duration-300',
+        'group relative flex items-center gap-3 rounded-xl px-3 py-2 text-[14px] no-underline transition-all duration-300',
         active
           ? 'bg-[linear-gradient(90deg,rgba(139,92,246,0.2),rgba(139,92,246,0.04))] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(167,139,250,0.18),0_0_30px_-10px_rgba(139,92,246,0.8)]'
           : 'text-[#B4B4C0] hover:bg-white/[0.04] hover:text-white',
