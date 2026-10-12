@@ -38,7 +38,7 @@ const TYPE_SUMMARY_CONFIG: Array<{
 }> = [
   { type: 'KYC',                  label: 'KYC',         icon: ShieldCheck,   color: 'text-[#C9A84C]', activeBorder: 'border-[#C9A84C]/40', bg: 'bg-[#C9A84C]/10' },
   { type: 'LISTING_VERIFICATION', label: 'Listing',      icon: Building2,     color: 'text-[#818CF8]', activeBorder: 'border-[#818CF8]/40', bg: 'bg-[#818CF8]/10' },
-  { type: 'INHERITANCE',          label: 'Inheritance',  icon: Landmark,      color: 'text-[#A78BFA]', activeBorder: 'border-[#A78BFA]/40', bg: 'bg-[#A78BFA]/10' },
+  { type: 'INHERITANCE',          label: 'Inheritance',  icon: Landmark,      color: 'text-[#D8D8E0]', activeBorder: 'border-[#D8D8E0]/40', bg: 'bg-[#D8D8E0]/10' },
   { type: 'FLAGGED_ANOMALY',      label: 'Anomaly',      icon: AlertTriangle, color: 'text-[#EF4444]', activeBorder: 'border-[#EF4444]/40', bg: 'bg-[#EF4444]/10' },
 ]
 
@@ -164,8 +164,8 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
             Administration
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">Compliance</h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">Compliance</h1>
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             KYC verification, listing reviews, inheritance submissions, and flagged anomalies.
           </p>
         </div>
@@ -200,18 +200,18 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
               className={cn(
                 'flex items-center gap-3 rounded-xl border p-3 text-left transition-all',
                 isActive
-                  ? `bg-[#111118] ${activeBorder} ${color}`
-                  : 'border-[#2A2A3A] bg-[#111118] hover:border-[#3A3A4A]'
+                  ? `bg-[#1E1E2A] ${activeBorder} ${color}`
+                  : 'border-[#33333F] bg-[#1E1E2A] hover:border-[#3A3A4A]'
               )}
             >
               <div className={cn('flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg', bg)}>
                 <Icon className={cn('h-4 w-4', color)} />
               </div>
               <div>
-                <p className={cn('font-heading text-lg font-semibold tabular-nums', isActive ? color : 'text-[#F5F5F7]')}>
+                <p className={cn('font-heading text-lg font-semibold tabular-nums', isActive ? color : 'text-[#EDEDF3]')}>
                   {count}
                 </p>
-                <p className="text-[11px] text-[#6B6B80]">{label}</p>
+                <p className="text-[11px] text-[#8E8E9C]">{label}</p>
               </div>
             </button>
           )
@@ -233,8 +233,8 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
               className={cn(
                 'inline-flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-medium transition-all',
                 isActive
-                  ? 'border-[#3A3A4A] bg-[#1A1A24] text-[#F5F5F7]'
-                  : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]'
+                  ? 'border-[#3A3A4A] bg-[#272735] text-[#EDEDF3]'
+                  : 'border-[#33333F] text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC]'
               )}
             >
               {dot && <span className={cn('h-1.5 w-1.5 rounded-full', dot)} />}
@@ -271,10 +271,10 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
       )}
 
       {/* ── Milestone footer ──────────────────────────────────────────── */}
-      <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
+      <div className="flex items-start gap-3 rounded-lg border border-[#33333F] bg-[#0D0D14] px-4 py-3">
         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
-        <p className="text-xs text-[#6B6B80]">
-          <span className="font-medium text-[#A0A0B2]">KYC Approve / Reject / Escalate</span>{' '}
+        <p className="text-xs text-[#8E8E9C]">
+          <span className="font-medium text-[#C3C3CC]">KYC Approve / Reject / Escalate</span>{' '}
           actions are live for submitted KYC verifications.{' '}
           Document viewer and full audit trail in{' '}
           <span className="font-medium text-[#C9A84C]">M3</span>.{' '}

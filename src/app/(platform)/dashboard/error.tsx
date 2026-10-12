@@ -28,8 +28,8 @@ export default function DashboardError({
       </div>
 
       <div className="space-y-2">
-        <h1 className="text-lg font-semibold text-[#F5F5F7]">Dashboard unavailable</h1>
-        <p className="max-w-sm text-sm text-[#6B6B80]">
+        <h1 className="text-lg font-semibold text-[#EDEDF3]">Dashboard unavailable</h1>
+        <p className="max-w-sm text-sm text-[#8E8E9C]">
           Something went wrong loading your dashboard. Your data is safe —
           this is a temporary issue.
         </p>
@@ -43,14 +43,14 @@ export default function DashboardError({
       <div className="flex flex-wrap items-center justify-center gap-3">
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl bg-[#C9A84C] px-4 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
+          className="flex items-center gap-2 rounded-xl bg-[#C9A84C] px-4 py-2.5 text-sm font-semibold text-[#171721] transition-opacity hover:opacity-90"
         >
           <RefreshCw className="h-4 w-4" />
           Try again
         </button>
         <Link
           href="/marketplace"
-          className="rounded-xl border border-[#2A2A3A] bg-[#1A1A24] px-4 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7]"
+          className="rounded-xl border border-[#33333F] bg-[#272735] px-4 py-2.5 text-sm font-medium text-[#C3C3CC] transition-colors hover:border-[#3A3A4A] hover:text-[#EDEDF3]"
         >
           Browse marketplace
         </Link>

@@ -95,9 +95,9 @@ export const CONFIDENCE_CONFIG: Record<
   LOW: {
     label: 'Low Confidence',
     shortLabel: 'Low',
-    color: '#6B6B80',
+    color: '#8E8E9C',
     barWidth: '30%',
-    ringClass: 'ring-[#3A3A48] bg-[#2A2A3A]/50 text-[#6B6B80]',
+    ringClass: 'ring-[#3A3A48] bg-[#33333F]/50 text-[#8E8E9C]',
   },
 }
 
@@ -111,7 +111,7 @@ export const DIRECTION_CONFIG: Record<
 > = {
   POSITIVE: { symbol: '▲', color: '#4ADE80', bg: 'rgba(74,222,128,0.08)' },
   NEGATIVE: { symbol: '▼', color: '#F87171', bg: 'rgba(248,113,113,0.08)' },
-  NEUTRAL:  { symbol: '─', color: '#6B6B80', bg: 'rgba(107,107,128,0.08)' },
+  NEUTRAL:  { symbol: '─', color: '#8E8E9C', bg: 'rgba(107,107,128,0.08)' },
 }
 
 export const IMPACT_LABEL: Record<DriverImpact, string> = {

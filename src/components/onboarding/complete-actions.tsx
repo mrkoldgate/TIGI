@@ -46,7 +46,7 @@ export function CompleteActions({ role, kycStatus }: CompleteActionsProps) {
       <button
         type="button"
         onClick={handleGoToDashboard}
-        className="flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98]"
+        className="flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4B86A] active:scale-[0.98]"
       >
         Go to dashboard
         <ArrowRight className="h-4 w-4" />

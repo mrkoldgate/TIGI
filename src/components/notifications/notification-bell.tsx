@@ -130,14 +130,14 @@ function NotificationsDropdown({
 
   return (
     <div
-      className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] shadow-2xl shadow-black/50"
+      className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-[#33333F] bg-[#1E1E2A] shadow-2xl shadow-black/50"
       role="dialog"
       aria-label="Notifications"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#1F1F2E] px-4 py-3">
+      <div className="flex items-center justify-between border-b border-[#2A2A37] px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-[#F5F5F7]">Notifications</span>
+          <span className="text-sm font-semibold text-[#EDEDF3]">Notifications</span>
           {unreadCount > 0 && (
             <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#C9A84C]/20 px-1.5 text-[10px] font-bold text-[#C9A84C]">
               {unreadCount > 99 ? '99+' : unreadCount}
@@ -148,7 +148,7 @@ function NotificationsDropdown({
           <button
             type="button"
             onClick={onMarkAllRead}
-            className="flex items-center gap-1 text-[11px] text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+            className="flex items-center gap-1 text-[11px] text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
           >
             <Check className="h-3 w-3" />
             Mark all read
@@ -164,11 +164,11 @@ function NotificationsDropdown({
           </div>
         ) : notifications.length === 0 ? (
           <div className="py-10 text-center">
-            <Bell className="mx-auto mb-2 h-7 w-7 text-[#2A2A3A]" />
+            <Bell className="mx-auto mb-2 h-7 w-7 text-[#33333F]" />
             <p className="text-sm text-[#4A4A5E]">No notifications yet</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#1F1F2E]">
+          <div className="divide-y divide-[#2A2A37]">
             {notifications.map((n) => (
               <NotificationItem
                 key={n.id}
@@ -182,11 +182,11 @@ function NotificationsDropdown({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[#1F1F2E] px-4 py-2.5">
+      <div className="border-t border-[#2A2A37] px-4 py-2.5">
         <Link
           href="/notifications"
           onClick={onClose}
-          className="block text-center text-xs font-medium text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="block text-center text-xs font-medium text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
         >
           See all notifications
         </Link>
@@ -237,7 +237,7 @@ export function NotificationBell() {
           'relative flex h-9 w-9 items-center justify-center rounded-lg border transition-colors',
           open
             ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]'
-            : 'border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C] hover:text-[#F5F5F7]',
+            : 'border-[#33333F] bg-[#272735] text-[#C3C3CC] hover:border-[#C9A84C] hover:text-[#EDEDF3]',
         )}
       >
         <Bell className="h-4 w-4" />
@@ -245,7 +245,7 @@ export function NotificationBell() {
         {unreadCount > 0 && (
           <span
             aria-hidden="true"
-            className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#C9A84C] px-1 text-[9px] font-bold text-[#0A0A0F]"
+            className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#C9A84C] px-1 text-[9px] font-bold text-[#171721]"
           >
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>

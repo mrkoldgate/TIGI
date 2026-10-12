@@ -9,7 +9,7 @@ import { OnboardingProgress } from '@/components/onboarding/progress'
 
 export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen flex-col bg-[#0A0A0F]">
+    <div className="relative flex min-h-screen flex-col bg-[#171721]">
       {/* Ambient glow */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-96"
@@ -30,7 +30,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
       />
 
       {/* Header */}
-      <header className="relative z-10 flex h-14 items-center justify-between border-b border-[#111118] px-6">
+      <header className="relative z-10 flex h-14 items-center justify-between border-b border-[#1E1E2A] px-6">
         <Link href="/" className="flex items-center gap-2">
           <TigiLogoMark />
           <span className="font-heading text-base font-bold tracking-tight text-white">
@@ -46,7 +46,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         >
           <button
             type="submit"
-            className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+            className="text-xs text-[#3A3A48] transition-colors hover:text-[#8E8E9C]"
           >
             Sign out
           </button>

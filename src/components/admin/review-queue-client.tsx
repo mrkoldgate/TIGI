@@ -65,8 +65,8 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
             Administration
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">Review Queue</h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">Review Queue</h1>
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Listings awaiting compliance review before going live.
           </p>
         </div>
@@ -78,7 +78,7 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
               {criticalCount} overdue
             </div>
           )}
-          <div className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] px-3 py-1.5 text-xs text-[#6B6B80]">
+          <div className="flex items-center gap-1.5 rounded-lg border border-[#33333F] px-3 py-1.5 text-xs text-[#8E8E9C]">
             <ClipboardList className="h-3 w-3" />
             {items.length} pending
           </div>
@@ -106,12 +106,12 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
       )}
 
       {/* ── Footer ──────────────────────────────────────────────────────── */}
-      <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
+      <div className="flex items-start gap-3 rounded-lg border border-[#33333F] bg-[#0D0D14] px-4 py-3">
         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
-        <p className="text-xs text-[#6B6B80]">
-          <span className="font-medium text-[#A0A0B2]">Approve / Reject / Request Update / Archive</span>{' '}
+        <p className="text-xs text-[#8E8E9C]">
+          <span className="font-medium text-[#C3C3CC]">Approve / Reject / Request Update / Archive</span>{' '}
           actions are live. Approved listings transition to{' '}
-          <span className="font-medium text-[#A0A0B2]">Active</span> immediately.
+          <span className="font-medium text-[#C3C3CC]">Active</span> immediately.
           Document viewer and full audit trail in{' '}
           <span className="font-medium text-[#C9A84C]">M3</span>.
         </p>

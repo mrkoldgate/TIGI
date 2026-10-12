@@ -31,15 +31,15 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
       className={cn(
         'relative flex flex-col rounded-2xl border p-6 transition-all',
         plan.highlighted && !isCurrent
-          ? 'border-[#C9A84C]/40 bg-[#111118] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
-          : 'border-[#2A2A3A] bg-[#0D0D14]',
-        isCurrent && 'border-[#2A2A3A] ring-1 ring-[#4ADE80]/30',
+          ? 'border-[#C9A84C]/40 bg-[#1E1E2A] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
+          : 'border-[#33333F] bg-[#0D0D14]',
+        isCurrent && 'border-[#33333F] ring-1 ring-[#4ADE80]/30',
       )}
     >
       {/* Badge */}
       {plan.badge && !isCurrent && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#171721]">
             <Sparkles className="h-2.5 w-2.5" />
             {plan.badge}
           </span>
@@ -56,17 +56,17 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
 
       {/* Header */}
       <div className="mb-5">
-        <h3 className="font-heading text-base font-semibold text-[#F5F5F7]">{plan.name}</h3>
-        <p className="mt-0.5 text-xs text-[#6B6B80]">{plan.tagline}</p>
+        <h3 className="font-heading text-base font-semibold text-[#EDEDF3]">{plan.name}</h3>
+        <p className="mt-0.5 text-xs text-[#8E8E9C]">{plan.tagline}</p>
       </div>
 
       {/* Price */}
       <div className="mb-5">
         {isEnterprise ? (
-          <p className="text-2xl font-bold text-[#F5F5F7]">Custom</p>
+          <p className="text-2xl font-bold text-[#EDEDF3]">Custom</p>
         ) : (
           <div className="flex items-end gap-1">
-            <span className="text-3xl font-bold tabular-nums text-[#F5F5F7]">
+            <span className="text-3xl font-bold tabular-nums text-[#EDEDF3]">
               {priceDisplay}
             </span>
           </div>
@@ -77,7 +77,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
           </p>
         )}
         {annual && plan.priceAnnual && plan.id !== 'free' && !isEnterprise && (
-          <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
             billed ${plan.priceAnnual}/yr
           </p>
         )}
@@ -88,7 +88,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
         {isEnterprise ? (
           <a
             href="mailto:enterprise@tigi.com"
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#1A1A24] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#33333F] bg-[#272735] py-2.5 text-sm font-semibold text-[#C3C3CC] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
           >
             <Building2 className="h-4 w-4" />
             Contact sales
@@ -104,8 +104,8 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
             className={cn(
               'flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all',
               plan.highlighted
-                ? 'bg-[#C9A84C] text-[#0A0A0F] hover:opacity-90 disabled:opacity-50'
-                : 'border border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C]/40 hover:text-[#F5F5F7] disabled:opacity-50',
+                ? 'bg-[#C9A84C] text-[#171721] hover:opacity-90 disabled:opacity-50'
+                : 'border border-[#33333F] bg-[#272735] text-[#C3C3CC] hover:border-[#C9A84C]/40 hover:text-[#EDEDF3] disabled:opacity-50',
             )}
           >
             {isLoading ? (
@@ -135,7 +135,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
             <span
               className={cn(
                 'text-xs leading-relaxed',
-                feat.included ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]',
+                feat.included ? 'text-[#C3C3CC]' : 'text-[#4A4A5E]',
               )}
             >
               {feat.label}

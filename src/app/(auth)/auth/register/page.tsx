@@ -91,7 +91,7 @@ export default function RegisterPage() {
         <h1 className="font-heading text-2xl font-bold text-white">
           Create your account
         </h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Start investing in tokenized real estate
         </p>
       </div>
@@ -109,7 +109,7 @@ export default function RegisterPage() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isSubmitting || googleLoading}
-        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
+        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[#33333F] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
       >
         {googleLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -141,8 +141,8 @@ export default function RegisterPage() {
             placeholder="Alex Johnson"
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-              errors.name ? 'border-red-500/50' : 'border-[#2A2A3A]',
+              'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+              errors.name ? 'border-red-500/50' : 'border-[#33333F]',
             )}
           />
           {errors.name && (
@@ -163,8 +163,8 @@ export default function RegisterPage() {
             placeholder="you@example.com"
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-              errors.email ? 'border-red-500/50' : 'border-[#2A2A3A]',
+              'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+              errors.email ? 'border-red-500/50' : 'border-[#33333F]',
             )}
           />
           {errors.email && (
@@ -186,8 +186,8 @@ export default function RegisterPage() {
               placeholder="••••••••"
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-                errors.password ? 'border-red-500/50' : 'border-[#2A2A3A]',
+                'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+                errors.password ? 'border-red-500/50' : 'border-[#33333F]',
               )}
             />
             <button
@@ -227,8 +227,8 @@ export default function RegisterPage() {
               placeholder="••••••••"
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-                errors.confirmPassword ? 'border-red-500/50' : 'border-[#2A2A3A]',
+                'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+                errors.confirmPassword ? 'border-red-500/50' : 'border-[#33333F]',
               )}
             />
             <button
@@ -248,11 +248,11 @@ export default function RegisterPage() {
         {/* Terms */}
         <p className="text-xs text-[#4A4A60]">
           By creating an account you agree to our{' '}
-          <Link href="/legal/terms" className="text-[#60A5FA] hover:underline">
+          <Link href="/legal/terms" className="text-[#D4B45E] hover:underline">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link href="/legal/privacy" className="text-[#60A5FA] hover:underline">
+          <Link href="/legal/privacy" className="text-[#D4B45E] hover:underline">
             Privacy Policy
           </Link>
           .
@@ -262,7 +262,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={isSubmitting || googleLoading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3B82F6] to-[#2563EB] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all hover:from-[#2563EB] hover:to-[#1D4ED8] hover:shadow-[0_0_28px_rgba(59,130,246,0.45)] active:scale-[0.98] disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C9A84C] to-[#B8932F] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(201, 168, 76,0.3)] transition-all hover:from-[#B8932F] hover:to-[#9A7A22] hover:shadow-[0_0_28px_rgba(201, 168, 76,0.45)] active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           Create account
@@ -270,11 +270,11 @@ export default function RegisterPage() {
       </form>
 
       {/* Login link */}
-      <p className="mt-6 text-center text-sm text-[#6B6B80]">
+      <p className="mt-6 text-center text-sm text-[#8E8E9C]">
         Already have an account?{' '}
         <Link
           href="/auth/login"
-          className="font-medium text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
+          className="font-medium text-[#D4B45E] hover:text-[#E8D590] transition-colors"
         >
           Sign in
         </Link>

@@ -25,14 +25,14 @@ export function CurrentPlanCard({
   const isFree = tier === 'free'
 
   const tierColor = {
-    free:       'text-[#6B6B80]',
+    free:       'text-[#8E8E9C]',
     pro:        'text-[#C9A84C]',
     pro_plus:   'text-[#818CF8]',
     enterprise: 'text-[#22C55E]',
   }[tier]
 
   const tierBg = {
-    free:       'bg-[#2A2A3A]/30 border-[#2A2A3A]',
+    free:       'bg-[#33333F]/30 border-[#33333F]',
     pro:        'bg-[#C9A84C]/5 border-[#C9A84C]/20',
     pro_plus:   'bg-[#818CF8]/5 border-[#818CF8]/20',
     enterprise: 'bg-[#22C55E]/5 border-[#22C55E]/20',
@@ -45,7 +45,7 @@ export function CurrentPlanCard({
           <div className={cn(
             'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border',
             tier === 'free'
-              ? 'border-[#2A2A3A] bg-[#1A1A24]'
+              ? 'border-[#33333F] bg-[#272735]'
               : 'border-[#C9A84C]/20 bg-[#C9A84C]/10',
           )}>
             <Sparkles className={cn('h-5 w-5', tierColor)} />
@@ -64,7 +64,7 @@ export function CurrentPlanCard({
           <button
             onClick={onManage}
             disabled={isLoading}
-            className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/30 hover:text-[#F5F5F7] disabled:opacity-50"
+            className="flex items-center gap-1.5 rounded-lg border border-[#33333F] bg-[#272735] px-3 py-1.5 text-xs font-medium text-[#C3C3CC] transition-colors hover:border-[#C9A84C]/30 hover:text-[#EDEDF3] disabled:opacity-50"
           >
             <Settings2 className="h-3 w-3" />
             Manage
@@ -74,7 +74,7 @@ export function CurrentPlanCard({
 
       {/* Renewal info */}
       {!isFree && endsAt && (
-        <div className="mt-4 flex items-center gap-2 text-xs text-[#6B6B80]">
+        <div className="mt-4 flex items-center gap-2 text-xs text-[#8E8E9C]">
           <Calendar className="h-3.5 w-3.5" />
           Renews {endsAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </div>
@@ -89,14 +89,14 @@ export function CurrentPlanCard({
 
       {/* Free plan prompt */}
       {isFree && (
-        <p className="mt-3 text-xs text-[#6B6B80]">
+        <p className="mt-3 text-xs text-[#8E8E9C]">
           Upgrade to Pro to unlock deep AI valuations, unlimited watchlists, and recommendation signals.
         </p>
       )}
 
       {/* Manage portal message */}
       {manageMessage && (
-        <p className="mt-3 rounded-lg border border-[#2A2A3A] bg-[#0A0A0F] px-3 py-2 text-xs text-[#A0A0B2]">
+        <p className="mt-3 rounded-lg border border-[#33333F] bg-[#171721] px-3 py-2 text-xs text-[#C3C3CC]">
           {manageMessage}
         </p>
       )}

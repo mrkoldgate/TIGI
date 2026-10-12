@@ -33,12 +33,12 @@ export function IntentsListClient({ initialIntents }: IntentsListClientProps) {
 
   if (intents.length === 0) {
     return (
-      <div className="mt-12 flex flex-col items-center justify-center rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] py-24 text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#1A1A24] text-[#6B6B80]">
+      <div className="mt-12 flex flex-col items-center justify-center rounded-xl border border-dashed border-[#33333F] bg-[#1E1E2A] py-24 text-center">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#272735] text-[#8E8E9C]">
           <ArrowLeftRight className="h-7 w-7" />
         </div>
-        <h3 className="font-heading text-lg font-semibold text-[#F5F5F7]">No intents yet</h3>
-        <p className="mt-2 max-w-sm text-sm text-[#6B6B80]">
+        <h3 className="font-heading text-lg font-semibold text-[#EDEDF3]">No intents yet</h3>
+        <p className="mt-2 max-w-sm text-sm text-[#8E8E9C]">
           Browse the marketplace and use the Buy, Invest, or Express Interest buttons to create
           your first transaction intent.
         </p>
@@ -50,7 +50,7 @@ export function IntentsListClient({ initialIntents }: IntentsListClientProps) {
     <div className="space-y-8">
       {active.length > 0 && (
         <section>
-          <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <h2 className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Active — {active.length}
           </h2>
           <div className="space-y-3">

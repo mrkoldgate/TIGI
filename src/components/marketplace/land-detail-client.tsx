@@ -61,9 +61,9 @@ const LAND_USE_CONFIG: Record<
   RESIDENTIAL_DEV: {
     label: 'Residential Dev.',
     description: 'Zoned for residential development. Suitable for single-family homes, multi-family projects, or planned unit developments pending entitlements.',
-    badgeClass: 'bg-[#1D4ED8]/15 text-[#93C5FD] ring-[#3B82F6]/25',
-    dotClass: 'bg-[#93C5FD]',
-    accentColor: '#93C5FD',
+    badgeClass: 'bg-[#9A7A22]/15 text-[#E8D590] ring-[#C9A84C]/25',
+    dotClass: 'bg-[#E8D590]',
+    accentColor: '#E8D590',
   },
   COMMERCIAL_DEV: {
     label: 'Commercial Dev.',
@@ -82,16 +82,16 @@ const LAND_USE_CONFIG: Record<
   MIXED_USE: {
     label: 'Mixed Use',
     description: 'Flexible zoning permitting residential, commercial, and retail development within the same parcel or project.',
-    badgeClass: 'bg-[#4C1D95]/20 text-[#C4B5FD] ring-[#7C3AED]/25',
-    dotClass: 'bg-[#C4B5FD]',
-    accentColor: '#C4B5FD',
+    badgeClass: 'bg-[#4C1D95]/20 text-[#EDEDF3] ring-[#A8A8B3]/25',
+    dotClass: 'bg-[#EDEDF3]',
+    accentColor: '#EDEDF3',
   },
   RECREATIONAL: {
     label: 'Recreational',
     description: 'Designated for recreational activities, vacation rental development, outdoor hospitality, and tourism-related uses.',
-    badgeClass: 'bg-[#065F46]/20 text-[#6EE7B7] ring-[#10B981]/25',
-    dotClass: 'bg-[#6EE7B7]',
-    accentColor: '#6EE7B7',
+    badgeClass: 'bg-[#065F46]/20 text-[#A7E3C4] ring-[#5DBB8E]/25',
+    dotClass: 'bg-[#A7E3C4]',
+    accentColor: '#A7E3C4',
   },
   WATERFRONT: {
     label: 'Waterfront',
@@ -103,9 +103,9 @@ const LAND_USE_CONFIG: Record<
   RURAL: {
     label: 'Rural',
     description: 'Large-acreage rural land suitable for grazing, hunting leases, timber production, or conservation easements.',
-    badgeClass: 'bg-[#1E293B]/80 text-[#94A3B8] ring-[#334155]/60',
-    dotClass: 'bg-[#94A3B8]',
-    accentColor: '#94A3B8',
+    badgeClass: 'bg-[#2E2E3D]/80 text-[#A8A8B3] ring-[#4A4A58]/60',
+    dotClass: 'bg-[#A8A8B3]',
+    accentColor: '#A8A8B3',
   },
 }
 
@@ -222,7 +222,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
           priority
         />
         {/* Bottom gradient blends into the page */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/60 via-[#0A0A0F]/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#171721]/60 via-[#171721]/10 to-transparent" />
 
         {/* Photo count badge */}
         {slots.length > 1 && (
@@ -254,7 +254,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
               {i === 1 && slots.length > 3 && (
                 <button
                   onClick={() => setLightboxOpen(true)}
-                  className="absolute inset-0 flex items-center justify-center bg-[#0A0A0F]/60"
+                  className="absolute inset-0 flex items-center justify-center bg-[#171721]/60"
                 >
                   <span className="text-sm font-medium text-[#E8F0E8]">+{slots.length - 3} more</span>
                 </button>
@@ -267,7 +267,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
       {/* Lightbox placeholder */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0F]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#171721]/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
         >
           <p className="text-[#5A7060]">Gallery lightbox coming soon.</p>
@@ -311,7 +311,7 @@ function AcreageHeroBlock({ listing, landUse }: { listing: MockListing; landUse:
         <div key={unit} className="flex flex-1 flex-col items-center justify-center px-4 py-4">
           <span
             className="font-heading text-2xl font-bold tabular-nums"
-            style={{ color: accent ? config.accentColor : '#F5F5F7' }}
+            style={{ color: accent ? config.accentColor : '#EDEDF3' }}
           >
             {value}
           </span>
@@ -355,7 +355,7 @@ function LandHeader({
           </span>
         )}
         {listing.listingType !== 'BUY' && (
-          <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-3 py-1 text-xs font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+          <span className="inline-flex items-center rounded-md bg-[#C9A84C]/15 px-3 py-1 text-xs font-medium text-[#D4B45E] ring-1 ring-inset ring-[#C9A84C]/25">
             {listing.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
           </span>
         )}
@@ -891,7 +891,7 @@ function LandActionPanel({
               </p>
             )}
             {leaseRateMonthly && (
-              <p className="mt-0.5 text-sm text-[#60A5FA]">
+              <p className="mt-0.5 text-sm text-[#D4B45E]">
                 or {formatLeaseRate(leaseRateMonthly)}
                 <span className="text-xs text-[#5A7060]"> to lease</span>
               </p>

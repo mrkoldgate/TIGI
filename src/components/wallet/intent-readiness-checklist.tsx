@@ -64,11 +64,11 @@ function CheckRow({ check, onWalletConnect }: {
       <div className="min-w-0 flex-1">
         <p className={cn(
           'text-xs font-medium',
-          check.passed ? 'text-[#A0A0B2]' : 'text-[#F5F5F7]',
+          check.passed ? 'text-[#C3C3CC]' : 'text-[#EDEDF3]',
         )}>
           {check.label}
         </p>
-        <p className="mt-0.5 text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="mt-0.5 text-[11px] leading-relaxed text-[#8E8E9C]">
           {check.detail}
         </p>
 
@@ -145,9 +145,9 @@ export function IntentReadinessChecklist({
 
         {/* Next action summary */}
         {!readiness.canPrepare && readiness.blockingReason && (
-          <div className="mt-4 flex items-start gap-2 rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2.5">
+          <div className="mt-4 flex items-start gap-2 rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2.5">
             <AlertCircle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#F59E0B]" />
-            <p className="text-[11px] leading-relaxed text-[#A0A0B2]">
+            <p className="text-[11px] leading-relaxed text-[#C3C3CC]">
               {readiness.nextAction}
             </p>
           </div>
@@ -155,24 +155,24 @@ export function IntentReadinessChecklist({
       </div>
 
       {/* "What signing does" explanation */}
-      <div className="rounded-xl border border-[#1E1E2A] bg-[#111118] p-4">
+      <div className="rounded-xl border border-[#1E1E2A] bg-[#1E1E2A] p-4">
         <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#4A4A60]">
           What signing does
         </p>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           {programInfo.userExplanation}
         </p>
         <div className="mt-2.5 flex items-center gap-3 border-t border-[#1E1E2A] pt-2.5">
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Program</span>
-            <span className="font-mono text-[10px] text-[#6B6B80]">{programInfo.displayName}</span>
+            <span className="font-mono text-[10px] text-[#8E8E9C]">{programInfo.displayName}</span>
           </div>
-          <span className="text-[#2A2A3A]">·</span>
+          <span className="text-[#33333F]">·</span>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Fee</span>
-            <span className="text-[10px] text-[#6B6B80]">~0.000005 SOL</span>
+            <span className="text-[10px] text-[#8E8E9C]">~0.000005 SOL</span>
           </div>
-          <span className="text-[#2A2A3A]">·</span>
+          <span className="text-[#33333F]">·</span>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Funds moved</span>
             <span className="text-[10px] text-[#4ADE80]">None</span>
@@ -195,8 +195,8 @@ export function IntentReadinessChecklist({
         className={cn(
           'flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
           readiness.canPrepare
-            ? 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B55A] disabled:opacity-60'
-            : 'cursor-not-allowed border border-[#2A2A3A] bg-[#0D0D14] text-[#4A4A60]',
+            ? 'bg-[#C9A84C] text-[#171721] hover:bg-[#D4B55A] disabled:opacity-60'
+            : 'cursor-not-allowed border border-[#33333F] bg-[#0D0D14] text-[#4A4A60]',
         )}
       >
         {isPreparing ? (

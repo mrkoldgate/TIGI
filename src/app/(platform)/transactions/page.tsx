@@ -34,7 +34,7 @@ export default async function TransactionsPage() {
           description="Your active intents, offers, and investment interests."
         />
 
-        <div className="flex flex-shrink-0 items-center gap-2 rounded-lg border border-[#2A2A3A] px-3 py-1.5 text-xs text-[#6B6B80]">
+        <div className="flex flex-shrink-0 items-center gap-2 rounded-lg border border-[#33333F] px-3 py-1.5 text-xs text-[#8E8E9C]">
           <span className="h-1.5 w-1.5 rounded-full bg-[#22C55E]" />
           <span>{activeCount} active</span>
         </div>
@@ -43,10 +43,10 @@ export default async function TransactionsPage() {
       <IntentsListClient initialIntents={intents} />
 
       {intents.length > 0 && (
-        <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
+        <div className="flex items-start gap-3 rounded-lg border border-[#33333F] bg-[#0D0D14] px-4 py-3">
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#F59E0B]" />
-          <p className="text-xs text-[#6B6B80]">
-            <span className="font-medium text-[#A0A0B2]">Intent layer is live.</span>{' '}
+          <p className="text-xs text-[#8E8E9C]">
+            <span className="font-medium text-[#C3C3CC]">Intent layer is live.</span>{' '}
             Full offer management, escrow step tracker, and settlement workflow arrive in{' '}
             <span className="font-medium text-[#C9A84C]">M5</span> after smart contract integration.
           </p>

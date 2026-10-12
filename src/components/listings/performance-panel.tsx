@@ -28,10 +28,10 @@ function PerformanceMetric({ icon: Icon, label, value, iconColor, iconBg, subtex
         <Icon className={cn('h-4 w-4', iconColor)} />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-xs text-[#6B6B80]">{label}</p>
+        <p className="text-xs text-[#8E8E9C]">{label}</p>
         {subtext && <p className="text-[11px] text-[#3A3A4A]">{subtext}</p>}
       </div>
-      <span className="flex-shrink-0 font-heading text-base font-semibold tabular-nums text-[#F5F5F7]">
+      <span className="flex-shrink-0 font-heading text-base font-semibold tabular-nums text-[#EDEDF3]">
         {value}
       </span>
     </div>
@@ -68,18 +68,18 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
           icon={MessageSquare}
           label="Total inquiries"
           value={stats.totalInquiries.toLocaleString()}
-          iconColor="text-[#A78BFA]"
-          iconBg="bg-[#A78BFA]/10"
+          iconColor="text-[#D8D8E0]"
+          iconBg="bg-[#D8D8E0]/10"
           subtext="All time"
         />
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-[#1F1F2E]" />
+      <div className="h-px bg-[#2A2A37]" />
 
       {/* Deferred metrics — M3 teaser */}
       <div className="space-y-2">
-        <p className="text-xs font-medium text-[#6B6B80]">Advanced analytics</p>
+        <p className="text-xs font-medium text-[#8E8E9C]">Advanced analytics</p>
 
         {[
           { icon: TrendingUp,    label: 'View → inquiry rate',    milestone: 'M3' },
@@ -88,13 +88,13 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
         ].map(({ icon: Icon, label, milestone }) => (
           <div
             key={label}
-            className="flex items-center gap-3 rounded-lg border border-dashed border-[#2A2A3A] px-3 py-2"
+            className="flex items-center gap-3 rounded-lg border border-dashed border-[#33333F] px-3 py-2"
           >
-            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-[#1A1A24]">
+            <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-[#272735]">
               <Icon className="h-3.5 w-3.5 text-[#3A3A4A]" />
             </div>
             <span className="flex-1 text-xs text-[#3A3A4A]">{label}</span>
-            <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+            <span className="flex items-center gap-1 rounded border border-[#33333F] bg-[#171721] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
               {milestone}
             </span>
@@ -103,10 +103,10 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
       </div>
 
       {/* AI listing tips teaser — M6 */}
-      <div className="rounded-lg border border-dashed border-[#2A2A3A] p-3 text-center">
+      <div className="rounded-lg border border-dashed border-[#33333F] p-3 text-center">
         <p className="text-xs text-[#3A3A4A]">
           AI listing optimisation recommendations arrive in{' '}
-          <span className="text-[#6B6B80]">Milestone 6</span>
+          <span className="text-[#8E8E9C]">Milestone 6</span>
         </p>
       </div>
     </div>

@@ -54,21 +54,21 @@ const STATUS_CONFIG: Record<
   },
   DRAFT: {
     label: 'Draft',
-    dotColor: '#6B6B80',
+    dotColor: '#8E8E9C',
     badgeBg: 'rgba(107,107,128,0.12)',
-    badgeText: '#A0A0B2',
+    badgeText: '#C3C3CC',
   },
   PAUSED: {
     label: 'Paused',
-    dotColor: '#60A5FA',
-    badgeBg: 'rgba(96,165,250,0.10)',
-    badgeText: '#93C5FD',
+    dotColor: '#D4B45E',
+    badgeBg: 'rgba(212, 180, 94,0.10)',
+    badgeText: '#E8D590',
   },
   ARCHIVED: {
     label: 'Archived',
     dotColor: '#3A3A4E',
     badgeBg: 'rgba(58,58,78,0.20)',
-    badgeText: '#6B6B80',
+    badgeText: '#8E8E9C',
   },
 }
 
@@ -243,21 +243,21 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
             <StatTile
               label="Total Views"
               value={stats.totalViews.toLocaleString()}
-              accent="#60A5FA"
+              accent="#D4B45E"
               icon={<EyeIcon />}
             />
             <StatTile
               label="Total Inquiries"
               value={stats.totalInquiries.toLocaleString()}
-              accent="#A78BFA"
+              accent="#D8D8E0"
               icon={<MessageIcon />}
             />
           </div>
 
           {/* Portfolio value callout */}
           {stats.totalPortfolioValue > 0 && (
-            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#2A2A3A] bg-[#111118] px-5 py-3">
-              <span className="text-sm text-[#6B6B80]">Active listing portfolio value</span>
+            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#33333F] bg-[#1E1E2A] px-5 py-3">
+              <span className="text-sm text-[#8E8E9C]">Active listing portfolio value</span>
               <span className="text-lg font-bold text-[#C9A84C]">
                 {formatPrice(stats.totalPortfolioValue)}
               </span>
@@ -269,7 +269,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
       {/* ── Tabs + toolbar ── */}
       <div className={embeddedMode ? 'space-y-3' : 'mt-8 space-y-3'}>
         {/* Tab bar */}
-        <div className="flex items-center gap-1 overflow-x-auto border-b border-[#2A2A3A] pb-0">
+        <div className="flex items-center gap-1 overflow-x-auto border-b border-[#33333F] pb-0">
           {TABS.map((t) => {
             const count = tabCounts[t.id]
             const isActive = tab === t.id
@@ -280,7 +280,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
                 className={cn(
                   'relative flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors duration-150',
                   'focus-visible:outline-none',
-                  isActive ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+                  isActive ? 'text-[#EDEDF3]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
                 )}
               >
                 {t.label}
@@ -289,8 +289,8 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
                     className={cn(
                       'rounded-full px-1.5 py-0.5 text-[10px] font-semibold leading-none',
                       isActive
-                        ? 'bg-[#C9A84C] text-[#0A0A0F]'
-                        : 'bg-[#22222E] text-[#6B6B80]',
+                        ? 'bg-[#C9A84C] text-[#171721]'
+                        : 'bg-[#2E2E3D] text-[#8E8E9C]',
                     )}
                   >
                     {count}
@@ -308,15 +308,15 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
         <div className="flex flex-wrap items-center gap-3">
           {/* Search */}
           <div className="relative min-w-0 flex-1 max-w-xs">
-            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#6B6B80]" />
+            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8E8E9C]" />
             <input
               type="text"
               placeholder="Search listings…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className={cn(
-                'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-                'py-2 pl-9 pr-4 text-sm text-[#F5F5F7] placeholder:text-[#6B6B80]',
+                'w-full rounded-lg border border-[#33333F] bg-[#2E2E3D]',
+                'py-2 pl-9 pr-4 text-sm text-[#EDEDF3] placeholder:text-[#8E8E9C]',
                 'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
                 'transition-colors duration-150',
               )}
@@ -328,8 +328,8 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
             className={cn(
-              'rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-              'px-3 py-2 text-sm text-[#A0A0B2]',
+              'rounded-lg border border-[#33333F] bg-[#2E2E3D]',
+              'px-3 py-2 text-sm text-[#C3C3CC]',
               'outline-none focus:border-[#C9A84C]',
               'transition-colors duration-150',
             )}
@@ -342,7 +342,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
           </select>
 
           {/* View toggle */}
-          <div className="flex rounded-lg border border-[#2A2A3A] overflow-hidden">
+          <div className="flex rounded-lg border border-[#33333F] overflow-hidden">
             <ViewToggleBtn
               active={view === 'table'}
               onClick={() => setView('table')}
@@ -360,7 +360,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
           </div>
 
           {/* Result count */}
-          <span className="ml-auto text-xs text-[#6B6B80]">
+          <span className="ml-auto text-xs text-[#8E8E9C]">
             {filtered.length} listing{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
@@ -391,7 +391,7 @@ interface StatTileProps {
 
 function StatTile({ label, value, accent, icon }: StatTileProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+    <div className="flex flex-col gap-3 rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
       <div
         className="flex h-8 w-8 items-center justify-center rounded-lg"
         style={{ backgroundColor: `${accent}15` }}
@@ -399,8 +399,8 @@ function StatTile({ label, value, accent, icon }: StatTileProps) {
         <span style={{ color: accent }}>{icon}</span>
       </div>
       <div>
-        <p className="text-2xl font-bold text-[#F5F5F7]">{value}</p>
-        <p className="mt-0.5 text-xs text-[#6B6B80]">{label}</p>
+        <p className="text-2xl font-bold text-[#EDEDF3]">{value}</p>
+        <p className="mt-0.5 text-xs text-[#8E8E9C]">{label}</p>
       </div>
     </div>
   )
@@ -473,7 +473,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
       <button
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          'flex h-8 w-8 items-center justify-center rounded-lg border border-[#2A2A3A] text-[#6B6B80]',
+          'flex h-8 w-8 items-center justify-center rounded-lg border border-[#33333F] text-[#8E8E9C]',
           'transition-colors hover:border-[#C9A84C] hover:text-[#C9A84C]',
           open && 'border-[#C9A84C] text-[#C9A84C]',
         )}
@@ -483,7 +483,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-1.5 min-w-[160px] overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] shadow-2xl">
+        <div className="absolute right-0 top-full z-50 mt-1.5 min-w-[160px] overflow-hidden rounded-xl border border-[#33333F] bg-[#1E1E2A] shadow-2xl">
           {canEdit && (
             <ActionItem
               href={`/listings/${listing.id}/edit`}
@@ -516,7 +516,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
             />
           )}
           {canArchive && (
-            <div className="border-t border-[#2A2A3A]">
+            <div className="border-t border-[#33333F]">
               <ActionItem
                 icon={<ArchiveIcon />}
                 label="Archive"
@@ -545,7 +545,7 @@ function ActionItem({ href, icon, label, onClick, accent, destructive }: ActionI
     'flex w-full items-center gap-2.5 px-3 py-2.5 text-sm transition-colors',
     destructive
       ? 'text-[#EF4444] hover:bg-[#EF4444]/10'
-      : 'text-[#A0A0B2] hover:bg-[#1A1A24] hover:text-[#F5F5F7]',
+      : 'text-[#C3C3CC] hover:bg-[#272735] hover:text-[#EDEDF3]',
   )
   const style = accent ? { color: accent } : {}
 
@@ -569,37 +569,37 @@ function ActionItem({ href, icon, label, onClick, accent, destructive }: ActionI
 
 function ListingsTable({ listings }: { listings: SellerListing[] }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A]">
+    <div className="overflow-hidden rounded-xl border border-[#33333F]">
       {/* Desktop table */}
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-[#2A2A3A] bg-[#111118]">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+            <tr className="border-b border-[#33333F] bg-[#1E1E2A]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Listing
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Type
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Price
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Views
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Inquiries
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
                 Updated
               </th>
               <th className="w-12 px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1F1F2E] bg-[#0A0A0F]">
+          <tbody className="divide-y divide-[#2A2A37] bg-[#171721]">
             {listings.map((listing, i) => (
               <TableRow key={listing.id} listing={listing} index={i} />
             ))}
@@ -608,7 +608,7 @@ function ListingsTable({ listings }: { listings: SellerListing[] }) {
       </div>
 
       {/* Mobile: card stack inside table container */}
-      <div className="divide-y divide-[#1F1F2E] md:hidden">
+      <div className="divide-y divide-[#2A2A37] md:hidden">
         {listings.map((listing) => (
           <MobileRow key={listing.id} listing={listing} />
         ))}
@@ -624,7 +624,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
     <tr
       className={cn(
         'group transition-colors duration-100',
-        isArchived ? 'opacity-50' : 'hover:bg-[#111118]',
+        isArchived ? 'opacity-50' : 'hover:bg-[#1E1E2A]',
       )}
       style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
     >
@@ -645,8 +645,8 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
           </div>
           {/* Title */}
           <div className="min-w-0">
-            <p className="truncate font-medium text-[#F5F5F7] max-w-[220px]">{listing.title}</p>
-            <p className="mt-0.5 text-xs text-[#6B6B80]">
+            <p className="truncate font-medium text-[#EDEDF3] max-w-[220px]">{listing.title}</p>
+            <p className="mt-0.5 text-xs text-[#8E8E9C]">
               {listing.city}, {listing.state}
               {getSubtitle(listing) && (
                 <span className="ml-2 text-[#4A4A5E]">· {getSubtitle(listing)}</span>
@@ -665,7 +665,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       <td className="px-4 py-3">
         <div className="flex flex-col gap-1">
           <AssetTypeBadge listing={listing} />
-          <span className="text-xs text-[#6B6B80]">{SUBTYPE_LABELS[listing.subtype]}</span>
+          <span className="text-xs text-[#8E8E9C]">{SUBTYPE_LABELS[listing.subtype]}</span>
           <span className="text-[10px] text-[#4A4A5E]">{LISTING_TYPE_LABELS[listing.listingType]}</span>
         </div>
       </td>
@@ -674,7 +674,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       <td className="px-4 py-3">
         <StatusBadge status={listing.status} />
         {listing.status === 'ACTIVE' && listing.expiresAt && (
-          <p className="mt-1 text-[10px] text-[#6B6B80]">
+          <p className="mt-1 text-[10px] text-[#8E8E9C]">
             Expires {formatDate(listing.expiresAt)}
           </p>
         )}
@@ -685,7 +685,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
 
       {/* Price */}
       <td className="px-4 py-3 text-right">
-        <span className="font-semibold text-[#F5F5F7]">{displayPrice(listing)}</span>
+        <span className="font-semibold text-[#EDEDF3]">{displayPrice(listing)}</span>
         {listing.aiEstimatedValue && listing.price && (
           <AiDelta price={listing.price} aiValue={listing.aiEstimatedValue} />
         )}
@@ -693,7 +693,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
 
       {/* Views */}
       <td className="px-4 py-3 text-right">
-        <span className={listing.viewCount > 0 ? 'text-[#F5F5F7]' : 'text-[#3A3A4E]'}>
+        <span className={listing.viewCount > 0 ? 'text-[#EDEDF3]' : 'text-[#3A3A4E]'}>
           {listing.viewCount > 0 ? listing.viewCount.toLocaleString() : '—'}
         </span>
       </td>
@@ -712,7 +712,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       </td>
 
       {/* Updated */}
-      <td className="px-4 py-3 text-right text-xs text-[#6B6B80]">
+      <td className="px-4 py-3 text-right text-xs text-[#8E8E9C]">
         {formatDate(listing.updatedAt)}
       </td>
 
@@ -730,7 +730,7 @@ function MobileRow({ listing }: { listing: SellerListing }) {
   return (
     <div
       className={cn(
-        'flex items-start gap-3 bg-[#0A0A0F] p-4',
+        'flex items-start gap-3 bg-[#171721] p-4',
         listing.status === 'ARCHIVED' && 'opacity-50',
       )}
     >
@@ -747,10 +747,10 @@ function MobileRow({ listing }: { listing: SellerListing }) {
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">
-          <p className="text-sm font-medium leading-tight text-[#F5F5F7]">{listing.title}</p>
+          <p className="text-sm font-medium leading-tight text-[#EDEDF3]">{listing.title}</p>
           <ActionMenu listing={listing} />
         </div>
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-[#8E8E9C]">
           {listing.city}, {listing.state}
           {getSubtitle(listing) && ` · ${getSubtitle(listing)}`}
         </p>
@@ -759,9 +759,9 @@ function MobileRow({ listing }: { listing: SellerListing }) {
           <AssetTypeBadge listing={listing} />
         </div>
         <div className="mt-1 flex items-center justify-between">
-          <span className="text-sm font-semibold text-[#F5F5F7]">{displayPrice(listing)}</span>
+          <span className="text-sm font-semibold text-[#EDEDF3]">{displayPrice(listing)}</span>
           {listing.viewCount > 0 && (
-            <span className="text-xs text-[#6B6B80]">
+            <span className="text-xs text-[#8E8E9C]">
               {listing.viewCount.toLocaleString()} views
             </span>
           )}
@@ -791,7 +791,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
     <div
       className={cn(
         'group flex flex-col overflow-hidden rounded-xl border transition-all duration-200',
-        isLand ? 'border-[#1E2D1E] bg-[#0D110D]' : 'border-[#2A2A3A] bg-[#111118]',
+        isLand ? 'border-[#1E2D1E] bg-[#0D110D]' : 'border-[#33333F] bg-[#1E1E2A]',
         isArchived ? 'opacity-50' : isLand ? 'hover:border-[#4ADE80]/40' : 'hover:border-[#C9A84C]/40',
         'animate-slide-up',
       )}
@@ -812,7 +812,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         </div>
         {/* Tokenized chip */}
         {listing.isTokenized && (
-          <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-[#0A0A0F]/80 px-2 py-1 text-[10px] font-semibold text-[#C9A84C] backdrop-blur-sm">
+          <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-[#171721]/80 px-2 py-1 text-[10px] font-semibold text-[#C9A84C] backdrop-blur-sm">
             <TokenIcon /> Tokenized
           </div>
         )}
@@ -823,14 +823,14 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         {/* Asset type + subtype */}
         <div className="flex items-center gap-2">
           <AssetTypeBadge listing={listing} />
-          <span className="text-xs text-[#6B6B80]">{SUBTYPE_LABELS[listing.subtype]}</span>
+          <span className="text-xs text-[#8E8E9C]">{SUBTYPE_LABELS[listing.subtype]}</span>
         </div>
 
         {/* Title */}
-        <p className="font-semibold leading-snug text-[#F5F5F7] line-clamp-2">{listing.title}</p>
+        <p className="font-semibold leading-snug text-[#EDEDF3] line-clamp-2">{listing.title}</p>
 
         {/* Location + specs */}
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-[#8E8E9C]">
           {listing.city}, {listing.state}
           {getSubtitle(listing) && (
             <span className="ml-1 text-[#4A4A5E]">· {getSubtitle(listing)}</span>
@@ -838,11 +838,11 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         </p>
 
         {/* Divider */}
-        <div className={cn('my-1 h-px', isLand ? 'bg-[#1E2D1E]' : 'bg-[#1F1F2E]')} />
+        <div className={cn('my-1 h-px', isLand ? 'bg-[#1E2D1E]' : 'bg-[#2A2A37]')} />
 
         {/* Price row */}
         <div className="flex items-center justify-between">
-          <span className="text-base font-bold text-[#F5F5F7]">{displayPrice(listing)}</span>
+          <span className="text-base font-bold text-[#EDEDF3]">{displayPrice(listing)}</span>
           {listing.aiEstimatedValue && listing.price && (
             <AiDelta price={listing.price} aiValue={listing.aiEstimatedValue} />
           )}
@@ -850,7 +850,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
 
         {/* Stats row */}
         {(listing.viewCount > 0 || listing.inquiryCount > 0 || listing.saveCount > 0) && (
-          <div className="flex items-center gap-3 text-xs text-[#6B6B80]">
+          <div className="flex items-center gap-3 text-xs text-[#8E8E9C]">
             {listing.viewCount > 0 && (
               <span className="flex items-center gap-1">
                 <EyeSmIcon /> {listing.viewCount.toLocaleString()}
@@ -877,7 +877,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
       <div
         className={cn(
           'flex items-center justify-between border-t px-4 py-3',
-          isLand ? 'border-[#1E2D1E]' : 'border-[#1F1F2E]',
+          isLand ? 'border-[#1E2D1E]' : 'border-[#2A2A37]',
         )}
       >
         {listing.status === 'DRAFT' ? (
@@ -890,14 +890,14 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         ) : listing.status === 'ACTIVE' ? (
           <Link
             href={`/marketplace/${listing.id}`}
-            className="text-xs font-medium text-[#A0A0B2] hover:text-[#F5F5F7]"
+            className="text-xs font-medium text-[#C3C3CC] hover:text-[#EDEDF3]"
           >
             View listing →
           </Link>
         ) : listing.status === 'PENDING_REVIEW' ? (
           <span className="text-xs text-[#F59E0B]/80">Under review · est. 1–2 days</span>
         ) : listing.status === 'PAUSED' ? (
-          <button className="text-xs font-medium text-[#60A5FA] hover:underline">
+          <button className="text-xs font-medium text-[#D4B45E] hover:underline">
             Resume listing
           </button>
         ) : (
@@ -936,12 +936,12 @@ function EmptyState({ tab, search }: { tab: TabFilter; search: string }) {
   const isSearch = search.trim().length > 0
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118]/60 py-20 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#1A1A24] text-[#6B6B80]">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[#33333F] bg-[#1E1E2A]/60 py-20 text-center">
+      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#272735] text-[#8E8E9C]">
         {isSearch ? <SearchEmptyIcon /> : <ListingsEmptyIcon />}
       </div>
 
-      <h3 className="mb-1.5 text-base font-semibold text-[#F5F5F7]">
+      <h3 className="mb-1.5 text-base font-semibold text-[#EDEDF3]">
         {isSearch
           ? `No results for "${search}"`
           : tab === 'ALL'
@@ -949,7 +949,7 @@ function EmptyState({ tab, search }: { tab: TabFilter; search: string }) {
             : `No ${STATUS_CONFIG[tab as SellerListingStatus]?.label ?? tab} listings`}
       </h3>
 
-      <p className="mb-6 max-w-xs text-sm text-[#6B6B80]">
+      <p className="mb-6 max-w-xs text-sm text-[#8E8E9C]">
         {isSearch
           ? 'Try a different search term or clear the filter.'
           : tab === 'ALL'
@@ -993,7 +993,7 @@ function ViewToggleBtn({
       onClick={onClick}
       className={cn(
         'flex h-9 w-9 items-center justify-center text-sm transition-colors',
-        active ? 'bg-[#1A1A24] text-[#C9A84C]' : 'bg-transparent text-[#6B6B80] hover:text-[#A0A0B2]',
+        active ? 'bg-[#272735] text-[#C9A84C]' : 'bg-transparent text-[#8E8E9C] hover:text-[#C3C3CC]',
       )}
     >
       {children}

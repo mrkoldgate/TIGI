@@ -27,9 +27,9 @@ interface MiniListingRowProps {
 }
 
 const CONFIDENCE_COLORS = {
-  LOW: 'text-[#94A3B8] border-white/10 bg-white/5',
+  LOW: 'text-[#A8A8B3] border-white/10 bg-white/5',
   MEDIUM: 'text-[#F59E0B] border-[#F59E0B]/30 bg-[#F59E0B]/10 shadow-[inset_0_0_8px_rgba(245,158,11,0.2)]',
-  HIGH: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10 shadow-[inset_0_0_8px_rgba(52,211,153,0.2)]',
+  HIGH: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10 shadow-[inset_0_0_8px_rgba(127, 209, 168,0.2)]',
 }
 
 const PROPERTY_TYPE_LABEL: Record<string, string> = {
@@ -77,10 +77,10 @@ export function MiniListingRow({
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white transition-all group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+        <p className="truncate text-sm font-medium text-white transition-all group-hover:text-[#C3C3CC] group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
           {listing.title}
         </p>
-        <p className="mt-0.5 truncate text-xs text-[#94A3B8]">
+        <p className="mt-0.5 truncate text-xs text-[#A8A8B3]">
           {listing.city}, {listing.state}
           {listing.lotAcres && listing.propertyType === 'LAND'
             ? ` · ${listing.lotAcres} ac`
@@ -91,12 +91,12 @@ export function MiniListingRow({
 
         {/* Badges row */}
         <div className="mt-1.5 flex items-center gap-1.5 flex-wrap">
-          <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+          <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#A8A8B3] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
             {PROPERTY_TYPE_LABEL[listing.propertyType] ?? listing.propertyType}
           </span>
 
           {listing.isTokenized && (
-            <span className="flex items-center gap-0.5 rounded border border-cyan-400/30 bg-cyan-400/10 px-1.5 py-0.5 text-[10px] text-cyan-400 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
+            <span className="flex items-center gap-0.5 rounded border border-[#C3C3CC]/30 bg-[#C3C3CC]/10 px-1.5 py-0.5 text-[10px] text-[#C3C3CC] shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
               <Coins className="h-2.5 w-2.5" />
               Tokenized
             </span>
@@ -116,7 +116,7 @@ export function MiniListingRow({
           {formatPrice(listing.price)}
         </p>
         {listing.isTokenized && listing.tokenPricePerFraction && (
-          <p className="mt-0.5 text-[11px] text-[#94A3B8]">
+          <p className="mt-0.5 text-[11px] text-[#A8A8B3]">
             from ${listing.tokenPricePerFraction.toLocaleString()}
           </p>
         )}

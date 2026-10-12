@@ -57,7 +57,7 @@ function buildOptions(listingType: string, isTokenized: boolean): InquiryOption[
       type:        'GENERAL',
       label:       'General Question',
       description: 'Ask about the property, neighbourhood, or next steps.',
-      accent:      'border-[#2A2A3A] hover:border-[#3A3A4A]',
+      accent:      'border-[#33333F] hover:border-[#3A3A4A]',
     },
   ]
 
@@ -121,7 +121,7 @@ function TypeCard({
             'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors',
             selected
               ? 'border-[#C9A84C] bg-[#C9A84C]/20'
-              : 'border-[#3A3A4A] bg-[#1A1A24]',
+              : 'border-[#3A3A4A] bg-[#272735]',
           )}
         >
           {selected && (
@@ -130,10 +130,10 @@ function TypeCard({
         </span>
 
         <div className="min-w-0">
-          <p className={cn('text-sm font-medium', selected ? 'text-[#F5F5F7]' : 'text-[#A0A0B2]')}>
+          <p className={cn('text-sm font-medium', selected ? 'text-[#EDEDF3]' : 'text-[#C3C3CC]')}>
             {option.label}
           </p>
-          <p className="mt-0.5 text-[11px] leading-relaxed text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] leading-relaxed text-[#8E8E9C]">
             {option.description}
           </p>
         </div>
@@ -160,14 +160,14 @@ function SuccessCard({
       </div>
 
       <div className="space-y-1">
-        <p className="font-heading text-base font-semibold text-[#F5F5F7]">Inquiry sent</p>
-        <p className="text-sm text-[#6B6B80]">
+        <p className="font-heading text-base font-semibold text-[#EDEDF3]">Inquiry sent</p>
+        <p className="text-sm text-[#8E8E9C]">
           {INQUIRY_TYPE_LABELS[inquiryType]} inquiry delivered to the listing owner.
           You'll be notified when they respond.
         </p>
       </div>
 
-      <div className="w-full rounded-xl border border-[#2A2A3A] bg-[#111118] p-3 text-left">
+      <div className="w-full rounded-xl border border-[#33333F] bg-[#1E1E2A] p-3 text-left">
         <p className="text-[11px] font-medium uppercase tracking-wider text-[#4A4A60]">What happens next</p>
         <ul className="mt-2 space-y-1.5">
           {[
@@ -175,7 +175,7 @@ function SuccessCard({
             'Most owners respond within 48 hours.',
             "You'll see their reply in your dashboard under My Inquiries.",
           ].map((step) => (
-            <li key={step} className="flex items-start gap-2 text-[11px] text-[#6B6B80]">
+            <li key={step} className="flex items-start gap-2 text-[11px] text-[#8E8E9C]">
               <ChevronRight className="mt-0.5 h-3 w-3 shrink-0 text-[#3A3A4A]" />
               {step}
             </li>
@@ -186,7 +186,7 @@ function SuccessCard({
       <button
         type="button"
         onClick={onClose}
-        className="w-full rounded-xl bg-[#1A1A24] py-2.5 text-sm font-medium text-[#A0A0B2] ring-1 ring-[#2A2A3A] transition hover:bg-[#222230] hover:text-[#F5F5F7]"
+        className="w-full rounded-xl bg-[#272735] py-2.5 text-sm font-medium text-[#C3C3CC] ring-1 ring-[#33333F] transition hover:bg-[#222230] hover:text-[#EDEDF3]"
       >
         Close
       </button>
@@ -269,13 +269,13 @@ export function InquiryModal({
     <>
       {/* Backdrop */}
       <div
-        className="fixed inset-0 z-40 bg-[#0A0A0F]/70 backdrop-blur-sm"
+        className="fixed inset-0 z-40 bg-[#171721]/70 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
 
       {/* Panel */}
-      <div className="fixed inset-x-0 bottom-0 z-50 mx-auto max-w-lg rounded-t-2xl border border-[#2A2A3A] bg-[#0F0F18] shadow-2xl sm:inset-auto sm:right-4 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2 sm:rounded-2xl">
+      <div className="fixed inset-x-0 bottom-0 z-50 mx-auto max-w-lg rounded-t-2xl border border-[#33333F] bg-[#0F0F18] shadow-2xl sm:inset-auto sm:right-4 sm:top-1/2 sm:bottom-auto sm:-translate-y-1/2 sm:rounded-2xl">
         {/* Header */}
         <div className="flex items-start justify-between border-b border-[#1E1E2A] p-4">
           <div className="flex items-center gap-2.5">
@@ -283,15 +283,15 @@ export function InquiryModal({
               <MessageSquare className="h-4 w-4 text-[#C9A84C]" />
             </div>
             <div>
-              <p className="text-sm font-semibold text-[#F5F5F7]">Make an Inquiry</p>
-              <p className="max-w-[200px] truncate text-[11px] text-[#6B6B80]">{propertyTitle}</p>
+              <p className="text-sm font-semibold text-[#EDEDF3]">Make an Inquiry</p>
+              <p className="max-w-[200px] truncate text-[11px] text-[#8E8E9C]">{propertyTitle}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#6B6B80] transition hover:bg-[#1A1A24] hover:text-[#A0A0B2]"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#8E8E9C] transition hover:bg-[#272735] hover:text-[#C3C3CC]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -334,7 +334,7 @@ export function InquiryModal({
                   }}
                   rows={4}
                   placeholder="Share what you'd like to know, your timeline, or any specific requirements…"
-                  className="w-full resize-none rounded-xl border border-[#2A2A3A] bg-[#111118] px-3.5 py-3 text-sm text-[#F5F5F7] placeholder-[#3A3A4A] outline-none transition focus:border-[#C9A84C]/40 focus:ring-1 focus:ring-[#C9A84C]/20"
+                  className="w-full resize-none rounded-xl border border-[#33333F] bg-[#1E1E2A] px-3.5 py-3 text-sm text-[#EDEDF3] placeholder-[#3A3A4A] outline-none transition focus:border-[#C9A84C]/40 focus:ring-1 focus:ring-[#C9A84C]/20"
                 />
                 <div className="mt-1 flex items-center justify-between">
                   {error ? (
@@ -362,8 +362,8 @@ export function InquiryModal({
                 className={cn(
                   'flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
                   loading || message.trim().length < 10
-                    ? 'cursor-not-allowed bg-[#1A1A24] text-[#3A3A4A]'
-                    : 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4AF5C] shadow-[0_0_20px_rgba(201,168,76,0.15)]',
+                    ? 'cursor-not-allowed bg-[#272735] text-[#3A3A4A]'
+                    : 'bg-[#C9A84C] text-[#171721] hover:bg-[#D4AF5C] shadow-[0_0_20px_rgba(201,168,76,0.15)]',
                 )}
               >
                 {loading ? (

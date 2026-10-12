@@ -69,7 +69,7 @@ export default function RolePage() {
         <h1 className="font-heading text-3xl font-bold text-white md:text-4xl">
           How will you use TIGI?
         </h1>
-        <p className="mt-3 text-sm text-[#6B6B80] md:text-base">
+        <p className="mt-3 text-sm text-[#8E8E9C] md:text-base">
           Choose the role that best describes you. You can always update this later.
         </p>
       </div>
@@ -119,8 +119,8 @@ export default function RolePage() {
           className={cn(
             'flex min-w-[200px] items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold transition-all',
             selected && !loading
-              ? 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B86A] active:scale-[0.98]'
-              : 'cursor-not-allowed bg-[#1A1A24] text-[#3A3A48]',
+              ? 'bg-[#C9A84C] text-[#171721] hover:bg-[#D4B86A] active:scale-[0.98]'
+              : 'cursor-not-allowed bg-[#272735] text-[#3A3A48]',
           )}
         >
           {loading ? (
@@ -135,7 +135,7 @@ export default function RolePage() {
         <button
           type="button"
           onClick={() => router.push('/marketplace')}
-          className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="text-xs text-[#3A3A48] transition-colors hover:text-[#8E8E9C]"
         >
           Skip setup — explore first
         </button>
@@ -167,7 +167,7 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
         compact ? 'p-4' : 'p-5',
         selected
           ? 'border-[#C9A84C]/60 shadow-[0_0_24px_rgba(201,168,76,0.1)]'
-          : 'border-[#1C1C28] hover:border-[#2A2A3A]',
+          : 'border-[#1C1C28] hover:border-[#33333F]',
       )}
       style={{ background: selected ? 'rgba(201,168,76,0.04)' : card.gradient }}
       aria-pressed={selected}
@@ -178,10 +178,10 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
           'absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full transition-all',
           selected
             ? 'bg-[#C9A84C] opacity-100'
-            : 'border border-[#2A2A3A] bg-transparent opacity-0 group-hover:opacity-100',
+            : 'border border-[#33333F] bg-transparent opacity-0 group-hover:opacity-100',
         )}
       >
-        <Check className={cn('h-3 w-3', selected ? 'text-[#0A0A0F]' : 'text-[#3A3A48]')} />
+        <Check className={cn('h-3 w-3', selected ? 'text-[#171721]' : 'text-[#3A3A48]')} />
       </span>
 
       {/* Popular badge */}

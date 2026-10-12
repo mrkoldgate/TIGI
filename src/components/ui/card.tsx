@@ -16,14 +16,14 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       ref={ref}
       className={cn(
         // Base
-        'rounded-xl border border-[#2A2A3A] bg-[#111118] p-4',
+        'rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4',
         // Variants
         variant === 'interactive' && [
           'cursor-pointer transition-all duration-200',
           'hover:-translate-y-0.5 hover:border-[#C9A84C] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]',
         ],
         variant === 'elevated' && [
-          'bg-[#1A1A24] border-[#2A2A3A]',
+          'bg-[#272735] border-[#33333F]',
         ],
         className
       )}
@@ -59,7 +59,7 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttribu
   ({ className, ...props }, ref) => (
     <p
       ref={ref}
-      className={cn('text-sm text-[#A0A0B2]', className)}
+      className={cn('text-sm text-[#C3C3CC]', className)}
       {...props}
     />
   )

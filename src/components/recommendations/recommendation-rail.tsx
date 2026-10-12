@@ -22,7 +22,7 @@ import type { ScoredListing, ReasonType } from '@/lib/recommendations/recommenda
 // ── Reason chip styling ─────────────────────────────────────────────────────
 
 const REASON_CHIP: Record<ReasonType, { className: string; dot: string }> = {
-  CATEGORY_MATCH:   { className: 'border-[#3A3A4A] text-[#A0A0B2]',                         dot: 'bg-[#6B6B80]' },
+  CATEGORY_MATCH:   { className: 'border-[#3A3A4A] text-[#C3C3CC]',                         dot: 'bg-[#8E8E9C]' },
   LOCATION_MATCH:   { className: 'border-[#3B5BDB]/35 bg-[#3B5BDB]/6 text-[#91A7FF]',        dot: 'bg-[#748FFC]' },
   PRICE_MATCH:      { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',         dot: 'bg-[#4ADE80]' },
   SIMILAR_TO_SAVED: { className: 'border-[#C9A84C]/30 bg-[#C9A84C]/6 text-[#C9A84C]',         dot: 'bg-[#C9A84C]' },
@@ -85,11 +85,11 @@ function RecommendationItem({
 function EmptyRecommendations() {
   return (
     <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A1A24]">
-        <Sparkles className="h-4 w-4 text-[#6B6B80]" />
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#272735]">
+        <Sparkles className="h-4 w-4 text-[#8E8E9C]" />
       </div>
-      <p className="text-sm text-[#A0A0B2]">No recommendations yet.</p>
-      <p className="max-w-[200px] text-xs text-[#6B6B80]">
+      <p className="text-sm text-[#C3C3CC]">No recommendations yet.</p>
+      <p className="max-w-[200px] text-xs text-[#8E8E9C]">
         Browse and save listings to personalise your feed.
       </p>
     </div>
@@ -112,18 +112,18 @@ export function RecommendationRail({
   className,
 }: RecommendationRailProps) {
   return (
-    <div className={cn('overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118]', className)}>
+    <div className={cn('overflow-hidden rounded-xl border border-[#33333F] bg-[#1E1E2A]', className)}>
       {/* AI attribution strip */}
-      <div className="flex items-center gap-1.5 border-b border-[#1F1F2E] px-4 py-2.5">
+      <div className="flex items-center gap-1.5 border-b border-[#2A2A37] px-4 py-2.5">
         <Sparkles className="h-3 w-3 text-[#C9A84C]" />
-        <span className="text-[10px] font-medium tracking-wide text-[#6B6B80] uppercase">
+        <span className="text-[10px] font-medium tracking-wide text-[#8E8E9C] uppercase">
           Aria-powered · updates with your activity
         </span>
       </div>
 
       {/* Items */}
       {items.length > 0 ? (
-        <div className="divide-y divide-[#1F1F2E]">
+        <div className="divide-y divide-[#2A2A37]">
           {items.map((item, i) => (
             <RecommendationItem key={item.listing.id} item={item} index={i} />
           ))}
@@ -134,10 +134,10 @@ export function RecommendationRail({
 
       {/* Footer link */}
       {viewAllHref && (
-        <div className="border-t border-[#1F1F2E] px-4 py-3">
+        <div className="border-t border-[#2A2A37] px-4 py-3">
           <Link
             href={viewAllHref}
-            className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+            className="flex items-center gap-1.5 text-xs text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
           >
             {viewAllLabel}
             <ArrowRight className="h-3 w-3" />
@@ -165,7 +165,7 @@ export function SimilarListingsGrid({
   emptyMessage = 'No similar listings available right now.',
 }: SimilarListingsGridProps) {
   if (items.length === 0) {
-    return <p className="py-8 text-center text-sm text-[#6B6B80]">{emptyMessage}</p>
+    return <p className="py-8 text-center text-sm text-[#8E8E9C]">{emptyMessage}</p>
   }
 
   // Collect unique reasons from top item for the context header
@@ -177,7 +177,7 @@ export function SimilarListingsGrid({
       {topReasons.length > 0 && (
         <div className="flex items-center gap-2">
           <Sparkles className="h-3 w-3 flex-shrink-0 text-[#C9A84C]" />
-          <span className="text-xs text-[#6B6B80]">Matched by:</span>
+          <span className="text-xs text-[#8E8E9C]">Matched by:</span>
           <div className="flex flex-wrap gap-1">
             {topReasons.map((reason) => (
               <ReasonChip key={reason.type} reason={reason} />

@@ -60,11 +60,11 @@ function AdminSectionHeader({
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
       <div className="flex items-center gap-2">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-[#6B6B80]">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-[#8E8E9C]">
           {title}
         </h2>
         {count !== undefined && (
-          <span className="rounded bg-[#1A1A24] px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-[#A0A0B2]">
+          <span className="rounded bg-[#272735] px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-[#C3C3CC]">
             {count}
           </span>
         )}
@@ -78,7 +78,7 @@ function AdminSectionHeader({
       {href && (
         <a
           href={href}
-          className="text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="text-xs text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
         >
           View all →
         </a>
@@ -116,19 +116,19 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
             Administration
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
+          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">
             Command Center
           </h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Platform overview and moderation controls.
           </p>
         </div>
 
         {/* System status */}
         <div className="flex flex-shrink-0 flex-col items-end gap-2">
-          <div className="flex items-center gap-2 rounded-lg border border-[#1F1F2E] bg-[#111118] px-3 py-1.5">
+          <div className="flex items-center gap-2 rounded-lg border border-[#2A2A37] bg-[#1E1E2A] px-3 py-1.5">
             <span className="h-2 w-2 animate-pulse rounded-full bg-[#4ADE80]" />
-            <span className="text-xs text-[#6B6B80]">All systems operational</span>
+            <span className="text-xs text-[#8E8E9C]">All systems operational</span>
           </div>
           <div className="flex items-center gap-1.5 text-[11px] text-[#4A4A5E]">
             <RefreshCw className="h-3 w-3" />
@@ -250,7 +250,7 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
             count={stats.totalUsers}
             href="/admin/users"
           />
-          <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+          <div className="rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
             <UserSummary stats={stats} recentUsers={MOCK_RECENT_USERS} />
           </div>
         </section>

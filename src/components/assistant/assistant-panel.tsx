@@ -35,7 +35,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
       return (
         <div className="space-y-2">
           {block.title && (
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#6B6B80]">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#8E8E9C]">
               {block.title}
             </p>
           )}
@@ -56,11 +56,11 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
       return (
         <Link
           href={block.href}
-          className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-3 transition-colors hover:border-[#3A3A4A]"
+          className="flex items-start gap-3 rounded-xl border border-[#33333F] bg-[#0D0D14] p-3 transition-colors hover:border-[#3A3A4A]"
         >
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-[#F5F5F7]">{block.title}</p>
-            <p className="text-xs text-[#6B6B80]">{block.location}</p>
+            <p className="text-sm font-medium text-[#EDEDF3]">{block.title}</p>
+            <p className="text-xs text-[#8E8E9C]">{block.location}</p>
             {block.price !== null && (
               <p className="mt-0.5 text-xs font-semibold text-[#C9A84C]">
                 {formatCurrency(block.price, { compact: true })}
@@ -126,7 +126,7 @@ function MessageBubble({ message }: { message: AssistantMessage }) {
     const text = message.content[0]?.type === 'text' ? message.content[0].text : ''
     return (
       <div className="flex justify-end">
-        <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-[#C9A84C]/15 px-4 py-2.5 text-sm leading-relaxed text-[#F5F5F7]">
+        <div className="max-w-[80%] rounded-2xl rounded-tr-sm bg-[#C9A84C]/15 px-4 py-2.5 text-sm leading-relaxed text-[#EDEDF3]">
           {text}
         </div>
       </div>
@@ -153,11 +153,11 @@ function TypingIndicator() {
   return (
     <div className="flex items-start gap-2.5">
       <AriaMark />
-      <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-sm bg-[#1A1A24] px-4 py-3">
+      <div className="flex items-center gap-1.5 rounded-2xl rounded-tl-sm bg-[#272735] px-4 py-3">
         {[0, 150, 300].map((delay) => (
           <span
             key={delay}
-            className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#6B6B80]"
+            className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#8E8E9C]"
             style={{ animationDelay: `${delay}ms` }}
           />
         ))}
@@ -176,7 +176,7 @@ function EmptyState({ onSuggestion }: { onSuggestion: (text: string) => void }) 
       {/* Opening message */}
       <div className="flex items-start gap-2.5">
         <AriaMark />
-        <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-[#1A1A24] px-4 py-3">
+        <div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-[#272735] px-4 py-3">
           <p className="text-sm leading-relaxed text-[#C8C8D8]">
             Hi, I&apos;m Aria — your TIGI advisor. I can help you understand listings, explain how investments and tokens work, or guide you through any part of the platform.
           </p>
@@ -193,7 +193,7 @@ function EmptyState({ onSuggestion }: { onSuggestion: (text: string) => void }) 
             <button
               key={s.id}
               onClick={() => onSuggestion(s.text)}
-              className="w-full rounded-xl border border-[#1F1F2E] bg-[#0D0D14] px-4 py-2.5 text-left text-sm text-[#A0A0B2] transition-all hover:border-[#2A2A3A] hover:text-[#F5F5F7]"
+              className="w-full rounded-xl border border-[#2A2A37] bg-[#0D0D14] px-4 py-2.5 text-left text-sm text-[#C3C3CC] transition-all hover:border-[#33333F] hover:text-[#EDEDF3]"
             >
               {s.text}
             </button>
@@ -227,7 +227,7 @@ function InputBar({ value, onChange, onSend, disabled, showDisclaimer = true, cl
 
   return (
     <div className={cn('flex-shrink-0', className)}>
-      <div className="flex items-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#0D0D14] px-3 py-2 transition-colors focus-within:border-[#3A3A4A]">
+      <div className="flex items-center gap-2 rounded-xl border border-[#33333F] bg-[#0D0D14] px-3 py-2 transition-colors focus-within:border-[#3A3A4A]">
         <input
           type="text"
           value={value}
@@ -235,7 +235,7 @@ function InputBar({ value, onChange, onSend, disabled, showDisclaimer = true, cl
           onKeyDown={handleKeyDown}
           placeholder="Ask Aria anything..."
           disabled={disabled}
-          className="flex-1 bg-transparent text-sm text-[#F5F5F7] placeholder:text-[#4A4A5E] focus:outline-none disabled:opacity-50"
+          className="flex-1 bg-transparent text-sm text-[#EDEDF3] placeholder:text-[#4A4A5E] focus:outline-none disabled:opacity-50"
         />
         <button
           onClick={onSend}
@@ -327,7 +327,7 @@ function PanelHeader({
   return (
     <div
       className={cn(
-        'flex flex-shrink-0 items-center gap-3 border-b border-[#1F1F2E]',
+        'flex flex-shrink-0 items-center gap-3 border-b border-[#2A2A37]',
         variant === 'panel' ? 'h-14 px-4' : 'px-1 py-5'
       )}
     >
@@ -343,7 +343,7 @@ function PanelHeader({
       <div className="flex-1">
         <p
           className={cn(
-            'font-semibold text-[#F5F5F7]',
+            'font-semibold text-[#EDEDF3]',
             variant === 'panel' ? 'text-sm' : 'font-heading text-lg'
           )}
         >
@@ -362,7 +362,7 @@ function PanelHeader({
           <button
             onClick={onClear}
             title="Clear conversation"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A5E] transition-colors hover:bg-[#1A1A24] hover:text-[#6B6B80]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A5E] transition-colors hover:bg-[#272735] hover:text-[#8E8E9C]"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
@@ -371,7 +371,7 @@ function PanelHeader({
           <button
             onClick={onClose}
             aria-label="Close Aria"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#6B6B80] transition-colors hover:bg-[#1A1A24] hover:text-[#A0A0B2]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#8E8E9C] transition-colors hover:bg-[#272735] hover:text-[#C3C3CC]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -395,7 +395,7 @@ export function AssistantPanel() {
       {/* Backdrop */}
       <div
         className={cn(
-          'fixed inset-0 z-40 bg-[#0A0A0F]/50 backdrop-blur-[2px] transition-opacity duration-300',
+          'fixed inset-0 z-40 bg-[#171721]/50 backdrop-blur-[2px] transition-opacity duration-300',
           isOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
         )}
         onClick={close}
@@ -408,7 +408,7 @@ export function AssistantPanel() {
         aria-modal="true"
         aria-label="Aria — TIGI Advisor"
         className={cn(
-          'fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l border-[#1F1F2E] bg-[#111118] shadow-2xl shadow-black/60 transition-transform duration-300 sm:w-[400px]',
+          'fixed inset-y-0 right-0 z-50 flex w-full flex-col border-l border-[#2A2A37] bg-[#1E1E2A] shadow-2xl shadow-black/60 transition-transform duration-300 sm:w-[400px]',
           isOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -435,7 +435,7 @@ export function AssistantPanel() {
           onChange={setInput}
           onSend={handleSend}
           disabled={isTyping}
-          className="border-t border-[#1F1F2E] px-4 pb-4 pt-3"
+          className="border-t border-[#2A2A37] px-4 pb-4 pt-3"
         />
       </div>
     </>
@@ -469,7 +469,7 @@ export function AssistantPageView() {
       </div>
 
       {/* Input */}
-      <div className="flex-shrink-0 border-t border-[#1F1F2E] px-1 pt-3 pb-6">
+      <div className="flex-shrink-0 border-t border-[#2A2A37] px-1 pt-3 pb-6">
         <InputBar
           value={input}
           onChange={setInput}

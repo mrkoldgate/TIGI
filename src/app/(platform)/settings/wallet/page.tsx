@@ -52,7 +52,7 @@ export default async function WalletSettingsPage() {
         {/* Current wallet */}
         <section>
           <SectionLabel>Active wallet</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
+          <div className="rounded-2xl border border-[#1E1E2A] bg-[#1E1E2A] p-5">
             <WalletDisplay />
           </div>
         </section>
@@ -60,12 +60,12 @@ export default async function WalletSettingsPage() {
         {/* External wallet connection */}
         <section>
           <SectionLabel>External wallet</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
+          <div className="rounded-2xl border border-[#1E1E2A] bg-[#1E1E2A] p-5">
             <div className="mb-4">
               <p className="text-sm font-medium text-white">
                 {isExternalConnected ? 'Connected wallet' : 'Connect your own wallet'}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-1 text-xs leading-relaxed text-[#8E8E9C]">
                 {isExternalConnected
                   ? 'Your Phantom or Solflare wallet is active. Disconnect to return to your platform-managed wallet.'
                   : 'Use Phantom or Solflare to control your own keys. Your platform wallet is preserved and restored on disconnect.'}
@@ -78,7 +78,7 @@ export default async function WalletSettingsPage() {
         {/* Custodial explanation */}
         <section>
           <SectionLabel>How your platform wallet works</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5 space-y-4">
+          <div className="rounded-2xl border border-[#1E1E2A] bg-[#1E1E2A] p-5 space-y-4">
             <ExplainerRow
               icon={Shield}
               title="Managed for you"
@@ -93,9 +93,9 @@ export default async function WalletSettingsPage() {
         </section>
 
         {/* Devnet notice */}
-        <div className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#0A0A0F] px-4 py-3">
+        <div className="flex items-start gap-3 rounded-xl border border-[#33333F] bg-[#171721] px-4 py-3">
           <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
-          <p className="text-xs leading-relaxed text-[#6B6B80]">
+          <p className="text-xs leading-relaxed text-[#8E8E9C]">
             <span className="font-medium text-[#9999AA]">Devnet active.</span>{' '}
             All wallets and transactions are on Solana Devnet. No real assets are involved.
             Mainnet will go live with the tokenization module.
@@ -125,12 +125,12 @@ function ExplainerRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#2A2A3A] bg-[#1A1A24]">
-        <Icon className="h-4 w-4 text-[#6B6B80]" />
+      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#33333F] bg-[#272735]">
+        <Icon className="h-4 w-4 text-[#8E8E9C]" />
       </div>
       <div>
         <p className="text-sm font-medium text-[#CCCCDD]">{title}</p>
-        <p className="mt-0.5 text-xs leading-relaxed text-[#6B6B80]">{body}</p>
+        <p className="mt-0.5 text-xs leading-relaxed text-[#8E8E9C]">{body}</p>
       </div>
     </div>
   )

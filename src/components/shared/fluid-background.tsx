@@ -56,22 +56,22 @@ function Scene() {
   return (
     <>
       {/* Fog for depth — matches bg-root color */}
-      <fog attach="fog" args={['#020409', 10, 22]} />
+      <fog attach="fog" args={['#171721', 10, 22]} />
 
       {/* Lights */}
       <ambientLight intensity={0.12} />
       {/* Key blue light — top-left */}
-      <pointLight position={[-5, 4, 4]} color="#3B82F6" intensity={8} />
+      <pointLight position={[-5, 4, 4]} color="#C9A84C" intensity={8} />
       {/* Fill purple light — right */}
-      <pointLight position={[5, -2, 3]} color="#8B5CF6" intensity={6} />
+      <pointLight position={[5, -2, 3]} color="#C3C3CC" intensity={6} />
       {/* Rim emerald light — top */}
-      <pointLight position={[1, 5, 1]} color="#10B981" intensity={4} />
+      <pointLight position={[1, 5, 1]} color="#5DBB8E" intensity={4} />
       {/* Deep back purple */}
-      <pointLight position={[0, -4, -5]} color="#7C3AED" intensity={5} />
+      <pointLight position={[0, -4, -5]} color="#A8A8B3" intensity={5} />
 
       {/* Main blue blob — large, left */}
       <Blob
-        color="#1D4ED8"
+        color="#9A7A22"
         position={[-3.2, 0.5, -2.5]}
         scale={2.9}
         speed={0.55}
@@ -81,7 +81,7 @@ function Scene() {
 
       {/* Purple blob — right */}
       <Blob
-        color="#6D28D9"
+        color="#8E8E9C"
         position={[3.0, -1.2, -3.5]}
         scale={2.4}
         speed={0.42}

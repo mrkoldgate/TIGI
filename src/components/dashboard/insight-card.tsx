@@ -24,12 +24,12 @@ const INSIGHT_CONFIG: Record<
   InsightType,
   { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; bg: string }
 > = {
-  PRICE_DROP: { icon: TrendingDown, color: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]', bg: 'bg-emerald-400/10 border border-emerald-400/20' },
+  PRICE_DROP: { icon: TrendingDown, color: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(127, 209, 168,0.5)]', bg: 'bg-emerald-400/10 border border-emerald-400/20' },
   PRICE_RISE: { icon: TrendingUp, color: 'text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.5)]', bg: 'bg-rose-500/10 border border-rose-500/20' },
-  NEW_MATCH: { icon: Sparkles, color: 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]', bg: 'bg-cyan-400/10 border border-cyan-400/20' },
-  VALUATION_CHANGE: { icon: BarChart3, color: 'text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-indigo-400/10 border border-indigo-400/20' },
-  MARKET_TREND: { icon: TrendingUp, color: 'text-indigo-400 drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-indigo-400/10 border border-indigo-400/20' },
-  TOKEN_ALERT: { icon: Coins, color: 'text-purple-400 drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]', bg: 'bg-purple-500/10 border border-purple-500/20' },
+  NEW_MATCH: { icon: Sparkles, color: 'text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]', bg: 'bg-[#C3C3CC]/10 border border-[#C3C3CC]/20' },
+  VALUATION_CHANGE: { icon: BarChart3, color: 'text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-[#C3C3CC]/10 border border-[#C3C3CC]/20' },
+  MARKET_TREND: { icon: TrendingUp, color: 'text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(129,140,248,0.5)]', bg: 'bg-[#C3C3CC]/10 border border-[#C3C3CC]/20' },
+  TOKEN_ALERT: { icon: Coins, color: 'text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(168,85,247,0.5)]', bg: 'bg-[#C3C3CC]/10 border border-[#C3C3CC]/20' },
   INVESTMENT_UPDATE: { icon: AlertCircle, color: 'text-slate-400 drop-shadow-[0_0_8px_rgba(148,163,184,0.5)]', bg: 'bg-slate-400/10 border border-slate-400/20' },
 }
 
@@ -59,13 +59,13 @@ export function InsightCard({ insight }: InsightCardProps) {
       className={cn(
         'relative flex gap-3 rounded-2xl border bg-white/5 p-4 backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:bg-white/10 hover:-translate-y-0.5',
         isHigh
-          ? 'border-indigo-500/30 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] bg-gradient-to-r from-indigo-500/5 to-transparent'
+          ? 'border-[#C3C3CC]/30 hover:border-[#C3C3CC]/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] bg-gradient-to-r from-[#C3C3CC]/5 to-transparent'
           : 'border-white/10 hover:border-white/20'
       )}
     >
       {/* High priority accent */}
       {isHigh && (
-        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-indigo-400 shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
+        <span className="absolute inset-y-3 left-0 w-0.5 rounded-r bg-[#C3C3CC] shadow-[0_0_12px_rgba(129,140,248,0.8)]" />
       )}
 
       {/* Icon */}
@@ -76,16 +76,16 @@ export function InsightCard({ insight }: InsightCardProps) {
       {/* Body */}
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium leading-snug text-white">{insight.title}</p>
-        <p className="mt-1 text-xs leading-relaxed text-[#94A3B8]">{insight.description}</p>
+        <p className="mt-1 text-xs leading-relaxed text-[#A8A8B3]">{insight.description}</p>
 
         {/* Footer: time + action */}
         <div className="mt-2.5 flex items-center justify-between gap-2">
-          <span className="text-[11px] text-[#6B6B80]">{formatTimeAgo(insight.timestamp)}</span>
+          <span className="text-[11px] text-[#8E8E9C]">{formatTimeAgo(insight.timestamp)}</span>
 
           {insight.actionHref && insight.actionLabel && (
             <Link
               href={insight.actionHref}
-              className="text-xs font-medium text-[#60A5FA] transition-opacity hover:opacity-70"
+              className="text-xs font-medium text-[#D4B45E] transition-opacity hover:opacity-70"
             >
               {insight.actionLabel} →
             </Link>

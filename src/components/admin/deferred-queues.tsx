@@ -47,7 +47,7 @@ function QueueRow({
   hasUrgent,
 }: QueueRowProps) {
   return (
-    <div className="flex items-start gap-4 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4 transition-colors hover:border-[#3A3A4A]">
+    <div className="flex items-start gap-4 rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4 transition-colors hover:border-[#3A3A4A]">
       {/* Icon */}
       <div className={cn('mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg', iconBg)}>
         <Icon className={cn('h-4 w-4', iconColor)} />
@@ -57,9 +57,9 @@ function QueueRow({
       <div className="min-w-0 flex-1">
         {/* Title row */}
         <div className="flex items-center gap-2">
-          <p className="text-sm font-medium text-[#F5F5F7]">{title}</p>
+          <p className="text-sm font-medium text-[#EDEDF3]">{title}</p>
           {milestone && (
-            <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+            <span className="flex items-center gap-1 rounded border border-[#33333F] bg-[#171721] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
               {milestone}
             </span>
@@ -69,10 +69,10 @@ function QueueRow({
         {/* Count row */}
         <div className="mt-1.5 flex flex-wrap items-center gap-3">
           <span className="flex items-baseline gap-1.5">
-            <span className="font-heading text-xl font-semibold tabular-nums text-[#F5F5F7]">
+            <span className="font-heading text-xl font-semibold tabular-nums text-[#EDEDF3]">
               {primaryCount}
             </span>
-            <span className="text-xs text-[#6B6B80]">{primaryLabel}</span>
+            <span className="text-xs text-[#8E8E9C]">{primaryLabel}</span>
           </span>
 
           {urgentCount !== undefined && urgentCount > 0 && (
@@ -85,7 +85,7 @@ function QueueRow({
               >
                 {urgentCount}
               </span>
-              <span className="text-xs text-[#6B6B80]">{urgentLabel}</span>
+              <span className="text-xs text-[#8E8E9C]">{urgentLabel}</span>
             </span>
           )}
 
@@ -98,7 +98,7 @@ function QueueRow({
       {/* Action link */}
       <Link
         href={href}
-        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
       >
         View
         <ChevronRight className="h-3 w-3" />
@@ -151,8 +151,8 @@ export function DeferredQueues({ counts }: DeferredQueuesProps) {
         timeHint={`oldest: ${counts.supportOldestHours}h`}
         href="/admin/compliance"
         milestone="M3"
-        iconColor="text-[#A0A0B2]"
-        iconBg="bg-[#A0A0B2]/10"
+        iconColor="text-[#C3C3CC]"
+        iconBg="bg-[#C3C3CC]/10"
         hasUrgent={counts.supportTicketsUrgent > 0}
       />
     </div>

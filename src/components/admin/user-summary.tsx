@@ -23,12 +23,12 @@ import { cn } from '@/lib/utils'
 const KYC_CONFIG: Record<UserKycStatus, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; label: string }> = {
   VERIFIED:   { icon: ShieldCheck, color: 'text-[#4ADE80]', label: 'Verified'   },
   PENDING:    { icon: Clock,       color: 'text-[#F59E0B]', label: 'Pending'    },
-  UNVERIFIED: { icon: ShieldOff,   color: 'text-[#6B6B80]', label: 'Unverified' },
+  UNVERIFIED: { icon: ShieldOff,   color: 'text-[#8E8E9C]', label: 'Unverified' },
 }
 
 const ROLE_COLORS: Record<UserRole, string> = {
   INVESTOR:     'text-[#818CF8]',
-  BUYER:        'text-[#A0A0B2]',
+  BUYER:        'text-[#C3C3CC]',
   OWNER:        'text-[#C9A84C]',
   PROFESSIONAL: 'text-[#4ADE80]',
   ADMIN:        'text-[#EF4444]',
@@ -43,11 +43,11 @@ interface UserKpiTileProps {
 
 function UserKpiTile({ label, value, sub, accent }: UserKpiTileProps) {
   return (
-    <div className="flex flex-col gap-0.5 rounded-lg border border-[#1F1F2E] bg-[#0D0D14] p-3">
-      <p className={cn('font-heading text-xl font-semibold tabular-nums', accent ?? 'text-[#F5F5F7]')}>
+    <div className="flex flex-col gap-0.5 rounded-lg border border-[#2A2A37] bg-[#0D0D14] p-3">
+      <p className={cn('font-heading text-xl font-semibold tabular-nums', accent ?? 'text-[#EDEDF3]')}>
         {value}
       </p>
-      <p className="text-[11px] text-[#6B6B80]">{label}</p>
+      <p className="text-[11px] text-[#8E8E9C]">{label}</p>
       {sub && <p className="text-[10px] text-[#4A4A5E]">{sub}</p>}
     </div>
   )
@@ -91,7 +91,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-[#1F1F2E]" />
+      <div className="h-px bg-[#2A2A37]" />
 
       {/* Recent registrations */}
       <div>
@@ -106,16 +106,16 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
             return (
               <div
                 key={user.id}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[#111118]"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[#1E1E2A]"
               >
                 {/* Avatar */}
-                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#1A1A24] text-[11px] font-semibold text-[#6B6B80]">
+                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#272735] text-[11px] font-semibold text-[#8E8E9C]">
                   {user.initials}
                 </div>
 
                 {/* Name + role */}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-medium text-[#F5F5F7]">{user.name}</p>
+                  <p className="truncate text-xs font-medium text-[#EDEDF3]">{user.name}</p>
                   <p className={cn('text-[10px]', ROLE_COLORS[user.role])}>{user.role}</p>
                 </div>
 
@@ -138,7 +138,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
       {/* Footer link */}
       <Link
         href="/admin/users"
-        className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+        className="flex items-center gap-1 text-xs text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
       >
         Manage all users →
       </Link>

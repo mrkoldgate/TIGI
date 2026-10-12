@@ -42,7 +42,7 @@ const GRADIENT_FALLBACKS: Record<string, string> = {
   land: 'linear-gradient(135deg, #101A10 0%, #18271A 40%, #1A1F15 100%)',
   industrial: 'linear-gradient(135deg, #1A1210 0%, #261A14 40%, #201818 100%)',
   mixed: 'linear-gradient(135deg, #0F0F1A 0%, #1A1528 40%, #141528 100%)',
-  default: 'linear-gradient(135deg, #0A0A0F 0%, #141420 50%, #1A1528 100%)',
+  default: 'linear-gradient(135deg, #171721 0%, #141420 50%, #1A1528 100%)',
 }
 
 type ImageSlot = keyof typeof PLACEHOLDER_PHOTOS
@@ -89,7 +89,7 @@ export function PlaceholderImage({
           priority={priority}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/30 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#171721]/30 via-transparent to-transparent pointer-events-none" />
       </div>
     )
   }
@@ -112,12 +112,12 @@ export function PlaceholderImage({
           // Blurred gradient while loading — matches TIGI dark tone
           placeholder="blur"
           blurDataURL={`data:image/svg+xml;base64,${btoa(
-            `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect fill="#111118"/></svg>`
+            `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600"><rect fill="#1E1E2A"/></svg>`
           )}`}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {/* Subtle dark vignette overlay — blends images into dark UI */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/30 via-transparent to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#171721]/30 via-transparent to-transparent pointer-events-none" />
       </div>
     )
   }
@@ -198,7 +198,7 @@ export function InitialsAvatar({ name, size = 'md', className }: InitialsAvatarP
   return (
     <div
       className={cn(
-        'flex flex-shrink-0 items-center justify-center rounded-md bg-[#C9A84C] font-heading font-semibold text-[#0A0A0F]',
+        'flex flex-shrink-0 items-center justify-center rounded-md bg-[#C9A84C] font-heading font-semibold text-[#171721]',
         sizeClasses[size],
         className
       )}

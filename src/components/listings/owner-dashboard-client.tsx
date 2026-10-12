@@ -212,10 +212,10 @@ function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: Ow
     <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
       {/* Left */}
       <div>
-        <p className="text-label text-[#6B6B80]">{greeting}</p>
+        <p className="text-label text-[#8E8E9C]">{greeting}</p>
         <h1 className="text-h1 mt-0.5">{user.name}</h1>
         <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="rounded border border-white/[0.08] bg-[#020409]/80 px-2 py-0.5 text-[11px] text-[#A0A0B2]">
+          <span className="rounded border border-white/[0.08] bg-[#171721]/80 px-2 py-0.5 text-[11px] text-[#C3C3CC]">
             {user.role}
           </span>
           <KycBadge status={user.kycStatus} />
@@ -225,7 +225,7 @@ function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: Ow
             </span>
           )}
           {newInquiryCount > 0 && (
-            <span className="rounded-full bg-[#C9A84C] px-2 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
+            <span className="rounded-full bg-[#C9A84C] px-2 py-0.5 text-[11px] font-semibold text-[#171721]">
               {newInquiryCount} new {newInquiryCount === 1 ? 'inquiry' : 'inquiries'}
             </span>
           )}
@@ -236,7 +236,7 @@ function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: Ow
       <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
         <Link
           href="/listings/new?type=property"
-          className="flex items-center gap-1.5 rounded-lg bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
+          className="flex items-center gap-1.5 rounded-lg bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#171721] transition-opacity hover:opacity-90"
         >
           <Building2 className="h-3.5 w-3.5" />
           New Property
@@ -304,8 +304,8 @@ function QuickActionsStrip() {
     default: {
       border: 'border-white/[0.08] hover:border-white/[0.10]',
       bg:     'bg-white/[0.04] backdrop-blur-xl',
-      text:   'text-[#A0A0B2]',
-      icon:   'text-[#6B6B80]',
+      text:   'text-[#C3C3CC]',
+      icon:   'text-[#8E8E9C]',
     },
   }
 
@@ -338,7 +338,7 @@ function QuickActionsStrip() {
                 <Icon className={`h-4 w-4 ${style.icon}`} />
               </div>
               {action.milestone && (
-                <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-[#020409]/80 px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-[#171721]/80 px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
                   {action.milestone}
                 </span>
@@ -348,7 +348,7 @@ function QuickActionsStrip() {
             {/* Label */}
             <div>
               <p className={`text-sm font-semibold ${style.text}`}>{action.label}</p>
-              <p className="mt-0.5 text-xs text-[#6B6B80] leading-snug">{action.description}</p>
+              <p className="mt-0.5 text-xs text-[#8E8E9C] leading-snug">{action.description}</p>
             </div>
           </div>
         )

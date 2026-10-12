@@ -162,7 +162,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
         <StatCard
           label="Total Listed Value"
           value={totalValue > 0 ? formatPrice(totalValue) : '—'}
-          accent="#A78BFA"
+          accent="#D8D8E0"
           icon={<ValueIcon />}
           wide
         />
@@ -184,7 +184,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
               onClick={() => setTab(id)}
               className={cn(
                 'relative flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors duration-150',
-                tab === id ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+                tab === id ? 'text-[#EDEDF3]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
               )}
             >
               {label}
@@ -194,9 +194,9 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
                     'rounded-full px-1.5 py-0.5 text-[10px] font-semibold',
                     tab === id
                       ? id === 'LAND'
-                        ? 'bg-[#4ADE80] text-[#0A0A0F]'
-                        : 'bg-[#C9A84C] text-[#0A0A0F]'
-                      : 'bg-[#22222E] text-[#6B6B80]',
+                        ? 'bg-[#4ADE80] text-[#171721]'
+                        : 'bg-[#C9A84C] text-[#171721]'
+                      : 'bg-[#2E2E3D] text-[#8E8E9C]',
                   )}
                 >
                   {count}
@@ -220,8 +220,8 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             value={sort}
             onChange={(e) => setSort(e.target.value as SortMode)}
             className={cn(
-              'rounded-lg border border-white/[0.08] bg-[#22222E]',
-              'px-3 py-2 text-sm text-[#A0A0B2]',
+              'rounded-lg border border-white/[0.08] bg-[#2E2E3D]',
+              'px-3 py-2 text-sm text-[#C3C3CC]',
               'outline-none focus:border-[#C9A84C]',
               'transition-colors duration-150',
             )}
@@ -242,7 +242,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             </ViewBtn>
           </div>
 
-          <span className="ml-auto text-xs text-[#6B6B80]">
+          <span className="ml-auto text-xs text-[#8E8E9C]">
             {sorted.length} {sorted.length === 1 ? 'asset' : 'assets'}
           </span>
         </div>
@@ -298,9 +298,9 @@ function SavedHeader({
         <div>
           <p className="text-label mb-1">Favorites</p>
           <h1 className="text-h1">
-            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-[#6B6B80]">· {count}</span>}
+            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-[#8E8E9C]">· {count}</span>}
           </h1>
-          <p className="mt-1 text-[#A0A0B2]">
+          <p className="mt-1 text-[#C3C3CC]">
             {count === 0 ? 'Save properties and land to revisit them later.' : 'Your saved properties and land parcels.'}
           </p>
         </div>
@@ -311,7 +311,7 @@ function SavedHeader({
               'mt-1 shrink-0 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-200',
               confirmClear
                 ? 'border-[#EF4444]/40 bg-[#EF4444]/10 text-[#EF4444]'
-                : 'border-white/[0.08] text-[#6B6B80] hover:border-[#EF4444]/30 hover:text-[#EF4444]',
+                : 'border-white/[0.08] text-[#8E8E9C] hover:border-[#EF4444]/30 hover:text-[#EF4444]',
             )}
           >
             {confirmClear ? 'Confirm clear all?' : 'Clear all'}
@@ -346,8 +346,8 @@ function StatCard({
         <span style={{ color: accent }}>{icon}</span>
       </div>
       <div>
-        <p className="text-xl font-bold text-[#F5F5F7]">{value}</p>
-        <p className="text-xs text-[#6B6B80]">{label}</p>
+        <p className="text-xl font-bold text-[#EDEDF3]">{value}</p>
+        <p className="text-xs text-[#8E8E9C]">{label}</p>
       </div>
     </div>
   )
@@ -476,7 +476,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
       )}
       {/* Saved-at timestamp — appears on hover */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between rounded-b-xl px-3 py-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-        <span className="rounded-full bg-[#020409]/80/80 px-2.5 py-1 text-[10px] text-[#A0A0B2] backdrop-blur-sm">
+        <span className="rounded-full bg-[#171721]/80/80 px-2.5 py-1 text-[10px] text-[#C3C3CC] backdrop-blur-sm">
           Saved {formatSavedAt(savedAt)}
         </span>
       </div>
@@ -489,7 +489,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
 function SavedAtChip({ savedAt }: { savedAt: number }) {
   return (
     <div className="pointer-events-none absolute right-3 top-3 z-10">
-      <span className="rounded-full bg-[#020409]/80/80 px-2 py-0.5 text-[10px] text-[#6B6B80] backdrop-blur-sm">
+      <span className="rounded-full bg-[#171721]/80/80 px-2 py-0.5 text-[10px] text-[#8E8E9C] backdrop-blur-sm">
         {formatSavedAt(savedAt)}
       </span>
     </div>
@@ -510,10 +510,10 @@ function EmptyAll() {
         <div className="absolute inset-0 rounded-full border border-dashed border-white/[0.08] animate-[spin_12s_linear_infinite]" />
       </div>
 
-      <h2 className="mb-2 text-xl font-semibold text-[#F5F5F7]">Nothing saved yet</h2>
-      <p className="mb-8 max-w-sm text-sm leading-relaxed text-[#6B6B80]">
+      <h2 className="mb-2 text-xl font-semibold text-[#EDEDF3]">Nothing saved yet</h2>
+      <p className="mb-8 max-w-sm text-sm leading-relaxed text-[#8E8E9C]">
         Tap the{' '}
-        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-xs text-[#A0A0B2]">
+        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-xs text-[#C3C3CC]">
           <HeartSmallIcon /> save
         </span>{' '}
         icon on any property or land listing to add it here. Saved assets persist across
@@ -529,8 +529,8 @@ function EmptyAll() {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#C9A84C]/10">
             <BuildingGoldIcon />
           </div>
-          <span className="text-sm font-medium text-[#F5F5F7]">Browse Properties</span>
-          <span className="text-xs text-[#6B6B80]">Residential & commercial</span>
+          <span className="text-sm font-medium text-[#EDEDF3]">Browse Properties</span>
+          <span className="text-xs text-[#8E8E9C]">Residential & commercial</span>
         </Link>
         <Link
           href="/marketplace?category=LAND"
@@ -540,7 +540,7 @@ function EmptyAll() {
             <LandGreenIcon />
           </div>
           <span className="text-sm font-medium text-[#E8F0E8]">Browse Land</span>
-          <span className="text-xs text-[#6B6B80]">Parcels & development</span>
+          <span className="text-xs text-[#8E8E9C]">Parcels & development</span>
         </Link>
       </div>
     </div>
@@ -559,10 +559,10 @@ function EmptyTab({ tab }: { tab: AssetTab }) {
       >
         {isLand ? <LandGreenIcon /> : <BuildingGoldIcon />}
       </div>
-      <p className="mb-1 text-sm font-medium text-[#A0A0B2]">
+      <p className="mb-1 text-sm font-medium text-[#C3C3CC]">
         No saved {isLand ? 'land parcels' : 'properties'} yet
       </p>
-      <p className="mb-5 text-xs text-[#6B6B80]">
+      <p className="mb-5 text-xs text-[#8E8E9C]">
         {isLand
           ? 'Save land parcels from the marketplace to see them here.'
           : 'Save properties from the marketplace to see them here.'}
@@ -595,7 +595,7 @@ function ViewBtn({
       onClick={onClick}
       className={cn(
         'flex h-9 w-9 items-center justify-center transition-colors',
-        active ? 'bg-white/[0.04] text-[#C9A84C]' : 'bg-transparent text-[#6B6B80] hover:text-[#A0A0B2]',
+        active ? 'bg-white/[0.04] text-[#C9A84C]' : 'bg-transparent text-[#8E8E9C] hover:text-[#C3C3CC]',
       )}
     >
       {children}

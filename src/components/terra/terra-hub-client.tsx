@@ -46,10 +46,10 @@ import { inferLandUse } from '@/components/marketplace/land-card'
 
 const LAND_USE_BADGE: Record<string, { label: string; cls: string }> = {
   AGRICULTURAL: { label: 'Agricultural', cls: 'bg-[#166534]/20 text-[#4ADE80]' },
-  RESIDENTIAL_DEV: { label: 'Residential Dev', cls: 'bg-[#1D4ED8]/15 text-[#93C5FD]' },
+  RESIDENTIAL_DEV: { label: 'Residential Dev', cls: 'bg-[#9A7A22]/15 text-[#E8D590]' },
   COMMERCIAL_DEV: { label: 'Commercial Dev', cls: 'bg-[#C9A84C]/15 text-[#C9A84C]' },
   INDUSTRIAL: { label: 'Industrial', cls: 'bg-[#92400E]/20 text-[#FCD34D]' },
-  MIXED_USE: { label: 'Mixed Use', cls: 'bg-[#4C1D95]/20 text-[#C4B5FD]' },
+  MIXED_USE: { label: 'Mixed Use', cls: 'bg-[#4C1D95]/20 text-[#EDEDF3]' },
   RECREATIONAL: { label: 'Recreational', cls: 'bg-[#1E3A5F]/20 text-[#7DD3FC]' },
   WATERFRONT: { label: 'Waterfront', cls: 'bg-[#164E63]/20 text-[#67E8F9]' },
   RURAL: { label: 'Rural', cls: 'bg-[#374151]/20 text-[#D1D5DB]' },
@@ -103,7 +103,7 @@ function TerraParcelCard({ listing }: { listing: TerraListing }) {
   return (
     <Link
       href={`/marketplace/${listing.id}`}
-      className="group block overflow-hidden rounded-2xl border border-[#1E2D1E] bg-[#0D110D] transition-all hover:border-[#2A3A2A] hover:shadow-lg hover:shadow-[#0A0A0F]/50"
+      className="group block overflow-hidden rounded-2xl border border-[#1E2D1E] bg-[#0D110D] transition-all hover:border-[#2A3A2A] hover:shadow-lg hover:shadow-[#171721]/50"
     >
       {/* Image */}
       <div className="relative h-48 overflow-hidden">

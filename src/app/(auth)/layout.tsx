@@ -7,13 +7,13 @@ import Link from 'next/link'
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#020409]">
+    <div className="relative flex min-h-screen flex-col items-center justify-center bg-[#171721]">
       {/* Radial glow behind card */}
       <div
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(59,130,246,0.08) 0%, rgba(139,92,246,0.04) 50%, transparent 70%)',
+            'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201, 168, 76,0.08) 0%, rgba(237, 237, 243,0.04) 50%, transparent 70%)',
         }}
       />
 
@@ -30,7 +30,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Logo */}
       <Link
         href="/"
-        className="relative mb-8 flex items-center gap-2 text-[#60A5FA] transition-opacity hover:opacity-80"
+        className="relative mb-8 flex items-center gap-2 text-[#D4B45E] transition-opacity hover:opacity-80"
         aria-label="TIGI home"
       >
         <TigiLogoMark />
@@ -47,11 +47,11 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Footer line */}
       <p className="relative mt-8 text-center text-xs text-[#3A3A48]">
         © {new Date().getFullYear()} TIGI. All rights reserved.{' '}
-        <Link href="/legal" className="hover:text-[#60A5FA] transition-colors">
+        <Link href="/legal" className="hover:text-[#D4B45E] transition-colors">
           Privacy
         </Link>
         {' · '}
-        <Link href="/legal/terms" className="hover:text-[#60A5FA] transition-colors">
+        <Link href="/legal/terms" className="hover:text-[#D4B45E] transition-colors">
           Terms
         </Link>
       </p>
@@ -62,16 +62,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 function TigiLogoMark() {
   return (
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-      <rect width="28" height="28" rx="6" fill="#3B82F6" fillOpacity="0.12" />
+      <rect width="28" height="28" rx="6" fill="#C9A84C" fillOpacity="0.12" />
       <path
         d="M14 6L20 10V14L14 18L8 14V10L14 6Z"
-        stroke="#3B82F6"
+        stroke="#C9A84C"
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
       <path
         d="M14 18V22M8 14L4 16M20 14L24 16"
-        stroke="#3B82F6"
+        stroke="#C9A84C"
         strokeWidth="1.5"
         strokeLinecap="round"
       />

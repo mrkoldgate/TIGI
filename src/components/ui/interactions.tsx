@@ -88,7 +88,7 @@ export function SpotlightCard({ children, className, spotlightColor = 'rgba(255,
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             className={cn(
-                'group relative overflow-hidden rounded-3xl border border-white/10 bg-[#020409]/40',
+                'group relative overflow-hidden rounded-3xl border border-white/10 bg-[#171721]/40',
                 className
             )}
         >
@@ -161,7 +161,7 @@ export function TextReveal({ text, className, style, delay = 0, by = 'word' }: {
 export function MouseTiltCard({
     children,
     className,
-    spotlightColor = 'rgba(59,130,246,0.12)',
+    spotlightColor = 'rgba(201, 168, 76,0.12)',
     maxTilt = 10,
     perspective = 1200,
 }: {
@@ -250,8 +250,8 @@ export function NavProgressBar({ className }: { className?: string }) {
             <div
                 className="h-full w-full"
                 style={{
-                    background: 'linear-gradient(90deg, #3B82F6 0%, #8B5CF6 50%, #10B981 100%)',
-                    boxShadow: '0 0 8px rgba(59,130,246,0.6)',
+                    background: 'linear-gradient(90deg, #C9A84C 0%, #C3C3CC 50%, #5DBB8E 100%)',
+                    boxShadow: '0 0 8px rgba(201, 168, 76,0.6)',
                 }}
             />
         </motion.div>

@@ -181,8 +181,8 @@ export function KYCOnboardingClient({
         <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
           Account Verification
         </p>
-        <h1 className="mt-1 text-2xl font-bold text-[#F5F5F7]">Identity Verification</h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <h1 className="mt-1 text-2xl font-bold text-[#EDEDF3]">Identity Verification</h1>
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Required to unlock investing and trading features on TIGI.
         </p>
       </div>
@@ -193,7 +193,7 @@ export function KYCOnboardingClient({
       )}
 
       {/* Step content */}
-      <div className="mt-6 rounded-2xl border border-[#2A2A3A] bg-[#0A0A0F] p-6 shadow-xl sm:p-8">
+      <div className="mt-6 rounded-2xl border border-[#33333F] bg-[#171721] p-6 shadow-xl sm:p-8">
         {step === 1 && (
           <WelcomeStep
             status={status}
@@ -265,7 +265,7 @@ export function KYCOnboardingClient({
           TIGI collects identity documents solely for regulatory compliance purposes.
           Documents are encrypted in transit and at rest.
           This verification does not constitute legal compliance certification.{' '}
-          <span className="text-[#6B6B80]">Privacy Policy · Terms of Service</span>
+          <span className="text-[#8E8E9C]">Privacy Policy · Terms of Service</span>
         </p>
       )}
     </div>
@@ -288,9 +288,9 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
               <div
                 className={cn(
                   'flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-semibold transition-all',
-                  isCompleted ? 'border-transparent text-[#0A0A0F]' :
+                  isCompleted ? 'border-transparent text-[#171721]' :
                     isActive ? 'border-[#C9A84C] text-[#C9A84C]' :
-                      'border-[#2A2A3A] text-[#4A4A5E]',
+                      'border-[#33333F] text-[#4A4A5E]',
                 )}
                 style={isCompleted ? { backgroundColor: GOLD } : {}}
               >
@@ -298,7 +298,7 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
               </div>
               <span className={cn(
                 'hidden text-[9px] font-medium sm:block',
-                isActive ? 'text-[#F5F5F7]' : isCompleted ? 'text-[#C9A84C]' : 'text-[#4A4A5E]',
+                isActive ? 'text-[#EDEDF3]' : isCompleted ? 'text-[#C9A84C]' : 'text-[#4A4A5E]',
               )}>
                 {step.label}
               </span>
@@ -306,7 +306,7 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
             {!isLast && (
               <div
                 className="mb-3.5 h-[2px] flex-1 transition-all"
-                style={{ backgroundColor: step.id < currentStep ? GOLD : '#2A2A3A' }}
+                style={{ backgroundColor: step.id < currentStep ? GOLD : '#33333F' }}
               />
             )}
           </React.Fragment>
@@ -342,20 +342,20 @@ function WelcomeStep({
       <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C9A84C]/15">
         <ShieldIcon color={GOLD} />
       </div>
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Verify Your Identity</h2>
-      <p className="mb-6 text-sm leading-relaxed text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Verify Your Identity</h2>
+      <p className="mb-6 text-sm leading-relaxed text-[#C3C3CC]">
         Identity verification is required to invest in tokenized assets, initiate purchases,
         and access TIGI's full marketplace. The process takes approximately 3–5 minutes.
       </p>
 
       {/* What you'll need */}
-      <div className="mb-6 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+      <div className="mb-6 rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
           What You'll Need
         </p>
         <ul className="space-y-2">
           {reqs.map((req) => (
-            <li key={req} className="flex items-center gap-2 text-sm text-[#A0A0B2]">
+            <li key={req} className="flex items-center gap-2 text-sm text-[#C3C3CC]">
               <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: GOLD }} />
               {req}
             </li>
@@ -370,9 +370,9 @@ function WelcomeStep({
           { label: 'Secure', sub: 'Access controlled' },
           { label: 'Compliant', sub: 'GDPR aligned' },
         ].map(({ label, sub }) => (
-          <div key={label} className="rounded-lg border border-[#2A2A3A] bg-[#14141E] px-3 py-2.5 text-center">
-            <p className="text-xs font-semibold text-[#F5F5F7]">{label}</p>
-            <p className="text-[10px] text-[#6B6B80]">{sub}</p>
+          <div key={label} className="rounded-lg border border-[#33333F] bg-[#14141E] px-3 py-2.5 text-center">
+            <p className="text-xs font-semibold text-[#EDEDF3]">{label}</p>
+            <p className="text-[10px] text-[#8E8E9C]">{sub}</p>
           </div>
         ))}
       </div>
@@ -385,7 +385,7 @@ function WelcomeStep({
         }}
         className={cn(
           'w-full rounded-xl px-6 py-3.5 text-sm font-semibold transition-all',
-          'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4A84C] disabled:opacity-50',
+          'bg-[#C9A84C] text-[#171721] hover:bg-[#D4A84C] disabled:opacity-50',
         )}
       >
         {starting ? 'Starting…' : 'Begin Verification'}
@@ -399,8 +399,8 @@ function WelcomeStep({
 function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   return (
     <div className="animate-fade-in">
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">What We Collect & Why</h2>
-      <p className="mb-6 text-sm text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">What We Collect & Why</h2>
+      <p className="mb-6 text-sm text-[#C3C3CC]">
         TIGI is required by applicable financial regulations to verify the identity of users
         who transact on the platform. This section explains what we collect and how we use it.
       </p>
@@ -423,9 +423,9 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
             notice: 'Vendor integration in progress. Currently a placeholder step.',
           },
         ].map(({ title, desc, notice }) => (
-          <div key={title} className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
-            <p className="mb-1 text-sm font-semibold text-[#F5F5F7]">{title}</p>
-            <p className="text-xs leading-relaxed text-[#6B6B80]">{desc}</p>
+          <div key={title} className="rounded-xl border border-[#33333F] bg-[#14141E] p-4">
+            <p className="mb-1 text-sm font-semibold text-[#EDEDF3]">{title}</p>
+            <p className="text-xs leading-relaxed text-[#8E8E9C]">{desc}</p>
             {notice && (
               <p className="mt-2 rounded-md border border-[#F59E0B]/20 bg-[#F59E0B]/8 px-2.5 py-1.5 text-[10px] text-[#F59E0B]">
                 ⚠ {notice}
@@ -435,13 +435,13 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
-          <strong className="text-[#A0A0B2]">Data Retention:</strong> Identity documents are stored
+      <div className="mt-5 rounded-xl border border-[#33333F] bg-[#14141E] p-4">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
+          <strong className="text-[#C3C3CC]">Data Retention:</strong> Identity documents are stored
           for the duration required by applicable law and deleted thereafter.
           TIGI does not sell or share verification data with third parties
           except as required for regulatory compliance.{' '}
-          <strong className="text-[#A0A0B2]">
+          <strong className="text-[#C3C3CC]">
             This verification process does not constitute legal advice or regulatory certification.
           </strong>
         </p>
@@ -477,8 +477,8 @@ function PersonalInfoStep({
 
   return (
     <div className="animate-fade-in">
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Personal Information</h2>
-      <p className="mb-6 text-sm text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Personal Information</h2>
+      <p className="mb-6 text-sm text-[#C3C3CC]">
         Enter your details exactly as they appear on your government-issued ID.
       </p>
 
@@ -499,8 +499,8 @@ function PersonalInfoStep({
           hint="Must be 18 years or older."
         />
 
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+        <div className="rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Residential Address
           </p>
           <div className="space-y-3">
@@ -525,11 +525,11 @@ function PersonalInfoStep({
               />
             </div>
             <div>
-              <label className="mb-1 block text-xs font-medium text-[#A0A0B2]">Country</label>
+              <label className="mb-1 block text-xs font-medium text-[#C3C3CC]">Country</label>
               <select
                 value={info.country}
                 onChange={f('country')}
-                className="w-full rounded-lg border border-[#2A2A3A] bg-[#22222E] px-3 py-2.5 text-sm text-[#F5F5F7] outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20"
+                className="w-full rounded-lg border border-[#33333F] bg-[#2E2E3D] px-3 py-2.5 text-sm text-[#EDEDF3] outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20"
               >
                 <option value="US">United States</option>
                 <option value="CA">Canada</option>
@@ -572,8 +572,8 @@ function DocumentUploadStep({
 
   return (
     <div className="animate-fade-in">
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Upload ID Document</h2>
-      <p className="mb-6 text-sm text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Upload ID Document</h2>
+      <p className="mb-6 text-sm text-[#C3C3CC]">
         Upload a clear photo of your government-issued ID. Accepted: passport, national ID,
         or driver's licence.
       </p>
@@ -581,7 +581,7 @@ function DocumentUploadStep({
       <div className="space-y-5">
         {/* Front */}
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Front of ID <span className="text-[#EF4444]">*</span>
           </p>
           <UploadZone
@@ -601,7 +601,7 @@ function DocumentUploadStep({
 
         {/* Back */}
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Back of ID{' '}
             <span className="font-normal normal-case text-[#4A4A5E]">(optional — required for national ID / driver's licence)</span>
           </p>
@@ -621,9 +621,9 @@ function DocumentUploadStep({
         </div>
 
         {/* Tips */}
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
-          <p className="mb-2 text-xs font-semibold text-[#A0A0B2]">Photo tips</p>
-          <ul className="space-y-1 text-xs text-[#6B6B80]">
+        <div className="rounded-xl border border-[#33333F] bg-[#14141E] p-4">
+          <p className="mb-2 text-xs font-semibold text-[#C3C3CC]">Photo tips</p>
+          <ul className="space-y-1 text-xs text-[#8E8E9C]">
             {[
               'Ensure all four corners of the document are visible',
               'Photo must be in focus and well-lit',
@@ -649,8 +649,8 @@ function DocumentUploadStep({
 function SelfieStep({ onNext, onBack }: { onNext: () => void; onBack: () => void }) {
   return (
     <div className="animate-fade-in">
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Selfie Verification</h2>
-      <p className="mb-6 text-sm text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Selfie Verification</h2>
+      <p className="mb-6 text-sm text-[#C3C3CC]">
         A liveness check confirms you are the person in the document you uploaded.
       </p>
 
@@ -661,7 +661,7 @@ function SelfieStep({ onNext, onBack }: { onNext: () => void; onBack: () => void
         <p className="mb-2 text-sm font-semibold text-[#F59E0B]">
           Liveness Check — Coming Soon
         </p>
-        <p className="max-w-sm text-xs leading-relaxed text-[#6B6B80]">
+        <p className="max-w-sm text-xs leading-relaxed text-[#8E8E9C]">
           TIGI will integrate a real-time liveness verification provider (Persona, Jumio, or Onfido)
           in a future milestone. For now, this step is bypassed during the initial KYC flow.
           Manual review by a compliance officer includes document-to-face comparison.
@@ -694,43 +694,43 @@ function ReviewSubmitStep({
 }) {
   return (
     <div className="animate-fade-in">
-      <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Review & Submit</h2>
-      <p className="mb-6 text-sm text-[#A0A0B2]">
+      <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Review & Submit</h2>
+      <p className="mb-6 text-sm text-[#C3C3CC]">
         Review your information before submitting. Your submission will be reviewed by a TIGI
         compliance officer within 1–3 business days.
       </p>
 
       {/* Personal info summary */}
-      <div className="mb-4 overflow-hidden rounded-xl border border-[#2A2A3A]">
+      <div className="mb-4 overflow-hidden rounded-xl border border-[#33333F]">
         <div className="bg-[#C9A84C]/10 px-4 py-2.5">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Personal Information</p>
         </div>
-        <div className="divide-y divide-[#1A1A24] px-4">
+        <div className="divide-y divide-[#272735] px-4">
           {[
             { label: 'Legal Name', value: personalInfo.legalName || '—' },
             { label: 'Date of Birth', value: personalInfo.dateOfBirth || '—' },
             { label: 'Address', value: [personalInfo.addressLine1, personalInfo.city, personalInfo.state, personalInfo.country].filter(Boolean).join(', ') || '—' },
           ].map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <span className="text-xs text-[#6B6B80]">{label}</span>
-              <span className="text-right text-xs font-medium text-[#F5F5F7]">{value}</span>
+              <span className="text-xs text-[#8E8E9C]">{label}</span>
+              <span className="text-right text-xs font-medium text-[#EDEDF3]">{value}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Documents summary */}
-      <div className="mb-4 overflow-hidden rounded-xl border border-[#2A2A3A]">
+      <div className="mb-4 overflow-hidden rounded-xl border border-[#33333F]">
         <div className="bg-[#C9A84C]/10 px-4 py-2.5">
           <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Documents</p>
         </div>
-        <div className="divide-y divide-[#1A1A24] px-4">
+        <div className="divide-y divide-[#272735] px-4">
           {[
             { label: 'ID Front', slot: idFront },
             { label: 'ID Back', slot: idBack },
           ].map(({ label, slot }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <span className="text-xs text-[#6B6B80]">{label}</span>
+              <span className="text-xs text-[#8E8E9C]">{label}</span>
               <span className={cn('text-xs font-medium', slot.status === 'done' ? 'text-[#4ADE80]' : 'text-[#4A4A5E]')}>
                 {slot.status === 'done' ? slot.file?.name ?? 'Uploaded' : '—'}
               </span>
@@ -740,12 +740,12 @@ function ReviewSubmitStep({
       </div>
 
       {/* Legal acknowledgment */}
-      <div className="mb-5 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
+      <div className="mb-5 rounded-xl border border-[#33333F] bg-[#14141E] p-4">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
           By submitting, I confirm that the information provided is accurate and complete.
           I understand that providing false information may result in account termination
           and may be subject to applicable legal consequences.{' '}
-          <strong className="text-[#A0A0B2]">
+          <strong className="text-[#C3C3CC]">
             This verification is for identity confirmation only and does not constitute
             legal, financial, or regulatory approval.
           </strong>
@@ -762,14 +762,14 @@ function ReviewSubmitStep({
         <button
           onClick={onBack}
           disabled={isSubmitting}
-          className="rounded-xl border border-[#2A2A3A] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7] disabled:opacity-50"
+          className="rounded-xl border border-[#33333F] px-5 py-2.5 text-sm font-medium text-[#C3C3CC] transition-colors hover:border-[#3A3A4A] hover:text-[#EDEDF3] disabled:opacity-50"
         >
           ← Back
         </button>
         <button
           onClick={onSubmit}
           disabled={isSubmitting}
-          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4A84C] disabled:opacity-50"
+          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4A84C] disabled:opacity-50"
         >
           {isSubmitting ? 'Submitting…' : 'Submit Verification'}
         </button>
@@ -799,8 +799,8 @@ function StatusScreen({
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full" style={{ backgroundColor: GREEN + '20' }}>
           <CheckCircleIcon color={GREEN} />
         </div>
-        <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Identity Verified</h2>
-        <p className="mb-6 max-w-sm text-sm leading-relaxed text-[#A0A0B2]">
+        <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Identity Verified</h2>
+        <p className="mb-6 max-w-sm text-sm leading-relaxed text-[#C3C3CC]">
           Your identity has been successfully verified. You now have full access to TIGI's
           investment features, tokenized asset purchases, and marketplace transactions.
         </p>
@@ -815,8 +815,8 @@ function StatusScreen({
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#F59E0B]/15">
           <ClockIcon color="#F59E0B" />
         </div>
-        <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Verification Submitted</h2>
-        <p className="mb-6 max-w-sm text-sm leading-relaxed text-[#A0A0B2]">
+        <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Verification Submitted</h2>
+        <p className="mb-6 max-w-sm text-sm leading-relaxed text-[#C3C3CC]">
           Your documents are under review by a TIGI compliance officer.
           You'll receive an email notification when your verification is complete.
           This typically takes 1–3 business days.
@@ -837,20 +837,20 @@ function StatusScreen({
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[#EF4444]/15">
           <XCircleIcon color="#EF4444" />
         </div>
-        <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Verification Not Approved</h2>
-        <p className="mb-4 max-w-sm text-sm leading-relaxed text-[#A0A0B2]">
+        <h2 className="mb-2 text-xl font-bold text-[#EDEDF3]">Verification Not Approved</h2>
+        <p className="mb-4 max-w-sm text-sm leading-relaxed text-[#C3C3CC]">
           Unfortunately, we were unable to verify your identity at this time.
           Please review the note below and resubmit with corrected information.
         </p>
         {reviewNote && (
           <div className="mb-6 w-full rounded-xl border border-[#EF4444]/25 bg-[#EF4444]/8 p-4 text-left">
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#EF4444]">Reviewer Note</p>
-            <p className="text-sm text-[#A0A0B2]">{reviewNote}</p>
+            <p className="text-sm text-[#C3C3CC]">{reviewNote}</p>
           </div>
         )}
         <button
           onClick={onRestart}
-          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#0A0A0F] hover:bg-[#D4A84C] transition-all"
+          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#171721] hover:bg-[#D4A84C] transition-all"
         >
           Resubmit Verification
         </button>
@@ -861,7 +861,7 @@ function StatusScreen({
   // PENDING or NONE — shouldn't normally reach here (caught in useEffect)
   return (
     <div className="flex flex-col items-center py-12 text-center">
-      <p className="text-sm text-[#6B6B80]">Verification in progress…</p>
+      <p className="text-sm text-[#8E8E9C]">Verification in progress…</p>
     </div>
   )
 }
@@ -877,13 +877,13 @@ function KycField({
   const id = label.toLowerCase().replace(/\s+/g, '-')
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-medium text-[#A0A0B2]">{label}</label>
+      <label htmlFor={id} className="text-xs font-medium text-[#C3C3CC]">{label}</label>
       <input
         id={id}
         type={type}
         className={cn(
-          'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-          'px-4 py-2.5 text-sm text-[#F5F5F7] placeholder:text-[#4A4A5E]',
+          'w-full rounded-lg border border-[#33333F] bg-[#2E2E3D]',
+          'px-4 py-2.5 text-sm text-[#EDEDF3] placeholder:text-[#4A4A5E]',
           'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
           'transition-colors duration-150',
         )}
@@ -909,14 +909,14 @@ function StepActions({
     <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
       <button
         onClick={onBack}
-        className="rounded-xl border border-[#2A2A3A] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7]"
+        className="rounded-xl border border-[#33333F] px-5 py-2.5 text-sm font-medium text-[#C3C3CC] transition-colors hover:border-[#3A3A4A] hover:text-[#EDEDF3]"
       >
         ← Back
       </button>
       <button
         onClick={onNext}
         disabled={!canNext}
-        className="rounded-xl bg-[#C9A84C] px-6 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4A84C] disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
+        className="rounded-xl bg-[#C9A84C] px-6 py-2.5 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4A84C] disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
       >
         {nextLabel} →
       </button>
@@ -926,7 +926,7 @@ function StepActions({
 
 function StatusBadge({ status }: { status: string }) {
   const cfg: Record<string, { label: string; color: string; dot: string }> = {
-    NONE: { label: 'Not Started', color: 'text-[#6B6B80]', dot: 'bg-[#3A3A4A]' },
+    NONE: { label: 'Not Started', color: 'text-[#8E8E9C]', dot: 'bg-[#3A3A4A]' },
     PENDING: { label: 'In Progress', color: 'text-[#F59E0B]', dot: 'bg-[#F59E0B]' },
     SUBMITTED: { label: 'Under Review', color: 'text-[#818CF8]', dot: 'bg-[#818CF8]' },
     VERIFIED: { label: 'Verified', color: 'text-[#4ADE80]', dot: 'bg-[#4ADE80]' },
@@ -934,7 +934,7 @@ function StatusBadge({ status }: { status: string }) {
   }
   const c = cfg[status] ?? cfg.NONE
   return (
-    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-[#2A2A3A] bg-[#111118] px-3 py-1 text-xs font-semibold', c.color)}>
+    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-[#33333F] bg-[#1E1E2A] px-3 py-1 text-xs font-semibold', c.color)}>
       <span className={cn('h-1.5 w-1.5 rounded-full', c.dot)} />
       {c.label}
     </span>

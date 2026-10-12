@@ -201,7 +201,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               {watchlistIsEmpty ? (
                 <div className="px-2 py-1">
                   {/* Show featured listings as inspiration when watchlist is empty */}
-                  <p className="px-2 py-2 text-xs text-[#94A3B8]">
+                  <p className="px-2 py-2 text-xs text-[#A8A8B3]">
                     You haven't saved anything yet. Here are some to get you started:
                   </p>
                   <div className="divide-y divide-white/[0.04]">
@@ -295,22 +295,22 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
     <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] sm:p-6">
       {/* Top accent line */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C3C3CC]/40 to-transparent"
         aria-hidden="true"
       />
       {/* Corner atmospheric light */}
       <div
-        className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-cyan-400/[0.04] blur-[50px]"
+        className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-[#C3C3CC]/[0.04] blur-[50px]"
         aria-hidden="true"
       />
 
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         {/* Left: greeting */}
         <div>
-          <p className="text-label text-[#6B6B80]">{greeting}</p>
+          <p className="text-label text-[#8E8E9C]">{greeting}</p>
           <h1 className="text-h1 mt-0.5">{userName}</h1>
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="rounded border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[11px] text-[#A0A0B2]">
+            <span className="rounded border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[11px] text-[#C3C3CC]">
               {role}
             </span>
             <KycBadge status={kycStatus} />
@@ -322,14 +322,14 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
         <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
           <Link
             href="/marketplace"
-            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:shadow-[0_0_20px_rgba(34,211,238,0.08)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:border-[#C3C3CC]/30 hover:bg-[#C3C3CC]/5 hover:shadow-[0_0_20px_rgba(34,211,238,0.08)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
           >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+            <Sparkles className="h-3.5 w-3.5 text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
             Browse marketplace
           </Link>
           <Link
             href="/settings/wallet"
-            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-[#94A3B8] backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-[#A8A8B3] backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
           >
             <Wallet className="h-3.5 w-3.5" />
             Connect wallet
@@ -378,15 +378,15 @@ function PortfolioTeaser() {
   return (
     <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
       <div className="mb-3 flex items-center gap-3">
-        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 border border-cyan-400/20 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
-          <BarChart3 className="h-5 w-5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-[#C3C3CC]/10 border border-[#C3C3CC]/20 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
+          <BarChart3 className="h-5 w-5 text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
         </div>
         <div>
           <h3 className="text-sm font-semibold text-white tracking-tight">Your Portfolio</h3>
-          <p className="text-[11px] text-[#94A3B8]">Holdings &amp; performance</p>
+          <p className="text-[11px] text-[#A8A8B3]">Holdings &amp; performance</p>
         </div>
       </div>
-      <p className="mb-4 text-xs leading-relaxed text-[#94A3B8]">
+      <p className="mb-4 text-xs leading-relaxed text-[#A8A8B3]">
         View your token holdings, track P&amp;L, and monitor yield performance
         across all fractional investments.
       </p>

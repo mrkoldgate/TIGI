@@ -62,7 +62,7 @@ function LoginContent() {
         <h1 className="font-heading text-2xl font-bold text-white">
           Welcome back
         </h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Sign in to your TIGI account
         </p>
       </div>
@@ -80,7 +80,7 @@ function LoginContent() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isSubmitting || googleLoading}
-        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
+        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[#33333F] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
       >
         {googleLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -112,8 +112,8 @@ function LoginContent() {
             placeholder="you@example.com"
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-              errors.email ? 'border-red-500/50' : 'border-[#2A2A3A]',
+              'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+              errors.email ? 'border-red-500/50' : 'border-[#33333F]',
             )}
           />
           {errors.email && (
@@ -129,7 +129,7 @@ function LoginContent() {
             </label>
             <Link
               href="/auth/forgot-password"
-              className="text-xs text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
+              className="text-xs text-[#D4B45E] hover:text-[#E8D590] transition-colors"
             >
               Forgot password?
             </Link>
@@ -143,8 +143,8 @@ function LoginContent() {
               placeholder="••••••••"
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-                errors.password ? 'border-red-500/50' : 'border-[#2A2A3A]',
+                'focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20',
+                errors.password ? 'border-red-500/50' : 'border-[#33333F]',
               )}
             />
             <button
@@ -165,7 +165,7 @@ function LoginContent() {
         <button
           type="submit"
           disabled={isSubmitting || googleLoading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3B82F6] to-[#2563EB] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all hover:from-[#2563EB] hover:to-[#1D4ED8] hover:shadow-[0_0_28px_rgba(59,130,246,0.45)] active:scale-[0.98] disabled:opacity-60"
+          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C9A84C] to-[#B8932F] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(201, 168, 76,0.3)] transition-all hover:from-[#B8932F] hover:to-[#9A7A22] hover:shadow-[0_0_28px_rgba(201, 168, 76,0.45)] active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           Sign in
@@ -173,11 +173,11 @@ function LoginContent() {
       </form>
 
       {/* Register link */}
-      <p className="mt-6 text-center text-sm text-[#6B6B80]">
+      <p className="mt-6 text-center text-sm text-[#8E8E9C]">
         Don&apos;t have an account?{' '}
         <Link
           href="/auth/register"
-          className="font-medium text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
+          className="font-medium text-[#D4B45E] hover:text-[#E8D590] transition-colors"
         >
           Create one
         </Link>
@@ -188,7 +188,7 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin text-[#3B82F6]" /></div>}>
+    <Suspense fallback={<div className="flex justify-center p-8"><Loader2 className="h-6 w-6 animate-spin text-[#C9A84C]" /></div>}>
       <LoginContent />
     </Suspense>
   )

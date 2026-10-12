@@ -36,21 +36,21 @@ export function SectionHeader({
         <div className="flex items-center gap-2">
           <h2 className="text-h4 text-white tracking-tight">{title}</h2>
           {milestone && (
-            <span className="flex items-center gap-1.5 rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            <span className="flex items-center gap-1.5 rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#A8A8B3] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(127, 209, 168,0.8)]" />
               {milestone}
             </span>
           )}
         </div>
         {description && (
-          <p className="mt-0.5 text-xs text-[#6B6B80]">{description}</p>
+          <p className="mt-0.5 text-xs text-[#8E8E9C]">{description}</p>
         )}
       </div>
 
       {viewAllHref && (
         <Link
           href={viewAllHref}
-          className="flex flex-shrink-0 items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#60A5FA]"
+          className="flex flex-shrink-0 items-center gap-1 text-xs text-[#8E8E9C] transition-colors hover:text-[#D4B45E]"
         >
           {viewAllLabel}
           <ChevronRight className="h-3 w-3" />

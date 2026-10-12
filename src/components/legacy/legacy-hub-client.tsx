@@ -180,10 +180,10 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
         <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
           Structured Planning Tool
         </p>
-        <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
+        <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">
           {LEGACY_MESSAGING.moduleTitle}
         </h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           {LEGACY_MESSAGING.shortDescription}
         </p>
       </div>
@@ -192,25 +192,25 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
       <StepIndicator currentStep={step} totalSteps={STEPS.length} />
 
       {/* Step content */}
-      <div className="rounded-2xl border border-[#2A2A3A] bg-[#0D0D14] p-6">
+      <div className="rounded-2xl border border-[#33333F] bg-[#0D0D14] p-6">
 
         {/* ── Step 0: Overview / Disclaimer ─────────────────────────────── */}
         {step === 0 && (
           <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#A78BFA]/10">
-                <Landmark className="h-5 w-5 text-[#A78BFA]" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#D8D8E0]/10">
+                <Landmark className="h-5 w-5 text-[#D8D8E0]" />
               </div>
               <div>
-                <h2 className="font-heading text-lg font-semibold text-[#F5F5F7]">
+                <h2 className="font-heading text-lg font-semibold text-[#EDEDF3]">
                   Set up your legacy preferences
                 </h2>
-                <p className="text-xs text-[#6B6B80]">Takes about 5 minutes</p>
+                <p className="text-xs text-[#8E8E9C]">Takes about 5 minutes</p>
               </div>
             </div>
 
-            <div className="rounded-xl border border-[#A78BFA]/20 bg-[#A78BFA]/5 p-4">
-              <p className="text-xs leading-relaxed text-[#A0A0B2]">
+            <div className="rounded-xl border border-[#D8D8E0]/20 bg-[#D8D8E0]/5 p-4">
+              <p className="text-xs leading-relaxed text-[#C3C3CC]">
                 {LEGACY_MESSAGING.disclaimer}
               </p>
             </div>
@@ -219,8 +219,8 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
               {STEPS.slice(1).map((s, i) => {
                 const Icon = s.icon
                 return (
-                  <li key={i} className="flex items-center gap-3 text-sm text-[#6B6B80]">
-                    <Icon className="h-4 w-4 text-[#A78BFA]/60 flex-shrink-0" />
+                  <li key={i} className="flex items-center gap-3 text-sm text-[#8E8E9C]">
+                    <Icon className="h-4 w-4 text-[#D8D8E0]/60 flex-shrink-0" />
                     {s.label}
                   </li>
                 )
@@ -230,7 +230,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
             <button
               onClick={() => goToStep(1)}
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#A78BFA]/20 px-5 py-2.5 text-sm font-semibold text-[#A78BFA] border border-[#A78BFA]/30 hover:bg-[#A78BFA]/30 transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-xl bg-[#D8D8E0]/20 px-5 py-2.5 text-sm font-semibold text-[#D8D8E0] border border-[#D8D8E0]/30 hover:bg-[#D8D8E0]/30 transition-all disabled:opacity-50"
             >
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
               {plan ? 'Continue setup' : LEGACY_MESSAGING.startCta}
@@ -245,7 +245,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
             <StepHeader icon={FileText} title="Estate Instructions" subtitle="General preferences for your estate distribution" />
 
             <div>
-              <label className="block text-xs font-medium text-[#6B6B80] mb-2">
+              <label className="block text-xs font-medium text-[#8E8E9C] mb-2">
                 General instructions
               </label>
               <textarea
@@ -253,12 +253,12 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                 onChange={(e) => setInstructions(e.target.value)}
                 rows={5}
                 placeholder="Describe your general estate wishes. For example: how assets should be distributed, any specific bequests, charitable intentions, or family priorities…"
-                className="w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#111118] px-4 py-3 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+                className="w-full resize-none rounded-lg border border-[#33333F] bg-[#1E1E2A] px-4 py-3 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-[#6B6B80] mb-2">
+              <label className="block text-xs font-medium text-[#8E8E9C] mb-2">
                 Special conditions (optional)
               </label>
               <textarea
@@ -266,7 +266,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                 onChange={(e) => setSpecialConditions(e.target.value)}
                 rows={3}
                 placeholder="Any special conditions, contingencies, or time-based restrictions…"
-                className="w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#111118] px-4 py-3 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+                className="w-full resize-none rounded-lg border border-[#33333F] bg-[#1E1E2A] px-4 py-3 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
               />
             </div>
 
@@ -296,24 +296,24 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                 {beneficiaries.map((b) => (
                   <li
                     key={b.id}
-                    className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] px-4 py-3"
+                    className="flex items-center gap-3 rounded-xl border border-[#33333F] bg-[#1E1E2A] px-4 py-3"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-[#F5F5F7] truncate">{b.name}</p>
-                      <p className="text-xs text-[#6B6B80]">
+                      <p className="text-sm font-medium text-[#EDEDF3] truncate">{b.name}</p>
+                      <p className="text-xs text-[#8E8E9C]">
                         {RELATIONSHIP_LABELS[b.relationship] ?? b.relationship}
                         {b.email && ` · ${b.email}`}
                       </p>
                     </div>
                     <span className={cn(
                       'flex-shrink-0 rounded-lg px-2.5 py-0.5 text-xs font-semibold tabular-nums',
-                      b.allocationPercent > 0 ? 'bg-[#A78BFA]/10 text-[#A78BFA]' : 'bg-[#2A2A3A] text-[#4A4A5E]',
+                      b.allocationPercent > 0 ? 'bg-[#D8D8E0]/10 text-[#D8D8E0]' : 'bg-[#33333F] text-[#4A4A5E]',
                     )}>
                       {b.allocationPercent}%
                     </span>
                     <button
                       onClick={() => { setEditBeneficiary(b); setShowBenefForm(true) }}
-                      className="flex-shrink-0 text-[#4A4A5E] hover:text-[#6B6B80] transition-colors"
+                      className="flex-shrink-0 text-[#4A4A5E] hover:text-[#8E8E9C] transition-colors"
                     >
                       <Pencil className="h-3.5 w-3.5" />
                     </button>
@@ -330,7 +330,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                 ))}
               </ul>
             ) : (
-              <div className="rounded-xl border border-dashed border-[#2A2A3A] py-8 text-center">
+              <div className="rounded-xl border border-dashed border-[#33333F] py-8 text-center">
                 <Users className="mx-auto h-6 w-6 text-[#4A4A5E]" />
                 <p className="mt-2 text-sm text-[#4A4A5E]">No beneficiaries added yet</p>
               </div>
@@ -346,7 +346,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
             ) : (
               <button
                 onClick={() => { setEditBeneficiary(null); setShowBenefForm(true) }}
-                className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#A78BFA]/30 px-4 py-2.5 text-xs font-medium text-[#A78BFA] hover:border-[#A78BFA]/50 hover:bg-[#A78BFA]/5 transition-all"
+                className="inline-flex items-center gap-1.5 rounded-xl border border-dashed border-[#D8D8E0]/30 px-4 py-2.5 text-xs font-medium text-[#D8D8E0] hover:border-[#D8D8E0]/50 hover:bg-[#D8D8E0]/5 transition-all"
               >
                 <Plus className="h-3.5 w-3.5" />
                 Add beneficiary
@@ -374,40 +374,40 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
           <div className="space-y-5">
             <StepHeader icon={UserCog} title="Executor" subtitle="The person responsible for carrying out your instructions" />
 
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               An executor (or personal representative) is the individual who administers your estate.
               This is optional but recommended — it helps our compliance team coordinate with the right person.
             </p>
 
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="block text-xs font-medium text-[#6B6B80] mb-1">Executor full name</label>
+                <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Executor full name</label>
                 <input
                   type="text"
                   value={executorName}
                   onChange={(e) => setExecutorName(e.target.value)}
                   placeholder="e.g. Robert Johnson"
-                  className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+                  className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#6B6B80] mb-1">Executor email</label>
+                <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Executor email</label>
                 <input
                   type="email"
                   value={executorEmail}
                   onChange={(e) => setExecutorEmail(e.target.value)}
                   placeholder="executor@example.com"
-                  className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+                  className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-[#6B6B80] mb-1">Executor phone</label>
+                <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Executor phone</label>
                 <input
                   type="tel"
                   value={executorPhone}
                   onChange={(e) => setExecutorPhone(e.target.value)}
                   placeholder="+1 (555) 000-0000"
-                  className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+                  className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
                 />
               </div>
             </div>
@@ -427,7 +427,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
           <div className="space-y-5">
             <StepHeader icon={Paperclip} title="Supporting Documents" subtitle="Upload any relevant estate planning documents" />
 
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               You can attach existing legal documents (wills, trusts, POA) to support your legacy
               preferences. These are stored securely and visible only to our compliance team.
             </p>
@@ -493,9 +493,9 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
             <div
               className={cn(
                 'flex h-6 w-6 items-center justify-center rounded-full border transition-all',
-                isPast    && 'border-[#A78BFA]/40 bg-[#A78BFA]/10 text-[#A78BFA]',
-                isCurrent && 'border-[#A78BFA] bg-[#A78BFA]/20 text-[#A78BFA]',
-                !isPast && !isCurrent && 'border-[#2A2A3A] text-[#4A4A5E]',
+                isPast    && 'border-[#D8D8E0]/40 bg-[#D8D8E0]/10 text-[#D8D8E0]',
+                isCurrent && 'border-[#D8D8E0] bg-[#D8D8E0]/20 text-[#D8D8E0]',
+                !isPast && !isCurrent && 'border-[#33333F] text-[#4A4A5E]',
               )}
             >
               {isPast
@@ -503,7 +503,7 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
                 : <Icon className="h-3 w-3" />}
             </div>
             {i < totalSteps - 1 && (
-              <div className={cn('h-px w-4 sm:w-6', isPast ? 'bg-[#A78BFA]/30' : 'bg-[#2A2A3A]')} />
+              <div className={cn('h-px w-4 sm:w-6', isPast ? 'bg-[#D8D8E0]/30' : 'bg-[#33333F]')} />
             )}
           </div>
         )
@@ -518,12 +518,12 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
 function StepHeader({ icon: Icon, title, subtitle }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; title: string; subtitle: string }) {
   return (
     <div className="flex items-center gap-3">
-      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#A78BFA]/10">
-        <Icon className="h-4 w-4 text-[#A78BFA]" />
+      <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#D8D8E0]/10">
+        <Icon className="h-4 w-4 text-[#D8D8E0]" />
       </div>
       <div>
-        <h2 className="font-heading text-base font-semibold text-[#F5F5F7]">{title}</h2>
-        <p className="text-xs text-[#6B6B80]">{subtitle}</p>
+        <h2 className="font-heading text-base font-semibold text-[#EDEDF3]">{title}</h2>
+        <p className="text-xs text-[#8E8E9C]">{subtitle}</p>
       </div>
     </div>
   )
@@ -539,12 +539,12 @@ function StepNavigation({
   onNext: () => void
 }) {
   return (
-    <div className="flex items-center justify-between border-t border-[#1A1A24] pt-4">
+    <div className="flex items-center justify-between border-t border-[#272735] pt-4">
       <button
         type="button"
         onClick={onBack}
         disabled={saving}
-        className="inline-flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] px-4 py-2 text-xs font-medium text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2] transition-colors disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 rounded-lg border border-[#33333F] px-4 py-2 text-xs font-medium text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC] transition-colors disabled:opacity-50"
       >
         <ChevronLeft className="h-3.5 w-3.5" />
         Back
@@ -553,7 +553,7 @@ function StepNavigation({
         type="button"
         onClick={onNext}
         disabled={saving}
-        className="inline-flex items-center gap-1.5 rounded-xl bg-[#A78BFA]/20 px-5 py-2 text-xs font-semibold text-[#A78BFA] border border-[#A78BFA]/30 hover:bg-[#A78BFA]/30 transition-all disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 rounded-xl bg-[#D8D8E0]/20 px-5 py-2 text-xs font-semibold text-[#D8D8E0] border border-[#D8D8E0]/30 hover:bg-[#D8D8E0]/30 transition-all disabled:opacity-50"
       >
         {saving && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
         {step === total - 2 ? 'Review' : 'Continue'}
@@ -571,7 +571,7 @@ function AllocationBar({ total }: { total: number }) {
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-xs">
-        <span className="text-[#6B6B80]">Total allocation</span>
+        <span className="text-[#8E8E9C]">Total allocation</span>
         <span className={cn(
           'font-semibold tabular-nums',
           isComplete ? 'text-[#4ADE80]' : isOver ? 'text-[#EF4444]' : 'text-[#F59E0B]',
@@ -579,7 +579,7 @@ function AllocationBar({ total }: { total: number }) {
           {total}%
         </span>
       </div>
-      <div className="h-1.5 overflow-hidden rounded-full bg-[#1A1A24]">
+      <div className="h-1.5 overflow-hidden rounded-full bg-[#272735]">
         <div
           className={cn(
             'h-full rounded-full transition-all',
@@ -594,7 +594,7 @@ function AllocationBar({ total }: { total: number }) {
 
 function DocumentUploadArea() {
   return (
-    <div className="rounded-xl border border-dashed border-[#2A2A3A] py-8 text-center">
+    <div className="rounded-xl border border-dashed border-[#33333F] py-8 text-center">
       <Paperclip className="mx-auto h-6 w-6 text-[#4A4A5E]" />
       <p className="mt-2 text-sm text-[#4A4A5E]">Document uploads coming soon</p>
       <p className="mt-1 text-xs text-[#3A3A4A]">
@@ -635,7 +635,7 @@ function ReviewStep({
       <div className="space-y-4">
         <ReviewSection title="Estate Instructions">
           {instructions
-            ? <p className="text-sm text-[#A0A0B2] whitespace-pre-wrap">{instructions}</p>
+            ? <p className="text-sm text-[#C3C3CC] whitespace-pre-wrap">{instructions}</p>
             : <p className="text-sm text-[#4A4A5E] italic">Not provided</p>}
         </ReviewSection>
 
@@ -644,10 +644,10 @@ function ReviewStep({
             <ul className="space-y-1.5">
               {beneficiaries.map((b) => (
                 <li key={b.id} className="flex items-center justify-between text-sm">
-                  <span className="text-[#F5F5F7]">{b.name}</span>
-                  <div className="flex items-center gap-2 text-xs text-[#6B6B80]">
+                  <span className="text-[#EDEDF3]">{b.name}</span>
+                  <div className="flex items-center gap-2 text-xs text-[#8E8E9C]">
                     <span>{RELATIONSHIP_LABELS[b.relationship] ?? b.relationship}</span>
-                    <span className="font-semibold text-[#A78BFA]">{b.allocationPercent}%</span>
+                    <span className="font-semibold text-[#D8D8E0]">{b.allocationPercent}%</span>
                   </div>
                 </li>
               ))}
@@ -660,15 +660,15 @@ function ReviewStep({
 
         {(executorName || executorEmail) && (
           <ReviewSection title="Executor">
-            <p className="text-sm text-[#F5F5F7]">{executorName}</p>
-            {executorEmail && <p className="text-xs text-[#6B6B80]">{executorEmail}</p>}
-            {executorPhone && <p className="text-xs text-[#6B6B80]">{executorPhone}</p>}
+            <p className="text-sm text-[#EDEDF3]">{executorName}</p>
+            {executorEmail && <p className="text-xs text-[#8E8E9C]">{executorEmail}</p>}
+            {executorPhone && <p className="text-xs text-[#8E8E9C]">{executorPhone}</p>}
           </ReviewSection>
         )}
       </div>
 
       {/* Compliance note */}
-      <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+      <div className="rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
         <div className="flex items-start gap-2">
           <ShieldCheck className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#4A4A5E]" />
           <p className="text-xs text-[#4A4A5E] leading-relaxed">
@@ -695,11 +695,11 @@ function ReviewStep({
         </div>
       )}
 
-      <div className="flex items-center justify-between border-t border-[#1A1A24] pt-4">
+      <div className="flex items-center justify-between border-t border-[#272735] pt-4">
         <button
           onClick={onBack}
           disabled={saving}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] px-4 py-2 text-xs font-medium text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2] transition-colors disabled:opacity-50"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-[#33333F] px-4 py-2 text-xs font-medium text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC] transition-colors disabled:opacity-50"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
           Back
@@ -710,8 +710,8 @@ function ReviewStep({
           className={cn(
             'inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold transition-all',
             canSubmit && !saving
-              ? 'bg-[#A78BFA]/20 text-[#A78BFA] border border-[#A78BFA]/30 hover:bg-[#A78BFA]/30'
-              : 'bg-[#2A2A3A] text-[#4A4A5E] cursor-not-allowed',
+              ? 'bg-[#D8D8E0]/20 text-[#D8D8E0] border border-[#D8D8E0]/30 hover:bg-[#D8D8E0]/30'
+              : 'bg-[#33333F] text-[#4A4A5E] cursor-not-allowed',
           )}
         >
           {saving && <Loader2 className="h-4 w-4 animate-spin" />}
@@ -724,8 +724,8 @@ function ReviewStep({
 
 function ReviewSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4 space-y-2">
-      <p className="text-xs font-semibold uppercase tracking-wide text-[#6B6B80]">{title}</p>
+    <div className="rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4 space-y-2">
+      <p className="text-xs font-semibold uppercase tracking-wide text-[#8E8E9C]">{title}</p>
       {children}
     </div>
   )
@@ -750,7 +750,7 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
         <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
           Structured Planning Tool
         </p>
-        <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
+        <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">
           {LEGACY_MESSAGING.moduleTitle}
         </h1>
       </div>
@@ -761,7 +761,7 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
           <Icon className={cn('h-5 w-5', cfg?.color)} />
           <p className={cn('font-semibold', cfg?.color)}>{cfg?.label}</p>
         </div>
-        <p className="text-sm text-[#A0A0B2]">
+        <p className="text-sm text-[#C3C3CC]">
           {plan.status === 'SUBMITTED' || plan.status === 'UNDER_REVIEW'
             ? LEGACY_MESSAGING.submittedMessage
             : plan.status === 'ACTIVE'
@@ -769,9 +769,9 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
             : 'Your legacy plan has been suspended. Please contact support.'}
         </p>
         {plan.reviewNote && (
-          <div className="rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-3 py-2">
-            <p className="text-xs text-[#6B6B80]">
-              <span className="font-medium text-[#A0A0B2]">Reviewer note:</span> {plan.reviewNote}
+          <div className="rounded-lg border border-[#33333F] bg-[#0D0D14] px-3 py-2">
+            <p className="text-xs text-[#8E8E9C]">
+              <span className="font-medium text-[#C3C3CC]">Reviewer note:</span> {plan.reviewNote}
             </p>
           </div>
         )}
@@ -783,24 +783,24 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
       </div>
 
       {/* Summary */}
-      <div className="rounded-2xl border border-[#2A2A3A] bg-[#0D0D14] p-5 space-y-4">
-        <p className="text-xs font-semibold uppercase tracking-wide text-[#6B6B80]">Plan summary</p>
+      <div className="rounded-2xl border border-[#33333F] bg-[#0D0D14] p-5 space-y-4">
+        <p className="text-xs font-semibold uppercase tracking-wide text-[#8E8E9C]">Plan summary</p>
 
         <div className="flex items-center gap-2 text-sm">
-          <Users className="h-4 w-4 text-[#A78BFA]" />
-          <span className="text-[#A0A0B2]">{plan.beneficiaries.length} beneficiar{plan.beneficiaries.length === 1 ? 'y' : 'ies'}</span>
+          <Users className="h-4 w-4 text-[#D8D8E0]" />
+          <span className="text-[#C3C3CC]">{plan.beneficiaries.length} beneficiar{plan.beneficiaries.length === 1 ? 'y' : 'ies'}</span>
         </div>
         {plan.executorName && (
           <div className="flex items-center gap-2 text-sm">
-            <UserCog className="h-4 w-4 text-[#A78BFA]" />
-            <span className="text-[#A0A0B2]">Executor: {plan.executorName}</span>
+            <UserCog className="h-4 w-4 text-[#D8D8E0]" />
+            <span className="text-[#C3C3CC]">Executor: {plan.executorName}</span>
           </div>
         )}
 
         {(plan.status === 'ACTIVE') && (
           <button
             onClick={onRequestEdit}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] px-3 py-1.5 text-xs font-medium text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2] transition-colors"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-[#33333F] px-3 py-1.5 text-xs font-medium text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC] transition-colors"
           >
             <Pencil className="h-3 w-3" />
             Edit preferences
@@ -809,7 +809,7 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
       </div>
 
       {/* Legal reminder */}
-      <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
+      <div className="flex items-start gap-3 rounded-lg border border-[#33333F] bg-[#0D0D14] px-4 py-3">
         <ExternalLink className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#4A4A5E]" />
         <p className="text-xs text-[#4A4A5E] leading-relaxed">
           {LEGACY_MESSAGING.complianceNote}

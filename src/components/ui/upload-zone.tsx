@@ -137,7 +137,7 @@ export function UploadZone({
     return (
       <div className={cn('w-full', className)}>
         <div
-          className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3"
+          className="flex items-center gap-3 rounded-xl border border-[#33333F] bg-[#14141E] px-4 py-3"
           style={{ borderColor: accentColor + '40' }}
         >
           <div
@@ -147,14 +147,14 @@ export function UploadZone({
             <CheckIcon color={accentColor} />
           </div>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium text-[#F5F5F7]">{fileName}</p>
-            <p className="text-xs text-[#6B6B80]">Uploaded successfully</p>
+            <p className="truncate text-sm font-medium text-[#EDEDF3]">{fileName}</p>
+            <p className="text-xs text-[#8E8E9C]">Uploaded successfully</p>
           </div>
           {onRemove && (
             <button
               type="button"
               onClick={onRemove}
-              className="shrink-0 rounded-lg border border-transparent px-2 py-1 text-xs text-[#6B6B80] transition-colors hover:border-[#EF4444] hover:text-[#EF4444]"
+              className="shrink-0 rounded-lg border border-transparent px-2 py-1 text-xs text-[#8E8E9C] transition-colors hover:border-[#EF4444] hover:text-[#EF4444]"
             >
               Remove
             </button>
@@ -169,7 +169,7 @@ export function UploadZone({
   if (uploading) {
     return (
       <div className={cn('w-full', className)}>
-        <div className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3">
+        <div className="flex items-center gap-3 rounded-xl border border-[#33333F] bg-[#14141E] px-4 py-3">
           <div
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
             style={{ backgroundColor: accentColor + '20' }}
@@ -177,8 +177,8 @@ export function UploadZone({
             <SpinnerIcon color={accentColor} />
           </div>
           <div>
-            <p className="text-sm font-medium text-[#F5F5F7]">Uploading…</p>
-            <p className="text-xs text-[#6B6B80]">{fileName ?? 'Processing file'}</p>
+            <p className="text-sm font-medium text-[#EDEDF3]">Uploading…</p>
+            <p className="text-xs text-[#8E8E9C]">{fileName ?? 'Processing file'}</p>
           </div>
         </div>
       </div>
@@ -205,9 +205,9 @@ export function UploadZone({
             ? 'cursor-not-allowed opacity-40'
             : 'cursor-pointer',
           isDragging
-            ? 'bg-[#1A1A24]'
-            : 'bg-[#14141E] hover:bg-[#1A1A24]',
-          displayError ? 'border-[#EF4444]' : isDragging ? 'border-opacity-100' : 'border-[#2A2A3A]',
+            ? 'bg-[#272735]'
+            : 'bg-[#14141E] hover:bg-[#272735]',
+          displayError ? 'border-[#EF4444]' : isDragging ? 'border-opacity-100' : 'border-[#33333F]',
         )}
         style={isDragging && !displayError ? { borderColor: accentColor } : undefined}
       >
@@ -224,15 +224,15 @@ export function UploadZone({
           className="flex h-10 w-10 items-center justify-center rounded-xl transition-colors"
           style={{ backgroundColor: accentColor + '20' }}
         >
-          <UploadIcon color={isDragging ? accentColor : '#6B6B80'} />
+          <UploadIcon color={isDragging ? accentColor : '#8E8E9C'} />
         </div>
 
         <div className="text-center">
-          <p className="text-sm font-medium" style={{ color: isDragging ? accentColor : '#A0A0B2' }}>
+          <p className="text-sm font-medium" style={{ color: isDragging ? accentColor : '#C3C3CC' }}>
             {label}
           </p>
           {hint && (
-            <p className="mt-0.5 text-xs text-[#6B6B80]">{hint}</p>
+            <p className="mt-0.5 text-xs text-[#8E8E9C]">{hint}</p>
           )}
         </div>
       </div>

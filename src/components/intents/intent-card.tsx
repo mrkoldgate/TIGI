@@ -55,8 +55,8 @@ const STATUS_CONFIG: Record<string, {
   },
   REVIEWING: {
     icon: AlertCircle,
-    badgeClass: 'border-[#3B82F6]/30 bg-[#3B82F6]/10 text-[#3B82F6]',
-    dotClass: 'bg-[#3B82F6]',
+    badgeClass: 'border-[#C9A84C]/30 bg-[#C9A84C]/10 text-[#C9A84C]',
+    dotClass: 'bg-[#C9A84C]',
   },
   APPROVED: {
     icon: CheckCircle2,
@@ -75,13 +75,13 @@ const STATUS_CONFIG: Record<string, {
   },
   CANCELLED: {
     icon: XCircle,
-    badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
-    dotClass: 'bg-[#6B6B80]',
+    badgeClass: 'border-[#8E8E9C]/20 bg-[#8E8E9C]/10 text-[#8E8E9C]',
+    dotClass: 'bg-[#8E8E9C]',
   },
   EXPIRED: {
     icon: XCircle,
-    badgeClass: 'border-[#6B6B80]/20 bg-[#6B6B80]/10 text-[#6B6B80]',
-    dotClass: 'bg-[#6B6B80]',
+    badgeClass: 'border-[#8E8E9C]/20 bg-[#8E8E9C]/10 text-[#8E8E9C]',
+    dotClass: 'bg-[#8E8E9C]',
   },
 }
 
@@ -179,7 +179,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
     <div className={cn(
       'rounded-xl border bg-[#0D0D14] p-4 transition-opacity',
       localStatus === 'CANCELLED' || localStatus === 'EXPIRED' ? 'opacity-60' : '',
-      'border-[#1A1A24]',
+      'border-[#272735]',
     )}>
       <div className="flex items-start gap-3">
         {/* Status dot */}
@@ -189,10 +189,10 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
           {/* Header row */}
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div className="min-w-0">
-              <p className="truncate text-sm font-medium text-[#F5F5F7]">
+              <p className="truncate text-sm font-medium text-[#EDEDF3]">
                 {intent.property.title}
               </p>
-              <p className="mt-0.5 flex items-center gap-1 text-xs text-[#6B6B80]">
+              <p className="mt-0.5 flex items-center gap-1 text-xs text-[#8E8E9C]">
                 <MapPin className="h-3 w-3" />
                 {intent.property.city}, {intent.property.state}
               </p>
@@ -210,7 +210,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
           {/* Intent type + details */}
           <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="rounded-md border border-[#2A2A3A] bg-[#111118] px-2 py-0.5 text-[11px] font-medium text-[#A0A0B2]">
+            <span className="rounded-md border border-[#33333F] bg-[#1E1E2A] px-2 py-0.5 text-[11px] font-medium text-[#C3C3CC]">
               {intentLabel.label}
             </span>
 
@@ -222,7 +222,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
             )}
 
             {intent.fractionQty != null && (
-              <span className="text-[11px] text-[#6B6B80]">
+              <span className="text-[11px] text-[#8E8E9C]">
                 {intent.fractionQty} fraction{intent.fractionQty !== 1 ? 's' : ''}
               </span>
             )}
@@ -236,7 +236,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
           {/* Note */}
           {intent.note && (
-            <p className="mt-2 text-[11px] italic text-[#6B6B80]">
+            <p className="mt-2 text-[11px] italic text-[#8E8E9C]">
               &ldquo;{intent.note}&rdquo;
             </p>
           )}
@@ -250,7 +250,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
             <div className="flex items-center gap-2">
               <Link
                 href={`/marketplace/${intent.property.id}`}
-                className="text-[11px] text-[#6B6B80] underline-offset-2 hover:text-[#A0A0B2] hover:underline"
+                className="text-[11px] text-[#8E8E9C] underline-offset-2 hover:text-[#C3C3CC] hover:underline"
               >
                 View listing
               </Link>
@@ -260,7 +260,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
                   type="button"
                   onClick={handleCancel}
                   disabled={isCancelling}
-                  className="flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-[11px] text-[#6B6B80] transition-all hover:border-[#EF4444]/40 hover:text-[#EF4444] disabled:opacity-50"
+                  className="flex items-center gap-1 rounded-lg border border-[#33333F] px-2.5 py-1 text-[11px] text-[#8E8E9C] transition-all hover:border-[#EF4444]/40 hover:text-[#EF4444] disabled:opacity-50"
                 >
                   {isCancelling ? (
                     <Loader2 className="h-3 w-3 animate-spin" />
@@ -286,7 +286,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
           {/* Readiness checklist — shown when APPROVED (replaces bare prepare button) */}
           {canPrepare && (
-            <div className="mt-3 border-t border-[#1A1A24] pt-3">
+            <div className="mt-3 border-t border-[#272735] pt-3">
               <IntentReadinessChecklist
                 intentId={intent.id}
                 intentType={intent.intentType}
@@ -300,7 +300,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
           {/* Wallet preparation signing panel — shown when READY_TO_SIGN */}
           {showPanel && preparation && (
-            <div className="mt-3 border-t border-[#1A1A24] pt-3">
+            <div className="mt-3 border-t border-[#272735] pt-3">
               <WalletPreparationPanel
                 intentId={intent.id}
                 preparation={preparation}

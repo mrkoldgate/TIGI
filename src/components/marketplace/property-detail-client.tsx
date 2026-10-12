@@ -73,8 +73,8 @@ const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
 }
 
 const TYPE_BADGE: Record<PropertyType, string> = {
-  RESIDENTIAL: 'bg-[#1A1A24]/90 text-[#A0A0B2] ring-[#2A2A3A]',
-  COMMERCIAL: 'bg-[#3B82F6]/15 text-[#60A5FA] ring-[#3B82F6]/25',
+  RESIDENTIAL: 'bg-[#272735]/90 text-[#C3C3CC] ring-[#33333F]',
+  COMMERCIAL: 'bg-[#C9A84C]/15 text-[#D4B45E] ring-[#C9A84C]/25',
   LAND: 'bg-[#22C55E]/15 text-[#4ADE80] ring-[#22C55E]/25',
   INDUSTRIAL: 'bg-[#F59E0B]/15 text-[#FCD34D] ring-[#F59E0B]/25',
   MIXED_USE: 'bg-[#C9A84C]/15 text-[#C9A84C] ring-[#C9A84C]/25',
@@ -110,7 +110,7 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
         {slots.length > 1 && (
           <button
             onClick={() => setLightboxOpen(true)}
-            className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-[#0A0A0F]/80 px-3 py-1.5 text-xs font-medium text-[#F5F5F7] backdrop-blur-sm ring-1 ring-[#2A2A3A] transition hover:bg-[#0A0A0F]"
+            className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-[#171721]/80 px-3 py-1.5 text-xs font-medium text-[#EDEDF3] backdrop-blur-sm ring-1 ring-[#33333F] transition hover:bg-[#171721]"
           >
             <LayoutGrid className="h-3.5 w-3.5" />
             Show all {slots.length} photos
@@ -153,10 +153,10 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
               className="h-full w-full"
             />
             {slots.length > 3 && (
-              <div className="absolute inset-0 flex items-center justify-center bg-[#0A0A0F]/55">
+              <div className="absolute inset-0 flex items-center justify-center bg-[#171721]/55">
                 <button
                   onClick={() => setLightboxOpen(true)}
-                  className="flex items-center gap-2 rounded-xl bg-[#0A0A0F]/70 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm ring-1 ring-[#2A2A3A] transition hover:bg-[#0A0A0F]/90"
+                  className="flex items-center gap-2 rounded-xl bg-[#171721]/70 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm ring-1 ring-[#33333F] transition hover:bg-[#171721]/90"
                 >
                   <LayoutGrid className="h-4 w-4" />
                   +{slots.length - 3} photos
@@ -170,10 +170,10 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
       {/* Lightbox placeholder — wired in a future iteration */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0F]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#171721]/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
         >
-          <p className="text-[#6B6B80]">Gallery lightbox coming soon.</p>
+          <p className="text-[#8E8E9C]">Gallery lightbox coming soon.</p>
         </div>
       )}
     </div>
@@ -186,15 +186,15 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
 
 function BreadcrumbNav({ listing }: { listing: MockListing }) {
   return (
-    <nav className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
-      <Link href="/marketplace" className="flex items-center gap-1 transition-colors hover:text-[#A0A0B2]">
+    <nav className="flex items-center gap-1.5 text-xs text-[#8E8E9C]">
+      <Link href="/marketplace" className="flex items-center gap-1 transition-colors hover:text-[#C3C3CC]">
         <ArrowLeft className="h-3.5 w-3.5" />
         Marketplace
       </Link>
       <ChevronRight className="h-3 w-3" />
       <span>{PROPERTY_TYPE_LABELS[listing.propertyType]}</span>
       <ChevronRight className="h-3 w-3" />
-      <span className="text-[#A0A0B2]">{listing.city}, {listing.state}</span>
+      <span className="text-[#C3C3CC]">{listing.city}, {listing.state}</span>
     </nav>
   )
 }
@@ -228,7 +228,7 @@ function ListingHeader({
           </span>
         )}
         {listing.listingType !== 'BUY' && (
-          <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-2 py-0.5 text-[10px] font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+          <span className="inline-flex items-center rounded-md bg-[#C9A84C]/15 px-2 py-0.5 text-[10px] font-medium text-[#D4B45E] ring-1 ring-inset ring-[#C9A84C]/25">
             {listing.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
           </span>
         )}
@@ -236,7 +236,7 @@ function ListingHeader({
 
       {/* Title + actions */}
       <div className="flex items-start justify-between gap-4">
-        <h1 className="font-heading text-2xl font-semibold leading-snug text-[#F5F5F7] sm:text-3xl">
+        <h1 className="font-heading text-2xl font-semibold leading-snug text-[#EDEDF3] sm:text-3xl">
           {listing.title}
         </h1>
         <div className="flex shrink-0 items-center gap-2">
@@ -244,22 +244,22 @@ function ListingHeader({
             type="button"
             aria-label={isSaved ? 'Remove from saved' : 'Save property'}
             onClick={onSave}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118] transition-all hover:border-[#C9A84C]/40 hover:bg-[#1A1A24]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#33333F] bg-[#1E1E2A] transition-all hover:border-[#C9A84C]/40 hover:bg-[#272735]"
           >
-            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#6B6B80]')} />
+            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#8E8E9C]')} />
           </button>
           <button
             type="button"
             aria-label="Share"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118] transition-all hover:border-[#C9A84C]/40 hover:bg-[#1A1A24]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#33333F] bg-[#1E1E2A] transition-all hover:border-[#C9A84C]/40 hover:bg-[#272735]"
           >
-            <Share2 className="h-4 w-4 text-[#6B6B80]" />
+            <Share2 className="h-4 w-4 text-[#8E8E9C]" />
           </button>
         </div>
       </div>
 
       {/* Location + meta strip */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#6B6B80]">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#8E8E9C]">
         <span className="flex items-center gap-1.5">
           <MapPin className="h-3.5 w-3.5 shrink-0 text-[#4A4A60]" />
           {listing.city}, {listing.state}
@@ -297,8 +297,8 @@ function SpecRow({ label, value }: { label: string; value: string | number | nul
   if (value == null) return null
   return (
     <div className="flex items-center justify-between gap-4 py-3 text-sm">
-      <span className="text-[#6B6B80]">{label}</span>
-      <span className="font-medium text-[#F5F5F7]">{value}</span>
+      <span className="text-[#8E8E9C]">{label}</span>
+      <span className="font-medium text-[#EDEDF3]">{value}</span>
     </div>
   )
 }
@@ -317,22 +317,22 @@ function TabContent({
       <div className="space-y-8">
         {/* Description */}
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#F5F5F7]">About this property</h2>
-          <p className="text-sm leading-relaxed text-[#A0A0B2]">{listing.description}</p>
+          <h2 className="mb-3 font-heading text-base font-semibold text-[#EDEDF3]">About this property</h2>
+          <p className="text-sm leading-relaxed text-[#C3C3CC]">{listing.description}</p>
         </section>
 
         {/* Highlights */}
         {listing.features.length > 0 && (
           <section>
-            <h2 className="mb-3 font-heading text-base font-semibold text-[#F5F5F7]">Highlights</h2>
+            <h2 className="mb-3 font-heading text-base font-semibold text-[#EDEDF3]">Highlights</h2>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
               {listing.features.map((f) => (
                 <div
                   key={f}
-                  className="flex items-center gap-2 rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2.5 text-sm"
+                  className="flex items-center gap-2 rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2.5 text-sm"
                 >
                   <Check className="h-3.5 w-3.5 shrink-0 text-[#C9A84C]" />
-                  <span className="text-[#A0A0B2]">{f}</span>
+                  <span className="text-[#C3C3CC]">{f}</span>
                 </div>
               ))}
             </div>
@@ -341,12 +341,12 @@ function TabContent({
 
         {/* Location context */}
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#F5F5F7]">Location</h2>
-          <div className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+          <h2 className="mb-3 font-heading text-base font-semibold text-[#EDEDF3]">Location</h2>
+          <div className="flex items-start gap-3 rounded-xl border border-[#33333F] bg-[#1E1E2A] p-4">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#C9A84C]" />
             <div className="space-y-1 text-sm">
-              <p className="font-medium text-[#F5F5F7]">{listing.city}, {listing.state}</p>
-              <p className="text-[#6B6B80]">
+              <p className="font-medium text-[#EDEDF3]">{listing.city}, {listing.state}</p>
+              <p className="text-[#8E8E9C]">
                 Neighborhood context, walkability scores, and proximity data will be available when location services are integrated.
               </p>
             </div>
@@ -362,8 +362,8 @@ function TabContent({
       <div className="space-y-6">
         {/* Property details */}
         <section>
-          <h2 className="mb-1 font-heading text-base font-semibold text-[#F5F5F7]">Property Details</h2>
-          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#2A2A3A] bg-[#111118] px-4">
+          <h2 className="mb-1 font-heading text-base font-semibold text-[#EDEDF3]">Property Details</h2>
+          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#33333F] bg-[#1E1E2A] px-4">
             <SpecRow label="Property type" value={PROPERTY_TYPE_LABELS[listing.propertyType]} />
             <SpecRow label="Listing type" value={listing.listingType === 'BOTH' ? 'Buy or Lease' : listing.listingType === 'BUY' ? 'For Sale' : 'For Lease'} />
             <SpecRow label="Status" value="Active" />
@@ -373,8 +373,8 @@ function TabContent({
 
         {/* Size & structure */}
         <section>
-          <h2 className="mb-1 font-heading text-base font-semibold text-[#F5F5F7]">Size & Structure</h2>
-          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#2A2A3A] bg-[#111118] px-4">
+          <h2 className="mb-1 font-heading text-base font-semibold text-[#EDEDF3]">Size & Structure</h2>
+          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#33333F] bg-[#1E1E2A] px-4">
             {isLand ? (
               <SpecRow label="Lot size" value={listing.lotAcres ? `${listing.lotAcres.toLocaleString()} acres` : undefined} />
             ) : (
@@ -391,8 +391,8 @@ function TabContent({
 
         {/* Financial */}
         <section>
-          <h2 className="mb-1 font-heading text-base font-semibold text-[#F5F5F7]">Financial</h2>
-          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#2A2A3A] bg-[#111118] px-4">
+          <h2 className="mb-1 font-heading text-base font-semibold text-[#EDEDF3]">Financial</h2>
+          <div className="divide-y divide-[#1E1E2A] rounded-xl border border-[#33333F] bg-[#1E1E2A] px-4">
             <SpecRow label="List price" value={`$${listing.price.toLocaleString()}`} />
             {listing.sqft && !isLand && (
               <SpecRow label="Price per sqft" value={`$${Math.round(listing.price / listing.sqft).toLocaleString()}`} />
@@ -415,21 +415,21 @@ function TabContent({
   if (tab === 'documents') {
     return (
       <div className="space-y-4">
-        <p className="text-sm text-[#6B6B80]">
+        <p className="text-sm text-[#8E8E9C]">
           Documents are verified by TIGI and made available as part of the due diligence package. Full access unlocked after signing an NDA or submitting an offer.
         </p>
-        <div className="divide-y divide-[#1E1E2A] overflow-hidden rounded-xl border border-[#2A2A3A]">
+        <div className="divide-y divide-[#1E1E2A] overflow-hidden rounded-xl border border-[#33333F]">
           {MOCK_DOCUMENTS.map((doc) => (
             <div
               key={doc.name}
-              className="flex items-center justify-between gap-4 bg-[#111118] px-4 py-3"
+              className="flex items-center justify-between gap-4 bg-[#1E1E2A] px-4 py-3"
             >
               <div className="flex items-center gap-3">
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#1A1A24]">
-                  <FileText className="h-4 w-4 text-[#6B6B80]" />
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#272735]">
+                  <FileText className="h-4 w-4 text-[#8E8E9C]" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-[#F5F5F7]">{doc.name}</p>
+                  <p className="text-sm font-medium text-[#EDEDF3]">{doc.name}</p>
                   <p className="text-[11px] text-[#4A4A60]">{doc.type}</p>
                 </div>
               </div>
@@ -438,7 +438,7 @@ function TabContent({
                   'inline-flex items-center rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
                   doc.status === 'available' && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
                   doc.status === 'pending' && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
-                  doc.status === 'not_available' && 'bg-[#2A2A3A] text-[#6B6B80] ring-[#3A3A48]',
+                  doc.status === 'not_available' && 'bg-[#33333F] text-[#8E8E9C] ring-[#3A3A48]',
                 )}
               >
                 {doc.status === 'available' ? 'Available' : null}
@@ -488,7 +488,7 @@ function DetailTabs({
 
   return (
     <div>
-      <div className="flex border-b border-[#2A2A3A]">
+      <div className="flex border-b border-[#33333F]">
         {tabs.map(({ key, label }) => (
           <button
             key={key}
@@ -496,7 +496,7 @@ function DetailTabs({
             onClick={() => setActiveTab(key)}
             className={cn(
               'relative px-5 py-3 text-sm font-medium transition-colors duration-150',
-              activeTab === key ? 'text-[#C9A84C]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+              activeTab === key ? 'text-[#C9A84C]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
             )}
           >
             {label}
@@ -536,9 +536,9 @@ function QuickStats({ listing }: { listing: MockListing }) {
   return (
     <div className="grid grid-cols-3 gap-2">
       {stats.slice(0, 6).map(({ icon, label, value }) => (
-        <div key={label} className="flex flex-col items-center gap-1 rounded-xl border border-[#2A2A3A] bg-[#0D0D14] py-3 text-center">
+        <div key={label} className="flex flex-col items-center gap-1 rounded-xl border border-[#33333F] bg-[#0D0D14] py-3 text-center">
           <span className="text-[#4A4A60]">{icon}</span>
-          <span className="font-heading text-sm font-semibold text-[#F5F5F7]">{value}</span>
+          <span className="font-heading text-sm font-semibold text-[#EDEDF3]">{value}</span>
           <span className="text-[9px] uppercase tracking-wider text-[#4A4A60]">{label}</span>
         </div>
       ))}
@@ -569,17 +569,17 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
           <p className="text-[10px] text-[#4A4A60]">Entry from</p>
           <p className="font-heading text-2xl font-bold text-[#C9A84C]">
             ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-sm font-normal text-[#6B6B80]">/fraction</span>
+            <span className="text-sm font-normal text-[#8E8E9C]">/fraction</span>
           </p>
         </div>
 
         {/* Progress */}
         <div className="mb-3">
           <div className="mb-1.5 flex items-center justify-between text-[11px]">
-            <span className="text-[#6B6B80]">{soldPct}% subscribed</span>
-            <span className="text-[#6B6B80]">{available.toLocaleString()} left</span>
+            <span className="text-[#8E8E9C]">{soldPct}% subscribed</span>
+            <span className="text-[#8E8E9C]">{available.toLocaleString()} left</span>
           </div>
-          <div className="h-1.5 overflow-hidden rounded-full bg-[#2A2A3A]">
+          <div className="h-1.5 overflow-hidden rounded-full bg-[#33333F]">
             <div
               className="h-full rounded-full bg-gradient-to-r from-[#B8932F] to-[#C9A84C] transition-all duration-700"
               style={{ width: `${soldPct}%` }}
@@ -588,10 +588,10 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         </div>
 
         {/* Investor count */}
-        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#6B6B80]">
+        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#8E8E9C]">
           <Users className="h-3.5 w-3.5" />
           <span>
-            <span className="font-medium text-[#A0A0B2]">{listing.tokenInvestorCount}</span>{' '}
+            <span className="font-medium text-[#C3C3CC]">{listing.tokenInvestorCount}</span>{' '}
             investors have participated
           </span>
         </div>
@@ -600,7 +600,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         <button
           type="button"
           onClick={() => setModalOpen(true)}
-          className="w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
+          className="w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
         >
           <Zap className="mr-1.5 inline h-3.5 w-3.5" />
           Invest from ${listing.tokenPricePerFraction.toLocaleString()}
@@ -638,7 +638,7 @@ function ActionPanel({
   return (
     <div className="space-y-4">
       {/* Price card */}
-      <div className="rounded-2xl border border-[#2A2A3A] bg-[#111118] p-5">
+      <div className="rounded-2xl border border-[#33333F] bg-[#1E1E2A] p-5">
         <p className="text-[10px] uppercase tracking-widest text-[#4A4A60]">List Price</p>
         <p className="mt-1 font-heading text-3xl font-bold text-white">
           {formatPrice(listing.price)}
@@ -646,7 +646,7 @@ function ActionPanel({
         {listing.isTokenized && listing.tokenPricePerFraction && (
           <p className="mt-1 text-sm text-[#C9A84C]">
             from ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-xs text-[#6B6B80]">/fraction</span>
+            <span className="text-xs text-[#8E8E9C]">/fraction</span>
           </p>
         )}
 
@@ -668,7 +668,7 @@ function ActionPanel({
             'mt-2 flex w-full items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all active:scale-[0.98]',
             isSaved
               ? 'border-rose-500/30 bg-rose-500/10 text-rose-400'
-              : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#F5F5F7]',
+              : 'border-[#33333F] text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#EDEDF3]',
           )}
         >
           <Heart className={cn('h-4 w-4', isSaved && 'fill-rose-400')} />
@@ -679,7 +679,7 @@ function ActionPanel({
         <button
           type="button"
           onClick={() => setInquiryOpen(true)}
-          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-[#C9A84C]/30 hover:text-[#C9A84C] active:scale-[0.98]"
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-[#33333F] py-2.5 text-sm font-medium text-[#8E8E9C] transition-all hover:border-[#C9A84C]/30 hover:text-[#C9A84C] active:scale-[0.98]"
         >
           <MessageSquare className="h-4 w-4" />
           Ask a Question
@@ -716,7 +716,7 @@ function ActionPanel({
       )}
 
       {/* Trust signals */}
-      <div className="rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-4">
+      <div className="rounded-xl border border-[#33333F] bg-[#0D0D14] p-4">
         <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
           TIGI Verified
         </p>
@@ -727,7 +727,7 @@ function ActionPanel({
             'AI-assisted due diligence',
             'Escrow-backed transactions',
           ].map((item) => (
-            <li key={item} className="flex items-center gap-2 text-xs text-[#6B6B80]">
+            <li key={item} className="flex items-center gap-2 text-xs text-[#8E8E9C]">
               <Check className="h-3 w-3 shrink-0 text-[#C9A84C]" />
               {item}
             </li>

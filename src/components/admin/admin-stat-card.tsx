@@ -35,19 +35,19 @@ const URGENCY_STYLES: Record<
     border:  'border-l-[#818CF8]',
     iconBg:  'bg-[#818CF8]/10',
     icon:    'text-[#818CF8]',
-    value:   'text-[#F5F5F7]',
+    value:   'text-[#EDEDF3]',
   },
   normal: {
     border:  'border-l-[#3A3A4A]',
-    iconBg:  'bg-[#1A1A24]',
-    icon:    'text-[#6B6B80]',
-    value:   'text-[#F5F5F7]',
+    iconBg:  'bg-[#272735]',
+    icon:    'text-[#8E8E9C]',
+    value:   'text-[#EDEDF3]',
   },
   positive: {
     border:  'border-l-[#4ADE80]',
     iconBg:  'bg-[#4ADE80]/10',
     icon:    'text-[#4ADE80]',
-    value:   'text-[#F5F5F7]',
+    value:   'text-[#EDEDF3]',
   },
 }
 
@@ -82,7 +82,7 @@ export function AdminStatCard({
   const content = (
     <div
       className={cn(
-        'group flex flex-col gap-3 rounded-xl border border-[#2A2A3A] border-l-2 bg-[#111118] p-4 transition-colors',
+        'group flex flex-col gap-3 rounded-xl border border-[#33333F] border-l-2 bg-[#1E1E2A] p-4 transition-colors',
         styles.border,
         href && !isLocked && 'cursor-pointer hover:border-[#3A3A4A] hover:bg-[#151520]',
         className
@@ -95,7 +95,7 @@ export function AdminStatCard({
         </div>
 
         {isLocked ? (
-          <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+          <span className="flex items-center gap-1 rounded border border-[#33333F] bg-[#171721] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
             {lockedUntil}
           </span>
@@ -105,7 +105,7 @@ export function AdminStatCard({
               'rounded px-1.5 py-0.5 text-[10px] font-medium tabular-nums',
               delta.urgent
                 ? 'bg-[#EF4444]/10 text-[#EF4444]'
-                : 'bg-[#1A1A24] text-[#6B6B80]'
+                : 'bg-[#272735] text-[#8E8E9C]'
             )}
           >
             {delta.value > 0 ? `+${delta.value}` : delta.value} {delta.label}
@@ -127,8 +127,8 @@ export function AdminStatCard({
 
       {/* Label + hint */}
       <div>
-        <p className="text-xs font-medium text-[#A0A0B2]">{label}</p>
-        {hint && <p className="mt-0.5 text-[11px] text-[#6B6B80]">{hint}</p>}
+        <p className="text-xs font-medium text-[#C3C3CC]">{label}</p>
+        {hint && <p className="mt-0.5 text-[11px] text-[#8E8E9C]">{hint}</p>}
       </div>
     </div>
   )

@@ -122,7 +122,7 @@ export const DEV_STAGE_CONFIG: Record<DevelopmentStage, {
   border: string
 }> = {
   RAW:         { label: 'Raw Land',     description: 'Unimproved, no entitlements.',                  color: 'text-[#6B7280]', bg: 'bg-[#6B7280]/10',     border: 'border-[#6B7280]/20' },
-  ENTITLED:    { label: 'Entitled',     description: 'Zoning and permits approved.',                   color: 'text-[#60A5FA]', bg: 'bg-[#60A5FA]/10',     border: 'border-[#60A5FA]/20' },
+  ENTITLED:    { label: 'Entitled',     description: 'Zoning and permits approved.',                   color: 'text-[#D4B45E]', bg: 'bg-[#D4B45E]/10',     border: 'border-[#D4B45E]/20' },
   IMPROVED:    { label: 'Improved',     description: 'Infrastructure is in place.',                    color: 'text-[#C9A84C]', bg: 'bg-[#C9A84C]/10',     border: 'border-[#C9A84C]/20' },
   SHOVEL_READY:{ label: 'Shovel-Ready', description: 'All approvals, grading and utilities complete.', color: 'text-[#4ADE80]', bg: 'bg-[#4ADE80]/10',     border: 'border-[#4ADE80]/20' },
 }

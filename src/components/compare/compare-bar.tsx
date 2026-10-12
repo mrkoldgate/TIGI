@@ -36,15 +36,15 @@ export function CompareBar() {
         }
       `}</style>
 
-      <div className="flex items-center gap-3 rounded-2xl border border-[#2A2A3A] bg-[#111118]/95 px-4 py-3 shadow-[0_8px_40px_rgba(0,0,0,0.6)] backdrop-blur-md ring-1 ring-[#C9A84C]/10 sm:gap-4">
+      <div className="flex items-center gap-3 rounded-2xl border border-[#33333F] bg-[#1E1E2A]/95 px-4 py-3 shadow-[0_8px_40px_rgba(0,0,0,0.6)] backdrop-blur-md ring-1 ring-[#C9A84C]/10 sm:gap-4">
 
         {/* Icon + label */}
         <div className="flex items-center gap-2">
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#C9A84C]/10">
             <GitCompare className="h-3.5 w-3.5 text-[#C9A84C]" />
           </div>
-          <span className="hidden text-sm text-[#6B6B80] sm:block">
-            <span className="font-semibold text-[#F5F5F7]">{compareEntries.length}</span>
+          <span className="hidden text-sm text-[#8E8E9C] sm:block">
+            <span className="font-semibold text-[#EDEDF3]">{compareEntries.length}</span>
             <span>/{MAX_COMPARE} selected</span>
           </span>
         </div>
@@ -54,9 +54,9 @@ export function CompareBar() {
           {compareEntries.map((entry) => (
             <div
               key={entry.id}
-              className="flex max-w-[120px] items-center gap-1 truncate rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-2.5 py-1.5 text-xs sm:max-w-[160px]"
+              className="flex max-w-[120px] items-center gap-1 truncate rounded-lg border border-[#33333F] bg-[#272735] px-2.5 py-1.5 text-xs sm:max-w-[160px]"
             >
-              <span className="truncate text-[#A0A0B2]">{entry.title}</span>
+              <span className="truncate text-[#C3C3CC]">{entry.title}</span>
               <button
                 type="button"
                 onClick={() => removeFromCompare(entry.id)}
@@ -72,7 +72,7 @@ export function CompareBar() {
           {Array.from({ length: MAX_COMPARE - compareEntries.length }).map((_, i) => (
             <div
               key={i}
-              className="hidden items-center rounded-lg border border-dashed border-[#2A2A3A] px-3 py-1.5 text-[10px] text-[#3A3A48] sm:flex"
+              className="hidden items-center rounded-lg border border-dashed border-[#33333F] px-3 py-1.5 text-[10px] text-[#3A3A48] sm:flex"
             >
               + add
             </div>
@@ -80,13 +80,13 @@ export function CompareBar() {
         </div>
 
         {/* Divider */}
-        <div className="h-6 w-px shrink-0 bg-[#2A2A3A]" />
+        <div className="h-6 w-px shrink-0 bg-[#33333F]" />
 
         {/* Compare CTA */}
         {canCompare ? (
           <Link
             href={compareUrl}
-            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
+            className="flex shrink-0 items-center gap-1.5 rounded-xl bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
           >
             <span className="hidden sm:inline">Compare</span>
             <ArrowRight className="h-3.5 w-3.5" />
@@ -103,7 +103,7 @@ export function CompareBar() {
           type="button"
           onClick={clearCompare}
           aria-label="Clear all comparisons"
-          className="shrink-0 text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="shrink-0 text-[#3A3A48] transition-colors hover:text-[#8E8E9C]"
         >
           <X className="h-4 w-4" />
         </button>

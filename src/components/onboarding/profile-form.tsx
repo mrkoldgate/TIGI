@@ -72,7 +72,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           className={cn(
             'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
             'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            errors.name ? 'border-red-500/50' : 'border-[#2A2A3A]',
+            errors.name ? 'border-red-500/50' : 'border-[#33333F]',
           )}
         />
         {errors.name && (
@@ -87,7 +87,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           Email address
           <span className="ml-auto text-[10px] text-[#3A3A48]">Verified</span>
         </label>
-        <div className="flex w-full items-center rounded-xl border border-[#1E1E2A] bg-[#0A0A0F] px-4 py-3 text-sm text-[#4A4A60]">
+        <div className="flex w-full items-center rounded-xl border border-[#1E1E2A] bg-[#171721] px-4 py-3 text-sm text-[#4A4A60]">
           {defaultEmail}
         </div>
         <p className="mt-1 text-[10px] text-[#3A3A48]">
@@ -111,7 +111,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           className={cn(
             'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
             'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            'border-[#2A2A3A]',
+            'border-[#33333F]',
           )}
         />
       </div>
@@ -132,7 +132,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           className={cn(
             'w-full resize-none rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
             'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            errors.bio ? 'border-red-500/50' : 'border-[#2A2A3A]',
+            errors.bio ? 'border-red-500/50' : 'border-[#33333F]',
           )}
         />
         <div className="mt-1 flex items-center justify-between">
@@ -162,7 +162,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98] disabled:opacity-60"
+          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4B86A] active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -176,7 +176,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <button
           type="button"
           onClick={() => router.push('/onboarding/interests')}
-          className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="text-xs text-[#3A3A48] transition-colors hover:text-[#8E8E9C]"
         >
           Skip for now
         </button>

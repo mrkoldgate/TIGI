@@ -64,7 +64,7 @@ export function WalletButton({
           onClick={disconnectWallet}
           title="Disconnect wallet"
           className={cn(
-            'flex items-center rounded-xl border border-[#1E1E2A] text-[#6B6B80]',
+            'flex items-center rounded-xl border border-[#1E1E2A] text-[#8E8E9C]',
             'transition-all hover:border-red-500/30 hover:bg-red-500/10 hover:text-red-400',
             sizeClasses[size],
           )}
@@ -86,12 +86,12 @@ export function WalletButton({
         'flex items-center rounded-xl font-medium transition-all',
         sizeClasses[size],
         variant === 'primary' && [
-          'bg-[#C9A84C] text-[#0A0A0F]',
+          'bg-[#C9A84C] text-[#171721]',
           'hover:bg-[#D4B86A] active:scale-[0.98]',
           'disabled:opacity-60',
         ],
         variant === 'outline' && [
-          'border border-[#2A2A3A] bg-transparent text-[#9999AA]',
+          'border border-[#33333F] bg-transparent text-[#9999AA]',
           'hover:border-[#3A3A4A] hover:text-white',
           'disabled:opacity-60',
         ],

@@ -65,14 +65,14 @@ const KYC_LABEL: Record<string, string> = {
   REJECTED:  'Rejected',
 }
 const KYC_COLOR: Record<string, string> = {
-  NONE:      'text-[#6B6B80]',
+  NONE:      'text-[#8E8E9C]',
   PENDING:   'text-[#F59E0B]',
   SUBMITTED: 'text-[#F59E0B]',
   VERIFIED:  'text-[#4ADE80]',
   REJECTED:  'text-[#EF4444]',
 }
 const TIER_COLOR: Record<string, string> = {
-  free:       'text-[#6B6B80]',
+  free:       'text-[#8E8E9C]',
   pro:        'text-[#C9A84C]',
   pro_plus:   'text-[#818CF8]',
   enterprise: 'text-[#22C55E]',
@@ -147,14 +147,14 @@ export function ProfileClient({ user }: ProfileClientProps) {
           <AvatarUploadButton onAvatarChange={setAvatarUrl} />
         </div>
         <div>
-          <p className="text-base font-semibold text-[#F5F5F7]">{user.name ?? 'Anonymous'}</p>
-          <p className="text-sm text-[#6B6B80]">{user.email}</p>
+          <p className="text-base font-semibold text-[#EDEDF3]">{user.name ?? 'Anonymous'}</p>
+          <p className="text-sm text-[#8E8E9C]">{user.email}</p>
           <div className="mt-1.5 flex items-center gap-2">
-            <span className={cn('text-xs font-medium', TIER_COLOR[user.subscriptionTier] ?? 'text-[#6B6B80]')}>
+            <span className={cn('text-xs font-medium', TIER_COLOR[user.subscriptionTier] ?? 'text-[#8E8E9C]')}>
               {TIER_LABEL[user.subscriptionTier] ?? user.subscriptionTier}
             </span>
             <span className="text-[#3A3A4A]">·</span>
-            <span className={cn('text-xs font-medium', KYC_COLOR[user.kycStatus] ?? 'text-[#6B6B80]')}>
+            <span className={cn('text-xs font-medium', KYC_COLOR[user.kycStatus] ?? 'text-[#8E8E9C]')}>
               {KYC_LABEL[user.kycStatus] ?? user.kycStatus}
             </span>
           </div>
@@ -210,7 +210,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
               className={cn(inputClass, 'resize-none leading-relaxed')}
             />
             {bio.length > 400 && (
-              <p className="mt-1 text-right text-[10px] text-[#6B6B80]">{bio.length}/500</p>
+              <p className="mt-1 text-right text-[10px] text-[#8E8E9C]">{bio.length}/500</p>
             )}
           </FieldRow>
         </div>
@@ -259,8 +259,8 @@ export function ProfileClient({ user }: ProfileClientProps) {
           <div className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-[#0D0D14] px-4 py-3">
             <Mail className="h-4 w-4 shrink-0 text-[#4A4A5E]" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-[#6B6B80]">Email address</p>
-              <p className="truncate text-sm text-[#A0A0B2]">{user.email}</p>
+              <p className="text-xs text-[#8E8E9C]">Email address</p>
+              <p className="truncate text-sm text-[#C3C3CC]">{user.email}</p>
             </div>
             <span className="shrink-0 text-[10px] text-[#4A4A5E]">Managed by auth</span>
           </div>
@@ -293,7 +293,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
                 ? `${user.walletAddress.slice(0, 6)}…${user.walletAddress.slice(-4)}`
                 : 'Platform-managed'
             }
-            valueColor="text-[#6B6B80]"
+            valueColor="text-[#8E8E9C]"
           />
         </div>
       </SectionCard>
@@ -314,7 +314,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
             disabled={saveState === 'saving' || isPending}
             className={cn(
               'flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold',
-              'bg-[#C9A84C] text-[#0A0A0F] transition-all',
+              'bg-[#C9A84C] text-[#171721] transition-all',
               'hover:bg-[#D4B85A] disabled:cursor-not-allowed disabled:opacity-60',
             )}
           >
@@ -380,7 +380,7 @@ function SectionCard({
 
 const inputClass = cn(
   'w-full rounded-xl border border-white/[0.08] bg-[#0D0D14]',
-  'px-3 py-2.5 text-sm text-[#F5F5F7] placeholder-[#4A4A5E]',
+  'px-3 py-2.5 text-sm text-[#EDEDF3] placeholder-[#4A4A5E]',
   'outline-none transition-colors focus:border-[#C9A84C]/60',
 )
 
@@ -405,10 +405,10 @@ function FieldRow({
           align === 'top' && 'mt-0.5',
         )}
       >
-        <Icon className="h-4 w-4 text-[#6B6B80]" />
+        <Icon className="h-4 w-4 text-[#8E8E9C]" />
       </div>
       <div className="flex-1 min-w-0">
-        <label className="mb-1 block text-xs text-[#6B6B80]">
+        <label className="mb-1 block text-xs text-[#8E8E9C]">
           {label}
           {required && <span className="ml-0.5 text-[#C9A84C]">*</span>}
         </label>
@@ -442,7 +442,7 @@ function NotifToggle({
         </div>
         <div>
           <p className="text-sm font-medium text-[#D0D0E0]">{label}</p>
-          <p className="mt-0.5 text-xs text-[#6B6B80]">{description}</p>
+          <p className="mt-0.5 text-xs text-[#8E8E9C]">{description}</p>
         </div>
       </div>
       {/* Toggle pill */}
@@ -486,10 +486,10 @@ function AccountLink({
       className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-transparent px-4 py-3 transition-colors hover:border-white/[0.08] hover:bg-[#0D0D14]"
     >
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
-        <Icon className="h-3.5 w-3.5 text-[#6B6B80]" />
+        <Icon className="h-3.5 w-3.5 text-[#8E8E9C]" />
       </div>
-      <p className="flex-1 text-sm text-[#A0A0B2]">{label}</p>
-      <span className={cn('text-xs font-medium', valueColor ?? 'text-[#6B6B80]')}>{value}</span>
+      <p className="flex-1 text-sm text-[#C3C3CC]">{label}</p>
+      <span className={cn('text-xs font-medium', valueColor ?? 'text-[#8E8E9C]')}>{value}</span>
       <ChevronRight className="h-3.5 w-3.5 text-[#3A3A4A]" />
     </Link>
   )

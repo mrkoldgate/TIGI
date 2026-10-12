@@ -38,7 +38,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
           className,
         )}
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1A1A24]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#272735]">
           <Shield className="h-4 w-4 text-[#3A3A48]" />
         </div>
         <div>
@@ -94,7 +94,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
             type="button"
             onClick={handleCopy}
             title="Copy address"
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#9999AA]"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#272735] hover:text-[#9999AA]"
           >
             {copied ? (
               <Check className="h-3.5 w-3.5 text-emerald-400" />
@@ -108,7 +108,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
               target="_blank"
               rel="noopener noreferrer"
               title="View on Solana Explorer"
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#9999AA]"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#272735] hover:text-[#9999AA]"
             >
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
@@ -137,7 +137,7 @@ export function WalletStatusBadge({ className, showAddress = true }: WalletStatu
   return (
     <div
       className={cn(
-        'flex items-center gap-1.5 rounded-lg border border-[#1E1E2A] bg-[#111118] px-2.5 py-1.5',
+        'flex items-center gap-1.5 rounded-lg border border-[#1E1E2A] bg-[#1E1E2A] px-2.5 py-1.5',
         className,
       )}
       title={walletLabel}
@@ -149,7 +149,7 @@ export function WalletStatusBadge({ className, showAddress = true }: WalletStatu
         <Shield className="h-3 w-3 text-[#C9A84C]" />
       )}
       {showAddress && (
-        <span className="font-mono text-[11px] text-[#6B6B80]">{displayAddress}</span>
+        <span className="font-mono text-[11px] text-[#8E8E9C]">{displayAddress}</span>
       )}
       {walletMode === 'connected' && (
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-label="Connected" />

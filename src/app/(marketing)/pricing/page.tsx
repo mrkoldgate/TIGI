@@ -22,10 +22,10 @@ export default function PricingPage() {
       {/* Header */}
       <div className="mb-12 text-center">
         <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Pricing</p>
-        <h1 className="mt-3 font-heading text-4xl font-semibold text-[#F5F5F7]">
+        <h1 className="mt-3 font-heading text-4xl font-semibold text-[#EDEDF3]">
           Intelligence that scales with you
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base text-[#6B6B80]">
+        <p className="mx-auto mt-4 max-w-xl text-base text-[#8E8E9C]">
           Start free. Unlock deeper AI analysis and premium signals as your portfolio grows.
         </p>
       </div>
@@ -42,13 +42,13 @@ export default function PricingPage() {
               key={planId}
               className={`relative flex flex-col rounded-2xl border p-6 ${
                 isHighlighted
-                  ? 'border-[#C9A84C]/40 bg-[#111118] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
-                  : 'border-[#2A2A3A] bg-[#0D0D14]'
+                  ? 'border-[#C9A84C]/40 bg-[#1E1E2A] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
+                  : 'border-[#33333F] bg-[#0D0D14]'
               }`}
             >
               {plan.badge && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#171721]">
                     <Sparkles className="h-2.5 w-2.5" />
                     {plan.badge}
                   </span>
@@ -56,20 +56,20 @@ export default function PricingPage() {
               )}
 
               <div className="mb-4">
-                <h3 className="font-heading text-base font-semibold text-[#F5F5F7]">{plan.name}</h3>
-                <p className="mt-0.5 text-xs text-[#6B6B80]">{plan.tagline}</p>
+                <h3 className="font-heading text-base font-semibold text-[#EDEDF3]">{plan.name}</h3>
+                <p className="mt-0.5 text-xs text-[#8E8E9C]">{plan.tagline}</p>
               </div>
 
               <div className="mb-6">
                 {isEnterprise ? (
-                  <p className="text-3xl font-bold text-[#F5F5F7]">Custom</p>
+                  <p className="font-display text-3xl font-[480] text-[#EDEDF3]">Custom</p>
                 ) : (
                   <div>
-                    <p className="text-3xl font-bold tabular-nums text-[#F5F5F7]">
+                    <p className="font-display text-3xl font-[480] tabular-nums text-[#EDEDF3]">
                       {plan.priceMonthly === 0 ? 'Free' : `$${plan.priceMonthly}/mo`}
                     </p>
-                    {plan.priceAnnual && plan.priceMonthly !== 0 && (
-                      <p className="mt-1 text-xs text-[#6B6B80]">
+                    {!!plan.priceAnnual && plan.priceMonthly !== 0 && (
+                      <p className="mt-1 text-xs text-[#8E8E9C]">
                         or ${plan.priceAnnual}/yr — save {plan.annualSavingsPercent}%
                       </p>
                     )}
@@ -81,7 +81,7 @@ export default function PricingPage() {
                 {isEnterprise ? (
                   <a
                     href="mailto:enterprise@tigi.com"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#1A1A24] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#33333F] bg-[#272735] py-2.5 text-sm font-semibold text-[#C3C3CC] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
                   >
                     <Building2 className="h-4 w-4" />
                     Contact sales
@@ -91,8 +91,8 @@ export default function PricingPage() {
                     href={plan.priceMonthly === 0 ? '/auth/register' : '/auth/register'}
                     className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all ${
                       isHighlighted
-                        ? 'bg-[#C9A84C] text-[#0A0A0F] hover:opacity-90'
-                        : 'border border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C]/40 hover:text-[#F5F5F7]'
+                        ? 'bg-[#C9A84C] text-[#171721] hover:opacity-90'
+                        : 'border border-[#33333F] bg-[#272735] text-[#C3C3CC] hover:border-[#C9A84C]/40 hover:text-[#EDEDF3]'
                     }`}
                   >
                     {isHighlighted && <Sparkles className="h-3.5 w-3.5" />}
@@ -110,7 +110,7 @@ export default function PricingPage() {
                     ) : (
                       <X className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#3A3A4A]" />
                     )}
-                    <span className={`text-xs leading-relaxed ${feat.included ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]'}`}>
+                    <span className={`text-xs leading-relaxed ${feat.included ? 'text-[#C3C3CC]' : 'text-[#4A4A5E]'}`}>
                       {feat.label}
                       {feat.note && (
                         <span className="ml-1 text-[10px] text-[#4A4A5E]">({feat.note})</span>
@@ -140,9 +140,9 @@ export default function PricingPage() {
             a: 'All major credit and debit cards via Stripe. More options available on Enterprise plans.',
           },
         ].map(({ q, a }) => (
-          <div key={q} className="rounded-xl border border-[#1F1F2E] bg-[#0D0D14] p-5">
-            <p className="text-sm font-semibold text-[#F5F5F7]">{q}</p>
-            <p className="mt-2 text-xs leading-relaxed text-[#6B6B80]">{a}</p>
+          <div key={q} className="rounded-xl border border-[#2A2A37] bg-[#0D0D14] p-5">
+            <p className="text-sm font-semibold text-[#EDEDF3]">{q}</p>
+            <p className="mt-2 text-xs leading-relaxed text-[#8E8E9C]">{a}</p>
           </div>
         ))}
       </div>

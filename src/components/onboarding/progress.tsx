@@ -21,7 +21,7 @@ export function OnboardingProgress() {
   if (currentStepIndex === -1) return null
 
   return (
-    <div className="relative z-10 border-b border-[#111118] bg-[#0A0A0F]/80 px-6 py-4 backdrop-blur-sm">
+    <div className="relative z-10 border-b border-[#1E1E2A] bg-[#171721]/80 px-6 py-4 backdrop-blur-sm">
       <div className="mx-auto flex w-full max-w-3xl items-center justify-between">
         {ONBOARDING_STEPS.map((step, idx) => {
           const isCompleted = idx < currentStepIndex
@@ -38,8 +38,8 @@ export function OnboardingProgress() {
                     isCompleted &&
                       'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]',
                     isActive &&
-                      'border-[#C9A84C] bg-[#C9A84C] text-[#0A0A0F] shadow-[0_0_12px_rgba(201,168,76,0.3)]',
-                    isPending && 'border-[#2A2A3A] bg-transparent text-[#3A3A48]',
+                      'border-[#C9A84C] bg-[#C9A84C] text-[#171721] shadow-[0_0_12px_rgba(201,168,76,0.3)]',
+                    isPending && 'border-[#33333F] bg-transparent text-[#3A3A48]',
                   )}
                 >
                   {isCompleted ? (
@@ -52,8 +52,8 @@ export function OnboardingProgress() {
                   className={cn(
                     'hidden text-[10px] font-medium sm:block',
                     isActive && 'text-[#C9A84C]',
-                    isCompleted && 'text-[#6B6B80]',
-                    isPending && 'text-[#2A2A3A]',
+                    isCompleted && 'text-[#8E8E9C]',
+                    isPending && 'text-[#33333F]',
                   )}
                 >
                   {step.label}

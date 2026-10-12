@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 
 const STATUS_CONFIG: Record<InquiryStatus, { label: string; dot: string; text: string }> = {
   NEW:     { label: 'New',     dot: 'bg-[#C9A84C]',  text: 'text-[#C9A84C]'  },
-  READ:    { label: 'Read',    dot: 'bg-[#6B6B80]',  text: 'text-[#6B6B80]'  },
+  READ:    { label: 'Read',    dot: 'bg-[#8E8E9C]',  text: 'text-[#8E8E9C]'  },
   REPLIED: { label: 'Replied', dot: 'bg-[#4ADE80]',  text: 'text-[#4ADE80]'  },
 }
 
@@ -27,7 +27,7 @@ const INTENT_STYLE: Record<InquiryIntent, string> = {
   BUY:    'border-[#C9A84C]/30 text-[#C9A84C]',
   LEASE:  'border-[#818CF8]/30 text-[#818CF8]',
   INVEST: 'border-[#4ADE80]/30 text-[#4ADE80]',
-  INFO:   'border-[#2A2A3A] text-[#6B6B80]',
+  INFO:   'border-[#33333F] text-[#8E8E9C]',
 }
 
 function formatTimeAgo(isoString: string): string {
@@ -53,13 +53,13 @@ function SenderAvatar({ initials, isNew }: { initials: string; isNew: boolean })
           'flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold',
           isNew
             ? 'bg-[#C9A84C]/20 text-[#C9A84C]'
-            : 'bg-[#1A1A24] text-[#6B6B80]'
+            : 'bg-[#272735] text-[#8E8E9C]'
         )}
       >
         {initials}
       </div>
       {isNew && (
-        <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#0A0A0F] bg-[#C9A84C]" />
+        <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#171721] bg-[#C9A84C]" />
       )}
     </div>
   )
@@ -74,11 +74,11 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
   if (inquiries.length === 0) {
     return (
       <div className={cn('flex flex-col items-center gap-3 py-10 text-center', className)}>
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#1A1A24] text-[#3A3A4A]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#272735] text-[#3A3A4A]">
           <MessageSquare className="h-5 w-5" />
         </div>
         <div>
-          <p className="text-sm text-[#6B6B80]">No inquiries yet.</p>
+          <p className="text-sm text-[#8E8E9C]">No inquiries yet.</p>
           <p className="mt-0.5 text-xs text-[#3A3A4A]">Once your listings go live, messages will appear here.</p>
         </div>
       </div>
@@ -90,7 +90,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
   return (
     <div className={cn('space-y-1', className)}>
       {newCount > 0 && (
-        <p className="mb-3 text-xs text-[#6B6B80]">
+        <p className="mb-3 text-xs text-[#8E8E9C]">
           <span className="font-semibold text-[#C9A84C]">{newCount} unread</span>
           {' '}· {inquiries.length} total
         </p>
@@ -107,7 +107,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
               'flex items-start gap-3 rounded-lg border p-3 transition-colors',
               isNew
                 ? 'border-[#C9A84C]/20 bg-[#C9A84C]/5 hover:border-[#C9A84C]/35'
-                : 'border-[#2A2A3A] bg-[#111118] hover:border-[#3A3A4A]'
+                : 'border-[#33333F] bg-[#1E1E2A] hover:border-[#3A3A4A]'
             )}
           >
             <SenderAvatar initials={inquiry.fromInitials} isNew={isNew} />
@@ -116,13 +116,13 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
             <div className="min-w-0 flex-1">
               {/* Top row: name + intent badge + time */}
               <div className="flex items-center gap-2">
-                <span className={cn('text-xs font-semibold', isNew ? 'text-[#F5F5F7]' : 'text-[#A0A0B2]')}>
+                <span className={cn('text-xs font-semibold', isNew ? 'text-[#EDEDF3]' : 'text-[#C3C3CC]')}>
                   {inquiry.fromName}
                 </span>
                 <span className={cn('rounded border px-1.5 py-0.5 text-[10px]', INTENT_STYLE[inquiry.intent])}>
                   {INTENT_LABEL[inquiry.intent]}
                 </span>
-                <span className="ml-auto flex-shrink-0 text-[11px] text-[#6B6B80]">
+                <span className="ml-auto flex-shrink-0 text-[11px] text-[#8E8E9C]">
                   {formatTimeAgo(inquiry.timestamp)}
                 </span>
               </div>
@@ -130,7 +130,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
               {/* Asset */}
               <Link
                 href={`/marketplace/${inquiry.assetId}`}
-                className="mt-0.5 flex items-center gap-1 text-[11px] text-[#6B6B80] hover:text-[#C9A84C]"
+                className="mt-0.5 flex items-center gap-1 text-[11px] text-[#8E8E9C] hover:text-[#C9A84C]"
               >
                 <span
                   className={cn(
@@ -143,7 +143,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
               </Link>
 
               {/* Message preview */}
-              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-1 line-clamp-2 text-xs leading-relaxed text-[#8E8E9C]">
                 {inquiry.messagePreview}
               </p>
 
@@ -160,7 +160,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
       {/* Full inbox CTA — M6 */}
       <p className="pt-2 text-center text-[11px] text-[#3A3A4A]">
         Reply threading and read receipts in{' '}
-        <span className="text-[#6B6B80]">Milestone 6</span>
+        <span className="text-[#8E8E9C]">Milestone 6</span>
       </p>
     </div>
   )

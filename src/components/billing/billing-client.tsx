@@ -128,14 +128,14 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
       {successMessage && (
         <div className="flex items-start gap-3 rounded-xl border border-[#4ADE80]/20 bg-[#4ADE80]/5 px-4 py-3">
           <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#4ADE80]" />
-          <p className="text-sm text-[#A0A0B2]">{successMessage}</p>
+          <p className="text-sm text-[#C3C3CC]">{successMessage}</p>
         </div>
       )}
 
       {errorMessage && (
         <div className="flex items-start gap-3 rounded-xl border border-[#EF4444]/20 bg-[#EF4444]/5 px-4 py-3">
           <AlertCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#EF4444]" />
-          <p className="text-sm text-[#A0A0B2]">{errorMessage}</p>
+          <p className="text-sm text-[#C3C3CC]">{errorMessage}</p>
         </div>
       )}
 
@@ -164,7 +164,7 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
       </div>
 
       {/* Feature comparison footnote */}
-      <div className="rounded-xl border border-[#1F1F2E] bg-[#0D0D14] px-5 py-4">
+      <div className="rounded-xl border border-[#2A2A37] bg-[#0D0D14] px-5 py-4">
         <p className="text-xs text-[#4A4A5E]">
           All plans include access to the TIGI marketplace, property detail pages, and basic AI
           valuation estimates. Premium features unlock deeper intelligence and are billed monthly or
@@ -174,12 +174,12 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
 
       {/* Demo mode notice */}
       {isMockMode && (
-        <div className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#0A0A0F] px-4 py-3">
+        <div className="flex items-start gap-3 rounded-xl border border-[#33333F] bg-[#171721] px-4 py-3">
           <span className="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-[#F59E0B]" />
-          <p className="text-xs text-[#6B6B80]">
+          <p className="text-xs text-[#8E8E9C]">
             <span className="font-medium text-[#9999AA]">Demo mode.</span>{' '}
             Billing is simulated — no payment is required. Upgrading will instantly change your plan.
-            Set <code className="rounded bg-[#1A1A24] px-1 font-mono text-[10px]">BILLING_PROVIDER=stripe</code> to
+            Set <code className="rounded bg-[#272735] px-1 font-mono text-[10px]">BILLING_PROVIDER=stripe</code> to
             enable real billing.
           </p>
         </div>
@@ -204,7 +204,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(false)}
         className={`text-xs font-medium transition-colors ${
-          !annual ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]'
+          !annual ? 'text-[#EDEDF3]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]'
         }`}
       >
         Monthly
@@ -212,7 +212,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(!annual)}
         className={`relative h-5 w-9 rounded-full transition-colors ${
-          annual ? 'bg-[#C9A84C]' : 'bg-[#2A2A3A]'
+          annual ? 'bg-[#C9A84C]' : 'bg-[#33333F]'
         }`}
         aria-label="Toggle annual billing"
         role="switch"
@@ -227,7 +227,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(true)}
         className={`flex items-center gap-1.5 text-xs font-medium transition-colors ${
-          annual ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]'
+          annual ? 'text-[#EDEDF3]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]'
         }`}
       >
         Annual

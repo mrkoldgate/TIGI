@@ -92,7 +92,7 @@ export function WalletModal() {
         <Dialog.Content
           className={cn(
             'fixed left-1/2 top-1/2 z-50 w-full max-w-md -translate-x-1/2 -translate-y-1/2 rounded-2xl',
-            'border border-[#1E1E2A] bg-[#111118] shadow-2xl',
+            'border border-[#1E1E2A] bg-[#1E1E2A] shadow-2xl',
             'data-[state=open]:animate-in data-[state=closed]:animate-out',
             'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
             'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
@@ -104,7 +104,7 @@ export function WalletModal() {
           {/* Close button */}
           <Dialog.Close asChild>
             <button
-              className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#9999AA]"
+              className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#272735] hover:text-[#9999AA]"
               aria-label="Close"
             >
               <X className="h-4 w-4" />
@@ -112,11 +112,11 @@ export function WalletModal() {
           </Dialog.Close>
 
           {/* Header */}
-          <div className="border-b border-[#1A1A24] px-6 pb-5 pt-6">
+          <div className="border-b border-[#272735] px-6 pb-5 pt-6">
             <Dialog.Title className="font-heading text-lg font-bold text-white">
               Connect your wallet
             </Dialog.Title>
-            <Dialog.Description id="wallet-modal-desc" className="mt-1 text-sm text-[#6B6B80]">
+            <Dialog.Description id="wallet-modal-desc" className="mt-1 text-sm text-[#8E8E9C]">
               Use an external wallet instead of your TIGI managed wallet.
             </Dialog.Description>
           </div>
@@ -140,7 +140,7 @@ export function WalletModal() {
                       disabled={connecting || !!connectingName}
                       className={cn(
                         'group relative w-full rounded-xl border p-4 text-left transition-all duration-150',
-                        'border-[#1E1E2A] bg-[#0E0E16] hover:border-[#2A2A3A] hover:bg-[#141420]',
+                        'border-[#1E1E2A] bg-[#0E0E16] hover:border-[#33333F] hover:bg-[#141420]',
                         'disabled:cursor-not-allowed disabled:opacity-60',
                         isThisConnecting && 'border-[#C9A84C]/30 bg-[#C9A84C]/5',
                       )}
@@ -155,7 +155,7 @@ export function WalletModal() {
                             className="h-9 w-9 rounded-xl"
                           />
                         ) : (
-                          <div className="h-9 w-9 rounded-xl bg-[#1A1A24]" />
+                          <div className="h-9 w-9 rounded-xl bg-[#272735]" />
                         )}
 
                         <div className="flex-1 min-w-0">
@@ -191,7 +191,7 @@ export function WalletModal() {
                       href={installUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex w-full items-center gap-3 rounded-xl border border-[#1A1A24] bg-[#0A0A0F] p-4 opacity-60 transition-opacity hover:opacity-80"
+                      className="flex w-full items-center gap-3 rounded-xl border border-[#272735] bg-[#171721] p-4 opacity-60 transition-opacity hover:opacity-80"
                     >
                       {wallet.adapter.icon ? (
                         // eslint-disable-next-line @next/next/no-img-element
@@ -201,10 +201,10 @@ export function WalletModal() {
                           className="h-9 w-9 rounded-xl grayscale"
                         />
                       ) : (
-                        <div className="h-9 w-9 rounded-xl bg-[#1A1A24]" />
+                        <div className="h-9 w-9 rounded-xl bg-[#272735]" />
                       )}
                       <div className="flex-1">
-                        <span className="text-sm font-medium text-[#6B6B80]">
+                        <span className="text-sm font-medium text-[#8E8E9C]">
                           {wallet.adapter.name}
                         </span>
                         <p className="mt-0.5 text-xs text-[#3A3A48]">Not installed</p>
@@ -226,7 +226,7 @@ export function WalletModal() {
           )}
 
           {/* Footer — security message */}
-          <div className="flex items-start gap-2.5 border-t border-[#1A1A24] px-5 py-4">
+          <div className="flex items-start gap-2.5 border-t border-[#272735] px-5 py-4">
             <Shield className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#4A4A60]" />
             <p className="text-[11px] leading-relaxed text-[#3A3A48]">
               Your private key never leaves your wallet — TIGI cannot access or move your funds

@@ -33,11 +33,11 @@ export function AppShell({ children, user }: AppShellProps) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   return (
-    <div className="relative flex min-h-screen bg-[#020409] text-white selection:bg-[#3B82F6]/30">
+    <div className="relative flex min-h-screen bg-[#171721] text-white selection:bg-[#C9A84C]/30">
       {/* Background Atmosphere */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 mix-blend-screen" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 mix-blend-screen" />
+        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#C3C3CC]/10 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3 mix-blend-screen" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#C9A84C]/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3 mix-blend-screen" />
         <div className="absolute inset-0 bg-[url('/noise.png')] opacity-20 mix-blend-overlay" />
       </div>
 

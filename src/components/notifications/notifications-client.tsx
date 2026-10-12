@@ -128,7 +128,7 @@ export function NotificationsClient({
             type="button"
             onClick={handleMarkAllRead}
             disabled={markingAll}
-            className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-[#6B6B80] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C] disabled:opacity-50"
+            className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.08] px-3 py-1.5 text-xs text-[#8E8E9C] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C] disabled:opacity-50"
           >
             {markingAll
               ? <Loader2 className="h-3 w-3 animate-spin" />
@@ -140,7 +140,7 @@ export function NotificationsClient({
       </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-1 border-b border-[#1F1F2E]">
+      <div className="flex gap-1 border-b border-[#2A2A37]">
         {([
           { key: 'all',    label: 'All',    count: total      },
           { key: 'unread', label: 'Unread', count: unreadCount },
@@ -151,7 +151,7 @@ export function NotificationsClient({
             onClick={() => setTab(key)}
             className={cn(
               'relative flex items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors',
-              tab === key ? 'text-[#C9A84C]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+              tab === key ? 'text-[#C9A84C]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
             )}
           >
             {label}
@@ -160,7 +160,7 @@ export function NotificationsClient({
                 'rounded-full px-1.5 py-0.5 text-[10px] font-bold',
                 tab === key
                   ? 'bg-[#C9A84C]/20 text-[#C9A84C]'
-                  : 'bg-white/[0.06] text-[#6B6B80]',
+                  : 'bg-white/[0.06] text-[#8E8E9C]',
               )}>
                 {count > 99 ? '99+' : count}
               </span>
@@ -174,8 +174,8 @@ export function NotificationsClient({
 
       {/* Feed */}
       {displayed.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl py-16">
-          <Bell className="mb-3 h-10 w-10 text-[#2A2A3A]" />
+        <div className="flex flex-col items-center justify-center rounded-xl border border-[#2A2A37] bg-white/[0.04] backdrop-blur-xl py-16">
+          <Bell className="mb-3 h-10 w-10 text-[#33333F]" />
           <p className="text-sm font-medium text-[#4A4A5E]">
             {tab === 'unread' ? 'All caught up' : 'No notifications yet'}
           </p>
@@ -188,7 +188,7 @@ export function NotificationsClient({
             <button
               type="button"
               onClick={() => setTab('all')}
-              className="mt-4 text-xs text-[#6B6B80] underline underline-offset-2 hover:text-[#C9A84C]"
+              className="mt-4 text-xs text-[#8E8E9C] underline underline-offset-2 hover:text-[#C9A84C]"
             >
               View all notifications
             </button>
@@ -211,7 +211,7 @@ export function NotificationsClient({
               type="button"
               onClick={handleLoadMore}
               disabled={loadingMore}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl py-3 text-sm text-[#6B6B80] transition-colors hover:border-white/[0.08] hover:text-[#A0A0B2] disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A37] bg-white/[0.04] backdrop-blur-xl py-3 text-sm text-[#8E8E9C] transition-colors hover:border-white/[0.08] hover:text-[#C3C3CC] disabled:opacity-50"
             >
               {loadingMore
                 ? <><Loader2 className="h-4 w-4 animate-spin" /> Loading…</>
@@ -226,7 +226,7 @@ export function NotificationsClient({
       {displayed.length > 0 && (
         <p className="text-center text-[11px] text-[#3A3A4A]">
           Notifications are retained for 90 days.{' '}
-          <Link href="/dashboard" className="underline underline-offset-2 hover:text-[#6B6B80]">
+          <Link href="/dashboard" className="underline underline-offset-2 hover:text-[#8E8E9C]">
             Go to dashboard
           </Link>
         </p>

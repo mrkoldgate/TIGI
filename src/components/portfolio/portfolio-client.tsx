@@ -85,13 +85,13 @@ function SummaryCard({
     green:   'text-[#4ADE80]',
     red:     'text-[#F87171]',
     blue:    'text-[#818CF8]',
-    neutral: 'text-[#F5F5F7]',
+    neutral: 'text-[#EDEDF3]',
   }
   return (
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
-      <p className="text-[11px] text-[#6B6B80]">{label}</p>
+      <p className="text-[11px] text-[#8E8E9C]">{label}</p>
       <p className={cn('mt-1 font-heading text-xl font-bold', colors[accent])}>{value}</p>
-      <p className="mt-0.5 text-[10px] text-[#6B6B80]">{sub}</p>
+      <p className="mt-0.5 text-[10px] text-[#8E8E9C]">{sub}</p>
     </div>
   )
 }
@@ -116,11 +116,11 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
           className="h-full w-full object-cover opacity-60"
         />
         {/* Type badge */}
-        <span className="absolute right-2 top-2 rounded border border-white/[0.08] bg-[#0A0A0F]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#6B6B80] backdrop-blur-sm">
+        <span className="absolute right-2 top-2 rounded border border-white/[0.08] bg-[#171721]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#8E8E9C] backdrop-blur-sm">
           {holding.propertyType.replace('_', ' ')}
         </span>
         {/* Ownership badge */}
-        <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded border border-[#C9A84C]/30 bg-[#0A0A0F]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#C9A84C] backdrop-blur-sm">
+        <span className="absolute bottom-2 left-2 flex items-center gap-1 rounded border border-[#C9A84C]/30 bg-[#171721]/80 px-1.5 py-0.5 text-[9px] font-medium text-[#C9A84C] backdrop-blur-sm">
           <Coins className="h-2.5 w-2.5" />
           {ownershipPct.toFixed(2)}% owned
         </span>
@@ -131,11 +131,11 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
         <div className="mb-3">
           <Link
             href={`/marketplace/${holding.propertyId}`}
-            className="line-clamp-1 text-sm font-semibold text-[#F5F5F7] transition-colors hover:text-[#C9A84C]"
+            className="line-clamp-1 text-sm font-semibold text-[#EDEDF3] transition-colors hover:text-[#C9A84C]"
           >
             {holding.propertyTitle}
           </Link>
-          <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
             {holding.propertyCity}, {holding.propertyState}
           </p>
         </div>
@@ -143,14 +143,14 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
         {/* Token quantity bar */}
         <div className="mb-3 rounded-lg bg-white/[0.04] border border-white/[0.06] px-3 py-2.5">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] text-[#6B6B80]">Tokens held</span>
+            <span className="text-[10px] text-[#8E8E9C]">Tokens held</span>
             <span className="text-[10px] text-[#3A3A4A]">of {holding.totalTokens.toLocaleString()} total</span>
           </div>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-sm font-bold text-[#F5F5F7]">
+            <span className="text-sm font-bold text-[#EDEDF3]">
               {holding.tokensOwned.toLocaleString()}
             </span>
-            <span className="text-[11px] text-[#6B6B80]">
+            <span className="text-[11px] text-[#8E8E9C]">
               @ ${holding.currentPricePerToken}/token
             </span>
           </div>
@@ -166,11 +166,11 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
         {/* P&L row */}
         <div className="grid grid-cols-3 gap-2">
           <div>
-            <p className="text-[10px] text-[#6B6B80]">Value</p>
-            <p className="text-xs font-semibold text-[#F5F5F7]">{fmt(currentValue)}</p>
+            <p className="text-[10px] text-[#8E8E9C]">Value</p>
+            <p className="text-xs font-semibold text-[#EDEDF3]">{fmt(currentValue)}</p>
           </div>
           <div>
-            <p className="text-[10px] text-[#6B6B80]">Return</p>
+            <p className="text-[10px] text-[#8E8E9C]">Return</p>
             <div className={cn('flex items-center gap-0.5', positive ? 'text-[#4ADE80]' : 'text-[#F87171]')}>
               {positive
                 ? <TrendingUp className="h-3 w-3 flex-shrink-0" />
@@ -180,7 +180,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
             </div>
           </div>
           <div>
-            <p className="text-[10px] text-[#6B6B80]">Yield APR</p>
+            <p className="text-[10px] text-[#8E8E9C]">Yield APR</p>
             <p className="text-xs font-semibold text-[#818CF8]">{fmtPct(holding.yieldApr)}</p>
           </div>
         </div>
@@ -198,14 +198,14 @@ function EmptyHoldings() {
         <Coins className="h-5 w-5" />
       </div>
       <div>
-        <p className="text-sm text-[#6B6B80]">No token holdings yet.</p>
+        <p className="text-sm text-[#8E8E9C]">No token holdings yet.</p>
         <p className="mt-0.5 text-xs text-[#3A3A4A]">
           Browse tokenized listings and make your first fractional investment.
         </p>
       </div>
       <Link
         href="/marketplace?tokenized=true"
-        className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+        className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#C3C3CC] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
       >
         Browse tokenized assets <ArrowRight className="h-3 w-3" />
       </Link>
@@ -218,17 +218,17 @@ function EmptyHoldings() {
 function WalletTeaser() {
   return (
     <div className="rounded-xl border border-dashed border-white/[0.08] p-6 text-center">
-      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#6B6B80]">
+      <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#8E8E9C]">
         <Wallet className="h-5 w-5" />
       </div>
-      <h3 className="text-sm font-semibold text-[#F5F5F7]">Connect Your Wallet</h3>
-      <p className="mx-auto mt-1.5 max-w-sm text-xs text-[#6B6B80]">
+      <h3 className="text-sm font-semibold text-[#EDEDF3]">Connect Your Wallet</h3>
+      <p className="mx-auto mt-1.5 max-w-sm text-xs text-[#8E8E9C]">
         Connect a Solana wallet to verify your on-chain holdings, unlock live
         pricing, and sync yield distributions automatically.
       </p>
       <Link
         href="/settings/wallet"
-        className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+        className="mt-4 inline-flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs font-medium text-[#C3C3CC] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
       >
         <Wallet className="h-3.5 w-3.5" />
         Connect wallet
@@ -253,13 +253,13 @@ function SectionHeader({
   return (
     <div className="mb-4 flex items-end justify-between">
       <div>
-        <h2 className="text-sm font-semibold text-[#F5F5F7]">{title}</h2>
-        {sub && <p className="mt-0.5 text-xs text-[#6B6B80]">{sub}</p>}
+        <h2 className="text-sm font-semibold text-[#EDEDF3]">{title}</h2>
+        {sub && <p className="mt-0.5 text-xs text-[#8E8E9C]">{sub}</p>}
       </div>
       {cta && ctaHref && (
         <Link
           href={ctaHref}
-          className="flex items-center gap-1 text-[11px] text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="flex items-center gap-1 text-[11px] text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
         >
           {cta} <ArrowRight className="h-3 w-3" />
         </Link>
@@ -281,14 +281,14 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
       {/* Preview mode banner */}
       <div className="flex items-center gap-2 rounded-lg border border-[#F59E0B]/20 bg-[#F59E0B]/5 px-4 py-2.5">
         <span className="h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#F59E0B]" />
-        <p className="text-xs text-[#A0A0B2]">
+        <p className="text-xs text-[#C3C3CC]">
           <span className="font-medium text-[#F59E0B]">Preview mode</span>
           {' '}— Holdings shown below use placeholder data.
           Connect your wallet to sync your real on-chain positions.
         </p>
         <Link
           href="/settings/wallet"
-          className="ml-auto flex-shrink-0 text-[11px] text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="ml-auto flex-shrink-0 text-[11px] text-[#8E8E9C] transition-colors hover:text-[#C9A84C]"
         >
           Connect →
         </Link>
@@ -332,11 +332,11 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#3A3A4A]">
             <BarChart3 className="h-5 w-5" />
           </div>
-          <p className="text-sm text-[#6B6B80]">Performance charts coming in M6.</p>
+          <p className="text-sm text-[#8E8E9C]">Performance charts coming in M6.</p>
           <p className="max-w-xs text-xs text-[#3A3A4A]">
             Historical portfolio value, yield distributions, and ROI trends.
           </p>
-          <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#0A0A0F] px-3 py-1 text-[11px] text-[#6B6B80]">
+          <div className="mt-1 inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-[#171721] px-3 py-1 text-[11px] text-[#8E8E9C]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#818CF8]" />
             Milestone 6
           </div>

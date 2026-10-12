@@ -77,7 +77,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
       {/* Mobile backdrop */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-30 bg-[#0A0A0F]/70 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-30 bg-[#171721]/70 backdrop-blur-sm md:hidden"
           onClick={onMobileClose}
           aria-hidden="true"
         />
@@ -85,7 +85,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.06] bg-[#020409]/70 backdrop-blur-xl transition-all duration-200 shadow-[4px_0_32px_-8px_rgba(0,0,0,0.6)]',
+          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.06] bg-[#171721]/70 backdrop-blur-xl transition-all duration-200 shadow-[4px_0_32px_-8px_rgba(0,0,0,0.6)]',
           // Desktop: collapsed or expanded
           collapsed ? 'md:w-16' : 'md:w-60',
           // Mobile: full drawer when open, hidden when closed
@@ -95,7 +95,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
       >
         {/* Top atmospheric glow — adds depth without noise */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-violet-600/[0.07] via-blue-600/[0.03] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#C3C3CC]/[0.07] via-[#C9A84C]/[0.03] to-transparent"
           aria-hidden="true"
         />
 
@@ -111,7 +111,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
           {/* Mobile close button */}
           <button
             onClick={onMobileClose}
-            className="ml-auto flex h-8 w-8 items-center justify-center rounded-lg text-[#6B6B80] transition-colors hover:bg-white/5 hover:text-[#A0A0B2] md:hidden"
+            className="ml-auto flex h-8 w-8 items-center justify-center rounded-lg text-[#8E8E9C] transition-colors hover:bg-white/5 hover:text-[#C3C3CC] md:hidden"
             aria-label="Close menu"
           >
             <X className="h-4 w-4" />
@@ -153,7 +153,7 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
           <button
             onClick={onToggle}
             className={cn(
-              'mt-2 hidden w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#6B6B80] transition-colors hover:bg-white/5 hover:text-[#A0A0B2] md:flex',
+              'mt-2 hidden w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#8E8E9C] transition-colors hover:bg-white/5 hover:text-[#C3C3CC] md:flex',
               collapsed ? 'justify-center' : ''
             )}
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
@@ -193,21 +193,21 @@ function SidebarLink({ item, active, collapsed, onClick }: SidebarLinkProps) {
       className={cn(
         'group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-300',
         active
-          ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_0_20px_rgba(52,211,153,0.04)]'
-          : 'text-[#94A3B8] hover:bg-white/[0.04] hover:text-white',
+          ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_0_20px_rgba(127, 209, 168,0.04)]'
+          : 'text-[#A8A8B3] hover:bg-white/[0.04] hover:text-white',
         collapsed ? 'justify-center' : ''
       )}
     >
       {/* Active left indicator */}
       {active && (
-        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.8)]" />
+        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-emerald-400 shadow-[0_0_12px_rgba(127, 209, 168,0.8)]" />
       )}
 
       {/* Icon */}
       <item.icon
         className={cn(
           'h-4 w-4 flex-shrink-0 transition-colors',
-          active ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]' : 'text-[#64748B] group-hover:text-[#94A3B8]'
+          active ? 'text-emerald-400 drop-shadow-[0_0_8px_rgba(127, 209, 168,0.5)]' : 'text-[#8E8E9C] group-hover:text-[#A8A8B3]'
         )}
       />
 
@@ -218,7 +218,7 @@ function SidebarLink({ item, active, collapsed, onClick }: SidebarLinkProps) {
           {item.href === '/saved' ? (
             <SavedCountBadge />
           ) : item.milestone ? (
-            <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8]">
+            <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#A8A8B3]">
               {item.milestone}
             </span>
           ) : null}

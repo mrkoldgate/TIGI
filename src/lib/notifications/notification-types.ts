@@ -90,17 +90,17 @@ export const NOTIFICATION_TYPE_CONFIG: Record<NotificationType, NotificationType
   LEASE_INTEREST_CREATED: {
     label: 'Lease Interest',
     iconName: 'MapPin',
-    color: 'text-[#60A5FA]',
-    bgColor: 'bg-[#3B82F6]/10',
-    borderColor: 'border-[#3B82F6]/20',
+    color: 'text-[#D4B45E]',
+    bgColor: 'bg-[#C9A84C]/10',
+    borderColor: 'border-[#C9A84C]/20',
     defaultActionUrl: '/listings',
   },
   LEGACY_SUBMITTED: {
     label: 'Plan Submitted',
     iconName: 'Landmark',
-    color: 'text-[#A78BFA]',
-    bgColor: 'bg-[#A78BFA]/10',
-    borderColor: 'border-[#A78BFA]/20',
+    color: 'text-[#D8D8E0]',
+    bgColor: 'bg-[#D8D8E0]/10',
+    borderColor: 'border-[#D8D8E0]/20',
     defaultActionUrl: '/inheritance',
   },
   LEGACY_APPROVED: {

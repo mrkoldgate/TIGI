@@ -38,7 +38,7 @@ export default async function SettingsPage() {
   }
 
   const kycColor: Record<string, string> = {
-    NONE:      'text-[#6B6B80]',
+    NONE:      'text-[#8E8E9C]',
     PENDING:   'text-[#F59E0B]',
     SUBMITTED: 'text-[#F59E0B]',
     VERIFIED:  'text-[#4ADE80]',
@@ -46,7 +46,7 @@ export default async function SettingsPage() {
   }
 
   const tierColor =
-    tier === 'free'       ? 'text-[#6B6B80]'
+    tier === 'free'       ? 'text-[#8E8E9C]'
     : tier === 'pro'      ? 'text-[#C9A84C]'
     : tier === 'pro_plus' ? 'text-[#818CF8]'
     : 'text-[#22C55E]'
@@ -66,7 +66,7 @@ export default async function SettingsPage() {
       title:       'Identity Verification',
       description: 'Complete KYC to unlock investment transactions.',
       meta:        kycLabel[kycStatus] ?? 'Unknown',
-      metaColor:   kycColor[kycStatus] ?? 'text-[#6B6B80]',
+      metaColor:   kycColor[kycStatus] ?? 'text-[#8E8E9C]',
     },
     {
       href:        '/settings/wallet',
@@ -74,7 +74,7 @@ export default async function SettingsPage() {
       title:       'Wallet',
       description: 'Manage your platform wallet and external connections.',
       meta:        'Devnet',
-      metaColor:   'text-[#6B6B80]',
+      metaColor:   'text-[#8E8E9C]',
     },
     {
       href:        '/settings/profile',
@@ -82,7 +82,7 @@ export default async function SettingsPage() {
       title:       'Profile',
       description: 'Edit your name, avatar, and notification preferences.',
       meta:        user?.name ?? 'Set up',
-      metaColor:   user?.name ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]',
+      metaColor:   user?.name ? 'text-[#C3C3CC]' : 'text-[#4A4A5E]',
     },
   ]
 
@@ -98,14 +98,14 @@ export default async function SettingsPage() {
           <Link
             key={href}
             href={href}
-            className="flex items-center gap-4 rounded-xl border border-[#1E1E2A] bg-[#111118] px-5 py-4 transition-colors hover:border-[#2A2A3A] hover:bg-[#15151E]"
+            className="flex items-center gap-4 rounded-xl border border-[#1E1E2A] bg-[#1E1E2A] px-5 py-4 transition-colors hover:border-[#33333F] hover:bg-[#15151E]"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#1A1A24]">
-              <Icon className="h-4.5 w-4.5 text-[#6B6B80]" />
+            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[#33333F] bg-[#272735]">
+              <Icon className="h-4.5 w-4.5 text-[#8E8E9C]" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-[#F5F5F7]">{title}</p>
-              <p className="mt-0.5 text-xs text-[#6B6B80]">{description}</p>
+              <p className="text-sm font-semibold text-[#EDEDF3]">{title}</p>
+              <p className="mt-0.5 text-xs text-[#8E8E9C]">{description}</p>
             </div>
             <div className="flex items-center gap-3">
               <span className={`text-xs font-medium ${metaColor}`}>{meta}</span>

@@ -118,8 +118,8 @@ const LAND_USE_CONFIG: Record<LandUseType, { label: string; className: string; d
   },
   RESIDENTIAL_DEV: {
     label: 'Residential Dev.',
-    className: 'bg-[#1D4ED8]/15 text-[#93C5FD] ring-[#3B82F6]/25',
-    dotClass: 'bg-[#93C5FD]',
+    className: 'bg-[#9A7A22]/15 text-[#E8D590] ring-[#C9A84C]/25',
+    dotClass: 'bg-[#E8D590]',
   },
   COMMERCIAL_DEV: {
     label: 'Commercial Dev.',
@@ -133,13 +133,13 @@ const LAND_USE_CONFIG: Record<LandUseType, { label: string; className: string; d
   },
   MIXED_USE: {
     label: 'Mixed Use',
-    className: 'bg-[#4C1D95]/20 text-[#C4B5FD] ring-[#7C3AED]/25',
-    dotClass: 'bg-[#C4B5FD]',
+    className: 'bg-[#4C1D95]/20 text-[#EDEDF3] ring-[#A8A8B3]/25',
+    dotClass: 'bg-[#EDEDF3]',
   },
   RECREATIONAL: {
     label: 'Recreational',
-    className: 'bg-[#065F46]/20 text-[#6EE7B7] ring-[#10B981]/25',
-    dotClass: 'bg-[#6EE7B7]',
+    className: 'bg-[#065F46]/20 text-[#A7E3C4] ring-[#5DBB8E]/25',
+    dotClass: 'bg-[#A7E3C4]',
   },
   WATERFRONT: {
     label: 'Waterfront',
@@ -148,8 +148,8 @@ const LAND_USE_CONFIG: Record<LandUseType, { label: string; className: string; d
   },
   RURAL: {
     label: 'Rural',
-    className: 'bg-[#1E293B]/80 text-[#94A3B8] ring-[#334155]/60',
-    dotClass: 'bg-[#94A3B8]',
+    className: 'bg-[#2E2E3D]/80 text-[#A8A8B3] ring-[#4A4A58]/60',
+    dotClass: 'bg-[#A8A8B3]',
   },
 }
 
@@ -207,7 +207,7 @@ function FeatureChips({
       {visible.map((f) => (
         <span
           key={f}
-          className="inline-flex items-center rounded bg-[#1A1A24] px-1.5 py-0.5 text-[10px] text-[#8080A0] ring-1 ring-inset ring-[#2A2A3A]"
+          className="inline-flex items-center rounded bg-[#272735] px-1.5 py-0.5 text-[10px] text-[#8080A0] ring-1 ring-inset ring-[#33333F]"
         >
           {f}
         </span>
@@ -243,8 +243,8 @@ function SaveButton({
       }}
       className={cn(
         'flex h-7 w-7 items-center justify-center rounded-full transition-all duration-150',
-        'bg-[#0A0A0F]/70 backdrop-blur-sm ring-1 ring-[#2A2A3A]',
-        'hover:bg-[#1A1A24] hover:ring-[#4ADE80]/40',
+        'bg-[#171721]/70 backdrop-blur-sm ring-1 ring-[#33333F]',
+        'hover:bg-[#272735] hover:ring-[#4ADE80]/40',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ADE80]',
         className,
       )}
@@ -252,7 +252,7 @@ function SaveButton({
       <Heart
         className={cn(
           'h-3.5 w-3.5 transition-colors duration-150',
-          isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#6B6B80]',
+          isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#8E8E9C]',
         )}
       />
     </button>
@@ -267,13 +267,13 @@ function TokenProgress({ info }: { info: LandTokenInfo }) {
   const soldPct = tokenSoldPercent(info)
   return (
     <div>
-      <div className="mb-1 flex items-center justify-between text-[10px] text-[#6B6B80]">
+      <div className="mb-1 flex items-center justify-between text-[10px] text-[#8E8E9C]">
         <span>{soldPct}% subscribed</span>
         {info.investorCount !== undefined && (
           <span>{info.investorCount} investors</span>
         )}
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-[#2A2A3A]">
+      <div className="h-1 overflow-hidden rounded-full bg-[#33333F]">
         <div
           className="h-full rounded-full bg-gradient-to-r from-[#166534] to-[#4ADE80] transition-all duration-700"
           style={{ width: `${soldPct}%` }}
@@ -296,7 +296,7 @@ function AcreageHero({
 }) {
   return (
     <div className="flex items-baseline gap-1.5">
-      <span className="font-heading text-2xl font-bold tabular-nums text-[#F5F5F7]">
+      <span className="font-heading text-2xl font-bold tabular-nums text-[#EDEDF3]">
         {formatAcres(acres)}
       </span>
       {pricePerAcreLabel && (
@@ -313,7 +313,7 @@ function AcreageHero({
 function ListingTypePill({ type }: { type: LandListingType }) {
   if (type === 'BUY') return null
   return (
-    <span className="inline-flex items-center rounded-md bg-[#3B82F6]/20 px-2 py-0.5 text-[10px] font-medium text-[#60A5FA] backdrop-blur-sm ring-1 ring-inset ring-[#3B82F6]/30">
+    <span className="inline-flex items-center rounded-md bg-[#C9A84C]/20 px-2 py-0.5 text-[10px] font-medium text-[#D4B45E] backdrop-blur-sm ring-1 ring-inset ring-[#C9A84C]/30">
       {type === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
     </span>
   )
@@ -515,7 +515,7 @@ function RowVariant({
                 </span>
               )}
               {data.listingType && data.listingType !== 'BUY' && (
-                <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-1.5 py-0.5 text-[9px] font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+                <span className="inline-flex items-center rounded-md bg-[#C9A84C]/15 px-1.5 py-0.5 text-[9px] font-medium text-[#D4B45E] ring-1 ring-inset ring-[#C9A84C]/25">
                   {data.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
                 </span>
               )}

@@ -124,7 +124,7 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
             ) : state === 'error' ? (
               <AlertCircle className="h-3.5 w-3.5 text-[#EF4444]" />
             ) : (
-              <Camera className="h-3.5 w-3.5 text-[#6B6B80]" />
+              <Camera className="h-3.5 w-3.5 text-[#8E8E9C]" />
             )}
           </button>
         </Tooltip.Trigger>
@@ -133,14 +133,14 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
           <Tooltip.Content
             side="bottom"
             sideOffset={6}
-            className="z-50 rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-2.5 py-1.5 text-[11px] text-[#A0A0B2] shadow-xl"
+            className="z-50 rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl px-2.5 py-1.5 text-[11px] text-[#C3C3CC] shadow-xl"
           >
             {state === 'error' && errorMsg
               ? errorMsg
               : state === 'uploading'
               ? 'Uploading…'
               : 'Upload profile photo'}
-            <Tooltip.Arrow className="fill-[#2A2A3A]" />
+            <Tooltip.Arrow className="fill-[#33333F]" />
           </Tooltip.Content>
         </Tooltip.Portal>
       </Tooltip.Root>

@@ -14,7 +14,7 @@
 // Design:
 //   - Property asset → gold (#C9A84C) accent throughout
 //   - Land asset → green (#4ADE80) accent throughout
-//   - Dark TIGI surface: #0A0A0F / #14141E / #1A1A24 / #2A2A3A border
+//   - Dark TIGI surface: #171721 / #14141E / #272735 / #33333F border
 //
 // DB integration path:
 //   - handleSubmit → call server action / API route with formState
@@ -152,7 +152,7 @@ function accentBg(assetType: AssetType | null) {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+    <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
       {children}
     </p>
   )
@@ -176,7 +176,7 @@ function Textarea({
   return (
     <div className="flex flex-col gap-1.5">
       {label && (
-        <label htmlFor={id} className="text-label text-xs font-medium text-[#A0A0B2]">
+        <label htmlFor={id} className="text-label text-xs font-medium text-[#C3C3CC]">
           {label}
         </label>
       )}
@@ -184,14 +184,14 @@ function Textarea({
         id={id}
         rows={rows}
         className={cn(
-          'w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-          'px-4 py-3 text-sm text-[#F5F5F7] placeholder:text-[#6B6B80]',
+          'w-full resize-none rounded-lg border border-[#33333F] bg-[#2E2E3D]',
+          'px-4 py-3 text-sm text-[#EDEDF3] placeholder:text-[#8E8E9C]',
           'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
           'transition-colors duration-150',
         )}
         {...props}
       />
-      {hint && <p className="text-xs text-[#6B6B80]">{hint}</p>}
+      {hint && <p className="text-xs text-[#8E8E9C]">{hint}</p>}
     </div>
   )
 }
@@ -209,7 +209,7 @@ function SelectField({ label, hint, value, onChange, options, placeholder }: Sel
   const id = label.toLowerCase().replace(/\s+/g, '-')
   return (
     <div className="flex flex-col gap-1.5">
-      <label htmlFor={id} className="text-xs font-medium text-[#A0A0B2]">
+      <label htmlFor={id} className="text-xs font-medium text-[#C3C3CC]">
         {label}
       </label>
       <select
@@ -217,11 +217,11 @@ function SelectField({ label, hint, value, onChange, options, placeholder }: Sel
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-          'px-4 py-2.5 text-sm text-[#F5F5F7]',
+          'w-full rounded-lg border border-[#33333F] bg-[#2E2E3D]',
+          'px-4 py-2.5 text-sm text-[#EDEDF3]',
           'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
           'transition-colors duration-150',
-          !value && 'text-[#6B6B80]',
+          !value && 'text-[#8E8E9C]',
         )}
       >
         {placeholder && (
@@ -235,7 +235,7 @@ function SelectField({ label, hint, value, onChange, options, placeholder }: Sel
           </option>
         ))}
       </select>
-      {hint && <p className="text-xs text-[#6B6B80]">{hint}</p>}
+      {hint && <p className="text-xs text-[#8E8E9C]">{hint}</p>}
     </div>
   )
 }
@@ -260,9 +260,9 @@ function ToggleCard({ selected, onSelect, assetType, children, className }: Togg
           ? cn(
               'border-2',
               accentBorder(assetType),
-              'bg-[#1A1A24]',
+              'bg-[#272735]',
             )
-          : 'border-[#2A2A3A] bg-[#14141E] hover:border-[#3A3A4E] hover:bg-[#1A1A24]',
+          : 'border-[#33333F] bg-[#14141E] hover:border-[#3A3A4E] hover:bg-[#272735]',
         className,
       )}
     >
@@ -271,7 +271,7 @@ function ToggleCard({ selected, onSelect, assetType, children, className }: Togg
           className={cn(
             'absolute right-4 top-4 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold',
             accentBg(assetType),
-            assetType === 'LAND' ? 'text-[#0A0A0F]' : 'text-[#0A0A0F]',
+            assetType === 'LAND' ? 'text-[#171721]' : 'text-[#171721]',
           )}
         >
           ✓
@@ -308,10 +308,10 @@ function StepProgress({ currentStep, assetType }: StepProgressProps) {
                   className={cn(
                     'flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-semibold transition-all duration-300',
                     isCompleted
-                      ? 'border-transparent text-[#0A0A0F]'
+                      ? 'border-transparent text-[#171721]'
                       : isActive
                         ? 'border-current text-inherit'
-                        : 'border-[#2A2A3A] text-[#6B6B80]',
+                        : 'border-[#33333F] text-[#8E8E9C]',
                   )}
                   style={
                     isCompleted
@@ -326,7 +326,7 @@ function StepProgress({ currentStep, assetType }: StepProgressProps) {
                 <span
                   className={cn(
                     'hidden text-[10px] font-medium sm:block',
-                    isActive ? 'text-[#F5F5F7]' : isCompleted ? '' : 'text-[#6B6B80]',
+                    isActive ? 'text-[#EDEDF3]' : isCompleted ? '' : 'text-[#8E8E9C]',
                   )}
                   style={isCompleted ? { color } : {}}
                 >
@@ -337,7 +337,7 @@ function StepProgress({ currentStep, assetType }: StepProgressProps) {
                 <div
                   className="mb-4 h-[2px] flex-1 transition-all duration-300"
                   style={{
-                    backgroundColor: step.id < currentStep ? color : '#2A2A3A',
+                    backgroundColor: step.id < currentStep ? color : '#33333F',
                   }}
                 />
               )}
@@ -361,8 +361,8 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">What are you listing?</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">What are you listing?</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Select the asset type to tailor the listing form to your specific asset.
         </p>
       </div>
@@ -373,11 +373,11 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
           onSelect={() => setForm((f) => ({ ...f, assetType: 'PROPERTY' }))}
           assetType={form.assetType}
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#22222E]">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#2E2E3D]">
             <BuildingIcon />
           </div>
-          <p className="mb-1 text-base font-semibold text-[#F5F5F7]">Property</p>
-          <p className="text-xs leading-relaxed text-[#6B6B80]">
+          <p className="mb-1 text-base font-semibold text-[#EDEDF3]">Property</p>
+          <p className="text-xs leading-relaxed text-[#8E8E9C]">
             Residential, commercial, industrial, or mixed-use built assets. Supports full ownership
             and fractional tokenization.
           </p>
@@ -385,7 +385,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
             {['Residential', 'Commercial', 'Industrial', 'Mixed-Use'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-[#2A2A3A] px-2.5 py-0.5 text-[10px] text-[#6B6B80]"
+                className="rounded-full border border-[#33333F] px-2.5 py-0.5 text-[10px] text-[#8E8E9C]"
               >
                 {t}
               </span>
@@ -401,8 +401,8 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
           <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#0D110D]">
             <LandIcon />
           </div>
-          <p className="mb-1 text-base font-semibold text-[#F5F5F7]">Land</p>
-          <p className="text-xs leading-relaxed text-[#6B6B80]">
+          <p className="mb-1 text-base font-semibold text-[#EDEDF3]">Land</p>
+          <p className="text-xs leading-relaxed text-[#8E8E9C]">
             Agricultural, development, recreational, waterfront, or raw land parcels. Supports
             sale, lease, and development partnerships.
           </p>
@@ -410,7 +410,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
             {['Agricultural', 'Dev. Opportunity', 'Recreational', 'Waterfront'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-[#1E2D1E] px-2.5 py-0.5 text-[10px] text-[#6B6B80]"
+                className="rounded-full border border-[#1E2D1E] px-2.5 py-0.5 text-[10px] text-[#8E8E9C]"
               >
                 {t}
               </span>
@@ -482,8 +482,8 @@ function BasicDetailsStep({ form, setForm, onNext, onBack }: Step2Props) {
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">Basic Details</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">Basic Details</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Describe your {isLand ? 'land parcel' : 'property'} and its location.
         </p>
       </div>
@@ -679,8 +679,8 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">Pricing</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">Pricing</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Set your asking price and how buyers or tenants can transact.
         </p>
       </div>
@@ -700,7 +700,7 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
             type="number"
             placeholder="850,000"
             min="0"
-            leftIcon={<span className="text-[#6B6B80]">$</span>}
+            leftIcon={<span className="text-[#8E8E9C]">$</span>}
             value={form.price}
             onChange={(e) => f('price')(e.target.value)}
             hint="Set 0 to display as 'Price on Request'."
@@ -713,7 +713,7 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
             type="number"
             placeholder={isLand ? '24,000' : '3,500'}
             min="0"
-            leftIcon={<span className="text-[#6B6B80]">$</span>}
+            leftIcon={<span className="text-[#8E8E9C]">$</span>}
             value={form.leaseRateMonthly}
             onChange={(e) => f('leaseRateMonthly')(e.target.value)}
           />
@@ -732,23 +732,23 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
               <span className="text-2xl font-bold text-[#E8F0E8]">
                 ${inferredPPA ?? '—'}
               </span>
-              <span className="text-xs text-[#6B6B80]">/ acre (calculated)</span>
+              <span className="text-xs text-[#8E8E9C]">/ acre (calculated)</span>
             </div>
-            <p className="mt-1 text-xs text-[#6B6B80]">
+            <p className="mt-1 text-xs text-[#8E8E9C]">
               Based on {form.lotAcres} acres at ${parseFloat(form.price || '0').toLocaleString()} asking price.
             </p>
           </div>
         )}
 
         {/* AI Valuation note */}
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+        <div className="rounded-xl border border-[#33333F] bg-[#14141E] p-4">
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#22222E]">
+            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#2E2E3D]">
               <SparkleIcon />
             </div>
             <div>
-              <p className="mb-1 text-sm font-semibold text-[#F5F5F7]">AI Valuation Coming Soon</p>
-              <p className="text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mb-1 text-sm font-semibold text-[#EDEDF3]">AI Valuation Coming Soon</p>
+              <p className="text-xs leading-relaxed text-[#8E8E9C]">
                 Once your listing is submitted, TIGI's valuation engine will run comparables
                 and provide an independent AI estimate. This appears on your listing page
                 to build buyer confidence.
@@ -816,8 +816,8 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">Ownership Model</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">Ownership Model</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Choose how investors and buyers can participate in this asset.
         </p>
       </div>
@@ -831,15 +831,15 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
               onSelect={() => setForm((f) => ({ ...f, ownershipModel: opt.value }))}
               assetType={form.assetType}
             >
-              <p className="mb-1 text-sm font-semibold text-[#F5F5F7]">{opt.label}</p>
-              <p className="text-xs leading-relaxed text-[#6B6B80]">{opt.description}</p>
+              <p className="mb-1 text-sm font-semibold text-[#EDEDF3]">{opt.label}</p>
+              <p className="text-xs leading-relaxed text-[#8E8E9C]">{opt.description}</p>
             </ToggleCard>
           ))}
         </div>
 
         {/* Fractional config */}
         {isFractional && (
-          <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-5">
+          <div className="rounded-xl border border-[#33333F] bg-[#14141E] p-5">
             <SectionLabel>Token Configuration</SectionLabel>
             <FieldGroup>
               <FieldRow>
@@ -857,7 +857,7 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
                   type="number"
                   placeholder="500"
                   min="1"
-                  leftIcon={<span className="text-[#6B6B80]">$</span>}
+                  leftIcon={<span className="text-[#8E8E9C]">$</span>}
                   value={form.tokenPricePerFraction}
                   onChange={(e) => f('tokenPricePerFraction')(e.target.value)}
                   hint="Entry price for a single fraction."
@@ -865,15 +865,15 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
               </FieldRow>
 
               {totalFractionalValue && (
-                <div className="flex items-center justify-between rounded-lg bg-[#22222E] px-4 py-3">
-                  <span className="text-xs text-[#6B6B80]">Total tokenized value</span>
+                <div className="flex items-center justify-between rounded-lg bg-[#2E2E3D] px-4 py-3">
+                  <span className="text-xs text-[#8E8E9C]">Total tokenized value</span>
                   <span className="text-sm font-semibold text-[#C9A84C]">{totalFractionalValue}</span>
                 </div>
               )}
 
-              <div className="rounded-lg border border-[#2A2A3A] px-4 py-3">
-                <p className="text-xs leading-relaxed text-[#6B6B80]">
-                  <strong className="text-[#A0A0B2]">Note:</strong> Token issuance, smart contract
+              <div className="rounded-lg border border-[#33333F] px-4 py-3">
+                <p className="text-xs leading-relaxed text-[#8E8E9C]">
+                  <strong className="text-[#C3C3CC]">Note:</strong> Token issuance, smart contract
                   deployment, and regulatory compliance steps are handled after listing approval by
                   the TIGI tokenization team. No on-chain action is required at this stage.
                 </p>
@@ -966,8 +966,8 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">Media</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">Media</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Upload photos of your {isLand ? 'land parcel' : 'property'}. High-quality images
           significantly improve listing performance.
         </p>
@@ -975,7 +975,7 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
 
       {/* Hero slot (large) */}
       <div className="mb-4">
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
           Hero Image <span className="text-[#EF4444]">*</span>
         </p>
         <UploadSlot
@@ -989,8 +989,8 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
 
       {/* Additional images (grid) */}
       <div>
-        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
-          Additional Images <span className="text-[#A0A0B2]">(up to 5)</span>
+        <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
+          Additional Images <span className="text-[#C3C3CC]">(up to 5)</span>
         </p>
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
           {form.uploadSlots.slice(1).map((slot) => (
@@ -1008,7 +1008,7 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
       {/* Upload counter */}
       <div className="mt-4 flex items-center gap-2">
         <div
-          className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#2A2A3A]"
+          className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#33333F]"
         >
           <div
             className="h-full rounded-full transition-all duration-500"
@@ -1018,14 +1018,14 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
             }}
           />
         </div>
-        <span className="shrink-0 text-xs text-[#6B6B80]">
+        <span className="shrink-0 text-xs text-[#8E8E9C]">
           {uploadedCount} / 6 uploaded
         </span>
       </div>
 
-      <div className="mt-4 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
-          <strong className="text-[#A0A0B2]">Supported formats:</strong> JPEG, PNG, WebP. Max 20 MB
+      <div className="mt-4 rounded-xl border border-[#33333F] bg-[#14141E] px-4 py-3">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
+          <strong className="text-[#C3C3CC]">Supported formats:</strong> JPEG, PNG, WebP. Max 20 MB
           per image.{' '}
           {isLand
             ? 'Aerial or drone photography performs best for land listings.'
@@ -1073,7 +1073,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     return (
       <div
         className={cn(
-          'relative overflow-hidden rounded-xl border border-[#2A2A3A]',
+          'relative overflow-hidden rounded-xl border border-[#33333F]',
           large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
         )}
       >
@@ -1092,7 +1092,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     return (
       <div
         className={cn(
-          'group relative overflow-hidden rounded-xl border border-[#2A2A3A]',
+          'group relative overflow-hidden rounded-xl border border-[#33333F]',
           large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
         )}
       >
@@ -1142,7 +1142,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
         <p className="px-1 text-center text-[10px] text-[#EF4444]">
           {slot.errorMessage ?? 'Upload failed'}
         </p>
-        <p className="mt-0.5 text-[10px] text-[#6B6B80]">Click to retry</p>
+        <p className="mt-0.5 text-[10px] text-[#8E8E9C]">Click to retry</p>
       </div>
     )
   }
@@ -1151,7 +1151,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
   return (
     <div
       className={cn(
-        'relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#2A2A3A]',
+        'relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#33333F]',
         'bg-[#14141E] transition-all duration-200',
         'hover:border-opacity-70',
         large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
@@ -1174,11 +1174,11 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
       >
         <UploadIcon style={{ color }} />
       </div>
-      <p className="text-xs font-medium text-[#A0A0B2]">
+      <p className="text-xs font-medium text-[#C3C3CC]">
         {large ? 'Click or drag to upload' : slot.label}
       </p>
       {large && (
-        <p className="mt-1 text-[10px] text-[#6B6B80]">JPEG, PNG, WebP · Max 20 MB</p>
+        <p className="mt-1 text-[10px] text-[#8E8E9C]">JPEG, PNG, WebP · Max 20 MB</p>
       )}
     </div>
   )
@@ -1200,8 +1200,8 @@ function ReviewStep({ form, onBack, onSubmit, isSubmitting, submitError }: Step6
   return (
     <div className="animate-slide-up">
       <div className="mb-8">
-        <h2 className="mb-2 text-2xl font-bold text-[#F5F5F7]">Review & Submit</h2>
-        <p className="text-sm text-[#A0A0B2]">
+        <h2 className="mb-2 text-2xl font-bold text-[#EDEDF3]">Review & Submit</h2>
+        <p className="text-sm text-[#C3C3CC]">
           Review your listing before submitting for TIGI team review. You can edit after submission
           while it is under review.
         </p>
@@ -1328,8 +1328,8 @@ function ReviewStep({ form, onBack, onSubmit, isSubmitting, submitError }: Step6
       </div>
 
       {/* Terms */}
-      <div className="mt-6 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
+      <div className="mt-6 rounded-xl border border-[#33333F] bg-[#14141E] p-4">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
           By submitting, you confirm that all information is accurate and that you have the legal
           authority to list this asset. Your listing will be reviewed by the TIGI compliance team
           within 1–2 business days before going live.
@@ -1369,7 +1369,7 @@ interface ReviewSectionProps {
 
 function ReviewSection({ title, assetType, rows, children }: ReviewSectionProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#14141E]">
+    <div className="overflow-hidden rounded-xl border border-[#33333F] bg-[#14141E]">
       <div
         className="px-4 py-2.5"
         style={{ backgroundColor: accentMuted(assetType) }}
@@ -1378,11 +1378,11 @@ function ReviewSection({ title, assetType, rows, children }: ReviewSectionProps)
           {title}
         </p>
       </div>
-      <div className="divide-y divide-[#2A2A3A] px-4">
+      <div className="divide-y divide-[#33333F] px-4">
         {rows.map((row) => (
           <div key={row.label} className="flex items-start justify-between gap-4 py-2.5">
-            <span className="shrink-0 text-xs text-[#6B6B80]">{row.label}</span>
-            <span className="text-right text-xs font-medium text-[#F5F5F7]">{row.value}</span>
+            <span className="shrink-0 text-xs text-[#8E8E9C]">{row.label}</span>
+            <span className="text-right text-xs font-medium text-[#EDEDF3]">{row.value}</span>
           </div>
         ))}
       </div>
@@ -1432,12 +1432,12 @@ function SuccessScreen({ assetType }: { assetType: AssetType | null }) {
       >
         <CheckCircleIcon style={{ color: accent(assetType) }} className="h-10 w-10" />
       </div>
-      <h2 className="mb-3 text-2xl font-bold text-[#F5F5F7]">Listing Submitted</h2>
-      <p className="mb-2 max-w-sm text-sm leading-relaxed text-[#A0A0B2]">
+      <h2 className="mb-3 text-2xl font-bold text-[#EDEDF3]">Listing Submitted</h2>
+      <p className="mb-2 max-w-sm text-sm leading-relaxed text-[#C3C3CC]">
         Your listing has been received and is under TIGI compliance review. You'll receive a
         notification within 1–2 business days.
       </p>
-      <p className="mb-10 text-xs text-[#6B6B80]">Reference ID: #{Math.random().toString(36).slice(2, 10).toUpperCase()}</p>
+      <p className="mb-10 text-xs text-[#8E8E9C]">Reference ID: #{Math.random().toString(36).slice(2, 10).toUpperCase()}</p>
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <Button variant="secondary" size="lg" onClick={() => router.push('/marketplace')}>
@@ -1555,22 +1555,22 @@ export function CreateListingClient() {
       {/* Page header */}
       <div className="mb-10">
         <div className="mb-1 flex items-center gap-2">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             TIGI Marketplace
           </span>
-          <span className="text-[#2A2A3A]">/</span>
+          <span className="text-[#33333F]">/</span>
           <span
             className={cn('text-xs font-semibold uppercase tracking-widest', accentText(form.assetType))}
           >
             New Listing
           </span>
         </div>
-        <h1 className="text-3xl font-bold text-[#F5F5F7]">Create Listing</h1>
+        <h1 className="text-3xl font-bold text-[#EDEDF3]">Create Listing</h1>
       </div>
 
       <StepProgress currentStep={step} assetType={form.assetType} />
 
-      <div className="rounded-2xl border border-[#2A2A3A] bg-[#0A0A0F] p-6 shadow-xl sm:p-8">
+      <div className="rounded-2xl border border-[#33333F] bg-[#171721] p-6 shadow-xl sm:p-8">
         {step === 1 && (
           <AssetTypeStep form={form} setForm={setForm} onNext={goNext} />
         )}

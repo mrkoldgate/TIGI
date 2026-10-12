@@ -194,11 +194,11 @@ export function WalletPreparationPanel({
       )}>
         <div className="flex items-center gap-2">
           <CheckCircle2 className="h-4 w-4 text-[#22C55E]" />
-          <p className="text-sm font-medium text-[#F5F5F7]">
+          <p className="text-sm font-medium text-[#EDEDF3]">
             Interest recorded on Solana
           </p>
         </div>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           Your fractional economic interest record has been confirmed on the Solana blockchain.
           Our team will reach out within 1–2 business days.
         </p>
@@ -223,33 +223,33 @@ export function WalletPreparationPanel({
   if (walletMode !== 'connected') {
     return (
       <div className={cn(
-        'rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-4 space-y-3',
+        'rounded-xl border border-[#33333F] bg-[#0D0D14] p-4 space-y-3',
         className,
       )}>
         <div className="flex items-center gap-2">
-          <Wallet className="h-4 w-4 text-[#6B6B80]" />
-          <p className="text-sm font-medium text-[#A0A0B2]">
+          <Wallet className="h-4 w-4 text-[#8E8E9C]" />
+          <p className="text-sm font-medium text-[#C3C3CC]">
             Wallet signature required
           </p>
         </div>
 
         {walletMode === 'custodial' ? (
           <>
-            <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+            <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
               Your transaction is ready to sign. Connect a Phantom or Solflare wallet to sign
               directly. Server-assisted signing for your platform wallet is coming in a future update.
             </p>
             <button
               type="button"
               onClick={openWalletModal}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-[#3A3A4A] hover:text-[#F5F5F7] active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#33333F] py-2.5 text-sm font-medium text-[#C3C3CC] transition-all hover:border-[#3A3A4A] hover:text-[#EDEDF3] active:scale-[0.98]"
             >
               <Wallet className="h-4 w-4" />
               Connect wallet to sign
             </button>
           </>
         ) : (
-          <p className="text-[11px] text-[#6B6B80]">
+          <p className="text-[11px] text-[#8E8E9C]">
             No wallet found. Please set up your wallet in Settings.
           </p>
         )}
@@ -269,7 +269,7 @@ export function WalletPreparationPanel({
           <AlertTriangle className="h-3.5 w-3.5 text-[#F59E0B]" />
           <p className="text-sm font-medium text-[#F59E0B]">Preparation window expired</p>
         </div>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           Solana transactions embed a recent block reference that expires after ~90 seconds.
           This is a network-level safety mechanism — not an error. Refresh to generate a fresh
           transaction and continue signing.
@@ -279,7 +279,7 @@ export function WalletPreparationPanel({
           type="button"
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-[#3A3A4A] hover:text-[#F5F5F7] disabled:opacity-50 active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#33333F] py-2.5 text-sm font-medium text-[#C3C3CC] transition-all hover:border-[#3A3A4A] hover:text-[#EDEDF3] disabled:opacity-50 active:scale-[0.98]"
         >
           {isRefreshing ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -305,13 +305,13 @@ export function WalletPreparationPanel({
       {/* Header */}
       <div className="flex items-center gap-2">
         <PenLine className="h-4 w-4 text-[#C9A84C]" />
-        <p className="text-sm font-medium text-[#F5F5F7]">Ready to sign</p>
+        <p className="text-sm font-medium text-[#EDEDF3]">Ready to sign</p>
       </div>
 
       {/* What will happen */}
-      <div className="rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2.5">
-        <p className="text-[11px] font-medium text-[#A0A0B2]">What this signs</p>
-        <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+      <div className="rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2.5">
+        <p className="text-[11px] font-medium text-[#C3C3CC]">What this signs</p>
+        <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
           A digital record of your fractional economic interest will be written to the
           Solana blockchain. No funds are transferred at this step.
         </p>
@@ -320,13 +320,13 @@ export function WalletPreparationPanel({
       {/* Wallet info */}
       <div className="flex items-center justify-between text-[11px]">
         <span className="text-[#4A4A60]">Signing with</span>
-        <span className="font-medium text-[#A0A0B2]">{walletLabel}</span>
+        <span className="font-medium text-[#C3C3CC]">{walletLabel}</span>
       </div>
 
       {/* Program + network */}
       <div className="flex items-center justify-between text-[11px]">
         <span className="text-[#4A4A60]">Program</span>
-        <span className="font-mono text-[#6B6B80]">{getProgramInfo(preparation.program).displayName}</span>
+        <span className="font-mono text-[#8E8E9C]">{getProgramInfo(preparation.program).displayName}</span>
       </div>
 
       {/* Signer mismatch warning */}
@@ -365,7 +365,7 @@ export function WalletPreparationPanel({
         type="button"
         onClick={handleSign}
         disabled={isBusy || !!signerMismatch}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#171721] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
       >
         {step === 'signing' ? (
           <>

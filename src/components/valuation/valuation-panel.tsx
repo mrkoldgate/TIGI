@@ -71,18 +71,18 @@ function theme(assetType: 'property' | 'land') {
     }
   }
   return {
-    border:       'border-[#2A2A3A]',
+    border:       'border-[#33333F]',
     bg:           'bg-[#0D0D14]',
-    headerBg:     'bg-[#111118]',
-    divider:      'border-[#2A2A3A]',
-    subtleBg:     'bg-[#111118]',
+    headerBg:     'bg-[#1E1E2A]',
+    divider:      'border-[#33333F]',
+    subtleBg:     'bg-[#1E1E2A]',
     accentColor:  '#C9A84C',
     accentMuted:  'rgba(201,168,76,0.08)',
     labelColor:   'text-[#4A4A60]',
-    subLabelColor:'text-[#6B6B80]',
-    textPrimary:  'text-[#F5F5F7]',
-    rangeBg:      'bg-[#2A2A3A]',
-    confBarBg:    'bg-[#2A2A3A]',
+    subLabelColor:'text-[#8E8E9C]',
+    textPrimary:  'text-[#EDEDF3]',
+    rangeBg:      'bg-[#33333F]',
+    confBarBg:    'bg-[#33333F]',
   }
 }
 
@@ -102,7 +102,7 @@ function getDelta(estimate: number, listPrice: number) {
   const pct = ((estimate - listPrice) / listPrice) * 100
   if (pct >  2) return { label: `${pct.toFixed(1)}% below ask`, color: '#4ADE80', variant: 'under' as const }
   if (pct < -2) return { label: `${Math.abs(pct).toFixed(1)}% above ask`, color: '#F87171', variant: 'over' as const }
-  return { label: 'At asking price', color: '#A0A0B2', variant: 'at' as const }
+  return { label: 'At asking price', color: '#C3C3CC', variant: 'at' as const }
 }
 
 // Position of list price pin within range bar (0–100%)
@@ -164,7 +164,7 @@ function RangeBar({
           style={{ left: `${pinPct}%`, transform: 'translate(-50%, -50%)' }}
           title={`List price: ${fmtFull(listPrice)}`}
         >
-          <div className="h-4 w-0.5 bg-[#6B6B80]" />
+          <div className="h-4 w-0.5 bg-[#8E8E9C]" />
         </div>
       </div>
 
@@ -172,7 +172,7 @@ function RangeBar({
       <div className="mt-2 flex items-center justify-between text-[9px]">
         <span className={t.labelColor}>Conservative</span>
         <span className={cn('flex items-center gap-1', t.subLabelColor)}>
-          <span className="inline-block h-0.5 w-2 bg-[#6B6B80]" />
+          <span className="inline-block h-0.5 w-2 bg-[#8E8E9C]" />
           List ${(listPrice / 1000).toFixed(0)}K
         </span>
         <span className={t.labelColor}>Optimistic</span>
@@ -310,7 +310,7 @@ function CompsSection({
               </div>
             </div>
             <div className="shrink-0 text-right">
-              <p className="text-[11px] font-semibold text-[#F5F5F7]">{fmtFull(c.soldPrice)}</p>
+              <p className="text-[11px] font-semibold text-[#EDEDF3]">{fmtFull(c.soldPrice)}</p>
               {assetType === 'land' && c.pricePerAcre && (
                 <p className={cn('text-[9px]', t.subLabelColor)}>
                   ${c.pricePerAcre.toLocaleString()}/ac

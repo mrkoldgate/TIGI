@@ -46,7 +46,7 @@ function getDelta(estimate: number, listPrice: number) {
   const pct = ((estimate - listPrice) / listPrice) * 100
   if (pct >  2) return { label: `${pct.toFixed(1)}% below ask`, color: '#4ADE80' }
   if (pct < -2) return { label: `${Math.abs(pct).toFixed(1)}% above ask`, color: '#F87171' }
-  return { label: 'At ask', color: '#A0A0B2' }
+  return { label: 'At ask', color: '#C3C3CC' }
 }
 
 // ── Block variant (grid cards) ─────────────────────────────────────────────
@@ -62,7 +62,7 @@ function BlockBadge({
   const delta = listPrice != null ? getDelta(estimatedValue, listPrice) : null
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded-lg bg-[#0D0D14] px-3 py-2 ring-1 ring-[#2A2A3A]">
+    <div className="flex items-center justify-between gap-2 rounded-lg bg-[#0D0D14] px-3 py-2 ring-1 ring-[#33333F]">
       {/* Left: icon + label */}
       <div className="flex items-center gap-1.5">
         <SparkleIcon color={accentColor} size={11} />
@@ -73,7 +73,7 @@ function BlockBadge({
 
       {/* Right: value + confidence pill */}
       <div className="flex items-center gap-1.5">
-        <span className="text-xs font-semibold text-[#F5F5F7]">
+        <span className="text-xs font-semibold text-[#EDEDF3]">
           {formatPrice(estimatedValue)}
         </span>
         {delta && (
@@ -107,11 +107,11 @@ function InlineBadge({
   const delta = listPrice != null ? getDelta(estimatedValue, listPrice) : null
 
   return (
-    <div className="flex items-center gap-1.5 text-[10px] text-[#6B6B80]">
+    <div className="flex items-center gap-1.5 text-[10px] text-[#8E8E9C]">
       <SparkleIcon color={accentColor} size={10} />
       <span>
         AI est.{' '}
-        <span className="font-semibold text-[#F5F5F7]">{formatPrice(estimatedValue)}</span>
+        <span className="font-semibold text-[#EDEDF3]">{formatPrice(estimatedValue)}</span>
         {delta && (
           <span className="ml-1" style={{ color: delta.color }}>
             · {delta.label}
@@ -139,7 +139,7 @@ function ChipBadge({
     <span
       className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-semibold backdrop-blur-sm"
       style={{
-        backgroundColor: 'rgba(10,10,15,0.80)',
+        backgroundColor: 'rgba(23, 23, 33,0.80)',
         color: accentColor,
         boxShadow: `0 0 0 1px rgba(${accentColor === '#4ADE80' ? '74,222,128' : '201,168,76'},0.20)`,
       }}

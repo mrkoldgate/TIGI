@@ -105,7 +105,7 @@ export function NotificationItem({ notification, onRead, compact = false }: Noti
             : 'border-white/[0.08] bg-[#1A1A28] hover:bg-[#1E1E30]'
           : compact
             ? 'hover:bg-white/[0.04] backdrop-blur-xl'
-            : 'border-[#1F1F2E] bg-white/[0.04] backdrop-blur-xl hover:bg-[#141420]',
+            : 'border-[#2A2A37] bg-white/[0.04] backdrop-blur-xl hover:bg-[#141420]',
       )}
     >
       {/* Icon */}
@@ -115,13 +115,13 @@ export function NotificationItem({ notification, onRead, compact = false }: Noti
       <div className="min-w-0 flex-1">
         <div className="flex items-start justify-between gap-2">
           <p className={cn(
-            'font-medium leading-tight text-[#F5F5F7]',
+            'font-medium leading-tight text-[#EDEDF3]',
             compact ? 'text-xs' : 'text-sm',
           )}>
             {notification.title}
           </p>
           <span className={cn(
-            'shrink-0 tabular-nums text-[#6B6B80]',
+            'shrink-0 tabular-nums text-[#8E8E9C]',
             compact ? 'text-[10px]' : 'text-xs',
           )}>
             {timeAgo(notification.createdAt)}

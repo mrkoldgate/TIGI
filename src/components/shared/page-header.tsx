@@ -23,12 +23,12 @@ export function PageHeader({ title, description, actions, eyebrow, className }: 
     >
       {/* Top accent hairline */}
       <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-400/40 to-transparent"
+        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#C3C3CC]/40 to-transparent"
         aria-hidden="true"
       />
       {/* Corner atmospheric light */}
       <div
-        className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-violet-400/[0.04] blur-[50px]"
+        className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-[#C3C3CC]/[0.04] blur-[50px]"
         aria-hidden="true"
       />
 
@@ -37,7 +37,7 @@ export function PageHeader({ title, description, actions, eyebrow, className }: 
           {eyebrow && <p className="text-label mb-1">{eyebrow}</p>}
           <h1 className="text-h1">{title}</h1>
           {description && (
-            <p className="mt-1 text-[#A0A0B2]">{description}</p>
+            <p className="mt-1 text-[#C3C3CC]">{description}</p>
           )}
         </div>
         {actions && (

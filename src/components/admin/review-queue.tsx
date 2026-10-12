@@ -43,14 +43,14 @@ const URGENCY_CONFIG: Record<
   },
   NORMAL: {
     row:      'border-l-2 border-l-[#3A3A4A]',
-    daysBg:   'bg-[#1A1A24]',
-    daysText: 'text-[#A0A0B2]',
+    daysBg:   'bg-[#272735]',
+    daysText: 'text-[#C3C3CC]',
     label:    'Review',
   },
   NEW: {
-    row:      'border-l-2 border-l-[#2A2A3A]',
-    daysBg:   'bg-[#1A1A24]',
-    daysText: 'text-[#6B6B80]',
+    row:      'border-l-2 border-l-[#33333F]',
+    daysBg:   'bg-[#272735]',
+    daysText: 'text-[#8E8E9C]',
     label:    'Review',
   },
 }
@@ -76,19 +76,19 @@ interface ReviewQueueProps {
 export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) {
   if (items.length === 0) {
     return (
-      <div className="flex items-center justify-center py-12 text-sm text-[#6B6B80]">
+      <div className="flex items-center justify-center py-12 text-sm text-[#8E8E9C]">
         No pending reviews. Queue is clear.
       </div>
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A]">
+    <div className="overflow-hidden rounded-xl border border-[#33333F]">
       {/* Desktop table */}
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-[#2A2A3A] bg-[#0D0D14]">
+            <tr className="border-b border-[#33333F] bg-[#0D0D14]">
               {['Listing', 'Type', 'Owner', 'Price', 'Queue', 'Submitted', ''].map((h) => (
                 <th
                   key={h}
@@ -99,14 +99,14 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1A1A24] bg-[#0A0A0F]">
+          <tbody className="divide-y divide-[#272735] bg-[#171721]">
             {items.map((item) => {
               const urgencyCfg = URGENCY_CONFIG[item.urgency]
               return (
                 <tr
                   key={item.id}
                   className={cn(
-                    'group transition-colors hover:bg-[#111118]',
+                    'group transition-colors hover:bg-[#1E1E2A]',
                     urgencyCfg.row
                   )}
                 >
@@ -114,10 +114,10 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-2">
                       <div>
-                        <p className="max-w-[180px] truncate text-sm font-medium text-[#F5F5F7]">
+                        <p className="max-w-[180px] truncate text-sm font-medium text-[#EDEDF3]">
                           {item.title}
                         </p>
-                        <p className="text-xs text-[#6B6B80]">
+                        <p className="text-xs text-[#8E8E9C]">
                           {item.city}, {item.state}
                         </p>
                         {item.isTokenized && (
@@ -143,17 +143,17 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
                       >
                         {item.assetType === 'LAND' ? 'Land' : 'Property'}
                       </span>
-                      <p className="text-[10px] text-[#6B6B80]">{item.subtype}</p>
+                      <p className="text-[10px] text-[#8E8E9C]">{item.subtype}</p>
                     </div>
                   </td>
 
                   {/* Owner */}
-                  <td className="px-4 py-3 text-sm text-[#A0A0B2]">
+                  <td className="px-4 py-3 text-sm text-[#C3C3CC]">
                     {item.ownerName}
                   </td>
 
                   {/* Price */}
-                  <td className="px-4 py-3 text-sm font-semibold tabular-nums text-[#F5F5F7]">
+                  <td className="px-4 py-3 text-sm font-semibold tabular-nums text-[#EDEDF3]">
                     {formatAdminPrice(item.price)}
                   </td>
 
@@ -163,7 +163,7 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
                   </td>
 
                   {/* Submitted */}
-                  <td className="px-4 py-3 text-xs text-[#6B6B80]">
+                  <td className="px-4 py-3 text-xs text-[#8E8E9C]">
                     {formatAdminRelative(item.submittedAt)}
                   </td>
 
@@ -183,13 +183,13 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
       </div>
 
       {/* Mobile: stacked rows */}
-      <div className="divide-y divide-[#1A1A24] md:hidden">
+      <div className="divide-y divide-[#272735] md:hidden">
         {items.map((item) => {
           const urgencyCfg = URGENCY_CONFIG[item.urgency]
           return (
             <div
               key={item.id}
-              className={cn('flex flex-col gap-2 bg-[#0A0A0F] p-4', urgencyCfg.row)}
+              className={cn('flex flex-col gap-2 bg-[#171721] p-4', urgencyCfg.row)}
             >
               <div className="flex items-start gap-3">
                 <div className="min-w-0 flex-1">
@@ -206,8 +206,8 @@ export function ReviewQueue({ items, onAction, actioningId }: ReviewQueueProps) 
                     </span>
                     <DaysBadge days={item.daysInQueue} urgency={item.urgency} />
                   </div>
-                  <p className="mt-1 truncate text-sm font-medium text-[#F5F5F7]">{item.title}</p>
-                  <p className="text-xs text-[#6B6B80]">
+                  <p className="mt-1 truncate text-sm font-medium text-[#EDEDF3]">{item.title}</p>
+                  <p className="text-xs text-[#8E8E9C]">
                     {item.city}, {item.state} · {item.ownerName} · {formatAdminPrice(item.price)}
                   </p>
                 </div>
@@ -274,9 +274,9 @@ const ACTION_CONFIG: Record<
     label:        'Archive',
     confirmLabel: 'Confirm Archive',
     color:        'text-[#3A3A4A]',
-    hoverBorder:  'hover:border-[#6B6B80]/40',
-    hoverText:    'hover:text-[#A0A0B2]',
-    confirmBg:    'bg-[#1A1A24] hover:bg-[#2A2A3A] text-[#A0A0B2]',
+    hoverBorder:  'hover:border-[#8E8E9C]/40',
+    hoverText:    'hover:text-[#C3C3CC]',
+    confirmBg:    'bg-[#272735] hover:bg-[#33333F] text-[#C3C3CC]',
   },
 }
 
@@ -314,14 +314,14 @@ function ReviewActionCell({ item, onAction, actioning, compact }: ReviewActionCe
   if (pending) {
     const cfg = ACTION_CONFIG[pending]
     return (
-      <div className="flex flex-col gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] p-2">
-        <p className="text-[11px] font-medium text-[#A0A0B2]">{cfg.confirmLabel}</p>
+      <div className="flex flex-col gap-1.5 rounded-lg border border-[#33333F] bg-[#0D0D14] p-2">
+        <p className="text-[11px] font-medium text-[#C3C3CC]">{cfg.confirmLabel}</p>
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
           placeholder="Note (optional — stored in audit log)"
           rows={2}
-          className="w-full resize-none rounded border border-[#2A2A3A] bg-[#0A0A0F] px-2 py-1.5 text-xs text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#3A3A4A]"
+          className="w-full resize-none rounded border border-[#33333F] bg-[#171721] px-2 py-1.5 text-xs text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#3A3A4A]"
         />
         <div className="flex items-center gap-1.5">
           <button
@@ -333,7 +333,7 @@ function ReviewActionCell({ item, onAction, actioning, compact }: ReviewActionCe
           </button>
           <button
             onClick={cancel}
-            className="flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] text-[#6B6B80] hover:text-[#A0A0B2]"
+            className="flex h-6 w-6 items-center justify-center rounded border border-[#33333F] text-[#8E8E9C] hover:text-[#C3C3CC]"
           >
             <X className="h-3 w-3" />
           </button>
@@ -356,7 +356,7 @@ function ReviewActionCell({ item, onAction, actioning, compact }: ReviewActionCe
                 title={cfg.label}
                 onClick={() => live && startAction(action)}
                 className={cn(
-                  'flex h-7 w-7 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+                  'flex h-7 w-7 items-center justify-center rounded border border-[#33333F] transition-all',
                   live && !actioning
                     ? `${cfg.color} ${cfg.hoverBorder} ${cfg.hoverText} opacity-50 hover:opacity-100`
                     : 'cursor-not-allowed opacity-20 text-[#3A3A4A]',
@@ -384,14 +384,14 @@ function ReviewActionCell({ item, onAction, actioning, compact }: ReviewActionCe
               title={live ? cfg.label : `${cfg.label} — live on review page`}
               onClick={() => live && startAction(action)}
               className={cn(
-                'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+                'flex h-6 w-6 items-center justify-center rounded border border-[#33333F] transition-all',
                 live && !actioning
                   ? `${cfg.color} ${cfg.hoverBorder} ${cfg.hoverText} opacity-40 hover:opacity-100`
                   : 'cursor-not-allowed opacity-20 text-[#3A3A4A]',
               )}
             >
               {actioning
-                ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
+                ? <span className="h-3 w-3 animate-spin rounded-full border border-[#8E8E9C] border-t-transparent" />
                 : <Icon className="h-3.5 w-3.5" />}
             </button>
           )

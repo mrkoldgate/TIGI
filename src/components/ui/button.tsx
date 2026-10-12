@@ -14,8 +14,8 @@ const buttonVariants = cva(
     'inline-flex items-center justify-center gap-2',
     'rounded-lg font-medium text-sm',
     'transition-all duration-150',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0A0F]',
-    'disabled:pointer-events-none disabled:bg-[#22222E] disabled:text-[#6B6B80]',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#171721]',
+    'disabled:pointer-events-none disabled:bg-[#2E2E3D] disabled:text-[#8E8E9C]',
     'active:scale-[0.98]',
     'select-none',
   ],
@@ -24,19 +24,19 @@ const buttonVariants = cva(
       variant: {
         // Primary — gold background. Main CTA: Invest, Submit, Confirm
         primary: [
-          'bg-[#C9A84C] text-[#0A0A0F]',
+          'bg-[#C9A84C] text-[#171721]',
           'hover:bg-[#B8932F]',
           'hover:shadow-[0_0_20px_rgba(201,168,76,0.2),0_0_40px_rgba(201,168,76,0.08)]',
         ],
         // Secondary — transparent with border. Cancel, Back, View Details
         secondary: [
-          'border border-[#2A2A3A] bg-transparent text-[#F5F5F7]',
-          'hover:border-[#C9A84C] hover:bg-[#1A1A24]',
+          'border border-[#33333F] bg-transparent text-[#EDEDF3]',
+          'hover:border-[#C9A84C] hover:bg-[#272735]',
         ],
         // Ghost — no border or background. Tertiary: Learn more, Show all
         ghost: [
-          'bg-transparent text-[#A0A0B2]',
-          'hover:bg-[#1A1A24] hover:text-[#F5F5F7]',
+          'bg-transparent text-[#C3C3CC]',
+          'hover:bg-[#272735] hover:text-[#EDEDF3]',
         ],
         // Destructive — red background. Delete, Revoke, Terminate
         destructive: [
@@ -45,8 +45,8 @@ const buttonVariants = cva(
         ],
         // Outline — visible border, no fill. Alternative secondary.
         outline: [
-          'border border-[#2A2A3A] bg-transparent text-[#A0A0B2]',
-          'hover:border-[#3A3A4E] hover:text-[#F5F5F7]',
+          'border border-[#33333F] bg-transparent text-[#C3C3CC]',
+          'hover:border-[#3A3A4E] hover:text-[#EDEDF3]',
         ],
       },
       size: {

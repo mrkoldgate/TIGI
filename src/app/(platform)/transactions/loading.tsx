@@ -21,7 +21,7 @@ export default function TransactionsLoading() {
       {/* Transaction rows */}
       <div className="space-y-2">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="flex items-center gap-4 rounded-xl border border-[#1A1A24] bg-[#0D0D14] p-4">
+          <div key={i} className="flex items-center gap-4 rounded-xl border border-[#272735] bg-[#0D0D14] p-4">
             <Skeleton variant="circle" className="h-10 w-10 flex-shrink-0" />
             <div className="flex-1 space-y-1.5">
               <Skeleton variant="text" className="h-4 w-48" />

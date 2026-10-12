@@ -44,14 +44,14 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
             Administration
           </p>
-          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
+          <h1 className="mt-1 font-heading text-2xl font-semibold text-[#EDEDF3]">
             Platform Analytics
           </h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Live aggregates from the production database.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 rounded-lg border border-[#1F1F2E] bg-[#111118] px-3 py-1.5 text-[11px] text-[#4A4A5E]">
+        <div className="flex items-center gap-1.5 rounded-lg border border-[#2A2A37] bg-[#1E1E2A] px-3 py-1.5 text-[11px] text-[#4A4A5E]">
           <RefreshCw className="h-3 w-3" />
           Snapshot at {snapshotTime}
         </div>
@@ -123,7 +123,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             />
           </div>
           <div className="mt-4 border-t border-[#1E1E2A] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Verification rate:{' '}
               <span className="font-semibold text-[#4ADE80]">
                 {users.totalUsers > 0
@@ -143,7 +143,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <TierRow label="Enterprise"  count={users.tierEnterprise} total={users.totalUsers} color="#22C55E" />
           </div>
           <div className="mt-4 border-t border-[#1E1E2A] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Paid conversion:{' '}
               <span className="font-semibold text-[#C9A84C]">
                 {users.totalUsers > 0
@@ -170,7 +170,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
               label="Express Interest"
               count={intents.byType.EXPRESS_INTEREST}
               total={intents.totalIntents}
-              color="#6B6B80"
+              color="#8E8E9C"
             />
             <BarRow
               label="Prepare Purchase"
@@ -192,7 +192,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             />
           </div>
           <div className="mt-4 border-t border-[#1E1E2A] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               +{intents.newLast30d} intents in last 30 days
             </p>
           </div>
@@ -205,7 +205,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
               label="Created"
               count={intents.funnel.created}
               pct={100}
-              color="#6B6B80"
+              color="#8E8E9C"
               step={1}
             />
             <FunnelStep
@@ -233,7 +233,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
           </div>
           <div className="mt-4 border-t border-[#1E1E2A] pt-3 flex items-center gap-2">
             <TrendingUp className="h-3.5 w-3.5 text-[#4ADE80]" />
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Full Solana execution tracking active in M8+
             </p>
           </div>
@@ -250,10 +250,10 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <BarRow label="Under Review" count={listings.underReview}   total={listings.totalListings} color="#F59E0B" />
             <BarRow label="Draft"        count={listings.draftListings} total={listings.totalListings} color="#3A3A4E" />
             <BarRow label="Sold"         count={listings.sold}          total={listings.totalListings} color="#C9A84C" />
-            <BarRow label="Delisted"     count={listings.delisted}      total={listings.totalListings} color="#6B6B80" />
+            <BarRow label="Delisted"     count={listings.delisted}      total={listings.totalListings} color="#8E8E9C" />
           </div>
           <div className="mt-4 border-t border-[#1E1E2A] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               {listings.tokenizedCount} tokenized listings ({listings.totalListings > 0
                 ? Math.round((listings.tokenizedCount / listings.totalListings) * 100)
                 : 0}% of total)
@@ -268,7 +268,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <BarRow label="Commercial"  count={listings.byType.COMMERCIAL}  total={listings.totalListings} color="#818CF8" />
             <BarRow label="Land"        count={listings.byType.LAND}        total={listings.totalListings} color="#4ADE80" />
             <BarRow label="Industrial"  count={listings.byType.INDUSTRIAL}  total={listings.totalListings} color="#F59E0B" />
-            <BarRow label="Mixed-Use"   count={listings.byType.MIXED_USE}   total={listings.totalListings} color="#6B6B80" />
+            <BarRow label="Mixed-Use"   count={listings.byType.MIXED_USE}   total={listings.totalListings} color="#8E8E9C" />
           </div>
         </AnalyticsCard>
       </div>
@@ -281,7 +281,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             label="Registered Users"
             value={users.totalUsers}
             pct={100}
-            color="#6B6B80"
+            color="#8E8E9C"
           />
           <FunnelBlock
             step="02"
@@ -323,14 +323,14 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
       {/* ── Inquiry summary ─────────────────────────────────────────────── */}
       <AnalyticsCard title="Inquiry Activity">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <InquiryTile label="Total"     value={inquiries.total}    color="#6B6B80" />
+          <InquiryTile label="Total"     value={inquiries.total}    color="#8E8E9C" />
           <InquiryTile label="Unread"    value={inquiries.unread}   color="#F59E0B" />
           <InquiryTile label="Replied"   value={inquiries.replied}  color="#4ADE80" />
           <InquiryTile label="Last 7d"   value={inquiries.newLast7d} color="#C9A84C" />
         </div>
         {inquiries.total > 0 && (
           <div className="mt-4 border-t border-[#1E1E2A] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Reply rate:{' '}
               <span className="font-semibold text-[#4ADE80]">
                 {Math.round((inquiries.replied / inquiries.total) * 100)}%
@@ -341,13 +341,13 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
       </AnalyticsCard>
 
       {/* ── Revenue placeholder ─────────────────────────────────────────── */}
-      <div className="rounded-xl border border-dashed border-[#2A2A3A] px-6 py-5">
+      <div className="rounded-xl border border-dashed border-[#33333F] px-6 py-5">
         <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#33333F] bg-[#1E1E2A]">
             <TrendingUp className="h-4 w-4 text-[#4A4A5E]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-[#6B6B80]">Revenue & Premium Conversion</p>
+            <p className="text-sm font-medium text-[#8E8E9C]">Revenue & Premium Conversion</p>
             <p className="text-xs text-[#4A4A5E]">
               Full revenue analytics — Stripe fee income, subscription MRR, platform fee
               per executed intent — available in M10+ when Stripe billing is activated.
@@ -369,7 +369,7 @@ function AnalyticsCard({
   children: React.ReactNode
 }) {
   return (
-    <div className="rounded-xl border border-[#1E1E2A] bg-[#111118] p-5">
+    <div className="rounded-xl border border-[#1E1E2A] bg-[#1E1E2A] p-5">
       <p className="mb-4 text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
         {title}
       </p>
@@ -392,7 +392,7 @@ function KpiTile({
   accent: string
 }) {
   return (
-    <div className="rounded-xl border border-[#1E1E2A] bg-[#111118] p-4">
+    <div className="rounded-xl border border-[#1E1E2A] bg-[#1E1E2A] p-4">
       <div className="flex items-start justify-between gap-2">
         <div
           className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
@@ -401,10 +401,10 @@ function KpiTile({
           <Icon className="h-4 w-4" style={{ color: accent }} />
         </div>
       </div>
-      <p className="mt-3 text-2xl font-bold tabular-nums text-[#F5F5F7]">
+      <p className="mt-3 text-2xl font-bold tabular-nums text-[#EDEDF3]">
         {value.toLocaleString()}
       </p>
-      <p className="mt-0.5 text-xs font-medium text-[#6B6B80]">{label}</p>
+      <p className="mt-0.5 text-xs font-medium text-[#8E8E9C]">{label}</p>
       <p className="mt-1 text-[10px] text-[#4A4A5E]">{sub}</p>
     </div>
   )
@@ -425,10 +425,10 @@ function BarRow({
   return (
     <div>
       <div className="mb-1 flex items-center justify-between gap-2">
-        <span className="text-xs text-[#A0A0B2]">{label}</span>
-        <span className="text-xs tabular-nums text-[#6B6B80]">{count.toLocaleString()} ({pct}%)</span>
+        <span className="text-xs text-[#C3C3CC]">{label}</span>
+        <span className="text-xs tabular-nums text-[#8E8E9C]">{count.toLocaleString()} ({pct}%)</span>
       </div>
-      <div className="h-1.5 w-full rounded-full bg-[#1A1A24]">
+      <div className="h-1.5 w-full rounded-full bg-[#272735]">
         <div
           className="h-full rounded-full transition-all duration-500"
           style={{ width: `${pct}%`, backgroundColor: color }}
@@ -458,17 +458,17 @@ function FunnelStep({
   return (
     <div className="flex items-center gap-3">
       <div
-        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-[#0A0A0F]"
+        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-[#171721]"
         style={{ backgroundColor: color }}
       >
         {step}
       </div>
       <div className="flex-1 min-w-0">
         <div className="mb-1 flex items-center justify-between gap-2">
-          <span className="text-xs text-[#A0A0B2]">{label}</span>
-          <span className="text-xs tabular-nums text-[#6B6B80]">{count.toLocaleString()} · {pct}%</span>
+          <span className="text-xs text-[#C3C3CC]">{label}</span>
+          <span className="text-xs tabular-nums text-[#8E8E9C]">{count.toLocaleString()} · {pct}%</span>
         </div>
-        <div className="h-1.5 w-full rounded-full bg-[#1A1A24]">
+        <div className="h-1.5 w-full rounded-full bg-[#272735]">
           <div
             className="h-full rounded-full transition-all duration-500"
             style={{ width: `${pct}%`, backgroundColor: color }}
@@ -497,12 +497,12 @@ function FunnelBlock({
   return (
     <div className={cn('rounded-xl border border-[#1E1E2A] bg-[#0D0D14] p-4', locked && 'opacity-60')}>
       <p className="text-[10px] font-semibold" style={{ color }}>{step}</p>
-      <p className="mt-2 text-xl font-bold tabular-nums text-[#F5F5F7]">
+      <p className="mt-2 text-xl font-bold tabular-nums text-[#EDEDF3]">
         {locked ? locked : value.toLocaleString()}
       </p>
-      <p className="mt-0.5 text-[11px] text-[#6B6B80]">{label}</p>
+      <p className="mt-0.5 text-[11px] text-[#8E8E9C]">{label}</p>
       {!locked && (
-        <div className="mt-2 h-1 w-full rounded-full bg-[#1A1A24]">
+        <div className="mt-2 h-1 w-full rounded-full bg-[#272735]">
           <div
             className="h-full rounded-full"
             style={{ width: `${Math.min(pct, 100)}%`, backgroundColor: color }}
@@ -530,7 +530,7 @@ function InquiryTile({
       <p className="text-xl font-bold tabular-nums" style={{ color }}>
         {value.toLocaleString()}
       </p>
-      <p className="text-xs text-[#6B6B80]">{label}</p>
+      <p className="text-xs text-[#8E8E9C]">{label}</p>
     </div>
   )
 }

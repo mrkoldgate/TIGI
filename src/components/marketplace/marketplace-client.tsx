@@ -180,12 +180,12 @@ function StatChip({
       <span
         className={cn(
           'font-heading text-sm font-semibold tabular-nums',
-          gold  ? 'text-[#C9A84C]' : green ? 'text-[#4ADE80]' : 'text-[#F5F5F7]',
+          gold  ? 'text-[#C9A84C]' : green ? 'text-[#4ADE80]' : 'text-[#EDEDF3]',
         )}
       >
         {value}
       </span>
-      <span className="text-xs text-[#6B6B80]">{label}</span>
+      <span className="text-xs text-[#8E8E9C]">{label}</span>
     </Tag>
   )
 }
@@ -218,7 +218,7 @@ function CategoryTabs({
           onClick={() => onChange(key)}
           className={cn(
             'relative flex shrink-0 items-center gap-1.5 px-5 py-3 text-sm font-medium transition-colors duration-150',
-            active === key ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+            active === key ? 'text-[#EDEDF3]' : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
           )}
         >
           {icon && (
@@ -267,7 +267,7 @@ function SearchBar({
         onChange={(e) => onChange(e.target.value)}
         placeholder={getSearchPlaceholder(category)}
         className={cn(
-          'w-full rounded-xl border bg-white/[0.04] backdrop-blur-2xl py-2.5 pl-10 pr-10 text-sm text-[#F5F5F7]',
+          'w-full rounded-xl border bg-white/[0.04] backdrop-blur-2xl py-2.5 pl-10 pr-10 text-sm text-[#EDEDF3]',
           'placeholder-[#4A4A60] outline-none transition-colors focus:ring-0',
           category === 'LAND'
             ? 'border-white/[0.06] focus:border-[#4ADE80]/30'
@@ -278,7 +278,7 @@ function SearchBar({
         <button
           type="button"
           onClick={() => onChange('')}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#4A4A60] hover:text-[#A0A0B2]"
+          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#4A4A60] hover:text-[#C3C3CC]"
         >
           <X className="h-4 w-4" />
         </button>
@@ -324,8 +324,8 @@ function FilterBar({
             className={cn(
               'rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-150',
               filters.listingType === key
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-[#EDEDF3]'
+                : 'text-[#8E8E9C] hover:text-[#C3C3CC]',
             )}
           >
             {label}
@@ -341,7 +341,7 @@ function FilterBar({
           'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
           filters.tokenizedOnly
             ? 'border-[#C9A84C]/40 bg-[#C9A84C]/10 text-[#C9A84C]'
-            : 'border-white/[0.08] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]',
+            : 'border-white/[0.08] text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC]',
         )}
       >
         <Zap className="h-3.5 w-3.5" />
@@ -357,7 +357,7 @@ function FilterBar({
             'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
             filters.devOpportunityOnly
               ? 'border-[#4ADE80]/30 bg-[#4ADE80]/10 text-[#4ADE80]'
-              : 'border-white/[0.08] text-[#6B6B80] hover:border-white/[0.06] hover:text-[#A0A0B2]',
+              : 'border-white/[0.08] text-[#8E8E9C] hover:border-white/[0.06] hover:text-[#C3C3CC]',
           )}
         >
           <Layers className="h-3.5 w-3.5" />
@@ -370,7 +370,7 @@ function FilterBar({
         <button
           type="button"
           onClick={onClear}
-          className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#A0A0B2]"
+          className="flex items-center gap-1 text-xs text-[#8E8E9C] transition-colors hover:text-[#C3C3CC]"
         >
           <X className="h-3.5 w-3.5" />
           Clear filters
@@ -398,7 +398,7 @@ function ResultsHeader({
 
   return (
     <div className="flex items-center justify-between gap-4">
-      <p className="text-sm text-[#6B6B80]">
+      <p className="text-sm text-[#8E8E9C]">
         <span className="font-medium" style={{ color: accentColor }}>
           {count}
         </span>{' '}
@@ -411,7 +411,7 @@ function ResultsHeader({
           <select
             value={filters.sort}
             onChange={(e) => onChange({ sort: e.target.value as SortOption })}
-            className="appearance-none rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-2 pl-3 pr-8 text-xs text-[#A0A0B2] outline-none transition-colors hover:border-[#3A3A4A] focus:border-[#C9A84C]/40"
+            className="appearance-none rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-2 pl-3 pr-8 text-xs text-[#C3C3CC] outline-none transition-colors hover:border-[#3A3A4A] focus:border-[#C9A84C]/40"
           >
             <option value="NEWEST">Newest</option>
             <option value="PRICE_ASC">Price: Low → High</option>
@@ -434,8 +434,8 @@ function ResultsHeader({
             className={cn(
               'px-2.5 py-2 transition-colors',
               filters.view === 'grid'
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#4A4A60] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-[#EDEDF3]'
+                : 'text-[#4A4A60] hover:text-[#C3C3CC]',
             )}
           >
             <LayoutGrid className="h-4 w-4" />
@@ -447,8 +447,8 @@ function ResultsHeader({
             className={cn(
               'border-l border-white/[0.08] px-2.5 py-2 transition-colors',
               filters.view === 'list'
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#4A4A60] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-[#EDEDF3]'
+                : 'text-[#4A4A60] hover:text-[#C3C3CC]',
             )}
           >
             <List className="h-4 w-4" />
@@ -489,12 +489,12 @@ function EmptyState({
           <Building2 className="h-7 w-7 text-[#4A4A60]" />
         )}
       </div>
-      <h3 className="font-heading text-base font-medium text-[#A0A0B2]">
+      <h3 className="font-heading text-base font-medium text-[#C3C3CC]">
         {hasSearch
           ? `No ${isLand ? 'land parcels' : 'listings'} match your search`
           : `No ${isLand ? 'land parcels' : 'listings'} match your filters`}
       </h3>
-      <p className="mt-1.5 max-w-xs text-sm text-[#6B6B80]">
+      <p className="mt-1.5 max-w-xs text-sm text-[#8E8E9C]">
         {hasSearch
           ? 'Try a different keyword or location.'
           : 'Try adjusting your filters or broadening your search.'}
@@ -503,7 +503,7 @@ function EmptyState({
         type="button"
         onClick={onClear}
         className={cn(
-          'mt-5 rounded-xl border px-5 py-2.5 text-sm text-[#A0A0B2] transition-all hover:text-white',
+          'mt-5 rounded-xl border px-5 py-2.5 text-sm text-[#C3C3CC] transition-all hover:text-white',
           isLand
             ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
             : 'border-white/[0.08] hover:border-[#C9A84C]/40',
@@ -755,7 +755,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
             onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
             className={cn(
               'flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-medium',
-              'text-[#A0A0B2] transition-all hover:text-white active:scale-[0.98]',
+              'text-[#C3C3CC] transition-all hover:text-white active:scale-[0.98]',
               filters.category === 'LAND'
                 ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
                 : 'border-white/[0.08] hover:border-[#C9A84C]/40',

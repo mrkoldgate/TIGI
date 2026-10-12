@@ -75,7 +75,7 @@ export default async function CompletePage() {
       <h1 className="font-heading text-3xl font-bold text-white md:text-4xl">
         Welcome to TIGI, {firstName}.
       </h1>
-      <p className="mt-3 text-sm leading-relaxed text-[#6B6B80]">
+      <p className="mt-3 text-sm leading-relaxed text-[#8E8E9C]">
         Your account is set up as a{' '}
         <span className="text-[#C9A84C]">{roleCard?.label ?? userType}</span>.
         Here&apos;s what&apos;s ready for you.
@@ -100,7 +100,7 @@ export default async function CompletePage() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">Identity verification required</p>
-              <p className="mt-1 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-1 text-xs leading-relaxed text-[#8E8E9C]">
                 To invest in or sell tokenized properties, you&apos;ll need to complete a quick
                 KYC check. It takes about 5 minutes and is fully encrypted.
               </p>
@@ -129,7 +129,7 @@ export default async function CompletePage() {
 
 function FeatureChip({ icon: Icon, label }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-[#1E1E2A] bg-[#111118] px-4 py-3">
+    <div className="flex items-center gap-2 rounded-xl border border-[#1E1E2A] bg-[#1E1E2A] px-4 py-3">
       <Icon className="h-4 w-4 shrink-0 text-[#C9A84C]" />
       <span className="text-xs text-[#9999AA]">{label}</span>
     </div>
@@ -142,7 +142,7 @@ function KycStep({ label, done }: { label: string; done: boolean }) {
       className={
         done
           ? 'flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] text-emerald-400'
-          : 'flex items-center gap-1 rounded-full border border-[#2A2A3A] bg-[#111118] px-3 py-1 text-[10px] text-[#4A4A60]'
+          : 'flex items-center gap-1 rounded-full border border-[#33333F] bg-[#1E1E2A] px-3 py-1 text-[10px] text-[#4A4A60]'
       }
     >
       <span className={done ? 'text-emerald-400' : 'text-[#3A3A48]'}>{done ? '✓' : '○'}</span>

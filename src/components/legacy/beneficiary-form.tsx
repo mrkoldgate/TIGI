@@ -91,20 +91,20 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-5 space-y-4"
+      className="rounded-xl border border-[#33333F] bg-[#0D0D14] p-5 space-y-4"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <UserPlus className="h-4 w-4 text-[#A78BFA]" />
-          <h3 className="text-sm font-semibold text-[#F5F5F7]">
+          <UserPlus className="h-4 w-4 text-[#D8D8E0]" />
+          <h3 className="text-sm font-semibold text-[#EDEDF3]">
             {isEdit ? 'Edit Beneficiary' : 'Add Beneficiary'}
           </h3>
         </div>
         <button
           type="button"
           onClick={onCancel}
-          className="text-[#4A4A5E] hover:text-[#6B6B80] transition-colors"
+          className="text-[#4A4A5E] hover:text-[#8E8E9C] transition-colors"
         >
           <X className="h-4 w-4" />
         </button>
@@ -114,7 +114,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {/* Name */}
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">
             Full name <span className="text-[#EF4444]">*</span>
           </label>
           <input
@@ -123,41 +123,41 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Jane Smith"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
           />
         </div>
 
         {/* Email */}
         <div>
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">Email</label>
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Email</label>
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jane@example.com"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
           />
         </div>
 
         {/* Phone */}
         <div>
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">Phone</label>
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Phone</label>
           <input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 (555) 000-0000"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
           />
         </div>
 
         {/* Relationship */}
         <div>
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">Relationship</label>
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Relationship</label>
           <select
             value={relationship}
             onChange={(e) => setRelationship(e.target.value)}
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
           >
             {RELATIONSHIP_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -167,7 +167,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
 
         {/* Allocation */}
         <div>
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">
             Allocation %
           </label>
           <div className="relative">
@@ -177,7 +177,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
               max={100}
               value={allocation}
               onChange={(e) => setAllocation(e.target.value)}
-              className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 pr-8 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+              className="w-full rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 pr-8 text-sm text-[#EDEDF3] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
             />
             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#4A4A5E]">%</span>
           </div>
@@ -185,13 +185,13 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
 
         {/* Notes */}
         <div className="sm:col-span-2">
-          <label className="block text-xs font-medium text-[#6B6B80] mb-1">Notes (optional)</label>
+          <label className="block text-xs font-medium text-[#8E8E9C] mb-1">Notes (optional)</label>
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
             placeholder="Any additional instructions for this beneficiary…"
-            className="w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full resize-none rounded-lg border border-[#33333F] bg-[#1E1E2A] px-3 py-2 text-sm text-[#EDEDF3] placeholder-[#4A4A5E] outline-none focus:border-[#D8D8E0]/50 focus:ring-1 focus:ring-[#D8D8E0]/20"
           />
         </div>
       </div>
@@ -208,7 +208,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-[#2A2A3A] px-4 py-2 text-xs font-medium text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2] transition-colors"
+          className="rounded-lg border border-[#33333F] px-4 py-2 text-xs font-medium text-[#8E8E9C] hover:border-[#3A3A4A] hover:text-[#C3C3CC] transition-colors"
         >
           Cancel
         </button>
@@ -218,8 +218,8 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
           className={cn(
             'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold transition-all',
             saving || !name.trim()
-              ? 'bg-[#2A2A3A] text-[#4A4A5E] cursor-not-allowed'
-              : 'bg-[#A78BFA]/20 text-[#A78BFA] border border-[#A78BFA]/30 hover:bg-[#A78BFA]/30',
+              ? 'bg-[#33333F] text-[#4A4A5E] cursor-not-allowed'
+              : 'bg-[#D8D8E0]/20 text-[#D8D8E0] border border-[#D8D8E0]/30 hover:bg-[#D8D8E0]/30',
           )}
         >
           {saving && <Loader2 className="h-3 w-3 animate-spin" />}

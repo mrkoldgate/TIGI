@@ -34,8 +34,8 @@ interface StatCardProps {
 
 const ACCENT_STYLES: Record<AccentColor, { icon: string; ring: string; hoverGlow: string }> = {
   gold:  { icon: 'text-[#FDE047] drop-shadow-[0_0_8px_rgba(253,224,71,0.5)]',  ring: 'bg-[#FDE047]/10 border border-[#FDE047]/20 shadow-[inset_0_0_12px_rgba(253,224,71,0.2)]',  hoverGlow: 'hover:shadow-[0_0_40px_rgba(253,224,71,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
-  green: { icon: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]', ring: 'bg-emerald-400/10 border border-emerald-400/20 shadow-[inset_0_0_12px_rgba(52,211,153,0.2)]', hoverGlow: 'hover:shadow-[0_0_40px_rgba(52,211,153,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
-  blue:  { icon: 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]',   ring: 'bg-cyan-400/10 border border-cyan-400/20 shadow-[inset_0_0_12px_rgba(34,211,238,0.2)]',   hoverGlow: 'hover:shadow-[0_0_40px_rgba(34,211,238,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
+  green: { icon: 'text-emerald-400 drop-shadow-[0_0_8px_rgba(127, 209, 168,0.5)]', ring: 'bg-emerald-400/10 border border-emerald-400/20 shadow-[inset_0_0_12px_rgba(127, 209, 168,0.2)]', hoverGlow: 'hover:shadow-[0_0_40px_rgba(127, 209, 168,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
+  blue:  { icon: 'text-[#C3C3CC] drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]',   ring: 'bg-[#C3C3CC]/10 border border-[#C3C3CC]/20 shadow-[inset_0_0_12px_rgba(34,211,238,0.2)]',   hoverGlow: 'hover:shadow-[0_0_40px_rgba(34,211,238,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
   rose:  { icon: 'text-rose-400 drop-shadow-[0_0_8px_rgba(251,113,133,0.5)]',  ring: 'bg-rose-500/10 border border-rose-500/20 shadow-[inset_0_0_12px_rgba(251,113,133,0.2)]',  hoverGlow: 'hover:shadow-[0_0_40px_rgba(251,113,133,0.07),inset_0_1px_0_0_rgba(255,255,255,0.1)]' },
 }
 
@@ -71,7 +71,7 @@ export function StatCard({
         {lockedUntil && (
           <span className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-2 py-0.5">
             <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
-            <span className="text-[10px] text-[#6B6B80]">{lockedUntil}</span>
+            <span className="text-[10px] text-[#8E8E9C]">{lockedUntil}</span>
           </span>
         )}
       </div>
@@ -102,8 +102,8 @@ export function StatCard({
 
       {/* Label + hint */}
       <div>
-        <p className="text-xs font-medium text-[#A0A0B2]">{label}</p>
-        {hint && <p className="mt-0.5 text-[11px] text-[#6B6B80]">{hint}</p>}
+        <p className="text-xs font-medium text-[#C3C3CC]">{label}</p>
+        {hint && <p className="mt-0.5 text-[11px] text-[#8E8E9C]">{hint}</p>}
       </div>
     </div>
   )

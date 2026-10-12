@@ -57,19 +57,19 @@ export function PremiumGate({
       </div>
 
       {/* Lock overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 rounded-xl bg-[#0A0A0F]/70 p-4 text-center backdrop-blur-[1px]">
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-2.5 rounded-xl bg-[#171721]/70 p-4 text-center backdrop-blur-[1px]">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#C9A84C]/15 ring-1 ring-[#C9A84C]/30">
           <Lock className="h-4 w-4 text-[#C9A84C]" />
         </div>
         <div>
-          <p className="text-xs font-semibold text-[#F5F5F7]">Pro feature</p>
-          <p className="mt-0.5 max-w-[200px] text-[11px] leading-relaxed text-[#6B6B80]">
+          <p className="text-xs font-semibold text-[#EDEDF3]">Pro feature</p>
+          <p className="mt-0.5 max-w-[200px] text-[11px] leading-relaxed text-[#8E8E9C]">
             Upgrade to access {feature}.
           </p>
         </div>
         <Link
           href="/settings/billing"
-          className="mt-0.5 rounded-lg bg-[#C9A84C] px-3 py-1.5 text-[11px] font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
+          className="mt-0.5 rounded-lg bg-[#C9A84C] px-3 py-1.5 text-[11px] font-semibold text-[#171721] transition-opacity hover:opacity-90"
         >
           Upgrade to Pro
         </Link>
