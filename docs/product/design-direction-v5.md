@@ -48,3 +48,22 @@
 ## Fix worth knowing
 
 `globals.css` reset `* { padding: 0; margin: 0 }` outside a CSS layer. In Tailwind v4 that beats every spacing utility (`p-*`, `m-*`, `mx-auto`, `space-y-*`), which is why sections looked cramped or collapsed. Base rules now sit in `@layer base` and custom classes in `@layer components`.
+
+## Inner pages (v5.2)
+
+| Area | Decision | Source |
+|---|---|---|
+| Shell | Sidebar grouped Overview / Market / Holdings / Your assets / Intelligence, violet active rail; top bar with ⌘K search, Devnet chip, account menu with sign-out | Mercury, Revolut app navigation |
+| Page header | No box. Mono eyebrow + Archivo title that waves in + description + actions, hairline below | Homepage chapters, Coinbase app |
+| Dashboard | One tray: portfolio value from real holdings, gain vs cost, allocation bar; four count cells beside it | Mercury home, Robinhood |
+| Portfolio | Big number, invested/holdings/yield/income, allocation by type, holdings as a data table. The old invented performance chart was removed | Robinhood, Wealthsimple, Coinbase "Assets" |
+| Marketplace | Figures in the header, one glass control bar (pills, search, sort, view), photo-first cards (4:3) | Coinbase Explore, Netflix rails, architecture sites |
+| Property / land detail | Photo mosaic + lightbox, wave title, pill tabs, sticky order ticket with violet "Buy shares" | Airbnb/architecture galleries, Robinhood order ticket |
+| Auth | Split screen: photograph with the brand line, form on black glass | Mercury, Wealthsimple sign-in |
+| Land | Emerald stays as the land accent; everything else on the shared palette | Scale AI (one muted colour per area) |
+
+New classes: `.panel`, `.panel-hover`, `.pill`, `.field`, `.figure`, `.live-dot`, `.data-row`, `.page-title`, `.section-title`.
+
+Contrast: low-alpha text (`white/20–45`, `#6B6B80`, `zinc-600`) was raised so body text and labels meet WCAG AA on black.
+
+Preview data: Vercel builds create and seed an SQLite demo database (`scripts/build-demo-db.mjs`). Demo users have stable ids; writes reset when a server instance recycles.
