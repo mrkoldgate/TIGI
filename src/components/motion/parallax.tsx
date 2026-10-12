@@ -78,7 +78,8 @@ export function HeroParallax({
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            'linear-gradient(180deg, rgba(0, 0, 0,0.55) 0%, rgba(0, 0, 0,0.08) 28%, rgba(0, 0, 0,0.25) 55%, rgba(0, 0, 0,0.92) 88%, #000000 100%)',
+            'linear-gradient(90deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.25) 45%, rgba(0,0,0,0) 70%),' +
+            'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.08) 28%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0.92) 88%, #000000 100%)',
         }}
         aria-hidden="true"
       />
