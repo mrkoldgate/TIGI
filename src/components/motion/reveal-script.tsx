@@ -12,12 +12,14 @@
 const SCRIPT = `(function(){try{
 var d=document,h=d.documentElement;
 if(!('IntersectionObserver' in window))return;
-if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(reduce)return;
 h.classList.add('js-reveal');
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target);}})},{rootMargin:'0px 0px -8% 0px',threshold:0.08});
 function arm(root){(root.querySelectorAll?root:d).querySelectorAll('[data-reveal]:not([data-reveal-armed])').forEach(function(el){el.setAttribute('data-reveal-armed','');var dl=el.getAttribute('data-reveal-delay');if(dl)el.style.setProperty('--reveal-delay',dl+'ms');io.observe(el);});}
 function start(){arm(d);new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(n){if(n.nodeType===1){if(n.hasAttribute&&n.hasAttribute('data-reveal'))arm(n.parentNode||d);else arm(n);}})})}).observe(d.body,{childList:true,subtree:true});}
 if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else start();
+var raf=0,lastEv=null;d.addEventListener('pointermove',function(ev){lastEv=ev;if(raf)return;raf=requestAnimationFrame(function(){raf=0;var t=lastEv&&lastEv.target;if(!t||!t.closest)return;var el=t.closest('.cell,.btn-primary,.btn-gold,.btn-glass,.btn-ghost,[data-glow]');if(!el)return;var r=el.getBoundingClientRect();el.style.setProperty('--mx',(lastEv.clientX-r.left)+'px');el.style.setProperty('--my',(lastEv.clientY-r.top)+'px');});},{passive:true});
 }catch(e){document.documentElement.classList.remove('js-reveal');}})();`
 
 export function RevealScript() {

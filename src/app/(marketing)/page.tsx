@@ -6,6 +6,7 @@ import { photoUrl, PHOTOS, type PhotoKey } from '@/lib/photography'
 import { PLANS } from '@/lib/billing/billing-types'
 import { HeroParallax, ParallaxImage } from '@/components/motion/parallax'
 import { MouseTiltCard } from '@/components/ui/interactions'
+import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
 
 // ---------------------------------------------------------------------------
 // TIGI Homepage — v4.1 "Private Ledger, in motion"
@@ -49,7 +50,7 @@ function Chapter({
 }: {
   num: string
   label: string
-  title: React.ReactNode
+  title: string
   lede?: React.ReactNode
   id?: string
 }) {
@@ -59,7 +60,9 @@ function Chapter({
         <span className="section-num">{num}</span>
         <span className="text-label">{label}</span>
       </div>
-      <h2 data-reveal="clip" className="text-display max-w-[18ch]">{title}</h2>
+      <h2 data-reveal="wave" className="text-display max-w-[18ch]">
+        <WaveChars text={title} />
+      </h2>
       {lede && (
         <p data-reveal="up" data-reveal-delay="150" className="mt-5 max-w-[56ch] text-[17px] leading-relaxed text-[#C3C3CC]">
           {lede}
@@ -101,7 +104,6 @@ function Plate({
 // ---------------------------------------------------------------------------
 
 function Hero() {
-  const words = 'Own real estate by the share.'.split(' ')
   return (
     <HeroParallax src={photoUrl('heroHouse', 2400, 82)} alt={PHOTOS.heroHouse.alt}>
       <Wrap className="flex flex-1 flex-col pb-10 pt-[120px]">
@@ -116,14 +118,15 @@ function Hero() {
         <div className="flex-1" />
 
         <div>
-          <h1 className="text-hero word-rise max-w-[14ch]" aria-label="Own real estate by the share.">
-            {words.map((w, i) => (
-              <span key={i} aria-hidden="true" style={{ ['--i' as string]: i }}>
-                {w}
-                {i < words.length - 1 ? '\u00A0' : ''}
-              </span>
-            ))}
-          </h1>
+          <WaveHeadline
+            className="text-hero max-w-[15ch] min-h-[2.1em]"
+            phrases={[
+              'Own real estate by the share.',
+              'Invest in property from $100.',
+              'Lease out the land you own.',
+              'Pass it on to who you choose.',
+            ]}
+          />
           <p className="animate-slide-up mt-6 max-w-[52ch] text-[18px] leading-relaxed text-[#D4D4DE]" style={{ animationDelay: '650ms' }}>
             TIGI turns homes, apartments and land into digital shares. Start from $100, collect your
             portion of the rent, lease out land, and decide who inherits it, with AI research on
@@ -180,7 +183,9 @@ function Collections() {
     <section aria-labelledby="collections-title" className="pt-16 md:pt-20">
       <Wrap>
         <div className="flex items-end justify-between gap-6">
-          <h2 id="collections-title" data-reveal="clip" className="text-h2">Browse by collection</h2>
+          <h2 id="collections-title" data-reveal="wave" className="text-h2">
+            <WaveChars text="Browse by collection" />
+          </h2>
           <span className="text-label hidden sm:inline">Scroll →</span>
         </div>
       </Wrap>
@@ -610,7 +615,9 @@ function Closing() {
           <ParallaxImage src={photoUrl('goldenLand', 2000)} alt={PHOTOS.goldenLand.alt} sizes="(min-width: 1200px) 1200px, 100vw" className="!absolute inset-0 -z-10" strength={80} />
           <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(0,0,0,0.92)_0%,rgba(0,0,0,0.6)_55%,rgba(0,0,0,0.2)_100%)]" aria-hidden="true" />
           <div className="px-7 py-16 sm:px-12 md:py-24">
-            <h2 className="text-display max-w-[16ch]">Be one of the first owners.</h2>
+            <h2 data-reveal="wave" className="text-display max-w-[16ch]">
+              <WaveChars text="Be one of the first owners." />
+            </h2>
             <p className="mt-5 max-w-[46ch] text-[17px] leading-relaxed text-[#D4D4DE]">
               We are opening TIGI to a small group of investors and property owners. Request a place and
               we will be in touch.
