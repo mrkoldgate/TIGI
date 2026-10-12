@@ -51,7 +51,7 @@ export interface UploadZoneProps {
   disabled?: boolean
   /** Extra class names on the outer wrapper */
   className?: string
-  /** Accent colour — defaults to gold (#C9A84C) */
+  /** Accent colour — defaults to gold (#6366F1) */
   accentColor?: string
 }
 
@@ -68,7 +68,7 @@ export function UploadZone({
   error,
   disabled = false,
   className,
-  accentColor = '#C9A84C',
+  accentColor = '#6366F1',
 }: UploadZoneProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const [isDragging, setIsDragging] = useState(false)
@@ -137,7 +137,7 @@ export function UploadZone({
     return (
       <div className={cn('w-full', className)}>
         <div
-          className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3"
+          className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3"
           style={{ borderColor: accentColor + '40' }}
         >
           <div
@@ -169,7 +169,7 @@ export function UploadZone({
   if (uploading) {
     return (
       <div className={cn('w-full', className)}>
-        <div className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3">
+        <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
           <div
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg"
             style={{ backgroundColor: accentColor + '20' }}
@@ -205,9 +205,9 @@ export function UploadZone({
             ? 'cursor-not-allowed opacity-40'
             : 'cursor-pointer',
           isDragging
-            ? 'bg-[#1A1A24]'
-            : 'bg-[#14141E] hover:bg-[#1A1A24]',
-          displayError ? 'border-[#EF4444]' : isDragging ? 'border-opacity-100' : 'border-[#2A2A3A]',
+            ? 'bg-white/[0.04]'
+            : 'bg-white/[0.04] hover:bg-white/[0.04]',
+          displayError ? 'border-[#EF4444]' : isDragging ? 'border-opacity-100' : 'border-white/[0.08]',
         )}
         style={isDragging && !displayError ? { borderColor: accentColor } : undefined}
       >

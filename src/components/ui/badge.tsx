@@ -13,9 +13,9 @@ const badgeVariants = cva(
     variants: {
       variant: {
         // Default — subtle gray
-        default: 'bg-[#1A1A24] text-[#A0A0B2] ring-[#2A2A3A]',
+        default: 'bg-white/[0.04] text-[#A0A0B2] ring-white/[0.08]',
         // Gold — for verified, premium, active states
-        gold: 'bg-[#C9A84C]/10 text-[#C9A84C] ring-[#C9A84C]/30',
+        gold: 'bg-indigo-500/10 text-indigo-400 ring-indigo-500/30',
         // Success — approved, completed, positive
         success: 'bg-[#22C55E]/10 text-[#22C55E] ring-[#22C55E]/30',
         // Warning — pending, under review, approaching limit
@@ -25,7 +25,7 @@ const badgeVariants = cva(
         // Info — informational, links
         info: 'bg-[#3B82F6]/10 text-[#3B82F6] ring-[#3B82F6]/30',
         // Outline — subtle bordered
-        outline: 'bg-transparent text-[#6B6B80] ring-[#2A2A3A]',
+        outline: 'bg-transparent text-[#6B6B80] ring-white/[0.08]',
       },
     },
     defaultVariants: {
@@ -51,7 +51,7 @@ function Badge({ className, variant, dot, children, ...props }: BadgeProps) {
             variant === 'warning' && 'bg-[#F59E0B]',
             variant === 'error' && 'bg-[#EF4444]',
             variant === 'info' && 'bg-[#3B82F6]',
-            variant === 'gold' && 'bg-[#C9A84C]',
+            variant === 'gold' && 'bg-indigo-500',
             (!variant || variant === 'default' || variant === 'outline') && 'bg-[#6B6B80]'
           )}
         />

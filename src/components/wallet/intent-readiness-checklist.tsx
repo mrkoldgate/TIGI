@@ -78,7 +78,7 @@ function CheckRow({ check, onWalletConnect }: {
             <button
               type="button"
               onClick={onWalletConnect}
-              className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-[#C9A84C] hover:text-[#D4B55A]"
+              className="mt-1.5 flex items-center gap-1.5 text-[11px] font-medium text-indigo-400 hover:text-indigo-300"
             >
               <Wallet className="h-3 w-3" />
               Connect Phantom or Solflare
@@ -86,7 +86,7 @@ function CheckRow({ check, onWalletConnect }: {
           ) : check.actionHref ? (
             <a
               href={check.actionHref}
-              className="mt-1.5 inline-block text-[11px] font-medium text-[#C9A84C] hover:text-[#D4B55A]"
+              className="mt-1.5 inline-block text-[11px] font-medium text-indigo-400 hover:text-indigo-300"
             >
               {check.actionLabel} →
             </a>
@@ -128,7 +128,7 @@ export function IntentReadinessChecklist({
   return (
     <div className={cn('space-y-4', className)}>
       {/* Checklist */}
-      <div className="rounded-xl border border-[#1E1E2A] bg-[#0D0D14] p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
         <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[#4A4A60]">
           Signing requirements
         </p>
@@ -145,7 +145,7 @@ export function IntentReadinessChecklist({
 
         {/* Next action summary */}
         {!readiness.canPrepare && readiness.blockingReason && (
-          <div className="mt-4 flex items-start gap-2 rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2.5">
+          <div className="mt-4 flex items-start gap-2 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
             <AlertCircle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#F59E0B]" />
             <p className="text-[11px] leading-relaxed text-[#A0A0B2]">
               {readiness.nextAction}
@@ -155,24 +155,24 @@ export function IntentReadinessChecklist({
       </div>
 
       {/* "What signing does" explanation */}
-      <div className="rounded-xl border border-[#1E1E2A] bg-[#111118] p-4">
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.04] p-4">
         <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#4A4A60]">
           What signing does
         </p>
         <p className="text-[11px] leading-relaxed text-[#6B6B80]">
           {programInfo.userExplanation}
         </p>
-        <div className="mt-2.5 flex items-center gap-3 border-t border-[#1E1E2A] pt-2.5">
+        <div className="mt-2.5 flex items-center gap-3 border-t border-white/[0.06] pt-2.5">
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Program</span>
             <span className="font-mono text-[10px] text-[#6B6B80]">{programInfo.displayName}</span>
           </div>
-          <span className="text-[#2A2A3A]">·</span>
+          <span className="text-white/20">·</span>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Fee</span>
             <span className="text-[10px] text-[#6B6B80]">~0.000005 SOL</span>
           </div>
-          <span className="text-[#2A2A3A]">·</span>
+          <span className="text-white/20">·</span>
           <div className="flex items-center gap-1.5">
             <span className="text-[10px] text-[#4A4A60]">Funds moved</span>
             <span className="text-[10px] text-[#4ADE80]">None</span>
@@ -195,8 +195,8 @@ export function IntentReadinessChecklist({
         className={cn(
           'flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
           readiness.canPrepare
-            ? 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B55A] disabled:opacity-60'
-            : 'cursor-not-allowed border border-[#2A2A3A] bg-[#0D0D14] text-[#4A4A60]',
+            ? 'bg-indigo-500 text-[#0A0A0F] hover:bg-indigo-400 disabled:opacity-60'
+            : 'cursor-not-allowed border border-white/[0.08] bg-white/[0.03] text-[#4A4A60]',
         )}
       >
         {isPreparing ? (

@@ -112,7 +112,8 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
   }
 
   return (
-    <div className="space-y-8">
+    <div className="relative space-y-8">
+      <div className="noise absolute inset-0 pointer-events-none" />
 
       {/* Current plan */}
       <CurrentPlanCard
@@ -164,7 +165,8 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
       </div>
 
       {/* Feature comparison footnote */}
-      <div className="rounded-xl border border-[#1F1F2E] bg-[#0D0D14] px-5 py-4">
+      <div className="relative rounded-xl border border-white/[0.06] bg-white/[0.03] px-5 py-4">
+        <div className="noise absolute inset-0 pointer-events-none" />
         <p className="text-xs text-[#4A4A5E]">
           All plans include access to the TIGI marketplace, property detail pages, and basic AI
           valuation estimates. Premium features unlock deeper intelligence and are billed monthly or
@@ -174,12 +176,13 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
 
       {/* Demo mode notice */}
       {isMockMode && (
-        <div className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#0A0A0F] px-4 py-3">
+        <div className="relative flex items-start gap-3 rounded-xl border border-white/[0.08] bg-black/80 px-4 py-3">
+          <div className="noise absolute inset-0 pointer-events-none" />
           <span className="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-[#F59E0B]" />
           <p className="text-xs text-[#6B6B80]">
             <span className="font-medium text-[#9999AA]">Demo mode.</span>{' '}
             Billing is simulated — no payment is required. Upgrading will instantly change your plan.
-            Set <code className="rounded bg-[#1A1A24] px-1 font-mono text-[10px]">BILLING_PROVIDER=stripe</code> to
+            Set <code className="rounded bg-white/[0.04] px-1 font-mono text-[10px]">BILLING_PROVIDER=stripe</code> to
             enable real billing.
           </p>
         </div>
@@ -212,7 +215,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(!annual)}
         className={`relative h-5 w-9 rounded-full transition-colors ${
-          annual ? 'bg-[#C9A84C]' : 'bg-[#2A2A3A]'
+          annual ? 'bg-indigo-500' : 'bg-white/[0.06]'
         }`}
         aria-label="Toggle annual billing"
         role="switch"
@@ -231,7 +234,7 @@ function BillingToggle({
         }`}
       >
         Annual
-        <span className="rounded-full bg-[#4ADE80]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#4ADE80]">
+        <span className="rounded-full bg-[#4ADE80]/15 px-1.5 py-0.5 text-[10px] font-semibold text-[#4ADE80] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
           Save 20%
         </span>
       </button>

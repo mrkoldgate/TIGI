@@ -60,7 +60,7 @@ export function ValuationAlerts({ alerts, className }: ValuationAlertsProps) {
           <Link
             key={alert.id}
             href={`/marketplace/${alert.assetId}`}
-            className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:border-white/20 hover:bg-white/10 hover:shadow-[0_0_30px_rgba(255,255,255,0.02)] hover:-translate-y-0.5"
+            className="flex items-start gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-3 transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05)] hover:border-white/15 hover:bg-white/[0.06] hover:shadow-[0_0_20px_rgba(255,255,255,0.03)] hover:-translate-y-0.5"
           >
             {/* Direction icon */}
             <div

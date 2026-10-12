@@ -21,7 +21,7 @@ export default function PricingPage() {
 
       {/* Header */}
       <div className="mb-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Pricing</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-[#6366F1]">Pricing</p>
         <h1 className="mt-3 font-heading text-4xl font-semibold text-[#F5F5F7]">
           Intelligence that scales with you
         </h1>
@@ -42,13 +42,13 @@ export default function PricingPage() {
               key={planId}
               className={`relative flex flex-col rounded-2xl border p-6 ${
                 isHighlighted
-                  ? 'border-[#C9A84C]/40 bg-[#111118] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
-                  : 'border-[#2A2A3A] bg-[#0D0D14]'
+                  ? 'border-[#6366F1]/40 bg-[#050505] shadow-[0_0_40px_rgba(99,102,241,0.08)]'
+                  : 'border-white/[0.04] bg-[#050505]'
               }`}
             >
               {plan.badge && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
+                  <span className="inline-flex items-center gap-1 rounded-full bg-[#6366F1] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
                     <Sparkles className="h-2.5 w-2.5" />
                     {plan.badge}
                   </span>
@@ -81,7 +81,7 @@ export default function PricingPage() {
                 {isEnterprise ? (
                   <a
                     href="mailto:enterprise@tigi.com"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#1A1A24] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.04] bg-white/[0.04] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#6366F1]/40 hover:text-[#6366F1]"
                   >
                     <Building2 className="h-4 w-4" />
                     Contact sales
@@ -91,8 +91,8 @@ export default function PricingPage() {
                     href={plan.priceMonthly === 0 ? '/auth/register' : '/auth/register'}
                     className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all ${
                       isHighlighted
-                        ? 'bg-[#C9A84C] text-[#0A0A0F] hover:opacity-90'
-                        : 'border border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C]/40 hover:text-[#F5F5F7]'
+                        ? 'bg-[#6366F1] text-[#0A0A0F] hover:opacity-90'
+                        : 'border border-white/[0.04] bg-white/[0.04] text-[#A0A0B2] hover:border-[#6366F1]/40 hover:text-[#F5F5F7]'
                     }`}
                   >
                     {isHighlighted && <Sparkles className="h-3.5 w-3.5" />}
@@ -140,7 +140,7 @@ export default function PricingPage() {
             a: 'All major credit and debit cards via Stripe. More options available on Enterprise plans.',
           },
         ].map(({ q, a }) => (
-          <div key={q} className="rounded-xl border border-[#1F1F2E] bg-[#0D0D14] p-5">
+          <div key={q} className="rounded-xl border border-white/[0.04] bg-[#050505] p-5">
             <p className="text-sm font-semibold text-[#F5F5F7]">{q}</p>
             <p className="mt-2 text-xs leading-relaxed text-[#6B6B80]">{a}</p>
           </div>

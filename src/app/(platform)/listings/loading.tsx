@@ -4,7 +4,7 @@ import { Skeleton, StatCardSkeleton } from '@/components/ui/skeleton'
 
 export default function ListingsLoading() {
   return (
-    <div className="animate-pulse pt-6 pb-16 space-y-8">
+    <div className="animate-pulse pt-8 pb-16 space-y-8">
       {/* Page header */}
       <div className="flex items-center justify-between gap-4">
         <div className="space-y-2">

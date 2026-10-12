@@ -6,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function ListingDetailLoading() {
   return (
-    <div className="animate-pulse pt-6 pb-16 space-y-6">
+    <div className="animate-pulse pt-8 pb-16 space-y-6">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2">
         <Skeleton variant="text" className="h-3 w-24" />
@@ -32,7 +32,7 @@ export default function ListingDetailLoading() {
         </div>
       </div>
 
-      <div className="border-t border-[#1E1E2A]" />
+      <div className="border-t border-white/[0.06]" />
 
       {/* Two-column layout */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">

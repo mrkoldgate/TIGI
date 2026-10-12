@@ -12,9 +12,9 @@
 //   6. ReviewStep           — summary before submit
 //
 // Design:
-//   - Property asset → gold (#C9A84C) accent throughout
+//   - Property asset → indigo (#818CF8) accent throughout
 //   - Land asset → green (#4ADE80) accent throughout
-//   - Dark TIGI surface: #0A0A0F / #14141E / #1A1A24 / #2A2A3A border
+//   - Dark TIGI surface: #050505 / border-white/[0.04]
 //
 // DB integration path:
 //   - handleSubmit → call server action / API route with formState
@@ -129,23 +129,23 @@ const STEPS = [
 // ── Accent helpers ─────────────────────────────────────────────────────────
 
 function accent(assetType: AssetType | null) {
-  return assetType === 'LAND' ? '#4ADE80' : '#C9A84C'
+  return assetType === 'LAND' ? '#4ADE80' : '#818CF8'
 }
 
 function accentMuted(assetType: AssetType | null) {
-  return assetType === 'LAND' ? 'rgba(74,222,128,0.12)' : 'rgba(201,168,76,0.12)'
+  return assetType === 'LAND' ? 'rgba(74,222,128,0.12)' : 'rgba(99,102,241,0.12)'
 }
 
 function accentBorder(assetType: AssetType | null) {
-  return assetType === 'LAND' ? 'border-[#4ADE80]' : 'border-[#C9A84C]'
+  return assetType === 'LAND' ? 'border-[#4ADE80]' : 'border-indigo-500'
 }
 
 function accentText(assetType: AssetType | null) {
-  return assetType === 'LAND' ? 'text-[#4ADE80]' : 'text-[#C9A84C]'
+  return assetType === 'LAND' ? 'text-[#4ADE80]' : 'text-indigo-400'
 }
 
 function accentBg(assetType: AssetType | null) {
-  return assetType === 'LAND' ? 'bg-[#4ADE80]' : 'bg-[#C9A84C]'
+  return assetType === 'LAND' ? 'bg-[#4ADE80]' : 'bg-indigo-500'
 }
 
 // ── Shared UI primitives ───────────────────────────────────────────────────
@@ -184,9 +184,9 @@ function Textarea({
         id={id}
         rows={rows}
         className={cn(
-          'w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#22222E]',
+          'w-full resize-none rounded-lg border border-white/[0.08] bg-white/[0.04]',
           'px-4 py-3 text-sm text-[#F5F5F7] placeholder:text-[#6B6B80]',
-          'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
+          'outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
           'transition-colors duration-150',
         )}
         {...props}
@@ -217,9 +217,9 @@ function SelectField({ label, hint, value, onChange, options, placeholder }: Sel
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
+          'w-full rounded-lg border border-white/[0.08] bg-white/[0.04]',
           'px-4 py-2.5 text-sm text-[#F5F5F7]',
-          'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
+          'outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
           'transition-colors duration-150',
           !value && 'text-[#6B6B80]',
         )}
@@ -255,14 +255,15 @@ function ToggleCard({ selected, onSelect, assetType, children, className }: Togg
       onClick={onSelect}
       className={cn(
         'relative w-full rounded-xl border p-5 text-left transition-all duration-200',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C]',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
+        'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
         selected
           ? cn(
               'border-2',
               accentBorder(assetType),
-              'bg-[#1A1A24]',
+              'bg-white/[0.04]',
             )
-          : 'border-[#2A2A3A] bg-[#14141E] hover:border-[#3A3A4E] hover:bg-[#1A1A24]',
+          : 'border-white/[0.08] bg-white/[0.04] hover:border-white/[0.15] hover:bg-white/[0.04]',
         className,
       )}
     >
@@ -311,7 +312,7 @@ function StepProgress({ currentStep, assetType }: StepProgressProps) {
                       ? 'border-transparent text-[#0A0A0F]'
                       : isActive
                         ? 'border-current text-inherit'
-                        : 'border-[#2A2A3A] text-[#6B6B80]',
+                        : 'border-white/[0.08] text-[#6B6B80]',
                   )}
                   style={
                     isCompleted
@@ -337,7 +338,7 @@ function StepProgress({ currentStep, assetType }: StepProgressProps) {
                 <div
                   className="mb-4 h-[2px] flex-1 transition-all duration-300"
                   style={{
-                    backgroundColor: step.id < currentStep ? color : '#2A2A3A',
+                    backgroundColor: step.id < currentStep ? color : 'rgba(255,255,255,0.04)',
                   }}
                 />
               )}
@@ -373,7 +374,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
           onSelect={() => setForm((f) => ({ ...f, assetType: 'PROPERTY' }))}
           assetType={form.assetType}
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#22222E]">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.04]">
             <BuildingIcon />
           </div>
           <p className="mb-1 text-base font-semibold text-[#F5F5F7]">Property</p>
@@ -385,7 +386,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
             {['Residential', 'Commercial', 'Industrial', 'Mixed-Use'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-[#2A2A3A] px-2.5 py-0.5 text-[10px] text-[#6B6B80]"
+                className="rounded-full border border-white/[0.08] px-2.5 py-0.5 text-[10px] text-[#6B6B80]"
               >
                 {t}
               </span>
@@ -741,9 +742,9 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
         )}
 
         {/* AI Valuation note */}
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
           <div className="flex items-start gap-3">
-            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#22222E]">
+            <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-white/[0.04]">
               <SparkleIcon />
             </div>
             <div>
@@ -839,7 +840,7 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
 
         {/* Fractional config */}
         {isFractional && (
-          <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-5">
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-5">
             <SectionLabel>Token Configuration</SectionLabel>
             <FieldGroup>
               <FieldRow>
@@ -865,13 +866,13 @@ function OwnershipStep({ form, setForm, onNext, onBack }: Step4Props) {
               </FieldRow>
 
               {totalFractionalValue && (
-                <div className="flex items-center justify-between rounded-lg bg-[#22222E] px-4 py-3">
+                <div className="flex items-center justify-between rounded-lg bg-white/[0.04] px-4 py-3">
                   <span className="text-xs text-[#6B6B80]">Total tokenized value</span>
-                  <span className="text-sm font-semibold text-[#C9A84C]">{totalFractionalValue}</span>
+                  <span className="text-sm font-semibold text-indigo-400">{totalFractionalValue}</span>
                 </div>
               )}
 
-              <div className="rounded-lg border border-[#2A2A3A] px-4 py-3">
+              <div className="rounded-lg border border-white/[0.08] px-4 py-3">
                 <p className="text-xs leading-relaxed text-[#6B6B80]">
                   <strong className="text-[#A0A0B2]">Note:</strong> Token issuance, smart contract
                   deployment, and regulatory compliance steps are handled after listing approval by
@@ -1008,7 +1009,7 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
       {/* Upload counter */}
       <div className="mt-4 flex items-center gap-2">
         <div
-          className="h-1.5 flex-1 overflow-hidden rounded-full bg-[#2A2A3A]"
+          className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/[0.06]"
         >
           <div
             className="h-full rounded-full transition-all duration-500"
@@ -1023,7 +1024,7 @@ function MediaStep({ form, setForm, onNext, onBack }: Step5Props) {
         </span>
       </div>
 
-      <div className="mt-4 rounded-xl border border-[#2A2A3A] bg-[#14141E] px-4 py-3">
+      <div className="mt-4 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-3">
         <p className="text-xs leading-relaxed text-[#6B6B80]">
           <strong className="text-[#A0A0B2]">Supported formats:</strong> JPEG, PNG, WebP. Max 20 MB
           per image.{' '}
@@ -1073,7 +1074,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     return (
       <div
         className={cn(
-          'relative overflow-hidden rounded-xl border border-[#2A2A3A]',
+          'relative overflow-hidden rounded-xl border border-white/[0.08]',
           large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
         )}
       >
@@ -1092,7 +1093,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
     return (
       <div
         className={cn(
-          'group relative overflow-hidden rounded-xl border border-[#2A2A3A]',
+          'group relative overflow-hidden rounded-xl border border-white/[0.08]',
           large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
         )}
       >
@@ -1128,7 +1129,7 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
       <div
         className={cn(
           'flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#EF4444]',
-          'bg-[#14141E] transition-all duration-200',
+          'bg-white/[0.04] transition-all duration-200',
           large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
         )}
         onClick={() => inputRef.current?.click()}
@@ -1151,8 +1152,8 @@ function UploadSlot({ slot, onSelect, onRemove, assetType, large }: UploadSlotPr
   return (
     <div
       className={cn(
-        'relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#2A2A3A]',
-        'bg-[#14141E] transition-all duration-200',
+        'relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-white/[0.08]',
+        'bg-white/[0.04] transition-all duration-200',
         'hover:border-opacity-70',
         large ? 'aspect-[16/9] w-full' : 'aspect-square w-full',
       )}
@@ -1328,7 +1329,7 @@ function ReviewStep({ form, onBack, onSubmit, isSubmitting, submitError }: Step6
       </div>
 
       {/* Terms */}
-      <div className="mt-6 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+      <div className="mt-6 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
         <p className="text-xs leading-relaxed text-[#6B6B80]">
           By submitting, you confirm that all information is accurate and that you have the legal
           authority to list this asset. Your listing will be reviewed by the TIGI compliance team
@@ -1369,7 +1370,7 @@ interface ReviewSectionProps {
 
 function ReviewSection({ title, assetType, rows, children }: ReviewSectionProps) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#14141E]">
+    <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.04]">
       <div
         className="px-4 py-2.5"
         style={{ backgroundColor: accentMuted(assetType) }}
@@ -1378,7 +1379,7 @@ function ReviewSection({ title, assetType, rows, children }: ReviewSectionProps)
           {title}
         </p>
       </div>
-      <div className="divide-y divide-[#2A2A3A] px-4">
+      <div className="divide-y divide-white/[0.04] px-4">
         {rows.map((row) => (
           <div key={row.label} className="flex items-start justify-between gap-4 py-2.5">
             <span className="shrink-0 text-xs text-[#6B6B80]">{row.label}</span>
@@ -1558,7 +1559,7 @@ export function CreateListingClient() {
           <span className="text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
             TIGI Marketplace
           </span>
-          <span className="text-[#2A2A3A]">/</span>
+          <span className="text-white/[0.04]">/</span>
           <span
             className={cn('text-xs font-semibold uppercase tracking-widest', accentText(form.assetType))}
           >
@@ -1570,7 +1571,8 @@ export function CreateListingClient() {
 
       <StepProgress currentStep={step} assetType={form.assetType} />
 
-      <div className="rounded-2xl border border-[#2A2A3A] bg-[#0A0A0F] p-6 shadow-xl sm:p-8">
+      <div className="relative rounded-2xl border border-white/[0.04] bg-[#050505]/80 p-6 shadow-xl sm:p-8">
+        <div className="noise absolute inset-0 pointer-events-none" />
         {step === 1 && (
           <AssetTypeStep form={form} setForm={setForm} onNext={goNext} />
         )}
@@ -1604,7 +1606,7 @@ export function CreateListingClient() {
 
 function BuildingIcon() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M3 21h18M9 21V7l6-4v18M9 12h6M9 8h.01M15 12h.01M15 8h.01" />
     </svg>
   )
@@ -1638,7 +1640,7 @@ function ChevronLeft() {
 
 function SparkleIcon() {
   return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#818CF8" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
     </svg>
   )

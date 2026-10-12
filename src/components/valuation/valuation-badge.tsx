@@ -58,11 +58,11 @@ function BlockBadge({
   assetType = 'property',
 }: ValuationBadgeProps) {
   const conf = CONFIDENCE_CONFIG[confidence]
-  const accentColor = assetType === 'land' ? '#4ADE80' : '#C9A84C'
+  const accentColor = assetType === 'land' ? '#4ADE80' : '#6366F1'
   const delta = listPrice != null ? getDelta(estimatedValue, listPrice) : null
 
   return (
-    <div className="flex items-center justify-between gap-2 rounded-lg bg-[#0D0D14] px-3 py-2 ring-1 ring-[#2A2A3A]">
+    <div className="flex items-center justify-between gap-2 rounded-lg bg-white/[0.03] px-3 py-2 ring-1 ring-white/[0.08]">
       {/* Left: icon + label */}
       <div className="flex items-center gap-1.5">
         <SparkleIcon color={accentColor} size={11} />
@@ -103,7 +103,7 @@ function InlineBadge({
   assetType = 'property',
 }: ValuationBadgeProps) {
   const conf = CONFIDENCE_CONFIG[confidence]
-  const accentColor = assetType === 'land' ? '#4ADE80' : '#C9A84C'
+  const accentColor = assetType === 'land' ? '#4ADE80' : '#6366F1'
   const delta = listPrice != null ? getDelta(estimatedValue, listPrice) : null
 
   return (
@@ -133,7 +133,7 @@ function ChipBadge({
   assetType = 'property',
 }: ValuationBadgeProps) {
   const conf = CONFIDENCE_CONFIG[confidence]
-  const accentColor = assetType === 'land' ? '#4ADE80' : '#C9A84C'
+  const accentColor = assetType === 'land' ? '#4ADE80' : '#6366F1'
 
   return (
     <span
@@ -141,7 +141,7 @@ function ChipBadge({
       style={{
         backgroundColor: 'rgba(10,10,15,0.80)',
         color: accentColor,
-        boxShadow: `0 0 0 1px rgba(${accentColor === '#4ADE80' ? '74,222,128' : '201,168,76'},0.20)`,
+        boxShadow: `0 0 0 1px rgba(${accentColor === '#4ADE80' ? '74,222,128' : '99,102,241'},0.20)`,
       }}
     >
       <SparkleIcon color={accentColor} size={9} />

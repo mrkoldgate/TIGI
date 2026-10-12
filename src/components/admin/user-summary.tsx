@@ -29,7 +29,7 @@ const KYC_CONFIG: Record<UserKycStatus, { icon: React.ComponentType<React.SVGPro
 const ROLE_COLORS: Record<UserRole, string> = {
   INVESTOR:     'text-[#818CF8]',
   BUYER:        'text-[#A0A0B2]',
-  OWNER:        'text-[#C9A84C]',
+  OWNER:        'text-[#6366F1]',
   PROFESSIONAL: 'text-[#4ADE80]',
   ADMIN:        'text-[#EF4444]',
 }
@@ -43,7 +43,7 @@ interface UserKpiTileProps {
 
 function UserKpiTile({ label, value, sub, accent }: UserKpiTileProps) {
   return (
-    <div className="flex flex-col gap-0.5 rounded-lg border border-[#1F1F2E] bg-[#0D0D14] p-3">
+    <div className="flex flex-col gap-0.5 rounded-lg border border-white/[0.04] bg-[#050505] p-3">
       <p className={cn('font-heading text-xl font-semibold tabular-nums', accent ?? 'text-[#F5F5F7]')}>
         {value}
       </p>
@@ -91,7 +91,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
       </div>
 
       {/* Divider */}
-      <div className="h-px bg-[#1F1F2E]" />
+      <div className="h-px bg-white/[0.04]" />
 
       {/* Recent registrations */}
       <div>
@@ -106,10 +106,10 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
             return (
               <div
                 key={user.id}
-                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[#111118]"
+                className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[#050505]"
               >
                 {/* Avatar */}
-                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[#1A1A24] text-[11px] font-semibold text-[#6B6B80]">
+                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white/[0.04] text-[11px] font-semibold text-[#6B6B80]">
                   {user.initials}
                 </div>
 
@@ -138,7 +138,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
       {/* Footer link */}
       <Link
         href="/admin/users"
-        className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+        className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
       >
         Manage all users →
       </Link>

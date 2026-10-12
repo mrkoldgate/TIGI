@@ -26,7 +26,7 @@ import { SubmittedInquiryFeed } from '@/components/inquiries/submitted-inquiry-f
 import { PremiumGate } from '@/components/premium/premium-gate'
 import { UpgradeCta } from '@/components/premium/upgrade-cta'
 import { SubscriptionBadge } from '@/components/premium/subscription-badge'
-
+import { PageHeader } from '@/components/shared/page-header'
 import { StatCard } from './stat-card'
 import { SectionHeader } from './section-header'
 import { InsightCard } from './insight-card'
@@ -35,19 +35,16 @@ import { MiniListingRow } from './mini-listing-row'
 import { ValuationAlerts } from './valuation-alerts'
 
 // ---------------------------------------------------------------------------
-// DashboardClient — Buyer / Investor personal dashboard.
+// DashboardClient — Buyer / Investor personal dashboard (Hyper-Glass v3).
 //
-// Layout:
-//   1. Welcome bar (greeting + KYC status + quick actions)
-//   2. Stats row  (4 metric cards)
-//   3. Two-column body (2/3 + 1/3 on desktop, stacked mobile):
-//      Left:  AI Insights + Recommended Listings + Watchlist Preview
-//      Right: Recent Activity + Valuation Alerts
+// Glassflow 3D icon centerpieces for stat cards.
+// Dimension nested glass layering for all section containers.
+// Paragon ultra-thin borders with edge-lit hover on every interactive surface.
 //
-// Data:
-//   - savedCount comes from SavedListingsContext (live, client-side)
-//   - all other data from mock-dashboard.ts (swap for API calls in M3+)
-//   - allListings passed from the server page component
+// Layout preserved:
+//   1. PageHeader + Welcome bar
+//   2. Stats row (4 Glassflow hero cards)
+//   3. Two-column body (2/3 + 1/3)
 // ---------------------------------------------------------------------------
 
 interface DashboardClientProps {
@@ -61,7 +58,6 @@ interface DashboardClientProps {
 export function DashboardClient({ allListings, user, stats: serverStats, isPro = false, subscriptionTier = 'free' }: DashboardClientProps) {
   const { savedIds, savedCount } = useSavedListings()
 
-  // Recommended: scored by recommendation engine (saved-signal + tokenization + AI confidence)
   const recommendationResult = getRecommendations(
     allListings,
     { kind: 'DASHBOARD', prefs: { ...DEMO_USER_PREFERENCES, savedListingIds: [...savedIds] } },
@@ -69,38 +65,46 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
   )
   const recommended = recommendationResult.items
 
-  // Watchlist: live from saved context, show first 4
   const watchlist = allListings
     .filter((l) => savedIds.has(l.id))
     .slice(0, 4)
 
-  // Supplement watchlist with fallbacks when user hasn't saved anything yet
   const watchlistDisplay =
     watchlist.length > 0
       ? watchlist
       : allListings.filter((l) => l.isTokenized).slice(0, 3)
   const watchlistIsEmpty = watchlist.length === 0
 
-  // savedCount from context is always authoritative (live, client-side)
   const stats = { ...serverStats, savedCount }
-
   const greeting = getGreeting(user.firstName)
 
   return (
-    <div className="animate-fade-in pt-8 pb-16 space-y-6">
-
-      {/* ── Welcome bar ─────────────────────────────────────────────────── */}
-      <WelcomeBar
-        greeting={greeting}
-        userName={user.name}
-        role={user.role}
-        kycStatus={user.kycStatus}
-        subscriptionTier={subscriptionTier}
+    <div className="relative pt-8 pb-8 space-y-10">
+      {/* ── Dashboard Header ── */}
+      <PageHeader
+        title="Dashboard"
+        eyebrow="Portfolio Overview"
+        description="Here's what's happening with your investments today."
+        actions={
+          <div className="flex items-center gap-2">
+            <KycBadge status={user.kycStatus} />
+            <SubscriptionBadge tier={subscriptionTier} />
+          </div>
+        }
       />
 
-      {/* ── Stats row ───────────────────────────────────────────────────── */}
+      {/* ── Welcome & Quick Actions ── */}
+      <WelcomeBar
+        userName={user.name}
+        role={user.role}
+        subscriptionTier={subscriptionTier}
+        greeting={greeting}
+        kycStatus={user.kycStatus}
+      />
+
+      {/* ── Stats row — Glassflow 3D centerpieces ── */}
       <section aria-label="Summary statistics">
-        <div className="stagger-children grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="stagger-children grid grid-cols-2 gap-5 lg:grid-cols-4">
           <StatCard
             label="Saved Assets"
             value={stats.savedCount}
@@ -135,11 +139,11 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
         </div>
       </section>
 
-      {/* ── Two-column body ─────────────────────────────────────────────── */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      {/* ── Two-column body ── */}
+      <div className="grid grid-cols-1 gap-8 lg:gap-10 lg:grid-cols-3">
 
-        {/* ── LEFT column (2/3) ──────────────────────────────────────────── */}
-        <div className="space-y-8 lg:col-span-2">
+        {/* ── LEFT column (2/3) ── */}
+        <div className="space-y-10 lg:col-span-2">
 
           {/* AI Insights */}
           <section aria-label="AI insights">
@@ -150,7 +154,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               viewAllLabel="All insights"
               milestone="M6"
             />
-            <div className="mt-4">
+            <div className="mt-5">
               <PremiumGate
                 isPro={isPro}
                 feature="advanced AI insights"
@@ -176,7 +180,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               viewAllHref="/marketplace"
               viewAllLabel="Browse all"
             />
-            <div className="mt-4">
+            <div className="mt-5">
               <RecommendationRail
                 items={recommended}
                 viewAllHref="/marketplace"
@@ -188,7 +192,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
           {/* Watchlist / Favorites Preview */}
           <section aria-label="Watchlist preview">
             <SectionHeader
-              title={watchlistIsEmpty ? 'Watchlist' : `Watchlist · ${savedCount}`}
+              title={watchlistIsEmpty ? 'Watchlist' : `Watchlist \u00B7 ${savedCount}`}
               description={
                 watchlistIsEmpty
                   ? 'Save listings to build your watchlist.'
@@ -197,55 +201,63 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               viewAllHref="/saved"
               viewAllLabel="View all saved"
             />
-            <div className="mt-4 overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
+            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl">
+              <div className="noise absolute inset-0 pointer-events-none" />
+              {/* Edge light */}
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+              {/* Ambient wash */}
+              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-500/[0.05] blur-[60px]" aria-hidden="true" />
+
               {watchlistIsEmpty ? (
-                <div className="px-2 py-1">
-                  {/* Show featured listings as inspiration when watchlist is empty */}
-                  <p className="px-2 py-2 text-xs text-[#94A3B8]">
-                    You haven't saved anything yet. Here are some to get you started:
+                <div className="px-3 py-2">
+                  <p className="px-3 py-2 text-[11px] text-white/20">
+                    You haven&apos;t saved anything yet. Here are some to get you started:
                   </p>
-                  <div className="divide-y divide-white/[0.04]">
+                  <div className="divide-y divide-white/[0.03]">
                     {watchlistDisplay.map((listing, i) => (
-                      <div key={listing.id} className="px-2 py-1">
+                      <div key={listing.id} className="px-3 py-1.5">
                         <MiniListingRow listing={listing} index={i} />
                       </div>
                     ))}
                   </div>
                 </div>
               ) : (
-                <div className="divide-y divide-white/[0.04]">
+                <div className="divide-y divide-white/[0.03]">
                   {watchlistDisplay.map((listing, i) => (
-                    <div key={listing.id} className="px-2 py-1">
+                    <div key={listing.id} className="px-3 py-1.5">
                       <MiniListingRow listing={listing} index={i} />
                     </div>
                   ))}
                 </div>
               )}
-              <div className="border-t border-white/10 p-3">
+              <div className="border-t border-white/[0.03] p-4">
                 <Link
                   href="/saved"
-                  className="flex items-center justify-center gap-1.5 rounded-full bg-white/5 py-2 text-xs font-medium text-white transition-all hover:bg-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)]"
+                  className="group flex items-center justify-center gap-2 rounded-full border border-white/[0.04] bg-white/[0.02] py-2.5 text-xs font-medium text-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-400 hover:border-white/[0.12] hover:bg-white/[0.04] hover:text-white/70"
                 >
                   {watchlistIsEmpty ? 'Browse marketplace' : 'View full watchlist'}
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
                 </Link>
               </div>
             </div>
           </section>
+
           {/* My Inquiries */}
           <section aria-label="My inquiries">
             <SectionHeader
               title="My Inquiries"
               description="Questions and interest you've sent to listing owners."
             />
-            <div className="mt-4">
+            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
+              <div className="noise absolute inset-0 pointer-events-none" />
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
               <SubmittedInquiryFeed />
             </div>
           </section>
         </div>
 
-        {/* ── RIGHT column (1/3) ─────────────────────────────────────────── */}
-        <div className="space-y-8">
+        {/* ── RIGHT column (1/3) ── */}
+        <div className="space-y-10">
 
           {/* Recent Activity */}
           <section aria-label="Recent activity">
@@ -253,8 +265,13 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               title="Recent Activity"
               description="Your latest interactions across the platform."
             />
-            <div className="mt-4">
-              <ActivityFeed items={MOCK_ACTIVITY} />
+            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
+              <div className="noise absolute inset-0 pointer-events-none" />
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+              <div className="pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full bg-indigo-500/[0.05] blur-[60px]" />
+              <div className="relative">
+                <ActivityFeed items={MOCK_ACTIVITY} />
+              </div>
             </div>
           </section>
 
@@ -265,12 +282,17 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
               description="AI-detected price and valuation changes."
               milestone="M6"
             />
-            <div className="mt-4">
-              <ValuationAlerts alerts={MOCK_VALUATION_ALERTS} />
+            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
+              <div className="noise absolute inset-0 pointer-events-none" />
+              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+              <div className="pointer-events-none absolute -right-12 -bottom-12 h-36 w-36 rounded-full bg-emerald-500/[0.04] blur-[50px]" />
+              <div className="relative">
+                <ValuationAlerts alerts={MOCK_VALUATION_ALERTS} />
+              </div>
             </div>
           </section>
 
-          {/* Portfolio unlock teaser */}
+          {/* Portfolio Teaser */}
           <PortfolioTeaser />
         </div>
       </div>
@@ -279,7 +301,7 @@ export function DashboardClient({ allListings, user, stats: serverStats, isPro =
 }
 
 // ---------------------------------------------------------------------------
-// Welcome bar — personalized greeting + KYC badge + quick action CTAs
+// WelcomeBar — Dimension deep container with cyan accent
 // ---------------------------------------------------------------------------
 
 interface WelcomeBarProps {
@@ -292,25 +314,23 @@ interface WelcomeBarProps {
 
 function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'free' }: WelcomeBarProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.03] p-5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] sm:p-6">
-      {/* Top accent line */}
-      <div
-        className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent"
-        aria-hidden="true"
-      />
-      {/* Corner atmospheric light */}
-      <div
-        className="pointer-events-none absolute -left-20 -top-20 h-56 w-56 rounded-full bg-cyan-400/[0.04] blur-[50px]"
-        aria-hidden="true"
-      />
+    <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl sm:p-8">
+      <div className="noise absolute inset-0 pointer-events-none" />
+      {/* Edge light — cyan accent */}
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
+      {/* Ambient wash */}
+      <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-cyan-400/[0.05] blur-[80px]" aria-hidden="true" />
+      <div className="pointer-events-none absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-indigo-500/[0.04] blur-[60px]" aria-hidden="true" />
 
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         {/* Left: greeting */}
         <div>
-          <p className="text-label text-[#6B6B80]">{greeting}</p>
-          <h1 className="text-h1 mt-0.5">{userName}</h1>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="rounded border border-white/[0.08] bg-white/[0.04] px-2 py-0.5 text-[11px] text-[#A0A0B2]">
+          <p className="text-[10px] font-semibold tracking-[0.16em] text-white/20 uppercase">{greeting}</p>
+          <h1 className="mt-1 text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
+            {userName}
+          </h1>
+          <div className="mt-3 flex flex-wrap items-center gap-2">
+            <span className="rounded-full border border-white/[0.06] bg-white/[0.02] px-2.5 py-0.5 text-[10px] text-white/25">
               {role}
             </span>
             <KycBadge status={kycStatus} />
@@ -319,17 +339,17 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
         </div>
 
         {/* Right: quick actions */}
-        <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
+        <div className="flex flex-shrink-0 flex-wrap items-center gap-2.5">
           <Link
             href="/marketplace"
-            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-white backdrop-blur-md transition-all hover:border-cyan-400/30 hover:bg-cyan-400/5 hover:shadow-[0_0_20px_rgba(34,211,238,0.08)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+            className="group flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-5 py-2.5 text-xs font-medium text-white/50 backdrop-blur-xl transition-all duration-400 hover:border-cyan-400/20 hover:bg-cyan-400/[0.04] hover:text-white hover:shadow-[0_0_24px_rgba(34,211,238,0.08)]"
           >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+            <Sparkles className="h-3.5 w-3.5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
             Browse marketplace
           </Link>
           <Link
             href="/settings/wallet"
-            className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold text-[#94A3B8] backdrop-blur-md transition-all hover:border-white/20 hover:bg-white/10 hover:text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08)]"
+            className="group flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] px-5 py-2.5 text-xs font-medium text-white/30 backdrop-blur-xl transition-all duration-400 hover:border-white/[0.1] hover:bg-white/[0.04] hover:text-white/60"
           >
             <Wallet className="h-3.5 w-3.5" />
             Connect wallet
@@ -341,21 +361,21 @@ function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'f
 }
 
 // ---------------------------------------------------------------------------
-// KYC badge — trust signal in the welcome bar
+// KYC Badge — Paragon ultra-thin badges
 // ---------------------------------------------------------------------------
 
 function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
   if (status === 'VERIFIED') {
     return (
-      <span className="flex items-center gap-1 rounded border border-[#4ADE80]/30 bg-[#4ADE80]/10 px-2 py-0.5 text-[11px] text-[#4ADE80]">
-        <ShieldCheck className="h-3 w-3" />
+      <span className="flex items-center gap-1 rounded-full border border-emerald-400/15 bg-emerald-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-emerald-400">
+        <ShieldCheck className="h-3 w-3 drop-shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
         KYC Verified
       </span>
     )
   }
   if (status === 'PENDING') {
     return (
-      <span className="flex items-center gap-1 rounded border border-[#F59E0B]/30 bg-[#F59E0B]/10 px-2 py-0.5 text-[11px] text-[#F59E0B]">
+      <span className="flex items-center gap-1 rounded-full border border-amber-400/15 bg-amber-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-amber-400">
         KYC Pending
       </span>
     )
@@ -363,7 +383,7 @@ function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
   return (
     <Link
       href="/settings"
-      className="flex items-center gap-1 rounded border border-[#F87171]/30 bg-[#F87171]/10 px-2 py-0.5 text-[11px] text-[#F87171] hover:opacity-80"
+      className="flex items-center gap-1 rounded-full border border-red-400/15 bg-red-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-red-400 transition-opacity hover:opacity-80"
     >
       Complete KYC →
     </Link>
@@ -371,31 +391,45 @@ function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
 }
 
 // ---------------------------------------------------------------------------
-// Portfolio teaser — live in M5, links to portfolio page
+// Portfolio Teaser — Glassflow icon centerpiece CTA
 // ---------------------------------------------------------------------------
 
 function PortfolioTeaser() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]">
-      <div className="mb-3 flex items-center gap-3">
-        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-cyan-400/10 border border-cyan-400/20 shadow-[inset_0_0_8px_rgba(34,211,238,0.2)]">
-          <BarChart3 className="h-5 w-5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-white tracking-tight">Your Portfolio</h3>
-          <p className="text-[11px] text-[#94A3B8]">Holdings &amp; performance</p>
+    <div className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.08]">
+      <div className="noise absolute inset-0 pointer-events-none" />
+      {/* Edge light */}
+      <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/0 to-transparent transition-all duration-500 group-hover:via-cyan-400/20" />
+      {/* Ambient wash */}
+      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-500/[0.06] blur-[60px]" />
+
+      {/* Glassflow icon centerpiece */}
+      <div className="relative mb-5 flex justify-center">
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-36 w-36 rounded-full bg-cyan-500/[0.15] blur-[50px]" />
+        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full bg-cyan-500/[0.08] blur-[20px]" />
+        <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] shadow-2xl backdrop-blur-md">
+          <BarChart3 className="h-7 w-7 text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]" />
         </div>
       </div>
-      <p className="mb-4 text-xs leading-relaxed text-[#94A3B8]">
-        View your token holdings, track P&amp;L, and monitor yield performance
-        across all fractional investments.
-      </p>
+
+      <div className="relative text-center">
+        <h3 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
+          Your Portfolio
+        </h3>
+        <p className="mt-1.5 text-[11px] text-white/20">Holdings &amp; performance</p>
+        <p className="mx-auto mt-3 max-w-xs text-xs leading-relaxed text-white/20">
+          View your token holdings, track P&amp;L, and monitor yield performance
+          across all fractional investments.
+        </p>
+      </div>
+
       <Link
         href="/portfolio"
-        className="flex w-full items-center justify-center gap-1.5 rounded-full bg-white/5 py-2.5 text-xs font-semibold text-white transition-all border border-white/10 hover:border-white/20 hover:bg-white/10 hover:shadow-[0_0_15px_rgba(255,255,255,0.05)] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)]"
+        className="group/btn mt-5 flex w-full items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] py-3 text-xs font-medium text-white/40 transition-all duration-400 hover:border-cyan-400/20 hover:bg-white/[0.04] hover:text-white/70 hover:shadow-[0_0_20px_rgba(34,211,238,0.06)]"
       >
         <BarChart3 className="h-3.5 w-3.5" />
         View portfolio
+        <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
       </Link>
     </div>
   )
@@ -405,9 +439,7 @@ function PortfolioTeaser() {
 // Helpers
 // ---------------------------------------------------------------------------
 
-
 function getGreeting(firstName: string): string {
-  // In real app use user's local time; fixed for SSR consistency in MVP
   const hour = new Date().getHours()
   if (hour < 12) return `Good morning, ${firstName}`
   if (hour < 18) return `Good afternoon, ${firstName}`

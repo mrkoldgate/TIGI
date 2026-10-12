@@ -46,7 +46,7 @@ export function CompleteActions({ role, kycStatus }: CompleteActionsProps) {
       <button
         type="button"
         onClick={handleGoToDashboard}
-        className="flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98]"
+        className="flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-indigo-500 px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-indigo-400 active:scale-[0.98]"
       >
         Go to dashboard
         <ArrowRight className="h-4 w-4" />
@@ -57,7 +57,7 @@ export function CompleteActions({ role, kycStatus }: CompleteActionsProps) {
         <button
           type="button"
           onClick={() => router.push('/settings/kyc')}
-          className="flex items-center gap-1.5 text-xs text-[#4A4A60] transition-colors hover:text-[#C9A84C]"
+          className="flex items-center gap-1.5 text-xs text-[#4A4A60] transition-colors hover:text-indigo-400"
         >
           <ShieldCheck className="h-3.5 w-3.5" />
           Complete identity verification now

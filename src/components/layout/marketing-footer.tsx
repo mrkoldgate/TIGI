@@ -10,7 +10,7 @@ import { FOOTER_LINKS } from '@/lib/nav-config'
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t border-[#1F1F2E] bg-[#0A0A0F]">
+    <footer className="border-t border-white/[0.06] bg-black/80">
       <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8">
         {/* Top row */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
@@ -50,7 +50,7 @@ export function MarketingFooter() {
         </div>
 
         {/* Bottom row */}
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-[#1F1F2E] pt-8 sm:flex-row sm:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-center">
           <p className="text-xs text-[#6B6B80]">
             &copy; {new Date().getFullYear()} TIGI — Tokenized Intelligent Global Infrastructure.
             All rights reserved.

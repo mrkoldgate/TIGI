@@ -113,14 +113,14 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
             className={cn(
               'absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center',
               'rounded-full border border-white/[0.08] bg-white/[0.04]',
-              'transition-colors hover:border-[#C9A84C]/50 hover:bg-[#252530]',
+              'backdrop-blur-2xl transition-colors hover:border-indigo-500/50 hover:bg-white/[0.08]',
               'disabled:cursor-not-allowed disabled:opacity-60',
               state === 'error' && 'border-[#EF4444]/40',
               className,
             )}
           >
             {state === 'uploading' ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#C9A84C]" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-indigo-400" />
             ) : state === 'error' ? (
               <AlertCircle className="h-3.5 w-3.5 text-[#EF4444]" />
             ) : (

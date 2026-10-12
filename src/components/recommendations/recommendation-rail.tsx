@@ -22,15 +22,15 @@ import type { ScoredListing, ReasonType } from '@/lib/recommendations/recommenda
 // ── Reason chip styling ─────────────────────────────────────────────────────
 
 const REASON_CHIP: Record<ReasonType, { className: string; dot: string }> = {
-  CATEGORY_MATCH:   { className: 'border-[#3A3A4A] text-[#A0A0B2]',                         dot: 'bg-[#6B6B80]' },
+  CATEGORY_MATCH:   { className: 'border-white/[0.10] text-[#A0A0B2]',                         dot: 'bg-[#6B6B80]' },
   LOCATION_MATCH:   { className: 'border-[#3B5BDB]/35 bg-[#3B5BDB]/6 text-[#91A7FF]',        dot: 'bg-[#748FFC]' },
   PRICE_MATCH:      { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',         dot: 'bg-[#4ADE80]' },
-  SIMILAR_TO_SAVED: { className: 'border-[#C9A84C]/30 bg-[#C9A84C]/6 text-[#C9A84C]',         dot: 'bg-[#C9A84C]' },
-  TOKENIZED_MATCH:  { className: 'border-[#C9A84C]/30 bg-[#C9A84C]/6 text-[#C9A84C]',         dot: 'bg-[#C9A84C]' },
+  SIMILAR_TO_SAVED: { className: 'border-[#6366F1]/30 bg-[#6366F1]/6 text-[#6366F1]',         dot: 'bg-[#6366F1]' },
+  TOKENIZED_MATCH:  { className: 'border-[#6366F1]/30 bg-[#6366F1]/6 text-[#6366F1]',         dot: 'bg-[#6366F1]' },
   HIGH_CONFIDENCE:  { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',         dot: 'bg-[#4ADE80]' },
   TRENDING:         { className: 'border-[#F97316]/30 bg-[#F97316]/6 text-[#FCA876]',          dot: 'bg-[#F97316]' },
   LAND_PREFERENCE:  { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',         dot: 'bg-[#4ADE80]' },
-  OWNERSHIP_MATCH:  { className: 'border-[#C9A84C]/30 bg-[#C9A84C]/6 text-[#C9A84C]',         dot: 'bg-[#C9A84C]' },
+  OWNERSHIP_MATCH:  { className: 'border-[#6366F1]/30 bg-[#6366F1]/6 text-[#6366F1]',         dot: 'bg-[#6366F1]' },
   NEW_LISTING:      { className: 'border-[#818CF8]/30 bg-[#818CF8]/6 text-[#818CF8]',          dot: 'bg-[#818CF8]' },
   VALUE_SCORE:      { className: 'border-[#22C55E]/30 bg-[#22C55E]/6 text-[#86EFAC]',          dot: 'bg-[#4ADE80]' },
 }
@@ -85,7 +85,7 @@ function RecommendationItem({
 function EmptyRecommendations() {
   return (
     <div className="flex flex-col items-center gap-2 px-4 py-8 text-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1A1A24]">
+      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/[0.04]">
         <Sparkles className="h-4 w-4 text-[#6B6B80]" />
       </div>
       <p className="text-sm text-[#A0A0B2]">No recommendations yet.</p>
@@ -112,10 +112,10 @@ export function RecommendationRail({
   className,
 }: RecommendationRailProps) {
   return (
-    <div className={cn('overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118]', className)}>
+    <div className={cn('overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]', className)}>
       {/* AI attribution strip */}
-      <div className="flex items-center gap-1.5 border-b border-[#1F1F2E] px-4 py-2.5">
-        <Sparkles className="h-3 w-3 text-[#C9A84C]" />
+      <div className="flex items-center gap-1.5 border-b border-white/[0.06] px-4 py-2.5">
+        <Sparkles className="h-3 w-3 text-[#6366F1]" />
         <span className="text-[10px] font-medium tracking-wide text-[#6B6B80] uppercase">
           Aria-powered · updates with your activity
         </span>
@@ -123,7 +123,7 @@ export function RecommendationRail({
 
       {/* Items */}
       {items.length > 0 ? (
-        <div className="divide-y divide-[#1F1F2E]">
+        <div className="divide-y divide-white/[0.06]">
           {items.map((item, i) => (
             <RecommendationItem key={item.listing.id} item={item} index={i} />
           ))}
@@ -134,10 +134,10 @@ export function RecommendationRail({
 
       {/* Footer link */}
       {viewAllHref && (
-        <div className="border-t border-[#1F1F2E] px-4 py-3">
+        <div className="border-t border-white/[0.06] px-4 py-3">
           <Link
             href={viewAllHref}
-            className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+            className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
           >
             {viewAllLabel}
             <ArrowRight className="h-3 w-3" />
@@ -176,7 +176,7 @@ export function SimilarListingsGrid({
       {/* Match context header */}
       {topReasons.length > 0 && (
         <div className="flex items-center gap-2">
-          <Sparkles className="h-3 w-3 flex-shrink-0 text-[#C9A84C]" />
+          <Sparkles className="h-3 w-3 flex-shrink-0 text-[#6366F1]" />
           <span className="text-xs text-[#6B6B80]">Matched by:</span>
           <div className="flex flex-wrap gap-1">
             {topReasons.map((reason) => (

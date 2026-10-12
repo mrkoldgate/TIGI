@@ -31,15 +31,15 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
       className={cn(
         'relative flex flex-col rounded-2xl border p-6 transition-all',
         plan.highlighted && !isCurrent
-          ? 'border-[#C9A84C]/40 bg-[#111118] shadow-[0_0_40px_rgba(201,168,76,0.08)]'
-          : 'border-[#2A2A3A] bg-[#0D0D14]',
-        isCurrent && 'border-[#2A2A3A] ring-1 ring-[#4ADE80]/30',
+          ? 'border-indigo-500/40 bg-white/[0.04] shadow-[0_0_40px_rgba(99,102,241,0.08)]'
+          : 'border-white/[0.08] bg-white/[0.03]',
+        isCurrent && 'border-white/[0.08] ring-1 ring-[#4ADE80]/30',
       )}
     >
       {/* Badge */}
       {plan.badge && !isCurrent && (
         <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-          <span className="inline-flex items-center gap-1 rounded-full bg-[#C9A84C] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
+          <span className="inline-flex items-center gap-1 rounded-full bg-indigo-500 px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
             <Sparkles className="h-2.5 w-2.5" />
             {plan.badge}
           </span>
@@ -88,7 +88,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
         {isEnterprise ? (
           <a
             href="mailto:enterprise@tigi.com"
-            className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] bg-[#1A1A24] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/40 hover:text-[#C9A84C]"
+            className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-indigo-500/40 hover:text-indigo-400"
           >
             <Building2 className="h-4 w-4" />
             Contact sales
@@ -104,8 +104,8 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
             className={cn(
               'flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all',
               plan.highlighted
-                ? 'bg-[#C9A84C] text-[#0A0A0F] hover:opacity-90 disabled:opacity-50'
-                : 'border border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C]/40 hover:text-[#F5F5F7] disabled:opacity-50',
+                ? 'bg-indigo-500 text-[#0A0A0F] hover:opacity-90 disabled:opacity-50'
+                : 'border border-white/[0.08] bg-white/[0.04] text-[#A0A0B2] hover:border-indigo-500/40 hover:text-[#F5F5F7] disabled:opacity-50',
             )}
           >
             {isLoading ? (

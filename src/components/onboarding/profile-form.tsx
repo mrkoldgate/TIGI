@@ -70,9 +70,9 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           autoComplete="name"
           placeholder="Alex Johnson"
           className={cn(
-            'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-            'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            errors.name ? 'border-red-500/50' : 'border-[#2A2A3A]',
+            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
+            errors.name ? 'border-red-500/50' : 'border-white/[0.08]',
           )}
         />
         {errors.name && (
@@ -87,7 +87,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           Email address
           <span className="ml-auto text-[10px] text-[#3A3A48]">Verified</span>
         </label>
-        <div className="flex w-full items-center rounded-xl border border-[#1E1E2A] bg-[#0A0A0F] px-4 py-3 text-sm text-[#4A4A60]">
+        <div className="flex w-full items-center rounded-xl border border-white/[0.06] bg-black/80 px-4 py-3 text-sm text-[#4A4A60]">
           {defaultEmail}
         </div>
         <p className="mt-1 text-[10px] text-[#3A3A48]">
@@ -109,9 +109,9 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           autoComplete="address-level2"
           placeholder="Austin, TX"
           className={cn(
-            'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-            'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            'border-[#2A2A3A]',
+            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
+            'border-white/[0.08]',
           )}
         />
       </div>
@@ -130,9 +130,9 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           rows={3}
           placeholder="Brief intro — what are you building, buying, or investing in?"
           className={cn(
-            'w-full resize-none rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-            'focus:border-[#C9A84C]/60 focus:ring-1 focus:ring-[#C9A84C]/20',
-            errors.bio ? 'border-red-500/50' : 'border-[#2A2A3A]',
+            'w-full resize-none rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
+            errors.bio ? 'border-red-500/50' : 'border-white/[0.08]',
           )}
         />
         <div className="mt-1 flex items-center justify-between">
@@ -162,7 +162,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98] disabled:opacity-60"
+          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-indigo-500 px-8 py-3.5 text-sm font-semibold text-white transition-all hover:bg-indigo-600 active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />

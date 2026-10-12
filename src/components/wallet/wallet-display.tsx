@@ -34,11 +34,11 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
     return (
       <div
         className={cn(
-          'flex items-center gap-3 rounded-xl border border-[#1E1E2A] bg-[#0E0E16] p-4',
+          'flex items-center gap-3 rounded-xl border border-white/[0.06] bg-white/[0.03] p-4',
           className,
         )}
       >
-        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#1A1A24]">
+        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.04]">
           <Shield className="h-4 w-4 text-[#3A3A48]" />
         </div>
         <div>
@@ -52,10 +52,10 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
   return (
     <div
       className={cn(
-        'rounded-xl border bg-[#0E0E16] p-4',
+        'rounded-xl border bg-white/[0.03] p-4',
         walletMode === 'connected'
-          ? 'border-[#C9A84C]/20'
-          : 'border-[#1E1E2A]',
+          ? 'border-indigo-500/20'
+          : 'border-white/[0.06]',
         className,
       )}
     >
@@ -65,8 +65,8 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={walletIcon} alt={walletLabel} className="h-9 w-9 rounded-xl" />
         ) : (
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#C9A84C]/20 bg-[#C9A84C]/10">
-            <Shield className="h-4 w-4 text-[#C9A84C]" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-indigo-500/20 bg-indigo-500/10">
+            <Shield className="h-4 w-4 text-indigo-400" />
           </div>
         )}
 
@@ -74,7 +74,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-white">{walletLabel}</span>
             {walletMode === 'custodial' && (
-              <span className="rounded-full border border-[#C9A84C]/20 bg-[#C9A84C]/8 px-2 py-0.5 text-[10px] font-medium text-[#C9A84C]">
+              <span className="rounded-full border border-indigo-500/20 bg-indigo-500/8 px-2 py-0.5 text-[10px] font-medium text-indigo-400">
                 Managed
               </span>
             )}
@@ -94,7 +94,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
             type="button"
             onClick={handleCopy}
             title="Copy address"
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#9999AA]"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
           >
             {copied ? (
               <Check className="h-3.5 w-3.5 text-emerald-400" />
@@ -108,7 +108,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
               target="_blank"
               rel="noopener noreferrer"
               title="View on Solana Explorer"
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#9999AA]"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
             >
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
@@ -137,7 +137,7 @@ export function WalletStatusBadge({ className, showAddress = true }: WalletStatu
   return (
     <div
       className={cn(
-        'flex items-center gap-1.5 rounded-lg border border-[#1E1E2A] bg-[#111118] px-2.5 py-1.5',
+        'flex items-center gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.04] px-2.5 py-1.5',
         className,
       )}
       title={walletLabel}
@@ -146,7 +146,7 @@ export function WalletStatusBadge({ className, showAddress = true }: WalletStatu
         // eslint-disable-next-line @next/next/no-img-element
         <img src={walletIcon} alt={walletLabel} className="h-4 w-4 rounded-sm" />
       ) : (
-        <Shield className="h-3 w-3 text-[#C9A84C]" />
+        <Shield className="h-3 w-3 text-indigo-400" />
       )}
       {showAddress && (
         <span className="font-mono text-[11px] text-[#6B6B80]">{displayAddress}</span>

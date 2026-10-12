@@ -26,14 +26,14 @@ export function CurrentPlanCard({
 
   const tierColor = {
     free:       'text-[#6B6B80]',
-    pro:        'text-[#C9A84C]',
+    pro:        'text-indigo-400',
     pro_plus:   'text-[#818CF8]',
     enterprise: 'text-[#22C55E]',
   }[tier]
 
   const tierBg = {
-    free:       'bg-[#2A2A3A]/30 border-[#2A2A3A]',
-    pro:        'bg-[#C9A84C]/5 border-[#C9A84C]/20',
+    free:       'bg-white/[0.04] border-white/[0.08]',
+    pro:        'bg-indigo-500/5 border-indigo-500/20',
     pro_plus:   'bg-[#818CF8]/5 border-[#818CF8]/20',
     enterprise: 'bg-[#22C55E]/5 border-[#22C55E]/20',
   }[tier]
@@ -45,8 +45,8 @@ export function CurrentPlanCard({
           <div className={cn(
             'flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border',
             tier === 'free'
-              ? 'border-[#2A2A3A] bg-[#1A1A24]'
-              : 'border-[#C9A84C]/20 bg-[#C9A84C]/10',
+              ? 'border-white/[0.08] bg-white/[0.04]'
+              : 'border-indigo-500/20 bg-indigo-500/10',
           )}>
             <Sparkles className={cn('h-5 w-5', tierColor)} />
           </div>
@@ -64,7 +64,7 @@ export function CurrentPlanCard({
           <button
             onClick={onManage}
             disabled={isLoading}
-            className="flex items-center gap-1.5 rounded-lg border border-[#2A2A3A] bg-[#1A1A24] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-[#C9A84C]/30 hover:text-[#F5F5F7] disabled:opacity-50"
+            className="flex items-center gap-1.5 rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-[#A0A0B2] transition-colors hover:border-indigo-500/30 hover:text-[#F5F5F7] disabled:opacity-50"
           >
             <Settings2 className="h-3 w-3" />
             Manage
@@ -96,7 +96,7 @@ export function CurrentPlanCard({
 
       {/* Manage portal message */}
       {manageMessage && (
-        <p className="mt-3 rounded-lg border border-[#2A2A3A] bg-[#0A0A0F] px-3 py-2 text-xs text-[#A0A0B2]">
+        <p className="mt-3 rounded-lg border border-white/[0.08] bg-black/80 px-3 py-2 text-xs text-[#A0A0B2]">
           {manageMessage}
         </p>
       )}

@@ -118,10 +118,6 @@ function applyFilters(listings: MockListing[], filters: Filters): MockListing[] 
 // Context helpers
 // ---------------------------------------------------------------------------
 
-function getAccentColor(category: CategoryTab) {
-  return category === 'LAND' ? '#4ADE80' : '#C9A84C'
-}
-
 function getListingLabel(count: number, category: CategoryTab): string {
   if (category === 'LAND') return count === 1 ? 'parcel' : 'parcels'
   return count === 1 ? 'listing' : 'listings'
@@ -148,7 +144,7 @@ function getGridCols(category: CategoryTab): string {
 }
 
 // ---------------------------------------------------------------------------
-// StatChip
+// StatChip — v4 Elite: #050505 bg, sharp 1px border, inset shadow, neon glow
 // ---------------------------------------------------------------------------
 
 function StatChip({
@@ -170,28 +166,41 @@ function StatChip({
       type={onClick ? 'button' : undefined}
       onClick={onClick}
       className={cn(
-        'inline-flex items-center gap-2 rounded-full border px-3 py-1.5',
-        gold  && 'border-[#C9A84C]/20 bg-[#C9A84C]/5',
-        green && 'border-[#4ADE80]/20 bg-[#4ADE80]/5',
-        !gold && !green && 'border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
-        onClick && 'cursor-pointer transition-opacity hover:opacity-80',
+        'group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border px-4 py-2 transition-all duration-300',
+        'bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.5)]',
+        gold  && 'border-indigo-400/20',
+        green && 'border-emerald-400/20',
+        !gold && !green && 'border-white/[0.04]',
+        onClick && 'cursor-pointer hover:-translate-y-0.5 hover:border-white/[0.15] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.6)]',
       )}
     >
+      {/* Ambient glow */}
+      {(gold || green) && (
+        <div
+          className={cn(
+            'pointer-events-none absolute -right-4 -top-4 h-14 w-14 rounded-full blur-[20px] opacity-30 transition-opacity duration-500 group-hover:opacity-60',
+            gold ? 'bg-indigo-400/50' : 'bg-emerald-400/50',
+          )}
+          aria-hidden="true"
+        />
+      )}
+      {/* Top-edge light */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" aria-hidden="true" />
       <span
         className={cn(
-          'font-heading text-sm font-semibold tabular-nums',
-          gold  ? 'text-[#C9A84C]' : green ? 'text-[#4ADE80]' : 'text-[#F5F5F7]',
+          'relative font-heading text-sm font-semibold tabular-nums',
+          gold  ? 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]' : green ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' : 'text-white',
         )}
       >
         {value}
       </span>
-      <span className="text-xs text-[#6B6B80]">{label}</span>
+      <span className="relative text-[12px] font-medium tracking-wide uppercase text-zinc-600">{label}</span>
     </Tag>
   )
 }
 
 // ---------------------------------------------------------------------------
-// CategoryTabs — accent color matches the active category's design language
+// CategoryTabs — v4 Elite: #050505 base, structural underline, neon accents
 // ---------------------------------------------------------------------------
 
 function CategoryTabs({
@@ -201,33 +210,34 @@ function CategoryTabs({
   active: CategoryTab
   onChange: (tab: CategoryTab) => void
 }) {
-  const accentColor = getAccentColor(active)
-
-  const tabs: { key: CategoryTab; label: string; icon?: React.ReactNode }[] = [
-    { key: 'ALL', label: 'All Listings' },
-    { key: 'PROPERTIES', label: 'Residential & Commercial', icon: <Building2 className="h-3.5 w-3.5" /> },
-    { key: 'LAND', label: 'Land & Development', icon: <Trees className="h-3.5 w-3.5" /> },
+  const tabs: { key: CategoryTab; label: string; icon?: React.ReactNode; accent: string; glow: string }[] = [
+    { key: 'ALL', label: 'All Listings', accent: 'bg-indigo-400', glow: 'shadow-[0_0_12px_rgba(99,102,241,0.6),0_2px_8px_rgba(99,102,241,0.3)]' },
+    { key: 'PROPERTIES', label: 'Residential & Commercial', icon: <Building2 className="h-3.5 w-3.5" />, accent: 'bg-indigo-400', glow: 'shadow-[0_0_12px_rgba(99,102,241,0.6),0_2px_8px_rgba(99,102,241,0.3)]' },
+    { key: 'LAND', label: 'Land & Development', icon: <Trees className="h-3.5 w-3.5" />, accent: 'bg-emerald-400', glow: 'shadow-[0_0_12px_rgba(52,211,153,0.6),0_2px_8px_rgba(52,211,153,0.3)]' },
   ]
 
   return (
-    <div className="flex overflow-x-auto border-b border-white/[0.08] scrollbar-none">
-      {tabs.map(({ key, label, icon }) => (
+    <div className="flex overflow-x-auto border-b border-white/[0.04] scrollbar-none">
+      {tabs.map(({ key, label, icon, accent, glow }) => (
         <button
           key={key}
           type="button"
           onClick={() => onChange(key)}
           className={cn(
-            'relative flex shrink-0 items-center gap-1.5 px-5 py-3 text-sm font-medium transition-colors duration-150',
-            active === key ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+            'relative flex shrink-0 items-center gap-2 px-6 py-4 text-sm font-medium transition-all duration-300',
+            active === key ? 'text-white' : 'text-zinc-600 hover:text-zinc-400',
           )}
         >
           {icon && (
             <span
               className={cn(
-                'transition-colors duration-150',
-                active === key ? '' : 'text-[#4A4A60]',
+                'transition-all duration-300',
+                active === key
+                  ? key === 'LAND'
+                    ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]'
+                    : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]'
+                  : 'text-zinc-700',
               )}
-              style={active === key ? { color: accentColor } : undefined}
             >
               {icon}
             </span>
@@ -235,8 +245,7 @@ function CategoryTabs({
           {label}
           {active === key && (
             <span
-              className="absolute inset-x-0 bottom-0 h-0.5 rounded-t-full"
-              style={{ backgroundColor: accentColor }}
+              className={cn('absolute inset-x-0 bottom-0 h-[2px] rounded-t-full', accent, glow)}
             />
           )}
         </button>
@@ -246,7 +255,7 @@ function CategoryTabs({
 }
 
 // ---------------------------------------------------------------------------
-// SearchBar
+// SearchBar — v4 Elite: #050505 input, sharp border, inset shadow
 // ---------------------------------------------------------------------------
 
 function SearchBar({
@@ -258,27 +267,30 @@ function SearchBar({
   category: CategoryTab
   onChange: (v: string) => void
 }) {
+  const isLand = category === 'LAND'
   return (
     <div className="relative">
-      <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[#4A4A60]" />
+      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600" />
       <input
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={getSearchPlaceholder(category)}
         className={cn(
-          'w-full rounded-xl border bg-white/[0.04] backdrop-blur-2xl py-2.5 pl-10 pr-10 text-sm text-[#F5F5F7]',
-          'placeholder-[#4A4A60] outline-none transition-colors focus:ring-0',
-          category === 'LAND'
-            ? 'border-white/[0.06] focus:border-[#4ADE80]/30'
-            : 'border-white/[0.08] focus:border-[#C9A84C]/40',
+          'w-full rounded-2xl border bg-[#050505] py-3.5 pl-12 pr-12 text-sm text-white',
+          'placeholder-zinc-700 outline-none transition-all duration-300',
+          'shadow-[inset_0_1px_0_rgba(255,255,255,0.03),inset_0_-1px_0_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.4)]',
+          'border-white/[0.04]',
+          isLand
+            ? 'focus:border-emerald-400/30 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_0_24px_rgba(52,211,153,0.08)]'
+            : 'focus:border-indigo-400/30 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_0_24px_rgba(99,102,241,0.08)]',
         )}
       />
       {value && (
         <button
           type="button"
           onClick={() => onChange('')}
-          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#4A4A60] hover:text-[#A0A0B2]"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 transition-colors hover:text-white"
         >
           <X className="h-4 w-4" />
         </button>
@@ -288,7 +300,7 @@ function SearchBar({
 }
 
 // ---------------------------------------------------------------------------
-// FilterBar — category-aware: dev opportunity toggle appears for LAND/ALL
+// FilterBar — v4 Elite: #050505 pill containers, sharp structural borders
 // ---------------------------------------------------------------------------
 
 function FilterBar({
@@ -313,19 +325,19 @@ function FilterBar({
   ]
 
   return (
-    <div className="flex flex-wrap items-center gap-2">
-      {/* Listing type pills */}
-      <div className="flex items-center rounded-lg border border-white/[0.08] p-0.5">
+    <div className="flex flex-wrap items-center gap-3">
+      {/* Listing type pills — Paragon structural container */}
+      <div className="flex items-center rounded-xl border border-white/[0.04] bg-[#050505] p-0.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
         {listingTypeOptions.map(({ key, label }) => (
           <button
             key={key}
             type="button"
             onClick={() => onChange({ listingType: key })}
             className={cn(
-              'rounded-md px-3 py-1.5 text-xs font-medium transition-all duration-150',
+              'rounded-lg px-4 py-2 text-xs font-medium transition-all duration-300',
               filters.listingType === key
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.4)]'
+                : 'text-zinc-600 hover:text-zinc-400',
             )}
           >
             {label}
@@ -338,29 +350,31 @@ function FilterBar({
         type="button"
         onClick={() => onChange({ tokenizedOnly: !filters.tokenizedOnly })}
         className={cn(
-          'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
+          'flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300',
+          'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
           filters.tokenizedOnly
-            ? 'border-[#C9A84C]/40 bg-[#C9A84C]/10 text-[#C9A84C]'
-            : 'border-white/[0.08] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]',
+            ? 'border-indigo-400/25 bg-indigo-400/[0.08] text-indigo-400 shadow-[0_0_18px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(99,102,241,0.12)]'
+            : 'border-white/[0.04] bg-[#050505] text-zinc-600 hover:border-white/[0.1] hover:text-zinc-400',
         )}
       >
-        <Zap className="h-3.5 w-3.5" />
+        <Zap className="h-3.5 w-3.5" style={filters.tokenizedOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
         Tokenized
       </button>
 
-      {/* Dev. opportunity toggle — land and all tabs */}
+      {/* Dev. opportunity toggle */}
       {showDevOpportunity && (
         <button
           type="button"
           onClick={() => onChange({ devOpportunityOnly: !filters.devOpportunityOnly })}
           className={cn(
-            'flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-all duration-150',
+            'flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300',
+            'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
             filters.devOpportunityOnly
-              ? 'border-[#4ADE80]/30 bg-[#4ADE80]/10 text-[#4ADE80]'
-              : 'border-white/[0.08] text-[#6B6B80] hover:border-white/[0.06] hover:text-[#A0A0B2]',
+              ? 'border-emerald-400/25 bg-emerald-400/[0.08] text-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.15),inset_0_1px_0_rgba(52,211,153,0.12)]'
+              : 'border-white/[0.04] bg-[#050505] text-zinc-600 hover:border-white/[0.1] hover:text-zinc-400',
           )}
         >
-          <Layers className="h-3.5 w-3.5" />
+          <Layers className="h-3.5 w-3.5" style={filters.devOpportunityOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
           Dev. Opportunity
         </button>
       )}
@@ -370,7 +384,7 @@ function FilterBar({
         <button
           type="button"
           onClick={onClear}
-          className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#A0A0B2]"
+          className="flex items-center gap-1.5 text-xs text-zinc-600 transition-colors hover:text-white"
         >
           <X className="h-3.5 w-3.5" />
           Clear filters
@@ -381,7 +395,7 @@ function FilterBar({
 }
 
 // ---------------------------------------------------------------------------
-// ResultsHeader
+// ResultsHeader — v4 Elite with Paragon structural controls
 // ---------------------------------------------------------------------------
 
 function ResultsHeader({
@@ -394,48 +408,55 @@ function ResultsHeader({
   onChange: (patch: Partial<Filters>) => void
 }) {
   const label = getListingLabel(count, filters.category)
-  const accentColor = getAccentColor(filters.category)
+  const isLand = filters.category === 'LAND'
 
   return (
     <div className="flex items-center justify-between gap-4">
-      <p className="text-sm text-[#6B6B80]">
-        <span className="font-medium" style={{ color: accentColor }}>
+      <p className="text-sm text-zinc-600">
+        <span className={cn(
+          'font-semibold',
+          isLand ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]',
+        )}>
           {count}
         </span>{' '}
         {label} found
       </p>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {/* Sort */}
         <div className="relative">
           <select
             value={filters.sort}
             onChange={(e) => onChange({ sort: e.target.value as SortOption })}
-            className="appearance-none rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl py-2 pl-3 pr-8 text-xs text-[#A0A0B2] outline-none transition-colors hover:border-[#3A3A4A] focus:border-[#C9A84C]/40"
+            className={cn(
+              'appearance-none rounded-xl border border-white/[0.04] bg-[#050505] py-2.5 pl-4 pr-9 text-xs text-zinc-400 outline-none transition-all duration-300',
+              'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] hover:border-white/[0.1]',
+              isLand
+                ? 'focus:border-emerald-400/30 focus:shadow-[0_0_18px_rgba(52,211,153,0.08)]'
+                : 'focus:border-indigo-400/30 focus:shadow-[0_0_18px_rgba(99,102,241,0.08)]',
+            )}
           >
             <option value="NEWEST">Newest</option>
             <option value="PRICE_ASC">Price: Low → High</option>
             <option value="PRICE_DESC">Price: High → Low</option>
             <option value="POPULAR">Most Popular</option>
           </select>
-          <div className="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2">
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="text-[#4A4A60]">
-              <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
+          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
+            <ChevronDown className="h-3 w-3 text-zinc-600" />
           </div>
         </div>
 
-        {/* View toggle */}
-        <div className="flex overflow-hidden rounded-lg border border-white/[0.08]">
+        {/* View toggle — Paragon structural */}
+        <div className="flex overflow-hidden rounded-xl border border-white/[0.04] bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
           <button
             type="button"
             onClick={() => onChange({ view: 'grid' })}
             title="Grid view"
             className={cn(
-              'px-2.5 py-2 transition-colors',
+              'px-3 py-2.5 transition-all duration-300',
               filters.view === 'grid'
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#4A4A60] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
+                : 'text-zinc-700 hover:text-zinc-400',
             )}
           >
             <LayoutGrid className="h-4 w-4" />
@@ -445,10 +466,10 @@ function ResultsHeader({
             onClick={() => onChange({ view: 'list' })}
             title="List view"
             className={cn(
-              'border-l border-white/[0.08] px-2.5 py-2 transition-colors',
+              'border-l border-white/[0.04] px-3 py-2.5 transition-all duration-300',
               filters.view === 'list'
-                ? 'bg-white/[0.08] text-[#F5F5F7]'
-                : 'text-[#4A4A60] hover:text-[#A0A0B2]',
+                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
+                : 'text-zinc-700 hover:text-zinc-400',
             )}
           >
             <List className="h-4 w-4" />
@@ -460,7 +481,7 @@ function ResultsHeader({
 }
 
 // ---------------------------------------------------------------------------
-// EmptyState — category-aware icon and messaging
+// EmptyState — Glassflow 3-layer centerpiece + Dimension container
 // ---------------------------------------------------------------------------
 
 function EmptyState({
@@ -474,27 +495,42 @@ function EmptyState({
 }) {
   const isLand = category === 'LAND'
   return (
-    <div className="flex flex-col items-center justify-center py-24 text-center">
-      <div
-        className={cn(
-          'mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border',
-          isLand
-            ? 'border-white/[0.06] bg-[#0D110D]'
-            : 'border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
-        )}
-      >
-        {isLand ? (
-          <Trees className="h-7 w-7 text-[#2A4A2A]" />
-        ) : (
-          <Building2 className="h-7 w-7 text-[#4A4A60]" />
-        )}
+    <div className="relative flex flex-col items-center justify-center py-32 text-center">
+      {/* Glassflow 3-layer centerpiece */}
+      <div className="relative flex items-center justify-center mb-8">
+        {/* Layer 1: Massive diffused backlight */}
+        <div
+          className={cn(
+            'pointer-events-none absolute inset-0 rounded-full blur-[120px]',
+            isLand ? 'bg-emerald-500/10' : 'bg-indigo-500/10',
+          )}
+          aria-hidden="true"
+        />
+        {/* Layer 2: Secondary core glow */}
+        <div
+          className={cn(
+            'pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full blur-[60px]',
+            isLand ? 'bg-emerald-400/20' : 'bg-indigo-400/20',
+          )}
+          aria-hidden="true"
+        />
+        {/* Layer 3: Nested glass icon shell */}
+        <div className="relative z-10 flex h-28 w-28 items-center justify-center rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl">
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          {isLand ? (
+            <Trees className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
+          ) : (
+            <Building2 className="h-12 w-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
+          )}
+        </div>
       </div>
-      <h3 className="font-heading text-base font-medium text-[#A0A0B2]">
+
+      <h3 className="relative font-heading text-lg font-extrabold tracking-[-0.05em] bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
         {hasSearch
           ? `No ${isLand ? 'land parcels' : 'listings'} match your search`
           : `No ${isLand ? 'land parcels' : 'listings'} match your filters`}
       </h3>
-      <p className="mt-1.5 max-w-xs text-sm text-[#6B6B80]">
+      <p className="relative mt-3 max-w-xs text-sm text-zinc-600">
         {hasSearch
           ? 'Try a different keyword or location.'
           : 'Try adjusting your filters or broadening your search.'}
@@ -503,10 +539,10 @@ function EmptyState({
         type="button"
         onClick={onClear}
         className={cn(
-          'mt-5 rounded-xl border px-5 py-2.5 text-sm text-[#A0A0B2] transition-all hover:text-white',
-          isLand
-            ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
-            : 'border-white/[0.08] hover:border-[#C9A84C]/40',
+          'relative mt-8 rounded-xl border px-7 py-3 text-sm font-medium text-zinc-500 transition-all duration-300',
+          'bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+          'hover:text-white hover:-translate-y-0.5 hover:border-white/[0.15]',
+          'border-white/[0.04]',
         )}
       >
         Clear all filters
@@ -614,10 +650,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
 
-  // Shared save state — persists across marketplace, detail pages, and /saved
   const { savedIds, toggleSave } = useSavedListings()
-
-  // Compare tray — sessionStorage backed, available across all platform pages
   const { compareIds: compareIdsArr, addToCompare, removeFromCompare, isComparing } = useCompare()
   const compareIdsSet = useMemo(() => new Set(compareIdsArr), [compareIdsArr])
 
@@ -654,12 +687,13 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
   const hasMore = visibleCount < filteredListings.length
   const totalValueDisplay = `$${(stats.totalValue / 1_000_000).toFixed(1)}M`
   const gridCols = getGridCols(filters.category)
+  const isLand = filters.category === 'LAND'
 
   return (
-    <div className="animate-fade-in space-y-6">
+    <div className="animate-fade-in space-y-8">
 
-      {/* ── Stats strip — landCount chip navigates to LAND tab ── */}
-      <div className="flex flex-wrap items-center gap-2">
+      {/* ── Stats strip ── */}
+      <div className="flex flex-wrap items-center gap-3">
         <StatChip value={String(stats.totalActive)} label="active listings" />
         <StatChip value={String(stats.tokenizedCount)} label="tokenized" gold />
         <StatChip value={totalValueDisplay} label="total listed value" />
@@ -677,19 +711,29 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
         onChange={(cat) => patchFilters({ category: cat })}
       />
 
-      {/* ── Search ── */}
-      <SearchBar
-        value={filters.search}
-        category={filters.category}
-        onChange={(v) => patchFilters({ search: v })}
-      />
-
-      {/* ── Filter bar ── */}
-      <FilterBar
-        filters={filters}
-        onChange={patchFilters}
-        onClear={clearFilters}
-      />
+      {/* ── Controls bar — v4 Outer Tray: #050505/50, rounded-[2.5rem] ── */}
+      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-[#050505]/50 p-8 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)]">
+        <div className="noise absolute inset-0 pointer-events-none" />
+        {/* Paragon top-edge light */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
+        {/* Corner atmospheric glow */}
+        <div className={cn(
+          'pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full blur-[60px] opacity-30',
+          isLand ? 'bg-emerald-500' : 'bg-indigo-500',
+        )} aria-hidden="true" />
+        <div className="relative space-y-5">
+          <SearchBar
+            value={filters.search}
+            category={filters.category}
+            onChange={(v) => patchFilters({ search: v })}
+          />
+          <FilterBar
+            filters={filters}
+            onChange={patchFilters}
+            onClear={clearFilters}
+          />
+        </div>
+      </div>
 
       {/* ── Results header ── */}
       <ResultsHeader
@@ -698,73 +742,98 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
         onChange={patchFilters}
       />
 
-      {/* ── Grid / List ── */}
-      {filteredListings.length === 0 ? (
-        <EmptyState
-          category={filters.category}
-          hasSearch={filters.search.trim().length > 0}
-          onClear={clearFilters}
-        />
-      ) : filters.view === 'grid' ? (
-        <div className={cn('grid gap-6', gridCols)}>
-          {visibleListings.map((listing, i) => (
-            <div
-              key={listing.id}
-              className="animate-slide-up"
-              style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}
-            >
-              <ListingCard
-                listing={listing}
-                index={i}
-                savedIds={savedIds}
-                onSave={handleSave}
-                compareIds={compareIdsSet}
-                onCompare={handleCompare}
-                priority={i < 3}
-              />
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col gap-3">
-          {visibleListings.map((listing, i) => (
-            <div
-              key={listing.id}
-              className="animate-slide-up"
-              style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}
-            >
-              <ListingRow
-                listing={listing}
-                index={i}
-                savedIds={savedIds}
-                onSave={handleSave}
-                compareIds={compareIdsSet}
-                onCompare={handleCompare}
-                priority={i < 5}
-              />
-            </div>
-          ))}
-        </div>
-      )}
+      {/* ── v4 Outer Tray wrapping the listing grid ── */}
+      <div className="group/container relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-white/[0.08]">
+        <div className="noise absolute inset-0 pointer-events-none" />
+        {/* Paragon top-edge structural lighting */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-all duration-500 group-hover/container:via-white/30" aria-hidden="true" />
 
-      {/* ── Load more ── */}
+        {/* Inner atmospheric orbs — category-colored */}
+        <div
+          className={cn(
+            'pointer-events-none absolute -left-28 -top-28 h-64 w-64 rounded-full blur-[100px] opacity-25 transition-opacity duration-700 group-hover/container:opacity-40',
+            isLand ? 'bg-emerald-500' : 'bg-indigo-500',
+          )}
+          aria-hidden="true"
+        />
+        <div className="pointer-events-none absolute -right-24 -bottom-24 h-52 w-52 rounded-full bg-violet-500/20 blur-[80px] opacity-25 transition-opacity duration-700 group-hover/container:opacity-40" aria-hidden="true" />
+        <div
+          className={cn(
+            'pointer-events-none absolute right-1/3 top-1/2 h-40 w-40 rounded-full blur-[80px] opacity-10',
+            isLand ? 'bg-cyan-500' : 'bg-rose-500',
+          )}
+          aria-hidden="true"
+        />
+
+        {/* Inner content — v4 uses p-10 for massive breathing room */}
+        <div className="relative p-8 sm:p-10">
+          {filteredListings.length === 0 ? (
+            <EmptyState
+              category={filters.category}
+              hasSearch={filters.search.trim().length > 0}
+              onClear={clearFilters}
+            />
+          ) : filters.view === 'grid' ? (
+            <div className={cn('grid gap-12', gridCols)}>
+              {visibleListings.map((listing, i) => (
+                <div
+                  key={listing.id}
+                  className="animate-slide-up"
+                  style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}
+                >
+                  <ListingCard
+                    listing={listing}
+                    index={i}
+                    savedIds={savedIds}
+                    onSave={handleSave}
+                    compareIds={compareIdsSet}
+                    onCompare={handleCompare}
+                    priority={i < 3}
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {visibleListings.map((listing, i) => (
+                <div
+                  key={listing.id}
+                  className="animate-slide-up"
+                  style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}
+                >
+                  <ListingRow
+                    listing={listing}
+                    index={i}
+                    savedIds={savedIds}
+                    onSave={handleSave}
+                    compareIds={compareIdsSet}
+                    onCompare={handleCompare}
+                    priority={i < 5}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* ── Load more — v4 structural glass button ── */}
       {hasMore && (
-        <div className="flex flex-col items-center gap-3 pt-4">
+        <div className="flex flex-col items-center gap-4 pt-6">
           <button
             type="button"
             onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
             className={cn(
-              'flex items-center gap-2 rounded-xl border px-6 py-3 text-sm font-medium',
-              'text-[#A0A0B2] transition-all hover:text-white active:scale-[0.98]',
-              filters.category === 'LAND'
-                ? 'border-white/[0.06] hover:border-[#4ADE80]/30'
-                : 'border-white/[0.08] hover:border-[#C9A84C]/40',
+              'flex items-center gap-2.5 rounded-xl border px-8 py-3.5 text-sm font-medium',
+              'bg-[#050505] text-zinc-500 transition-all duration-300 hover:text-white hover:-translate-y-0.5 active:scale-[0.98]',
+              'shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_16px_rgba(0,0,0,0.5)]',
+              'border-white/[0.04] hover:border-white/[0.15]',
             )}
           >
             <ChevronDown className="h-4 w-4" />
             {getLoadMoreLabel(filters.category)}
           </button>
-          <p className="text-xs text-[#4A4A60]">
+          <p className="text-[12px] font-medium tracking-wide uppercase text-zinc-600">
             Showing {visibleCount} of {filteredListings.length}{' '}
             {getListingLabel(filteredListings.length, filters.category)}
           </p>
@@ -773,7 +842,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
 
       {/* ── All shown indicator ── */}
       {!hasMore && filteredListings.length > PAGE_SIZE && (
-        <p className="pt-4 text-center text-xs text-[#4A4A60]">
+        <p className="pt-6 text-center text-[12px] font-medium tracking-wide uppercase text-zinc-600">
           All {filteredListings.length}{' '}
           {getListingLabel(filteredListings.length, filters.category)} shown
         </p>

@@ -73,7 +73,7 @@ const KYC_COLOR: Record<string, string> = {
 }
 const TIER_COLOR: Record<string, string> = {
   free:       'text-[#6B6B80]',
-  pro:        'text-[#C9A84C]',
+  pro:        'text-indigo-400',
   pro_plus:   'text-[#818CF8]',
   enterprise: 'text-[#22C55E]',
 }
@@ -138,7 +138,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
   }
 
   return (
-    <div className="space-y-8 pb-16">
+    <div className="animate-fade-in space-y-8 pb-16">
 
       {/* ── Avatar + identity strip ─────────────────────────────────────── */}
       <div className="flex items-center gap-5">
@@ -148,7 +148,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
         </div>
         <div>
           <p className="text-base font-semibold text-[#F5F5F7]">{user.name ?? 'Anonymous'}</p>
-          <p className="text-sm text-[#6B6B80]">{user.email}</p>
+          <p className="text-sm text-zinc-500">{user.email}</p>
           <div className="mt-1.5 flex items-center gap-2">
             <span className={cn('text-xs font-medium', TIER_COLOR[user.subscriptionTier] ?? 'text-[#6B6B80]')}>
               {TIER_LABEL[user.subscriptionTier] ?? user.subscriptionTier}
@@ -210,7 +210,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
               className={cn(inputClass, 'resize-none leading-relaxed')}
             />
             {bio.length > 400 && (
-              <p className="mt-1 text-right text-[10px] text-[#6B6B80]">{bio.length}/500</p>
+              <p className="mt-1 text-right text-[10px] text-zinc-500">{bio.length}/500</p>
             )}
           </FieldRow>
         </div>
@@ -256,13 +256,13 @@ export function ProfileClient({ user }: ProfileClientProps) {
       <SectionCard title="Account">
         <div className="space-y-2">
           {/* Email — not editable */}
-          <div className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-[#0D0D14] px-4 py-3">
+          <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3">
             <Mail className="h-4 w-4 shrink-0 text-[#4A4A5E]" />
             <div className="flex-1 min-w-0">
-              <p className="text-xs text-[#6B6B80]">Email address</p>
-              <p className="truncate text-sm text-[#A0A0B2]">{user.email}</p>
+              <p className="text-xs text-zinc-500">Email address</p>
+              <p className="truncate text-sm text-zinc-400">{user.email}</p>
             </div>
-            <span className="shrink-0 text-[10px] text-[#4A4A5E]">Managed by auth</span>
+            <span className="shrink-0 text-[10px] text-zinc-500">Managed by auth</span>
           </div>
 
           {/* KYC status */}
@@ -300,7 +300,8 @@ export function ProfileClient({ user }: ProfileClientProps) {
 
       {/* ── Save bar ────────────────────────────────────────────────────── */}
       <div className="sticky bottom-6 flex justify-end">
-        <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl/95 px-4 py-3 shadow-xl backdrop-blur-sm">
+        <div className="relative flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),_0_20px_25px_-5px_rgba(0,0,0,0.3)] px-4 py-3">
+          <div className="noise absolute inset-0 pointer-events-none" />
           {saveState === 'error' && (
             <p className="text-xs text-[#EF4444]">{errorMsg || 'Save failed'}</p>
           )}
@@ -314,8 +315,8 @@ export function ProfileClient({ user }: ProfileClientProps) {
             disabled={saveState === 'saving' || isPending}
             className={cn(
               'flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold',
-              'bg-[#C9A84C] text-[#0A0A0F] transition-all',
-              'hover:bg-[#D4B85A] disabled:cursor-not-allowed disabled:opacity-60',
+              'bg-indigo-500 text-[#0A0A0F] transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+              'hover:bg-indigo-400 disabled:cursor-not-allowed disabled:opacity-60',
             )}
           >
             {(saveState === 'saving' || isPending) && (
@@ -350,7 +351,7 @@ function AvatarDisplay({
   }
   return (
     <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.04]">
-      <span className="text-xl font-semibold text-[#C9A84C]">{initials || '?'}</span>
+      <span className="text-xl font-semibold text-indigo-400">{initials || '?'}</span>
     </div>
   )
 }
@@ -366,10 +367,11 @@ function SectionCard({
 }) {
   return (
     <div>
-      <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#4A4A60]">
+      <p className="mb-3 text-xs font-semibold uppercase tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
         {title}
       </p>
-      <div className="rounded-2xl border border-white/[0.06] bg-white/[0.04] backdrop-blur-xl p-5">
+      <div className="relative rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6">
+        <div className="noise absolute inset-0 pointer-events-none" />
         {children}
       </div>
     </div>
@@ -379,9 +381,9 @@ function SectionCard({
 // ── Field row ──────────────────────────────────────────────────────────────
 
 const inputClass = cn(
-  'w-full rounded-xl border border-white/[0.08] bg-[#0D0D14]',
-  'px-3 py-2.5 text-sm text-[#F5F5F7] placeholder-[#4A4A5E]',
-  'outline-none transition-colors focus:border-[#C9A84C]/60',
+  'w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
+  'px-3 py-3 text-sm text-[#F5F5F7] placeholder-[#4A4A5E]',
+  'outline-none transition-colors focus:border-indigo-500/60 hover:border-white/15 hover:bg-white/[0.08]',
 )
 
 function FieldRow({
@@ -405,12 +407,12 @@ function FieldRow({
           align === 'top' && 'mt-0.5',
         )}
       >
-        <Icon className="h-4 w-4 text-[#6B6B80]" />
+        <Icon className="h-4 w-4 text-zinc-500" />
       </div>
       <div className="flex-1 min-w-0">
-        <label className="mb-1 block text-xs text-[#6B6B80]">
+        <label className="mb-1 block text-xs text-zinc-500">
           {label}
-          {required && <span className="ml-0.5 text-[#C9A84C]">*</span>}
+          {required && <span className="ml-0.5 text-indigo-400">*</span>}
         </label>
         {children}
       </div>
@@ -433,16 +435,16 @@ function NotifToggle({
 }) {
   return (
     <div
-      className="flex cursor-pointer items-start justify-between gap-4 rounded-xl px-3 py-3 transition-colors hover:bg-[#0D0D14]"
+      className="flex cursor-pointer items-start justify-between gap-4 rounded-xl px-3 py-3 transition-colors hover:bg-white/[0.03]"
       onClick={onToggle}
     >
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg">
+        <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
           <Bell className="h-3.5 w-3.5 text-[#4A4A5E]" />
         </div>
         <div>
           <p className="text-sm font-medium text-[#D0D0E0]">{label}</p>
-          <p className="mt-0.5 text-xs text-[#6B6B80]">{description}</p>
+          <p className="mt-0.5 text-xs text-zinc-500">{description}</p>
         </div>
       </div>
       {/* Toggle pill */}
@@ -451,7 +453,7 @@ function NotifToggle({
         aria-checked={enabled}
         className={cn(
           'relative mt-0.5 h-5 w-9 shrink-0 rounded-full transition-colors duration-200',
-          enabled ? 'bg-[#C9A84C]' : 'bg-white/[0.06]',
+          enabled ? 'bg-indigo-500' : 'bg-white/[0.06]',
         )}
       >
         <span
@@ -483,12 +485,12 @@ function AccountLink({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 rounded-xl border border-white/[0.06] bg-transparent px-4 py-3 transition-colors hover:border-white/[0.08] hover:bg-[#0D0D14]"
+      className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3 transition-colors hover:border-white/15 hover:bg-white/[0.08]"
     >
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
         <Icon className="h-3.5 w-3.5 text-[#6B6B80]" />
       </div>
-      <p className="flex-1 text-sm text-[#A0A0B2]">{label}</p>
+      <p className="flex-1 text-sm text-zinc-400">{label}</p>
       <span className={cn('text-xs font-medium', valueColor ?? 'text-[#6B6B80]')}>{value}</span>
       <ChevronRight className="h-3.5 w-3.5 text-[#3A3A4A]" />
     </Link>

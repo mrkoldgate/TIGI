@@ -26,9 +26,9 @@ export default function AdminListingsPage() {
         </p>
       </div>
 
-      <div className="rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] p-8">
+      <div className="rounded-xl border border-dashed border-white/[0.04] bg-[#050505] p-8">
         <div className="mx-auto max-w-lg">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#1A1A24] text-[#6B6B80]">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.04] text-[#6B6B80]">
             <Building2 className="h-6 w-6" />
           </div>
           <h2 className="mt-4 text-base font-semibold text-[#F5F5F7]">
@@ -47,7 +47,7 @@ export default function AdminListingsPage() {
               <li key={label} className="flex items-start gap-3">
                 <Icon className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#3A3A4A]" />
                 <span className="flex-1 text-sm text-[#6B6B80]">{label}</span>
-                <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
                   {milestone}
                 </span>

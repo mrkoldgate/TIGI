@@ -56,7 +56,7 @@ function Scene() {
   return (
     <>
       {/* Fog for depth — matches bg-root color */}
-      <fog attach="fog" args={['#020409', 10, 22]} />
+      <fog attach="fog" args={['#000000', 10, 22]} />
 
       {/* Lights */}
       <ambientLight intensity={0.12} />

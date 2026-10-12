@@ -130,16 +130,16 @@ function NotificationsDropdown({
 
   return (
     <div
-      className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] shadow-2xl shadow-black/50"
+      className="absolute right-0 top-full z-50 mt-2 w-80 overflow-hidden rounded-2xl border border-white/[0.08] bg-black/95 backdrop-blur-2xl shadow-2xl shadow-black/50 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]"
       role="dialog"
       aria-label="Notifications"
     >
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-[#1F1F2E] px-4 py-3">
+      <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-[#F5F5F7]">Notifications</span>
+          <span className="text-sm font-semibold text-white">Notifications</span>
           {unreadCount > 0 && (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-[#C9A84C]/20 px-1.5 text-[10px] font-bold text-[#C9A84C]">
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-cyan-400/20 px-1.5 text-[10px] font-bold text-cyan-400 border border-cyan-400/30">
               {unreadCount > 99 ? '99+' : unreadCount}
             </span>
           )}
@@ -148,7 +148,7 @@ function NotificationsDropdown({
           <button
             type="button"
             onClick={onMarkAllRead}
-            className="flex items-center gap-1 text-[11px] text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+            className="flex items-center gap-1 text-[11px] text-zinc-500 transition-colors hover:text-cyan-400"
           >
             <Check className="h-3 w-3" />
             Mark all read
@@ -160,15 +160,15 @@ function NotificationsDropdown({
       <div className="max-h-[400px] overflow-y-auto overscroll-contain">
         {loading ? (
           <div className="flex items-center justify-center py-10">
-            <Loader2 className="h-5 w-5 animate-spin text-[#4A4A5E]" />
+            <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
           </div>
         ) : notifications.length === 0 ? (
           <div className="py-10 text-center">
-            <Bell className="mx-auto mb-2 h-7 w-7 text-[#2A2A3A]" />
-            <p className="text-sm text-[#4A4A5E]">No notifications yet</p>
+            <Bell className="mx-auto mb-2 h-7 w-7 text-zinc-500" />
+            <p className="text-sm text-zinc-500">No notifications yet</p>
           </div>
         ) : (
-          <div className="divide-y divide-[#1F1F2E]">
+          <div className="divide-y divide-white/[0.06]">
             {notifications.map((n) => (
               <NotificationItem
                 key={n.id}
@@ -182,11 +182,11 @@ function NotificationsDropdown({
       </div>
 
       {/* Footer */}
-      <div className="border-t border-[#1F1F2E] px-4 py-2.5">
+      <div className="border-t border-white/[0.06] px-4 py-2.5">
         <Link
           href="/notifications"
           onClick={onClose}
-          className="block text-center text-xs font-medium text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="block text-center text-xs font-medium text-zinc-500 transition-colors hover:text-cyan-400"
         >
           See all notifications
         </Link>
@@ -236,8 +236,8 @@ export function NotificationBell() {
         className={cn(
           'relative flex h-9 w-9 items-center justify-center rounded-lg border transition-colors',
           open
-            ? 'border-[#C9A84C] bg-[#C9A84C]/10 text-[#C9A84C]'
-            : 'border-[#2A2A3A] bg-[#1A1A24] text-[#A0A0B2] hover:border-[#C9A84C] hover:text-[#F5F5F7]',
+            ? 'border-cyan-400/60 bg-cyan-400/10 text-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.2)]'
+            : 'border-white/[0.08] bg-white/[0.04] text-zinc-400 hover:border-cyan-400/40 hover:text-white',
         )}
       >
         <Bell className="h-4 w-4" />
@@ -245,7 +245,7 @@ export function NotificationBell() {
         {unreadCount > 0 && (
           <span
             aria-hidden="true"
-            className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#C9A84C] px-1 text-[9px] font-bold text-[#0A0A0F]"
+            className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-cyan-400 px-1 text-[9px] font-bold text-black shadow-[0_0_10px_rgba(34,211,238,0.5)]"
           >
             {unreadCount > 9 ? '9+' : unreadCount}
           </span>

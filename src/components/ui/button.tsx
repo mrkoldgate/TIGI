@@ -14,39 +14,40 @@ const buttonVariants = cva(
     'inline-flex items-center justify-center gap-2',
     'rounded-lg font-medium text-sm',
     'transition-all duration-150',
-    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C9A84C] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0A0A0F]',
-    'disabled:pointer-events-none disabled:bg-[#22222E] disabled:text-[#6B6B80]',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
+    'disabled:pointer-events-none disabled:bg-white/[0.02] disabled:text-[#6B6B80]',
     'active:scale-[0.98]',
     'select-none',
   ],
   {
     variants: {
       variant: {
-        // Primary — gold background. Main CTA: Invest, Submit, Confirm
+        // Primary — indigo gradient. Main CTA: Invest, Submit, Confirm
         primary: [
-          'bg-[#C9A84C] text-[#0A0A0F]',
-          'hover:bg-[#B8932F]',
-          'hover:shadow-[0_0_20px_rgba(201,168,76,0.2),0_0_40px_rgba(201,168,76,0.08)]',
+          'bg-gradient-to-r from-indigo-500 to-indigo-600 text-white',
+          'shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_2px_8px_rgba(0,0,0,0.4)]',
+          'hover:from-indigo-400 hover:to-indigo-500',
+          'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_0_20px_rgba(99,102,241,0.25),0_0_40px_rgba(99,102,241,0.1)]',
         ],
-        // Secondary — transparent with border. Cancel, Back, View Details
+        // Secondary — glass with border. Cancel, Back, View Details
         secondary: [
-          'border border-[#2A2A3A] bg-transparent text-[#F5F5F7]',
-          'hover:border-[#C9A84C] hover:bg-[#1A1A24]',
+          'border border-white/[0.04] bg-white/[0.025] text-[#F5F5F7] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+          'hover:border-white/[0.15] hover:bg-white/[0.06]',
         ],
         // Ghost — no border or background. Tertiary: Learn more, Show all
         ghost: [
           'bg-transparent text-[#A0A0B2]',
-          'hover:bg-[#1A1A24] hover:text-[#F5F5F7]',
+          'hover:bg-white/[0.03] hover:text-[#F5F5F7]',
         ],
         // Destructive — red background. Delete, Revoke, Terminate
         destructive: [
-          'bg-[#EF4444] text-white',
+          'bg-[#EF4444] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]',
           'hover:bg-[#DC2626]',
         ],
         // Outline — visible border, no fill. Alternative secondary.
         outline: [
-          'border border-[#2A2A3A] bg-transparent text-[#A0A0B2]',
-          'hover:border-[#3A3A4E] hover:text-[#F5F5F7]',
+          'border border-white/[0.04] bg-transparent text-[#A0A0B2] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
+          'hover:border-white/[0.12] hover:text-[#F5F5F7]',
         ],
       },
       size: {

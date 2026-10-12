@@ -56,10 +56,10 @@ export default async function CompletePage() {
     <div className="w-full max-w-lg text-center">
       {/* Success mark */}
       <div className="relative mx-auto mb-8 flex h-20 w-20 items-center justify-center">
-        <div className="absolute inset-0 animate-pulse rounded-full bg-[#C9A84C]/10" />
-        <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-[#C9A84C]/30 bg-[#C9A84C]/10">
+        <div className="absolute inset-0 animate-pulse rounded-full bg-[#6366F1]/10" />
+        <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-[#6366F1]/30 bg-[#6366F1]/10">
           <svg
-            className="h-7 w-7 text-[#C9A84C]"
+            className="h-7 w-7 text-[#6366F1]"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -77,7 +77,7 @@ export default async function CompletePage() {
       </h1>
       <p className="mt-3 text-sm leading-relaxed text-[#6B6B80]">
         Your account is set up as a{' '}
-        <span className="text-[#C9A84C]">{roleCard?.label ?? userType}</span>.
+        <span className="text-[#6366F1]">{roleCard?.label ?? userType}</span>.
         Here&apos;s what&apos;s ready for you.
       </p>
 
@@ -93,10 +93,10 @@ export default async function CompletePage() {
 
       {/* KYC section — informational placeholder */}
       {needsKyc && (
-        <div className="mt-6 rounded-2xl border border-[#C9A84C]/15 bg-[#C9A84C]/5 p-5 text-left">
+        <div className="mt-6 rounded-2xl border border-[#6366F1]/15 bg-[#6366F1]/5 p-5 text-left">
           <div className="mb-3 flex items-start gap-3">
-            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#C9A84C]/20 bg-[#C9A84C]/10">
-              <Shield className="h-4 w-4 text-[#C9A84C]" />
+            <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#6366F1]/20 bg-[#6366F1]/10">
+              <Shield className="h-4 w-4 text-[#6366F1]" />
             </div>
             <div>
               <p className="text-sm font-semibold text-white">Identity verification required</p>
@@ -129,8 +129,8 @@ export default async function CompletePage() {
 
 function FeatureChip({ icon: Icon, label }: { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-xl border border-[#1E1E2A] bg-[#111118] px-4 py-3">
-      <Icon className="h-4 w-4 shrink-0 text-[#C9A84C]" />
+    <div className="flex items-center gap-2 rounded-xl border border-white/[0.04] bg-[#050505] px-4 py-3">
+      <Icon className="h-4 w-4 shrink-0 text-[#6366F1]" />
       <span className="text-xs text-[#9999AA]">{label}</span>
     </div>
   )
@@ -142,7 +142,7 @@ function KycStep({ label, done }: { label: string; done: boolean }) {
       className={
         done
           ? 'flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] text-emerald-400'
-          : 'flex items-center gap-1 rounded-full border border-[#2A2A3A] bg-[#111118] px-3 py-1 text-[10px] text-[#4A4A60]'
+          : 'flex items-center gap-1 rounded-full border border-white/[0.04] bg-[#050505] px-3 py-1 text-[10px] text-[#4A4A60]'
       }
     >
       <span className={done ? 'text-emerald-400' : 'text-[#3A3A48]'}>{done ? '✓' : '○'}</span>

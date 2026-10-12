@@ -4,7 +4,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 
 export default function NotificationsLoading() {
   return (
-    <div className="animate-pulse pt-6 pb-16 space-y-6">
+    <div className="animate-pulse pt-8 pb-16 space-y-6">
       {/* Page header */}
       <div className="flex items-center justify-between gap-4">
         <Skeleton variant="text" className="h-8 w-36" />
@@ -14,7 +14,7 @@ export default function NotificationsLoading() {
       {/* Notification rows */}
       <div className="space-y-2">
         {Array.from({ length: 8 }).map((_, i) => (
-          <div key={i} className="flex items-start gap-3 rounded-xl border border-[#1A1A24] bg-[#0D0D14] p-4">
+          <div key={i} className="flex items-start gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-4">
             <Skeleton variant="circle" className="h-8 w-8 flex-shrink-0" />
             <div className="flex-1 space-y-2">
               <Skeleton variant="text" className="h-4 w-3/4" />

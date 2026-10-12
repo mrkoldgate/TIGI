@@ -68,9 +68,9 @@ const LAND_USE_CONFIG: Record<
   COMMERCIAL_DEV: {
     label: 'Commercial Dev.',
     description: 'Approved for commercial and mixed-use development. Suitable for retail, office, hospitality, or mixed-use projects.',
-    badgeClass: 'bg-[#C9A84C]/15 text-[#C9A84C] ring-[#C9A84C]/25',
-    dotClass: 'bg-[#C9A84C]',
-    accentColor: '#C9A84C',
+    badgeClass: 'bg-indigo-500/15 text-indigo-400 ring-indigo-500/25',
+    dotClass: 'bg-indigo-500',
+    accentColor: '#818CF8',
   },
   INDUSTRIAL: {
     label: 'Industrial',
@@ -222,7 +222,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
           priority
         />
         {/* Bottom gradient blends into the page */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0A0A0F]/60 via-[#0A0A0F]/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/60 via-[#050505]/10 to-transparent" />
 
         {/* Photo count badge */}
         {slots.length > 1 && (
@@ -254,7 +254,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
               {i === 1 && slots.length > 3 && (
                 <button
                   onClick={() => setLightboxOpen(true)}
-                  className="absolute inset-0 flex items-center justify-center bg-[#0A0A0F]/60"
+                  className="absolute inset-0 flex items-center justify-center bg-black/60"
                 >
                   <span className="text-sm font-medium text-[#E8F0E8]">+{slots.length - 3} more</span>
                 </button>
@@ -267,7 +267,7 @@ function LandGallery({ listing }: { listing: MockListing }) {
       {/* Lightbox placeholder */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#0A0A0F]/95 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
         >
           <p className="text-[#5A7060]">Gallery lightbox coming soon.</p>
@@ -349,7 +349,7 @@ function LandHeader({
           </span>
         )}
         {listing.isTokenized && (
-          <span className="inline-flex items-center gap-1.5 rounded-md bg-[#C9A84C]/15 px-3 py-1 text-xs font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25">
+          <span className="inline-flex items-center gap-1.5 rounded-md bg-indigo-500/15 px-3 py-1 text-xs font-medium text-indigo-400 ring-1 ring-inset ring-indigo-500/25">
             <Zap className="h-3 w-3" />
             Tokenized
           </span>
@@ -371,14 +371,14 @@ function LandHeader({
             type="button"
             aria-label={isSaved ? 'Remove from saved' : 'Save parcel'}
             onClick={onSave}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
           >
             <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#5A7060]')} />
           </button>
           <button
             type="button"
             aria-label="Share"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
           >
             <Share2 className="h-4 w-4 text-[#5A7060]" />
           </button>
@@ -458,7 +458,7 @@ const LAND_DOCUMENTS = [
 
 function FeatureChip({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-[#1E2D1E] bg-[#0D110D] px-3 py-2.5 text-sm">
+    <div className="flex items-center gap-2 rounded-lg border border-[#1E2D1E] bg-[#0D110D] px-3 py-2.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
       <Check className="h-3.5 w-3.5 shrink-0 text-[#4ADE80]" />
       <span className="text-[#8A9E8A]">{label}</span>
     </div>
@@ -785,16 +785,16 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
   const available = listing.tokenAvailableSupply ?? 0
 
   return (
-    <div className="rounded-xl border border-[#C9A84C]/20 bg-[#0D110D] p-4">
+    <div className="rounded-xl border border-indigo-500/20 bg-[#0D110D] p-4">
       <div className="mb-3 flex items-center gap-2">
-        <Zap className="h-3.5 w-3.5 text-[#C9A84C]" />
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-[#C9A84C]">
+        <Zap className="h-3.5 w-3.5 text-indigo-400" />
+        <span className="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
           Fractional Ownership
         </span>
       </div>
       <div className="mb-4">
         <p className="text-[10px] text-[#4A6A4A]">Entry from</p>
-        <p className="font-heading text-2xl font-bold text-[#C9A84C]">
+        <p className="font-heading text-2xl font-bold text-indigo-400">
           ${listing.tokenPricePerFraction.toLocaleString()}
           <span className="text-sm font-normal text-[#5A7060]">/fraction</span>
         </p>
@@ -899,7 +899,7 @@ function LandActionPanel({
           </>
         )}
         {listing.isTokenized && listing.tokenPricePerFraction && (
-          <p className="mt-0.5 text-sm text-[#C9A84C]">
+          <p className="mt-0.5 text-sm text-indigo-400">
             from ${listing.tokenPricePerFraction.toLocaleString()}
             <span className="text-xs text-[#5A7060]">/fraction</span>
           </p>
@@ -1007,7 +1007,7 @@ function LandActionPanel({
             'Escrow-backed transactions',
           ].map((item) => (
             <li key={item} className="flex items-center gap-2 text-xs text-[#5A7060]">
-              <Check className="h-3 w-3 shrink-0 text-[#C9A84C]" />
+              <Check className="h-3 w-3 shrink-0 text-indigo-400" />
               {item}
             </li>
           ))}

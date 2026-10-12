@@ -30,10 +30,10 @@ const TYPE_CONFIG: Record<
   KYC: {
     label: 'KYC',
     icon: ShieldCheck,
-    color: 'text-[#C9A84C]',
-    bg: 'bg-[#C9A84C]/10',
-    badgeBg: 'bg-[#C9A84C]/10',
-    badgeText: 'text-[#C9A84C]',
+    color: 'text-[#6366F1]',
+    bg: 'bg-[#6366F1]/10',
+    badgeBg: 'bg-[#6366F1]/10',
+    badgeText: 'text-[#6366F1]',
   },
   LISTING_VERIFICATION: {
     label: 'Listing',
@@ -75,8 +75,8 @@ const STATUS_CONFIG: Record<
 const PRIORITY_ROW: Record<CompliancePriority, string> = {
   CRITICAL: 'border-l-2 border-l-[#EF4444] bg-[#EF4444]/5',
   HIGH:     'border-l-2 border-l-[#F59E0B]',
-  NORMAL:   'border-l-2 border-l-[#3A3A4A]',
-  NEW:      'border-l-2 border-l-[#2A2A3A]',
+  NORMAL:   'border-l-2 border-l-white/[0.06]',
+  NEW:      'border-l-2 border-l-white/[0.04]',
 }
 
 function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: CompliancePriority }) {
@@ -87,7 +87,7 @@ function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: 
         'rounded px-1.5 py-0.5 text-[11px] font-semibold tabular-nums',
         priority === 'CRITICAL' ? 'bg-[#EF4444]/15 text-[#EF4444]' :
         priority === 'HIGH'     ? 'bg-[#F59E0B]/10 text-[#F59E0B]' :
-                                  'bg-[#1A1A24] text-[#6B6B80]'
+                                  'bg-white/[0.04] text-[#6B6B80]'
       )}
     >
       {label}
@@ -111,20 +111,20 @@ interface ComplianceQueueProps {
 export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningId }: ComplianceQueueProps) {
   if (items.length === 0) {
     return (
-      <div className="flex items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#111118] py-16 text-sm text-[#6B6B80]">
+      <div className="flex items-center justify-center rounded-xl border border-white/[0.04] bg-[#050505] py-16 text-sm text-[#6B6B80]">
         No items match the current filters.
       </div>
     )
   }
 
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A]">
+    <div className="overflow-hidden rounded-xl border border-white/[0.04]">
 
       {/* ── Desktop table ─────────────────────────────────────────────── */}
       <div className="hidden overflow-x-auto lg:block">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-[#2A2A3A] bg-[#0D0D14]">
+            <tr className="border-b border-white/[0.04] bg-[#050505]">
               {['Type', 'Subject', 'Notes', 'Docs', 'Queue', 'Status', ''].map((h) => (
                 <th
                   key={h}
@@ -135,7 +135,7 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1A1A24] bg-[#0A0A0F]">
+          <tbody className="divide-y divide-white/[0.04] bg-[#0A0A0F]">
             {items.map((item) => {
               const typeCfg   = TYPE_CONFIG[item.type]
               const statusCfg = STATUS_CONFIG[item.status]
@@ -144,7 +144,7 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
               return (
                 <tr
                   key={item.id}
-                  className={cn('group transition-colors hover:bg-[#111118]', PRIORITY_ROW[item.priority])}
+                  className={cn('group transition-colors hover:bg-[#050505]', PRIORITY_ROW[item.priority])}
                 >
                   {/* Type */}
                   <td className="px-4 py-3">
@@ -238,7 +238,7 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
       </div>
 
       {/* ── Mobile: stacked cards ──────────────────────────────────────── */}
-      <div className="divide-y divide-[#1A1A24] lg:hidden">
+      <div className="divide-y divide-white/[0.04] lg:hidden">
         {items.map((item) => {
           const typeCfg   = TYPE_CONFIG[item.type]
           const statusCfg = STATUS_CONFIG[item.status]
@@ -351,8 +351,8 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
     <button
       disabled={actioning}
       className={cn(
-        'inline-flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
-        live ? 'hover:border-[#C9A84C]/40 hover:text-[#C9A84C]' : 'cursor-default opacity-50',
+        'inline-flex items-center gap-1 rounded-lg border border-white/[0.04] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
+        live ? 'hover:border-[#6366F1]/40 hover:text-[#6366F1]' : 'cursor-default opacity-50',
         compact && 'py-1.5',
       )}
     >
@@ -376,7 +376,7 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         title={live ? 'Approve' : 'Approve — not available for this item type'}
         onClick={() => live && onKycAction!(sid!, 'approve')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -391,7 +391,7 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         title={live ? 'Reject' : 'Reject — not available for this item type'}
         onClick={() => live && onKycAction!(sid!, 'reject')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -406,7 +406,7 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         title={live ? 'Request Update' : 'Request Update — not available for this item type'}
         onClick={() => live && onKycAction!(sid!, 'request_update')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -421,7 +421,7 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         title={live ? 'Escalate' : 'Escalate — not available for this item type'}
         onClick={() => live && onKycAction!(sid!, 'escalate')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#FB923C]/40 hover:text-[#FB923C] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -456,7 +456,7 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
     <button
       disabled={actioning}
       className={cn(
-        'inline-flex items-center gap-1 rounded-lg border border-[#2A2A3A] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
+        'inline-flex items-center gap-1 rounded-lg border border-white/[0.04] px-2.5 py-1 text-xs font-medium text-[#A0A0B2] transition-colors',
         live ? 'hover:border-[#A78BFA]/40 hover:text-[#A78BFA]' : 'cursor-default opacity-50',
         compact && 'py-1.5',
       )}
@@ -478,7 +478,7 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         title={live ? 'Approve' : 'Approve — not available for this item type'}
         onClick={() => live && onLegacyAction!(pid!, 'approve')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -493,7 +493,7 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         title={live ? 'Reject' : 'Reject — not available for this item type'}
         onClick={() => live && onLegacyAction!(pid!, 'reject')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
@@ -508,7 +508,7 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         title={live ? 'Request Update' : 'Request Update — not available for this item type'}
         onClick={() => live && onLegacyAction!(pid!, 'request_update')}
         className={cn(
-          'flex h-6 w-6 items-center justify-center rounded border border-[#2A2A3A] transition-all',
+          'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
             ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
             : 'cursor-not-allowed text-[#3A3A4A] opacity-20',

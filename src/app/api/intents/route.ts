@@ -23,6 +23,7 @@ import { prisma } from '@/lib/db'
 import { createNotification } from '@/lib/notifications/notification-service'
 import { isInvestor, hasKyc } from '@/lib/auth/rbac'
 import { logger } from '@/lib/logger'
+import { IntentType } from '@prisma/client'
 
 const CreateIntentSchema = z.object({
   propertyId:  z.string().min(1),
@@ -122,8 +123,8 @@ export async function POST(req: Request) {
       where: {
         userId,
         propertyId,
-        intentType: intentType as never,
-        status: { in: ['PENDING', 'REVIEWING'] as never[] },
+        intentType: intentType as IntentType,
+        status: { in: ['PENDING', 'REVIEWING'] },
       },
       select: { id: true },
     })
@@ -138,17 +139,17 @@ export async function POST(req: Request) {
     const intent = await prisma.$transaction(async (tx) => {
       const intentMetadata = leaseDetails
         ? { leaseDetails }
-        : undefined
+        : {}
 
       const created = await tx.transactionIntent.create({
         data: {
           userId,
           propertyId,
-          intentType:  intentType as never,
+          intentType:  intentType as IntentType,
           fractionQty: fractionQty ?? null,
           offerAmount: offerAmount ?? null,
           note:        note ?? null,
-          ...(intentMetadata && { metadata: intentMetadata }),
+          metadata:    intentMetadata,
         },
       })
 

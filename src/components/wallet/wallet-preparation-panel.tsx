@@ -189,7 +189,7 @@ export function WalletPreparationPanel({
   if (confirmed) {
     return (
       <div className={cn(
-        'rounded-xl border border-[#22C55E]/25 bg-[#0D0D14] p-4 space-y-3',
+        'rounded-xl border border-[#22C55E]/25 bg-white/[0.03] p-4 space-y-3',
         className,
       )}>
         <div className="flex items-center gap-2">
@@ -206,7 +206,7 @@ export function WalletPreparationPanel({
           href={confirmed.explorerUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 text-[11px] text-[#C9A84C] hover:text-[#D4B55A]"
+          className="flex items-center gap-1.5 text-[11px] text-indigo-400 hover:text-indigo-300"
         >
           <ExternalLink className="h-3 w-3" />
           View on Solana Explorer
@@ -223,7 +223,7 @@ export function WalletPreparationPanel({
   if (walletMode !== 'connected') {
     return (
       <div className={cn(
-        'rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-4 space-y-3',
+        'rounded-xl border border-white/[0.08] bg-white/[0.03] p-4 space-y-3',
         className,
       )}>
         <div className="flex items-center gap-2">
@@ -242,7 +242,7 @@ export function WalletPreparationPanel({
             <button
               type="button"
               onClick={openWalletModal}
-              className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-[#3A3A4A] hover:text-[#F5F5F7] active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-white/[0.10] hover:text-[#F5F5F7] active:scale-[0.98]"
             >
               <Wallet className="h-4 w-4" />
               Connect wallet to sign
@@ -262,7 +262,7 @@ export function WalletPreparationPanel({
   if (expired) {
     return (
       <div className={cn(
-        'rounded-xl border border-[#F59E0B]/20 bg-[#0D0D14] p-4 space-y-3',
+        'rounded-xl border border-[#F59E0B]/20 bg-white/[0.03] p-4 space-y-3',
         className,
       )}>
         <div className="flex items-center gap-1.5">
@@ -279,7 +279,7 @@ export function WalletPreparationPanel({
           type="button"
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-[#3A3A4A] hover:text-[#F5F5F7] disabled:opacity-50 active:scale-[0.98]"
+          className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#A0A0B2] transition-all hover:border-white/[0.10] hover:text-[#F5F5F7] disabled:opacity-50 active:scale-[0.98]"
         >
           {isRefreshing ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -299,17 +299,17 @@ export function WalletPreparationPanel({
 
   return (
     <div className={cn(
-      'rounded-xl border border-[#C9A84C]/20 bg-[#0D0D14] p-4 space-y-3',
+      'rounded-xl border border-indigo-500/20 bg-white/[0.03] p-4 space-y-3',
       className,
     )}>
       {/* Header */}
       <div className="flex items-center gap-2">
-        <PenLine className="h-4 w-4 text-[#C9A84C]" />
+        <PenLine className="h-4 w-4 text-indigo-400" />
         <p className="text-sm font-medium text-[#F5F5F7]">Ready to sign</p>
       </div>
 
       {/* What will happen */}
-      <div className="rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2.5">
+      <div className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
         <p className="text-[11px] font-medium text-[#A0A0B2]">What this signs</p>
         <p className="mt-0.5 text-[11px] text-[#6B6B80]">
           A digital record of your fractional economic interest will be written to the
@@ -365,7 +365,7 @@ export function WalletPreparationPanel({
         type="button"
         onClick={handleSign}
         disabled={isBusy || !!signerMismatch}
-        className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
+        className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-500 py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-indigo-400 disabled:opacity-60 active:scale-[0.98]"
       >
         {step === 'signing' ? (
           <>

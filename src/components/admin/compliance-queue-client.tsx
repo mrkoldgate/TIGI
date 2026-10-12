@@ -36,7 +36,7 @@ const TYPE_SUMMARY_CONFIG: Array<{
   activeBorder: string
   bg: string
 }> = [
-  { type: 'KYC',                  label: 'KYC',         icon: ShieldCheck,   color: 'text-[#C9A84C]', activeBorder: 'border-[#C9A84C]/40', bg: 'bg-[#C9A84C]/10' },
+  { type: 'KYC',                  label: 'KYC',         icon: ShieldCheck,   color: 'text-[#6366F1]', activeBorder: 'border-[#6366F1]/40', bg: 'bg-[#6366F1]/10' },
   { type: 'LISTING_VERIFICATION', label: 'Listing',      icon: Building2,     color: 'text-[#818CF8]', activeBorder: 'border-[#818CF8]/40', bg: 'bg-[#818CF8]/10' },
   { type: 'INHERITANCE',          label: 'Inheritance',  icon: Landmark,      color: 'text-[#A78BFA]', activeBorder: 'border-[#A78BFA]/40', bg: 'bg-[#A78BFA]/10' },
   { type: 'FLAGGED_ANOMALY',      label: 'Anomaly',      icon: AlertTriangle, color: 'text-[#EF4444]', activeBorder: 'border-[#EF4444]/40', bg: 'bg-[#EF4444]/10' },
@@ -198,12 +198,14 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
               key={type}
               onClick={() => setActiveType(isActive ? 'ALL' : type)}
               className={cn(
-                'flex items-center gap-3 rounded-xl border p-3 text-left transition-all',
+                'relative overflow-hidden flex items-center gap-3 rounded-xl border p-3 text-left transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
                 isActive
-                  ? `bg-[#111118] ${activeBorder} ${color}`
-                  : 'border-[#2A2A3A] bg-[#111118] hover:border-[#3A3A4A]'
+                  ? `bg-[#050505] ${activeBorder} ${color}`
+                  : 'border-white/[0.04] bg-[#050505] hover:border-white/[0.06]'
               )}
             >
+              <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+              <div className="noise absolute inset-0 pointer-events-none" />
               <div className={cn('flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg', bg)}>
                 <Icon className={cn('h-4 w-4', color)} />
               </div>
@@ -231,10 +233,10 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
                 setActiveStatus(isActive && value !== 'ALL' ? 'ALL' : (value as ComplianceItemStatus | 'ALL'))
               }
               className={cn(
-                'inline-flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-medium transition-all',
+                'inline-flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-medium transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
                 isActive
-                  ? 'border-[#3A3A4A] bg-[#1A1A24] text-[#F5F5F7]'
-                  : 'border-[#2A2A3A] text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2]'
+                  ? 'border-white/[0.06] bg-white/[0.04] text-[#F5F5F7]'
+                  : 'border-white/[0.04] text-[#6B6B80] hover:border-white/[0.06] hover:text-[#A0A0B2]'
               )}
             >
               {dot && <span className={cn('h-1.5 w-1.5 rounded-full', dot)} />}
@@ -271,17 +273,19 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
       )}
 
       {/* ── Milestone footer ──────────────────────────────────────────── */}
-      <div className="flex items-start gap-3 rounded-lg border border-[#2A2A3A] bg-[#0D0D14] px-4 py-3">
+      <div className="relative overflow-hidden flex items-start gap-3 rounded-lg border border-white/[0.04] bg-[#050505] px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+        <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="noise absolute inset-0 pointer-events-none" />
         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
         <p className="text-xs text-[#6B6B80]">
           <span className="font-medium text-[#A0A0B2]">KYC Approve / Reject / Escalate</span>{' '}
           actions are live for submitted KYC verifications.{' '}
           Document viewer and full audit trail in{' '}
-          <span className="font-medium text-[#C9A84C]">M3</span>.{' '}
+          <span className="font-medium text-[#6366F1]">M3</span>.{' '}
           AML automated screening in{' '}
-          <span className="font-medium text-[#C9A84C]">M5</span>.{' '}
+          <span className="font-medium text-[#6366F1]">M5</span>.{' '}
           FINCEN / SEC regulatory exports in{' '}
-          <span className="font-medium text-[#C9A84C]">M10</span>.
+          <span className="font-medium text-[#6366F1]">M10</span>.
         </p>
       </div>
     </div>

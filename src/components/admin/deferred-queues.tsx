@@ -47,7 +47,7 @@ function QueueRow({
   hasUrgent,
 }: QueueRowProps) {
   return (
-    <div className="flex items-start gap-4 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4 transition-colors hover:border-[#3A3A4A]">
+    <div className="flex items-start gap-4 rounded-xl border border-white/[0.04] bg-[#050505] p-4 transition-colors hover:border-white/[0.06]">
       {/* Icon */}
       <div className={cn('mt-0.5 flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg', iconBg)}>
         <Icon className={cn('h-4 w-4', iconColor)} />
@@ -59,7 +59,7 @@ function QueueRow({
         <div className="flex items-center gap-2">
           <p className="text-sm font-medium text-[#F5F5F7]">{title}</p>
           {milestone && (
-            <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+            <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
               {milestone}
             </span>
@@ -98,7 +98,7 @@ function QueueRow({
       {/* Action link */}
       <Link
         href={href}
-        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
       >
         View
         <ChevronRight className="h-3 w-3" />
@@ -135,8 +135,8 @@ export function DeferredQueues({ counts }: DeferredQueuesProps) {
         urgentCount={counts.complianceEscalated}
         urgentLabel="escalated"
         href="/admin/compliance"
-        iconColor="text-[#C9A84C]"
-        iconBg="bg-[#C9A84C]/10"
+        iconColor="text-[#6366F1]"
+        iconBg="bg-[#6366F1]/10"
         hasUrgent={counts.complianceEscalated > 0}
       />
 

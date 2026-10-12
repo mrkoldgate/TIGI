@@ -81,7 +81,7 @@ function CostRow({
     <div
       className={cn(
         'flex items-center justify-between gap-4 py-2.5 text-sm',
-        total && 'border-t border-[#2A2A3A] pt-3 mt-1',
+        total && 'border-t border-white/[0.08] pt-3 mt-1',
       )}
     >
       <span className={cn('text-[#6B6B80]', total && 'font-medium text-[#A0A0B2]')}>
@@ -91,7 +91,7 @@ function CostRow({
       <span
         className={cn(
           'font-mono font-medium',
-          gold  ? 'text-[#C9A84C]' : 'text-[#F5F5F7]',
+          gold  ? 'text-indigo-400' : 'text-[#F5F5F7]',
           total && 'text-base',
         )}
       >
@@ -105,7 +105,7 @@ function Disclosure() {
   const [expanded, setExpanded] = useState(false)
 
   return (
-    <div className="rounded-xl border border-[#2A2A3A] bg-[#0D0D14]">
+    <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
       <button
         type="button"
         onClick={() => setExpanded((v) => !v)}
@@ -126,7 +126,7 @@ function Disclosure() {
       </button>
 
       {expanded && (
-        <div className="border-t border-[#1E1E2A] px-4 pb-4 pt-3 text-[11px] leading-relaxed text-[#6B6B80] space-y-2">
+        <div className="border-t border-white/[0.06] px-4 pb-4 pt-3 text-[11px] leading-relaxed text-[#6B6B80] space-y-2">
           <p>
             TIGI fractional tokens represent a proportional economic interest in the underlying real
             estate asset. They do not confer legal title, voting rights, or any form of direct
@@ -179,7 +179,7 @@ function SuccessScreen({
         </h2>
         <p className="text-sm text-[#6B6B80]">
           Your intent to acquire{' '}
-          <span className="font-medium text-[#C9A84C]">{fractions} fraction{fractions !== 1 ? 's' : ''}</span>{' '}
+          <span className="font-medium text-indigo-400">{fractions} fraction{fractions !== 1 ? 's' : ''}</span>{' '}
           ({fmtUSD(total)} total) is pending review. Our team will be in touch within 1–2 business
           days to guide you through next steps.
         </p>
@@ -194,7 +194,7 @@ function SuccessScreen({
       <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <Link
           href="/transactions"
-          className="flex items-center gap-1.5 rounded-xl bg-[#C9A84C] px-5 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
+          className="flex items-center gap-1.5 rounded-xl bg-indigo-500 px-5 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
         >
           View in Transactions
           <ArrowUpRight className="h-3.5 w-3.5" />
@@ -202,7 +202,7 @@ function SuccessScreen({
         <button
           type="button"
           onClick={onClose}
-          className="rounded-xl border border-[#2A2A3A] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7]"
+          className="rounded-xl border border-white/[0.08] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-white/[0.10] hover:text-[#F5F5F7]"
         >
           Back to listing
         </button>
@@ -318,20 +318,20 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
     /* Overlay */
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-[60] flex items-end justify-center bg-[#0A0A0F]/80 backdrop-blur-sm sm:items-center sm:p-4"
+      className="fixed inset-0 z-[60] flex items-end justify-center bg-black/80 backdrop-blur-2xl sm:items-center sm:p-4"
       onClick={(e) => { if (e.target === overlayRef.current) handleClose() }}
       role="dialog"
       aria-modal="true"
       aria-label={`Invest in ${listing.title}`}
     >
       {/* Sheet */}
-      <div className="relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-[#2A2A3A] bg-[#0D0D14] shadow-2xl sm:rounded-2xl">
+      <div className="relative flex max-h-[92dvh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] sm:rounded-2xl">
 
         {/* ── Header ────────────────────────────────────────────────────── */}
-        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-[#1E1E2A] px-5 py-4">
+        <div className="flex shrink-0 items-center justify-between gap-4 border-b border-white/[0.06] px-5 py-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#C9A84C]/10">
-              <Zap className="h-3.5 w-3.5 text-[#C9A84C]" />
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-500/10">
+              <Zap className="h-3.5 w-3.5 text-indigo-400" />
             </div>
             <h2 className="font-heading text-sm font-semibold text-[#F5F5F7]">
               Invest in Property
@@ -343,7 +343,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
             onClick={handleClose}
             disabled={isSubmitting}
             aria-label="Close investment modal"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-[#1A1A24] hover:text-[#A0A0B2] disabled:opacity-50"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2] disabled:opacity-50"
           >
             <X className="h-4 w-4" />
           </button>
@@ -363,7 +363,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
             <div className="space-y-5 px-5 pb-6 pt-5">
 
               {/* ── Property strip ──────────────────────────────────────── */}
-              <div className="flex items-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] p-3">
+              <div className="flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-3">
                 <div className="h-16 w-20 shrink-0 overflow-hidden rounded-lg">
                   <PlaceholderImage
                     slot={listing.imageSlot}
@@ -376,7 +376,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                   <p className="truncate text-sm font-medium text-[#F5F5F7]">{listing.title}</p>
                   <p className="text-xs text-[#6B6B80]">{listing.city}, {listing.state}</p>
                   <div className="mt-1.5 flex items-center gap-2">
-                    <span className="inline-flex items-center gap-1 rounded-md bg-[#C9A84C]/15 px-1.5 py-0.5 text-[10px] font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25">
+                    <span className="inline-flex items-center gap-1 rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-medium text-indigo-400 ring-1 ring-inset ring-indigo-500/25">
                       <Zap className="h-2.5 w-2.5" />
                       Tokenized
                     </span>
@@ -387,7 +387,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                 </div>
                 <div className="shrink-0 text-right">
                   <p className="text-[10px] text-[#4A4A60]">from</p>
-                  <p className="font-heading text-base font-bold text-[#C9A84C]">
+                  <p className="font-heading text-base font-bold text-indigo-400">
                     {fmtUSD(pricePerFraction)}
                   </p>
                   <p className="text-[10px] text-[#6B6B80]">/ fraction</p>
@@ -403,9 +403,9 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     {listing.tokenInvestorCount ?? 0} investors
                   </span>
                 </div>
-                <div className="h-1.5 overflow-hidden rounded-full bg-[#2A2A3A]">
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#B8932F] to-[#C9A84C] transition-all duration-700"
+                    className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-600 transition-all duration-700"
                     style={{ width: `${soldPct}%` }}
                   />
                 </div>
@@ -429,7 +429,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     step={1}
                     value={fractions}
                     onChange={(e) => setFractions(Number(e.target.value))}
-                    className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-[#2A2A3A] accent-[#C9A84C]"
+                    className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/[0.06] accent-indigo-500"
                     aria-label="Number of fractions"
                   />
                   <div className="flex items-center justify-between text-[10px] text-[#3A3A48]">
@@ -451,7 +451,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                         const v = Math.max(1, Math.min(available, Number(e.target.value) || 1))
                         setFractions(v)
                       }}
-                      className="w-24 rounded-xl border border-[#2A2A3A] bg-[#111118] px-3 py-2.5 text-center font-mono text-sm font-semibold text-[#F5F5F7] outline-none transition-colors focus:border-[#C9A84C]/50 focus:ring-1 focus:ring-[#C9A84C]/20"
+                      className="w-24 rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-center font-mono text-sm font-semibold text-[#F5F5F7] outline-none transition-colors focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/20"
                       aria-label="Fraction count"
                     />
                   </div>
@@ -475,7 +475,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
               </div>
 
               {/* ── Cost breakdown ──────────────────────────────────────── */}
-              <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] px-4 py-1">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] px-4 py-1">
                 <CostRow
                   label="Fractions"
                   sub={`× ${fmtUSD(pricePerFraction)}`}
@@ -508,16 +508,16 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     className={cn(
                       'flex cursor-pointer items-start gap-3 rounded-xl border p-3.5 transition-colors',
                       acks[i]
-                        ? 'border-[#C9A84C]/30 bg-[#C9A84C]/5'
-                        : 'border-[#2A2A3A] bg-[#111118] hover:border-[#3A3A4A]',
+                        ? 'border-indigo-500/30 bg-indigo-500/5'
+                        : 'border-white/[0.08] bg-white/[0.04] hover:border-white/[0.10]',
                     )}
                   >
                     <div
                       className={cn(
                         'mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-all',
                         acks[i]
-                          ? 'border-[#C9A84C] bg-[#C9A84C]'
-                          : 'border-[#3A3A4A] bg-transparent',
+                          ? 'border-indigo-500 bg-indigo-500'
+                          : 'border-white/[0.10] bg-transparent',
                       )}
                     >
                       {acks[i] && <svg viewBox="0 0 10 8" className="h-2.5 w-2.5 fill-none stroke-[#0A0A0F] stroke-[1.5]"><path d="M1 4l2.5 2.5L9 1" strokeLinecap="round" strokeLinejoin="round" /></svg>}
@@ -547,7 +547,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Any questions or additional context for the TIGI team…"
-                  className="w-full resize-none rounded-xl border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#3A3A4A] outline-none transition-colors focus:border-[#3A3A4A]"
+                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#3A3A4A] outline-none transition-colors focus:border-white/[0.10]"
                 />
               </div>
 
@@ -563,7 +563,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
 
         {/* ── Footer (submit) ────────────────────────────────────────────── */}
         {!success && (
-          <div className="shrink-0 border-t border-[#1E1E2A] px-5 py-4">
+          <div className="shrink-0 border-t border-white/[0.06] px-5 py-4">
             <button
               type="button"
               onClick={handleSubmit}
@@ -571,8 +571,8 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
               className={cn(
                 'w-full rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
                 canSubmit
-                  ? 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B55A]'
-                  : 'cursor-not-allowed bg-[#C9A84C]/20 text-[#C9A84C]/40',
+                  ? 'bg-indigo-500 text-white hover:bg-indigo-600'
+                  : 'cursor-not-allowed bg-indigo-500/20 text-indigo-400/40',
               )}
             >
               {isSubmitting ? (

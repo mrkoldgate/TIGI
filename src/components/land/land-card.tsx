@@ -113,43 +113,43 @@ function tokenSoldPercent(info: LandTokenInfo): number {
 const LAND_USE_CONFIG: Record<LandUseType, { label: string; className: string; dotClass: string }> = {
   AGRICULTURAL: {
     label: 'Agricultural',
-    className: 'bg-[#166534]/20 text-[#4ADE80] ring-[#22C55E]/25',
-    dotClass: 'bg-[#4ADE80]',
+    className: 'bg-emerald-900/30 text-emerald-300 ring-emerald-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-emerald-400',
   },
   RESIDENTIAL_DEV: {
     label: 'Residential Dev.',
-    className: 'bg-[#1D4ED8]/15 text-[#93C5FD] ring-[#3B82F6]/25',
-    dotClass: 'bg-[#93C5FD]',
+    className: 'bg-indigo-900/25 text-indigo-300 ring-indigo-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-indigo-400',
   },
   COMMERCIAL_DEV: {
     label: 'Commercial Dev.',
-    className: 'bg-[#C9A84C]/15 text-[#C9A84C] ring-[#C9A84C]/25',
-    dotClass: 'bg-[#C9A84C]',
+    className: 'bg-amber-900/25 text-amber-300 ring-amber-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-amber-400',
   },
   INDUSTRIAL: {
     label: 'Industrial',
-    className: 'bg-[#92400E]/20 text-[#FCD34D] ring-[#F59E0B]/25',
-    dotClass: 'bg-[#FCD34D]',
+    className: 'bg-amber-900/30 text-amber-200 ring-amber-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-amber-300',
   },
   MIXED_USE: {
     label: 'Mixed Use',
-    className: 'bg-[#4C1D95]/20 text-[#C4B5FD] ring-[#7C3AED]/25',
-    dotClass: 'bg-[#C4B5FD]',
+    className: 'bg-violet-900/30 text-violet-300 ring-violet-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-violet-400',
   },
   RECREATIONAL: {
     label: 'Recreational',
-    className: 'bg-[#065F46]/20 text-[#6EE7B7] ring-[#10B981]/25',
-    dotClass: 'bg-[#6EE7B7]',
+    className: 'bg-emerald-900/25 text-emerald-300 ring-emerald-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-emerald-300',
   },
   WATERFRONT: {
     label: 'Waterfront',
-    className: 'bg-[#0C4A6E]/20 text-[#7DD3FC] ring-[#0EA5E9]/25',
-    dotClass: 'bg-[#7DD3FC]',
+    className: 'bg-cyan-900/25 text-cyan-300 ring-cyan-500/25 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+    dotClass: 'bg-cyan-400',
   },
   RURAL: {
     label: 'Rural',
-    className: 'bg-[#1E293B]/80 text-[#94A3B8] ring-[#334155]/60',
-    dotClass: 'bg-[#94A3B8]',
+    className: 'bg-white/[0.03] text-zinc-400 ring-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
+    dotClass: 'bg-zinc-500',
   },
 }
 
@@ -178,7 +178,7 @@ function DevOpportunityBadge({ small }: { small?: boolean }) {
     <span
       className={cn(
         'inline-flex items-center gap-1 rounded-md font-semibold backdrop-blur-sm ring-1 ring-inset',
-        'bg-[#166534]/25 text-[#4ADE80] ring-[#22C55E]/30',
+        'bg-[#166534]/25 text-[#4ADE80] ring-[#22C55E]/30 shadow-[0_0_12px_rgba(74,222,128,0.25)]',
         small ? 'px-1.5 py-0.5 text-[9px]' : 'px-2 py-1 text-[10px]',
       )}
     >
@@ -207,13 +207,13 @@ function FeatureChips({
       {visible.map((f) => (
         <span
           key={f}
-          className="inline-flex items-center rounded bg-[#1A1A24] px-1.5 py-0.5 text-[10px] text-[#8080A0] ring-1 ring-inset ring-[#2A2A3A]"
+          className="inline-flex items-center rounded bg-white/[0.03] px-1.5 py-0.5 text-[10px] text-zinc-400 ring-1 ring-inset ring-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
         >
           {f}
         </span>
       ))}
       {overflow > 0 && (
-        <span className="text-[10px] text-[#4A4A60]">+{overflow}</span>
+        <span className="text-[10px] text-zinc-700">+{overflow}</span>
       )}
     </div>
   )
@@ -243,8 +243,8 @@ function SaveButton({
       }}
       className={cn(
         'flex h-7 w-7 items-center justify-center rounded-full transition-all duration-150',
-        'bg-[#0A0A0F]/70 backdrop-blur-sm ring-1 ring-[#2A2A3A]',
-        'hover:bg-[#1A1A24] hover:ring-[#4ADE80]/40',
+        'bg-black/70 backdrop-blur-sm ring-1 ring-white/[0.08]',
+        'hover:bg-white/[0.04] hover:ring-[#4ADE80]/40',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#4ADE80]',
         className,
       )}
@@ -252,7 +252,7 @@ function SaveButton({
       <Heart
         className={cn(
           'h-3.5 w-3.5 transition-colors duration-150',
-          isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#6B6B80]',
+          isSaved ? 'fill-rose-400 text-rose-400' : 'text-zinc-500',
         )}
       />
     </button>
@@ -267,15 +267,15 @@ function TokenProgress({ info }: { info: LandTokenInfo }) {
   const soldPct = tokenSoldPercent(info)
   return (
     <div>
-      <div className="mb-1 flex items-center justify-between text-[10px] text-[#6B6B80]">
+      <div className="mb-1 flex items-center justify-between text-[10px] text-zinc-500">
         <span>{soldPct}% subscribed</span>
         {info.investorCount !== undefined && (
           <span>{info.investorCount} investors</span>
         )}
       </div>
-      <div className="h-1 overflow-hidden rounded-full bg-[#2A2A3A]">
+      <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#166534] to-[#4ADE80] transition-all duration-700"
+          className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-700"
           style={{ width: `${soldPct}%` }}
         />
       </div>
@@ -296,11 +296,11 @@ function AcreageHero({
 }) {
   return (
     <div className="flex items-baseline gap-1.5">
-      <span className="font-heading text-2xl font-bold tabular-nums text-[#F5F5F7]">
+      <span className="font-heading text-2xl font-bold tabular-nums bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
         {formatAcres(acres)}
       </span>
       {pricePerAcreLabel && (
-        <span className="text-[11px] text-[#4A4A60]">{pricePerAcreLabel}</span>
+        <span className="text-[11px] text-zinc-700">{pricePerAcreLabel}</span>
       )}
     </div>
   )
@@ -337,9 +337,12 @@ function CardVariant({
   return (
     <Link href={resolvedHref} className="group block h-full" tabIndex={0}>
       <article
-        className="flex h-full flex-col overflow-hidden rounded-xl border border-[#1E2D1E] bg-[#0D110D] transition-all duration-200 hover:-translate-y-0.5 hover:border-[#4ADE80]/30 hover:shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
+        className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.04] bg-[#050505] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.8)] hover:-translate-y-1 hover:border-white/[0.15] hover:bg-[#0A0A0F] hover:shadow-[0_12px_48px_rgba(0,0,0,1),0_0_40px_rgba(74,222,128,0.08)]"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 50}ms` }}
       >
+        {/* ── Paragon top-edge lighting ── */}
+        <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-opacity duration-300 group-hover:via-white/[0.2]" />
+
         {/* ── Panoramic image ── */}
         <div className="relative overflow-hidden">
           <PlaceholderImage
@@ -347,7 +350,7 @@ function CardVariant({
             slot={data.imageSlot}
             propertyType="land"
             alt={data.title}
-            className="aspect-[21/9] w-full transition-transform duration-500 group-hover:scale-[1.03]"
+            className="aspect-[21/9] w-full transition-transform duration-500 group-hover:scale-110"
             priority={priority}
           />
 
@@ -364,7 +367,7 @@ function CardVariant({
               </span>
             )}
             {data.isTokenized && (
-              <span className="inline-flex items-center gap-1 rounded-md bg-[#C9A84C]/20 px-2 py-0.5 text-[10px] font-medium text-[#C9A84C] backdrop-blur-sm ring-1 ring-inset ring-[#C9A84C]/30">
+              <span className="inline-flex items-center gap-1 rounded-md bg-cyan-400/10 px-2 py-0.5 text-[10px] font-medium text-cyan-400 backdrop-blur-sm border border-cyan-400/20 shadow-[0_0_12px_rgba(34,211,238,0.3)]">
                 <Zap className="h-2.5 w-2.5" />
                 Tokenized
               </span>
@@ -389,19 +392,22 @@ function CardVariant({
           )}
 
           {/* Landscape gradient overlay — heavier at bottom for readability */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0D110D]/50 via-transparent to-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-transparent" />
         </div>
 
         {/* ── Body ── */}
-        <div className="flex flex-1 flex-col p-4">
+        <div className="flex flex-1 flex-col p-5">
+          {/* ── Corner glow ── */}
+          <div className="pointer-events-none absolute left-0 top-0 h-20 w-20 rounded-full bg-emerald-500 blur-[30px] opacity-20" />
+
           {/* Location */}
-          <div className="mb-1.5 flex items-center gap-1 text-[11px] text-[#5A7060]">
+          <div className="mb-1.5 flex items-center gap-1 text-[11px] text-zinc-500">
             <MapPin className="h-3 w-3 shrink-0" />
             {data.city}, {data.state}
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-1 font-heading text-sm font-medium leading-snug text-[#E8F0E8]">
+          <h3 className="line-clamp-1 font-heading text-sm font-medium leading-snug bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
             {data.title}
           </h3>
 
@@ -432,22 +438,22 @@ function CardVariant({
           <div className="flex-1" />
 
           {/* Divider */}
-          <div className="my-3 border-t border-[#1A2B1A]" />
+          <div className="my-3 border-t border-white/[0.06]" />
 
           {/* Price row */}
           <div className="flex items-end justify-between gap-2">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-[#3A4F3A]">List Price</p>
-              <p className="font-heading text-base font-semibold text-[#E8F0E8]">
+              <p className="text-[10px] uppercase tracking-wider text-zinc-700">List Price</p>
+              <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
             </div>
             {data.isTokenized && data.tokenInfo && (
               <div className="text-right">
-                <p className="text-[10px] text-[#3A4F3A]">from</p>
-                <p className="text-sm font-medium text-[#C9A84C]">
+                <p className="text-[10px] text-zinc-700">from</p>
+                <p className="text-sm font-medium text-amber-400">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
-                  <span className="text-[10px] font-normal text-[#5A7060]">/fraction</span>
+                  <span className="text-[10px] font-normal text-zinc-500">/fraction</span>
                 </p>
               </div>
             )}
@@ -483,9 +489,12 @@ function RowVariant({
   return (
     <Link href={resolvedHref} className="group block" tabIndex={0}>
       <article
-        className="flex gap-4 overflow-hidden rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-3 transition-all duration-200 hover:border-[#4ADE80]/30 hover:shadow-[0_4px_20px_rgba(0,0,0,0.35)]"
+        className="relative flex gap-4 overflow-hidden rounded-2xl border border-white/[0.04] bg-[#050505] p-4 transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.8)] hover:border-white/[0.15] hover:bg-[#0A0A0F] hover:shadow-[0_12px_48px_rgba(0,0,0,1),0_0_40px_rgba(74,222,128,0.08)]"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 40}ms` }}
       >
+        {/* ── Paragon top-edge lighting ── */}
+        <div className="absolute inset-x-0 top-0 h-[1px] w-full bg-gradient-to-r from-transparent via-white/[0.05] to-transparent transition-opacity duration-300 group-hover:via-white/[0.2]" />
+
         {/* Thumbnail — landscape crop */}
         <div className="relative w-36 shrink-0 overflow-hidden rounded-lg sm:w-52">
           <PlaceholderImage
@@ -493,7 +502,7 @@ function RowVariant({
             slot={data.imageSlot}
             propertyType="land"
             alt={data.title}
-            className="aspect-[3/2] w-full transition-transform duration-500 group-hover:scale-[1.04]"
+            className="aspect-[3/2] w-full transition-transform duration-500 group-hover:scale-110"
             priority={priority}
           />
           <div className="absolute left-2 top-2 flex flex-col gap-1">
@@ -509,7 +518,7 @@ function RowVariant({
           <div>
             <div className="mb-1.5 flex flex-wrap items-center gap-1.5">
               {data.isTokenized && (
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#C9A84C]/15 px-1.5 py-0.5 text-[9px] font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25">
+                <span className="inline-flex items-center gap-1 rounded-md bg-cyan-400/10 px-1.5 py-0.5 text-[9px] font-medium text-cyan-400 backdrop-blur-sm border border-cyan-400/20 shadow-[0_0_12px_rgba(34,211,238,0.3)]">
                   <Zap className="h-2 w-2" />
                   Tokenized
                 </span>
@@ -526,10 +535,10 @@ function RowVariant({
               )}
             </div>
 
-            <h3 className="truncate font-heading text-sm font-medium text-[#E8F0E8]">
+            <h3 className="truncate font-heading text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
               {data.title}
             </h3>
-            <p className="mt-0.5 flex items-center gap-1 text-xs text-[#5A7060]">
+            <p className="mt-0.5 flex items-center gap-1 text-xs text-zinc-500">
               <MapPin className="h-3 w-3 shrink-0" />
               {data.city}, {data.state}
             </p>
@@ -538,11 +547,11 @@ function RowVariant({
           <div className="mt-2 space-y-2">
             {/* Acreage inline */}
             <div className="flex items-baseline gap-1.5">
-              <span className="font-heading text-base font-semibold text-[#E8F0E8]">
+              <span className="font-heading text-base font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
                 {formatAcres(data.acres)}
               </span>
               {ppaLabel && (
-                <span className="text-[11px] text-[#4A4A60]">{ppaLabel}</span>
+                <span className="text-[11px] text-zinc-700">{ppaLabel}</span>
               )}
             </div>
             {data.features && data.features.length > 0 && (
@@ -564,14 +573,14 @@ function RowVariant({
         <div className="flex shrink-0 flex-col items-end justify-between py-0.5">
           <div className="flex items-start gap-2">
             <div className="text-right">
-              <p className="text-[10px] uppercase tracking-wider text-[#3A4F3A]">List Price</p>
-              <p className="font-heading text-base font-semibold text-[#E8F0E8]">
+              <p className="text-[10px] uppercase tracking-wider text-zinc-700">List Price</p>
+              <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
               {data.isTokenized && data.tokenInfo && (
-                <p className="text-xs text-[#C9A84C]">
+                <p className="text-xs text-amber-400">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
-                  <span className="text-[10px] text-[#5A7060]">/fraction</span>
+                  <span className="text-[10px] text-zinc-500">/fraction</span>
                 </p>
               )}
             </div>
@@ -586,12 +595,12 @@ function RowVariant({
 
           {data.isTokenized && data.tokenInfo && (
             <div className="w-24 text-right">
-              <p className="mb-1 text-[10px] text-[#5A7060]">
+              <p className="mb-1 text-[10px] text-zinc-500">
                 {tokenSoldPercent(data.tokenInfo)}% subscribed
               </p>
-              <div className="h-0.5 overflow-hidden rounded-full bg-[#1A2B1A]">
+              <div className="h-0.5 overflow-hidden rounded-full bg-white/[0.06]">
                 <div
-                  className="h-full rounded-full bg-[#4ADE80]"
+                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
                   style={{ width: `${tokenSoldPercent(data.tokenInfo)}%` }}
                 />
               </div>

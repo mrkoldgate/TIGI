@@ -44,31 +44,31 @@ const STATUS_CONFIG: Record<
     label: 'Active',
     dotColor: '#22C55E',
     badgeBg: 'rgba(34,197,94,0.10)',
-    badgeText: '#4ADE80',
+    badgeText: 'text-emerald-400',
   },
   PENDING_REVIEW: {
     label: 'Pending Review',
     dotColor: '#F59E0B',
     badgeBg: 'rgba(245,158,11,0.10)',
-    badgeText: '#FBB03B',
+    badgeText: 'text-amber-400',
   },
   DRAFT: {
     label: 'Draft',
-    dotColor: '#6B6B80',
+    dotColor: 'rgb(113 113 122)',
     badgeBg: 'rgba(107,107,128,0.12)',
-    badgeText: '#A0A0B2',
+    badgeText: 'text-zinc-400',
   },
   PAUSED: {
     label: 'Paused',
-    dotColor: '#60A5FA',
+    dotColor: 'rgb(96 165 250)',
     badgeBg: 'rgba(96,165,250,0.10)',
-    badgeText: '#93C5FD',
+    badgeText: 'text-blue-300',
   },
   ARCHIVED: {
     label: 'Archived',
-    dotColor: '#3A3A4E',
+    dotColor: 'rgb(63 63 70)',
     badgeBg: 'rgba(58,58,78,0.20)',
-    badgeText: '#6B6B80',
+    badgeText: 'text-zinc-500',
   },
 }
 
@@ -231,7 +231,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
             <StatTile
               label="Active Listings"
               value={stats.active}
-              accent="#C9A84C"
+              accent="#6366F1"
               icon={<CheckCircleIcon />}
             />
             <StatTile
@@ -256,9 +256,9 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
 
           {/* Portfolio value callout */}
           {stats.totalPortfolioValue > 0 && (
-            <div className="mt-3 flex items-center justify-between rounded-xl border border-[#2A2A3A] bg-[#111118] px-5 py-3">
-              <span className="text-sm text-[#6B6B80]">Active listing portfolio value</span>
-              <span className="text-lg font-bold text-[#C9A84C]">
+            <div className="mt-3 flex items-center justify-between rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] px-5 py-3">
+              <span className="text-sm text-zinc-500">Active listing portfolio value</span>
+              <span className="text-lg font-bold text-amber-400">
                 {formatPrice(stats.totalPortfolioValue)}
               </span>
             </div>
@@ -269,7 +269,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
       {/* ── Tabs + toolbar ── */}
       <div className={embeddedMode ? 'space-y-3' : 'mt-8 space-y-3'}>
         {/* Tab bar */}
-        <div className="flex items-center gap-1 overflow-x-auto border-b border-[#2A2A3A] pb-0">
+        <div className="flex items-center gap-1 overflow-x-auto border-b border-white/[0.08] pb-0">
           {TABS.map((t) => {
             const count = tabCounts[t.id]
             const isActive = tab === t.id
@@ -278,9 +278,9 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
                 key={t.id}
                 onClick={() => setTab(t.id)}
                 className={cn(
-                  'relative flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-medium transition-colors duration-150',
+                  'relative flex shrink-0 items-center gap-2 px-5 py-3 text-sm font-medium transition-colors duration-150',
                   'focus-visible:outline-none',
-                  isActive ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+                  isActive ? 'text-white' : 'text-zinc-500 hover:text-zinc-400',
                 )}
               >
                 {t.label}
@@ -289,15 +289,15 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
                     className={cn(
                       'rounded-full px-1.5 py-0.5 text-[10px] font-semibold leading-none',
                       isActive
-                        ? 'bg-[#C9A84C] text-[#0A0A0F]'
-                        : 'bg-[#22222E] text-[#6B6B80]',
+                        ? 'bg-amber-400/20 text-amber-400 border border-amber-400/30'
+                        : 'bg-white/[0.04] text-zinc-500 border border-white/[0.06]',
                     )}
                   >
                     {count}
                   </span>
                 )}
                 {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-t-full bg-[#C9A84C]" />
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-t-full bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.5)]" />
                 )}
               </button>
             )
@@ -308,16 +308,17 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
         <div className="flex flex-wrap items-center gap-3">
           {/* Search */}
           <div className="relative min-w-0 flex-1 max-w-xs">
-            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#6B6B80]" />
+            <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-zinc-500" />
             <input
               type="text"
               placeholder="Search listings…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className={cn(
-                'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-                'py-2 pl-9 pr-4 text-sm text-[#F5F5F7] placeholder:text-[#6B6B80]',
-                'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
+                'w-full rounded-lg border border-white/[0.04] bg-[#050505]',
+                'py-2 pl-9 pr-4 text-sm text-white placeholder:text-zinc-600',
+                'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+                'outline-none focus:border-amber-400/60 focus:shadow-[0_0_12px_rgba(251,191,36,0.15)]',
                 'transition-colors duration-150',
               )}
             />
@@ -328,9 +329,10 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
             className={cn(
-              'rounded-lg border border-[#2A2A3A] bg-[#22222E]',
-              'px-3 py-2 text-sm text-[#A0A0B2]',
-              'outline-none focus:border-[#C9A84C]',
+              'rounded-lg border border-white/[0.04] bg-[#050505]',
+              'px-3 py-2 text-sm text-zinc-400',
+              'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
+              'outline-none focus:border-amber-400/60 focus:shadow-[0_0_12px_rgba(251,191,36,0.15)]',
               'transition-colors duration-150',
             )}
           >
@@ -342,7 +344,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
           </select>
 
           {/* View toggle */}
-          <div className="flex rounded-lg border border-[#2A2A3A] overflow-hidden">
+          <div className="flex rounded-lg border border-white/[0.04] overflow-hidden">
             <ViewToggleBtn
               active={view === 'table'}
               onClick={() => setView('table')}
@@ -360,7 +362,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
           </div>
 
           {/* Result count */}
-          <span className="ml-auto text-xs text-[#6B6B80]">
+          <span className="ml-auto text-xs text-zinc-500">
             {filtered.length} listing{filtered.length !== 1 ? 's' : ''}
           </span>
         </div>
@@ -391,16 +393,18 @@ interface StatTileProps {
 
 function StatTile({ label, value, accent, icon }: StatTileProps) {
   return (
-    <div className="flex flex-col gap-3 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+    <div className="group relative flex flex-col gap-3 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5 hover:border-white/15 hover:bg-white/[0.08] hover:-translate-y-0.5 transition-all duration-300">
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute -right-8 -top-8 h-24 w-24 rounded-full blur-[40px] opacity-40 transition-opacity duration-500 group-hover:opacity-70" style={{ backgroundColor: accent }} />
       <div
-        className="flex h-8 w-8 items-center justify-center rounded-lg"
+        className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]"
         style={{ backgroundColor: `${accent}15` }}
       >
-        <span style={{ color: accent }}>{icon}</span>
+        <span style={{ color: accent, filter: `drop-shadow(0 0 8px ${accent}80)` }}>{icon}</span>
       </div>
       <div>
-        <p className="text-2xl font-bold text-[#F5F5F7]">{value}</p>
-        <p className="mt-0.5 text-xs text-[#6B6B80]">{label}</p>
+        <p className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{value}</p>
+        <p className="mt-0.5 text-xs text-zinc-500">{label}</p>
       </div>
     </div>
   )
@@ -412,12 +416,12 @@ function StatusBadge({ status }: { status: SellerListingStatus }) {
   const cfg = STATUS_CONFIG[status]
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium whitespace-nowrap"
-      style={{ backgroundColor: cfg.badgeBg, color: cfg.badgeText }}
+      className={cn('inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium whitespace-nowrap', cfg.badgeText)}
+      style={{ backgroundColor: cfg.badgeBg, boxShadow: `0 0 8px 0 ${cfg.dotColor}20` }}
     >
       <span
         className="h-1.5 w-1.5 rounded-full shrink-0"
-        style={{ backgroundColor: cfg.dotColor }}
+        style={{ backgroundColor: cfg.dotColor, boxShadow: `0 0 6px 1px ${cfg.dotColor}60` }}
       />
       {cfg.label}
     </span>
@@ -433,8 +437,8 @@ function AssetTypeBadge({ listing }: { listing: SellerListing }) {
       className={cn(
         'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
         isLand
-          ? 'bg-[rgba(74,222,128,0.08)] text-[#4ADE80]'
-          : 'bg-[rgba(201,168,76,0.08)] text-[#C9A84C]',
+          ? 'bg-emerald-400/[0.08] text-emerald-400'
+          : 'bg-amber-400/[0.08] text-amber-400',
       )}
     >
       {isLand ? <LandDotIcon /> : <BuildingDotIcon />}
@@ -473,9 +477,9 @@ function ActionMenu({ listing }: ActionMenuProps) {
       <button
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          'flex h-8 w-8 items-center justify-center rounded-lg border border-[#2A2A3A] text-[#6B6B80]',
-          'transition-colors hover:border-[#C9A84C] hover:text-[#C9A84C]',
-          open && 'border-[#C9A84C] text-[#C9A84C]',
+          'flex h-8 w-8 items-center justify-center rounded-lg border border-white/[0.08] text-zinc-500',
+          'transition-colors hover:border-amber-400/60 hover:text-amber-400',
+          open && 'border-amber-400/60 text-amber-400',
         )}
         title="Actions"
       >
@@ -483,7 +487,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-1.5 min-w-[160px] overflow-hidden rounded-xl border border-[#2A2A3A] bg-[#111118] shadow-2xl">
+        <div className="absolute right-0 top-full z-50 mt-1.5 min-w-[160px] overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] shadow-2xl">
           {canEdit && (
             <ActionItem
               href={`/listings/${listing.id}/edit`}
@@ -505,7 +509,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
               icon={<PublishIcon />}
               label={listing.status === 'PAUSED' ? 'Resume' : 'Submit to Review'}
               onClick={() => setOpen(false)}
-              accent="#C9A84C"
+              accent="rgb(251 191 36)"
             />
           )}
           {canPause && (
@@ -516,7 +520,7 @@ function ActionMenu({ listing }: ActionMenuProps) {
             />
           )}
           {canArchive && (
-            <div className="border-t border-[#2A2A3A]">
+            <div className="border-t border-white/[0.08]">
               <ActionItem
                 icon={<ArchiveIcon />}
                 label="Archive"
@@ -544,8 +548,8 @@ function ActionItem({ href, icon, label, onClick, accent, destructive }: ActionI
   const cls = cn(
     'flex w-full items-center gap-2.5 px-3 py-2.5 text-sm transition-colors',
     destructive
-      ? 'text-[#EF4444] hover:bg-[#EF4444]/10'
-      : 'text-[#A0A0B2] hover:bg-[#1A1A24] hover:text-[#F5F5F7]',
+      ? 'text-red-400 hover:bg-red-400/10'
+      : 'text-zinc-400 hover:bg-white/[0.04] hover:text-white',
   )
   const style = accent ? { color: accent } : {}
 
@@ -569,37 +573,38 @@ function ActionItem({ href, icon, label, onClick, accent, destructive }: ActionI
 
 function ListingsTable({ listings }: { listings: SellerListing[] }) {
   return (
-    <div className="overflow-hidden rounded-xl border border-[#2A2A3A]">
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]">
+      <div className="noise absolute inset-0 pointer-events-none" />
       {/* Desktop table */}
       <div className="hidden overflow-x-auto md:block">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="border-b border-[#2A2A3A] bg-[#111118]">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+            <tr className="border-b border-white/[0.08] bg-white/[0.02]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Listing
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Type
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Price
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Views
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Inquiries
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
                 Updated
               </th>
               <th className="w-12 px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-[#1F1F2E] bg-[#0A0A0F]">
+          <tbody className="divide-y divide-white/[0.06] bg-transparent">
             {listings.map((listing, i) => (
               <TableRow key={listing.id} listing={listing} index={i} />
             ))}
@@ -608,7 +613,7 @@ function ListingsTable({ listings }: { listings: SellerListing[] }) {
       </div>
 
       {/* Mobile: card stack inside table container */}
-      <div className="divide-y divide-[#1F1F2E] md:hidden">
+      <div className="divide-y divide-white/[0.06] md:hidden">
         {listings.map((listing) => (
           <MobileRow key={listing.id} listing={listing} />
         ))}
@@ -624,7 +629,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
     <tr
       className={cn(
         'group transition-colors duration-100',
-        isArchived ? 'opacity-50' : 'hover:bg-[#111118]',
+        isArchived ? 'opacity-50' : 'hover:bg-white/[0.04]',
       )}
       style={{ animationDelay: `${Math.min(index, 8) * 30}ms` }}
     >
@@ -640,20 +645,20 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
               fill
             />
             {listing.assetType === 'LAND' && (
-              <div className="absolute inset-0 ring-1 ring-inset ring-[#4ADE80]/20 rounded-lg" />
+              <div className="absolute inset-0 ring-1 ring-inset ring-emerald-400/20 rounded-lg" />
             )}
           </div>
           {/* Title */}
           <div className="min-w-0">
-            <p className="truncate font-medium text-[#F5F5F7] max-w-[220px]">{listing.title}</p>
-            <p className="mt-0.5 text-xs text-[#6B6B80]">
+            <p className="truncate font-medium bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500 max-w-[220px]">{listing.title}</p>
+            <p className="mt-0.5 text-xs text-zinc-500">
               {listing.city}, {listing.state}
               {getSubtitle(listing) && (
-                <span className="ml-2 text-[#4A4A5E]">· {getSubtitle(listing)}</span>
+                <span className="ml-2 text-zinc-600">· {getSubtitle(listing)}</span>
               )}
             </p>
             {listing.isTokenized && (
-              <span className="mt-1 inline-flex items-center gap-1 text-[10px] text-[#C9A84C]">
+              <span className="mt-1 inline-flex items-center gap-1 text-[10px] text-amber-400">
                 <TokenIcon /> Tokenized
               </span>
             )}
@@ -665,8 +670,8 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       <td className="px-4 py-3">
         <div className="flex flex-col gap-1">
           <AssetTypeBadge listing={listing} />
-          <span className="text-xs text-[#6B6B80]">{SUBTYPE_LABELS[listing.subtype]}</span>
-          <span className="text-[10px] text-[#4A4A5E]">{LISTING_TYPE_LABELS[listing.listingType]}</span>
+          <span className="text-xs text-zinc-500">{SUBTYPE_LABELS[listing.subtype]}</span>
+          <span className="text-[10px] text-zinc-600">{LISTING_TYPE_LABELS[listing.listingType]}</span>
         </div>
       </td>
 
@@ -674,18 +679,18 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       <td className="px-4 py-3">
         <StatusBadge status={listing.status} />
         {listing.status === 'ACTIVE' && listing.expiresAt && (
-          <p className="mt-1 text-[10px] text-[#6B6B80]">
+          <p className="mt-1 text-[10px] text-zinc-500">
             Expires {formatDate(listing.expiresAt)}
           </p>
         )}
         {listing.status === 'PENDING_REVIEW' && (
-          <p className="mt-1 text-[10px] text-[#F59E0B]/70">Est. 1–2 days</p>
+          <p className="mt-1 text-[10px] text-amber-500/80">Est. 1–2 days</p>
         )}
       </td>
 
       {/* Price */}
       <td className="px-4 py-3 text-right">
-        <span className="font-semibold text-[#F5F5F7]">{displayPrice(listing)}</span>
+        <span className="font-semibold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{displayPrice(listing)}</span>
         {listing.aiEstimatedValue && listing.price && (
           <AiDelta price={listing.price} aiValue={listing.aiEstimatedValue} />
         )}
@@ -693,7 +698,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
 
       {/* Views */}
       <td className="px-4 py-3 text-right">
-        <span className={listing.viewCount > 0 ? 'text-[#F5F5F7]' : 'text-[#3A3A4E]'}>
+        <span className={listing.viewCount > 0 ? 'text-white' : 'text-zinc-700'}>
           {listing.viewCount > 0 ? listing.viewCount.toLocaleString() : '—'}
         </span>
       </td>
@@ -703,8 +708,8 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
         <span
           className={cn(
             listing.inquiryCount > 0
-              ? 'font-semibold text-[#C9A84C]'
-              : 'text-[#3A3A4E]',
+              ? 'font-semibold text-amber-400'
+              : 'text-zinc-700',
           )}
         >
           {listing.inquiryCount > 0 ? listing.inquiryCount : '—'}
@@ -712,7 +717,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       </td>
 
       {/* Updated */}
-      <td className="px-4 py-3 text-right text-xs text-[#6B6B80]">
+      <td className="px-4 py-3 text-right text-xs text-zinc-600">
         {formatDate(listing.updatedAt)}
       </td>
 
@@ -730,7 +735,7 @@ function MobileRow({ listing }: { listing: SellerListing }) {
   return (
     <div
       className={cn(
-        'flex items-start gap-3 bg-[#0A0A0F] p-4',
+        'flex items-start gap-3 bg-transparent p-4',
         listing.status === 'ARCHIVED' && 'opacity-50',
       )}
     >
@@ -747,10 +752,10 @@ function MobileRow({ listing }: { listing: SellerListing }) {
       {/* Content */}
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">
-          <p className="text-sm font-medium leading-tight text-[#F5F5F7]">{listing.title}</p>
+          <p className="text-sm font-medium leading-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{listing.title}</p>
           <ActionMenu listing={listing} />
         </div>
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-zinc-500">
           {listing.city}, {listing.state}
           {getSubtitle(listing) && ` · ${getSubtitle(listing)}`}
         </p>
@@ -759,9 +764,9 @@ function MobileRow({ listing }: { listing: SellerListing }) {
           <AssetTypeBadge listing={listing} />
         </div>
         <div className="mt-1 flex items-center justify-between">
-          <span className="text-sm font-semibold text-[#F5F5F7]">{displayPrice(listing)}</span>
+          <span className="text-sm font-semibold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{displayPrice(listing)}</span>
           {listing.viewCount > 0 && (
-            <span className="text-xs text-[#6B6B80]">
+            <span className="text-xs text-zinc-500">
               {listing.viewCount.toLocaleString()} views
             </span>
           )}
@@ -790,12 +795,18 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
   return (
     <div
       className={cn(
-        'group flex flex-col overflow-hidden rounded-xl border transition-all duration-200',
-        isLand ? 'border-[#1E2D1E] bg-[#0D110D]' : 'border-[#2A2A3A] bg-[#111118]',
-        isArchived ? 'opacity-50' : isLand ? 'hover:border-[#4ADE80]/40' : 'hover:border-[#C9A84C]/40',
+        'group flex flex-col overflow-hidden rounded-2xl border transition-all duration-300',
+        isLand
+          ? 'border-emerald-400/10 bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]'
+          : 'border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]',
+        isArchived
+          ? 'opacity-50'
+          : isLand
+            ? 'hover:border-white/15 hover:bg-white/[0.08] hover:-translate-y-1'
+            : 'hover:border-white/15 hover:bg-white/[0.08] hover:-translate-y-1',
         'animate-slide-up',
       )}
-      style={{ animationDelay: `${Math.min(index, 11) * 40}ms` }}
+      style={{ animationDelay: `${Math.min(index, 11) * 50}ms` }}
     >
       {/* Image */}
       <div className={cn('relative', isLand ? 'aspect-[21/9]' : 'aspect-[16/9]')}>
@@ -812,37 +823,37 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         </div>
         {/* Tokenized chip */}
         {listing.isTokenized && (
-          <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-[#0A0A0F]/80 px-2 py-1 text-[10px] font-semibold text-[#C9A84C] backdrop-blur-sm">
+          <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-transparent px-2 py-1 text-[10px] font-semibold text-amber-400 backdrop-blur-sm">
             <TokenIcon /> Tokenized
           </div>
         )}
       </div>
 
       {/* Body */}
-      <div className="flex flex-1 flex-col gap-2 p-4">
+      <div className="flex flex-1 flex-col gap-2 p-5">
         {/* Asset type + subtype */}
         <div className="flex items-center gap-2">
           <AssetTypeBadge listing={listing} />
-          <span className="text-xs text-[#6B6B80]">{SUBTYPE_LABELS[listing.subtype]}</span>
+          <span className="text-xs text-zinc-500">{SUBTYPE_LABELS[listing.subtype]}</span>
         </div>
 
         {/* Title */}
-        <p className="font-semibold leading-snug text-[#F5F5F7] line-clamp-2">{listing.title}</p>
+        <p className="font-semibold leading-snug bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500 line-clamp-2">{listing.title}</p>
 
         {/* Location + specs */}
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-zinc-500">
           {listing.city}, {listing.state}
           {getSubtitle(listing) && (
-            <span className="ml-1 text-[#4A4A5E]">· {getSubtitle(listing)}</span>
+            <span className="ml-1 text-zinc-600">· {getSubtitle(listing)}</span>
           )}
         </p>
 
         {/* Divider */}
-        <div className={cn('my-1 h-px', isLand ? 'bg-[#1E2D1E]' : 'bg-[#1F1F2E]')} />
+        <div className="my-1 h-px bg-white/[0.06]" />
 
         {/* Price row */}
         <div className="flex items-center justify-between">
-          <span className="text-base font-bold text-[#F5F5F7]">{displayPrice(listing)}</span>
+          <span className="text-base font-bold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{displayPrice(listing)}</span>
           {listing.aiEstimatedValue && listing.price && (
             <AiDelta price={listing.price} aiValue={listing.aiEstimatedValue} />
           )}
@@ -850,7 +861,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
 
         {/* Stats row */}
         {(listing.viewCount > 0 || listing.inquiryCount > 0 || listing.saveCount > 0) && (
-          <div className="flex items-center gap-3 text-xs text-[#6B6B80]">
+          <div className="flex items-center gap-3 text-xs text-zinc-500">
             {listing.viewCount > 0 && (
               <span className="flex items-center gap-1">
                 <EyeSmIcon /> {listing.viewCount.toLocaleString()}
@@ -862,7 +873,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
               </span>
             )}
             {listing.inquiryCount > 0 && (
-              <span className="flex items-center gap-1 font-semibold text-[#C9A84C]">
+              <span className="flex items-center gap-1 font-semibold text-amber-400">
                 <MessageSmIcon /> {listing.inquiryCount} inquir{listing.inquiryCount === 1 ? 'y' : 'ies'}
               </span>
             )}
@@ -870,38 +881,35 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         )}
 
         {/* Date */}
-        <p className="text-[10px] text-[#4A4A5E]">Updated {formatDate(listing.updatedAt)}</p>
+        <p className="text-[10px] text-zinc-600">Updated {formatDate(listing.updatedAt)}</p>
       </div>
 
       {/* Footer actions */}
       <div
-        className={cn(
-          'flex items-center justify-between border-t px-4 py-3',
-          isLand ? 'border-[#1E2D1E]' : 'border-[#1F1F2E]',
-        )}
+        className="flex items-center justify-between border-t border-white/[0.06] px-4 py-3"
       >
         {listing.status === 'DRAFT' ? (
           <Link
             href={`/listings/${listing.id}/edit`}
-            className="text-xs font-medium text-[#C9A84C] hover:underline"
+            className="text-xs font-medium text-amber-400 hover:underline"
           >
             Continue editing →
           </Link>
         ) : listing.status === 'ACTIVE' ? (
           <Link
             href={`/marketplace/${listing.id}`}
-            className="text-xs font-medium text-[#A0A0B2] hover:text-[#F5F5F7]"
+            className="text-xs font-medium text-zinc-400 hover:text-white"
           >
             View listing →
           </Link>
         ) : listing.status === 'PENDING_REVIEW' ? (
-          <span className="text-xs text-[#F59E0B]/80">Under review · est. 1–2 days</span>
+          <span className="text-xs text-amber-500/80">Under review · est. 1–2 days</span>
         ) : listing.status === 'PAUSED' ? (
-          <button className="text-xs font-medium text-[#60A5FA] hover:underline">
+          <button className="text-xs font-medium text-blue-400 hover:underline">
             Resume listing
           </button>
         ) : (
-          <span className="text-xs text-[#4A4A5E]">Archived</span>
+          <span className="text-xs text-zinc-600">Archived</span>
         )}
 
         <ActionMenu listing={listing} />
@@ -922,7 +930,7 @@ function AiDelta({ price, aiValue }: { price: number; aiValue: number }) {
     <span
       className={cn(
         'ml-1 text-[10px] font-medium',
-        isUnder ? 'text-[#4ADE80]' : 'text-[#EF4444]',
+        isUnder ? 'text-emerald-400' : 'text-red-400',
       )}
     >
       {isUnder ? `▲ ${pct.toFixed(1)}% AI est.` : `▼ ${Math.abs(pct).toFixed(1)}% AI est.`}
@@ -936,12 +944,16 @@ function EmptyState({ tab, search }: { tab: TabFilter; search: string }) {
   const isSearch = search.trim().length > 0
 
   return (
-    <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118]/60 py-20 text-center">
-      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#1A1A24] text-[#6B6B80]">
-        {isSearch ? <SearchEmptyIcon /> : <ListingsEmptyIcon />}
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] py-20 text-center">
+      <div className="relative mb-4">
+        {/* Atmospheric glow */}
+        <div className="pointer-events-none absolute inset-0 h-16 w-16 rounded-full bg-zinc-500/20 blur-[20px]" />
+        <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-white/[0.08] bg-white/[0.06] backdrop-blur-2xl text-zinc-500">
+          {isSearch ? <SearchEmptyIcon /> : <ListingsEmptyIcon />}
+        </div>
       </div>
 
-      <h3 className="mb-1.5 text-base font-semibold text-[#F5F5F7]">
+      <h3 className="mb-1.5 text-base font-semibold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
         {isSearch
           ? `No results for "${search}"`
           : tab === 'ALL'
@@ -949,7 +961,7 @@ function EmptyState({ tab, search }: { tab: TabFilter; search: string }) {
             : `No ${STATUS_CONFIG[tab as SellerListingStatus]?.label ?? tab} listings`}
       </h3>
 
-      <p className="mb-6 max-w-xs text-sm text-[#6B6B80]">
+      <p className="mb-6 max-w-xs text-sm text-zinc-500">
         {isSearch
           ? 'Try a different search term or clear the filter.'
           : tab === 'ALL'
@@ -993,7 +1005,7 @@ function ViewToggleBtn({
       onClick={onClick}
       className={cn(
         'flex h-9 w-9 items-center justify-center text-sm transition-colors',
-        active ? 'bg-[#1A1A24] text-[#C9A84C]' : 'bg-transparent text-[#6B6B80] hover:text-[#A0A0B2]',
+        active ? 'bg-white/[0.06] text-amber-400 shadow-[inset_0_0_8px_rgba(251,191,36,0.15)]' : 'bg-transparent text-zinc-500 hover:text-zinc-400',
       )}
     >
       {children}

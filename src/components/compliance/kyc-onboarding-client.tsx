@@ -54,7 +54,7 @@ const EMPTY_DOC_SLOT: DocSlot = {
   storageKey: null, url: null, errorMessage: null,
 }
 
-const GOLD = '#C9A84C'
+const GOLD = '#818CF8'
 const GREEN = '#4ADE80'
 
 // ── Step config ────────────────────────────────────────────────────────────
@@ -193,7 +193,7 @@ export function KYCOnboardingClient({
       )}
 
       {/* Step content */}
-      <div className="mt-6 rounded-2xl border border-[#2A2A3A] bg-[#0A0A0F] p-6 shadow-xl sm:p-8">
+      <div className="mt-6 rounded-2xl border border-white/[0.08] bg-black/80 p-6 shadow-xl sm:p-8">
         {step === 1 && (
           <WelcomeStep
             status={status}
@@ -289,8 +289,8 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
                 className={cn(
                   'flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-semibold transition-all',
                   isCompleted ? 'border-transparent text-[#0A0A0F]' :
-                    isActive ? 'border-[#C9A84C] text-[#C9A84C]' :
-                      'border-[#2A2A3A] text-[#4A4A5E]',
+                    isActive ? 'border-indigo-500 text-indigo-400' :
+                      'border-white/[0.08] text-[#4A4A5E]',
                 )}
                 style={isCompleted ? { backgroundColor: GOLD } : {}}
               >
@@ -298,7 +298,7 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
               </div>
               <span className={cn(
                 'hidden text-[9px] font-medium sm:block',
-                isActive ? 'text-[#F5F5F7]' : isCompleted ? 'text-[#C9A84C]' : 'text-[#4A4A5E]',
+                isActive ? 'text-[#F5F5F7]' : isCompleted ? 'text-indigo-400' : 'text-[#4A4A5E]',
               )}>
                 {step.label}
               </span>
@@ -339,7 +339,7 @@ function WelcomeStep({
 
   return (
     <div className="animate-fade-in">
-      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#C9A84C]/15">
+      <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/15">
         <ShieldIcon color={GOLD} />
       </div>
       <h2 className="mb-2 text-xl font-bold text-[#F5F5F7]">Verify Your Identity</h2>
@@ -349,7 +349,7 @@ function WelcomeStep({
       </p>
 
       {/* What you'll need */}
-      <div className="mb-6 rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+      <div className="mb-6 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
         <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
           What You'll Need
         </p>
@@ -370,7 +370,7 @@ function WelcomeStep({
           { label: 'Secure', sub: 'Access controlled' },
           { label: 'Compliant', sub: 'GDPR aligned' },
         ].map(({ label, sub }) => (
-          <div key={label} className="rounded-lg border border-[#2A2A3A] bg-[#14141E] px-3 py-2.5 text-center">
+          <div key={label} className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-center">
             <p className="text-xs font-semibold text-[#F5F5F7]">{label}</p>
             <p className="text-[10px] text-[#6B6B80]">{sub}</p>
           </div>
@@ -385,7 +385,7 @@ function WelcomeStep({
         }}
         className={cn(
           'w-full rounded-xl px-6 py-3.5 text-sm font-semibold transition-all',
-          'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4A84C] disabled:opacity-50',
+          'bg-indigo-500 text-white hover:bg-indigo-600 disabled:opacity-50',
         )}
       >
         {starting ? 'Starting…' : 'Begin Verification'}
@@ -423,7 +423,7 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
             notice: 'Vendor integration in progress. Currently a placeholder step.',
           },
         ].map(({ title, desc, notice }) => (
-          <div key={title} className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+          <div key={title} className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
             <p className="mb-1 text-sm font-semibold text-[#F5F5F7]">{title}</p>
             <p className="text-xs leading-relaxed text-[#6B6B80]">{desc}</p>
             {notice && (
@@ -435,7 +435,7 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
         ))}
       </div>
 
-      <div className="mt-5 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+      <div className="mt-5 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
         <p className="text-xs leading-relaxed text-[#6B6B80]">
           <strong className="text-[#A0A0B2]">Data Retention:</strong> Identity documents are stored
           for the duration required by applicable law and deleted thereafter.
@@ -499,7 +499,7 @@ function PersonalInfoStep({
           hint="Must be 18 years or older."
         />
 
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
           <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
             Residential Address
           </p>
@@ -529,7 +529,7 @@ function PersonalInfoStep({
               <select
                 value={info.country}
                 onChange={f('country')}
-                className="w-full rounded-lg border border-[#2A2A3A] bg-[#22222E] px-3 py-2.5 text-sm text-[#F5F5F7] outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20"
+                className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-sm text-[#F5F5F7] outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20"
               >
                 <option value="US">United States</option>
                 <option value="CA">Canada</option>
@@ -621,7 +621,7 @@ function DocumentUploadStep({
         </div>
 
         {/* Tips */}
-        <div className="rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
           <p className="mb-2 text-xs font-semibold text-[#A0A0B2]">Photo tips</p>
           <ul className="space-y-1 text-xs text-[#6B6B80]">
             {[
@@ -701,9 +701,9 @@ function ReviewSubmitStep({
       </p>
 
       {/* Personal info summary */}
-      <div className="mb-4 overflow-hidden rounded-xl border border-[#2A2A3A]">
-        <div className="bg-[#C9A84C]/10 px-4 py-2.5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Personal Information</p>
+      <div className="mb-4 overflow-hidden rounded-xl border border-white/[0.08]">
+        <div className="bg-indigo-500/10 px-4 py-2.5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">Personal Information</p>
         </div>
         <div className="divide-y divide-[#1A1A24] px-4">
           {[
@@ -720,9 +720,9 @@ function ReviewSubmitStep({
       </div>
 
       {/* Documents summary */}
-      <div className="mb-4 overflow-hidden rounded-xl border border-[#2A2A3A]">
-        <div className="bg-[#C9A84C]/10 px-4 py-2.5">
-          <p className="text-xs font-semibold uppercase tracking-widest text-[#C9A84C]">Documents</p>
+      <div className="mb-4 overflow-hidden rounded-xl border border-white/[0.08]">
+        <div className="bg-indigo-500/10 px-4 py-2.5">
+          <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">Documents</p>
         </div>
         <div className="divide-y divide-[#1A1A24] px-4">
           {[
@@ -740,7 +740,7 @@ function ReviewSubmitStep({
       </div>
 
       {/* Legal acknowledgment */}
-      <div className="mb-5 rounded-xl border border-[#2A2A3A] bg-[#14141E] p-4">
+      <div className="mb-5 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
         <p className="text-xs leading-relaxed text-[#6B6B80]">
           By submitting, I confirm that the information provided is accurate and complete.
           I understand that providing false information may result in account termination
@@ -762,14 +762,14 @@ function ReviewSubmitStep({
         <button
           onClick={onBack}
           disabled={isSubmitting}
-          className="rounded-xl border border-[#2A2A3A] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7] disabled:opacity-50"
+          className="rounded-xl border border-white/[0.08] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-white/[0.10] hover:text-[#F5F5F7] disabled:opacity-50"
         >
           ← Back
         </button>
         <button
           onClick={onSubmit}
           disabled={isSubmitting}
-          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4A84C] disabled:opacity-50"
+          className="rounded-xl bg-indigo-500 px-8 py-2.5 text-sm font-semibold text-white transition-all hover:bg-indigo-600 disabled:opacity-50"
         >
           {isSubmitting ? 'Submitting…' : 'Submit Verification'}
         </button>
@@ -850,7 +850,7 @@ function StatusScreen({
         )}
         <button
           onClick={onRestart}
-          className="rounded-xl bg-[#C9A84C] px-8 py-2.5 text-sm font-semibold text-[#0A0A0F] hover:bg-[#D4A84C] transition-all"
+          className="rounded-xl bg-indigo-500 px-8 py-2.5 text-sm font-semibold text-white hover:bg-indigo-600 transition-all"
         >
           Resubmit Verification
         </button>
@@ -882,9 +882,9 @@ function KycField({
         id={id}
         type={type}
         className={cn(
-          'w-full rounded-lg border border-[#2A2A3A] bg-[#22222E]',
+          'w-full rounded-lg border border-white/[0.08] bg-white/[0.04]',
           'px-4 py-2.5 text-sm text-[#F5F5F7] placeholder:text-[#4A4A5E]',
-          'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
+          'outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
           'transition-colors duration-150',
         )}
         {...props}
@@ -909,14 +909,14 @@ function StepActions({
     <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-between">
       <button
         onClick={onBack}
-        className="rounded-xl border border-[#2A2A3A] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7]"
+        className="rounded-xl border border-white/[0.08] px-5 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-white/[0.10] hover:text-[#F5F5F7]"
       >
         ← Back
       </button>
       <button
         onClick={onNext}
         disabled={!canNext}
-        className="rounded-xl bg-[#C9A84C] px-6 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4A84C] disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
+        className="rounded-xl bg-indigo-500 px-6 py-2.5 text-sm font-semibold text-white transition-all hover:bg-indigo-600 disabled:opacity-40 disabled:cursor-not-allowed w-full sm:w-auto"
       >
         {nextLabel} →
       </button>
@@ -934,7 +934,7 @@ function StatusBadge({ status }: { status: string }) {
   }
   const c = cfg[status] ?? cfg.NONE
   return (
-    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-[#2A2A3A] bg-[#111118] px-3 py-1 text-xs font-semibold', c.color)}>
+    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.04] px-3 py-1 text-xs font-semibold', c.color)}>
       <span className={cn('h-1.5 w-1.5 rounded-full', c.dot)} />
       {c.label}
     </span>

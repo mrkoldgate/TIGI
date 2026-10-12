@@ -71,18 +71,18 @@ function theme(assetType: 'property' | 'land') {
     }
   }
   return {
-    border:       'border-[#2A2A3A]',
-    bg:           'bg-[#0D0D14]',
-    headerBg:     'bg-[#111118]',
-    divider:      'border-[#2A2A3A]',
-    subtleBg:     'bg-[#111118]',
-    accentColor:  '#C9A84C',
-    accentMuted:  'rgba(201,168,76,0.08)',
+    border:       'border-white/[0.08]',
+    bg:           'bg-white/[0.03]',
+    headerBg:     'bg-white/[0.04]',
+    divider:      'border-white/[0.08]',
+    subtleBg:     'bg-white/[0.04]',
+    accentColor:  '#6366F1',
+    accentMuted:  'rgba(99,102,241,0.08)',
     labelColor:   'text-[#4A4A60]',
     subLabelColor:'text-[#6B6B80]',
     textPrimary:  'text-[#F5F5F7]',
-    rangeBg:      'bg-[#2A2A3A]',
-    confBarBg:    'bg-[#2A2A3A]',
+    rangeBg:      'bg-white/[0.06]',
+    confBarBg:    'bg-white/[0.06]',
   }
 }
 

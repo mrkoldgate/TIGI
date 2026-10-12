@@ -14,10 +14,10 @@ interface SubscriptionBadgeProps {
 }
 
 const TIER_CONFIG: Record<string, { label: string; className: string }> = {
-  pro:        { label: 'Pro',        className: 'border-[#C9A84C]/40 bg-[#C9A84C]/10 text-[#C9A84C]' },
+  pro:        { label: 'Pro',        className: 'border-[#6366F1]/40 bg-[#6366F1]/10 text-[#6366F1]' },
   pro_plus:   { label: 'Pro+',       className: 'border-[#818CF8]/40 bg-[#818CF8]/10 text-[#818CF8]' },
   enterprise: { label: 'Enterprise', className: 'border-[#4ADE80]/40 bg-[#4ADE80]/10 text-[#4ADE80]' },
-  free:       { label: 'Free',       className: 'border-[#2A2A3A] bg-transparent text-[#6B6B80]' },
+  free:       { label: 'Free',       className: 'border-white/[0.08] bg-transparent text-[#6B6B80]' },
 }
 
 export function SubscriptionBadge({ tier, className, showFree = false }: SubscriptionBadgeProps) {

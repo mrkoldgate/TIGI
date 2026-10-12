@@ -109,7 +109,7 @@ export default function RegisterPage() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isSubmitting || googleLoading}
-        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-[#2A2A3A] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
+        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-white/[0.04] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
       >
         {googleLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -121,9 +121,9 @@ export default function RegisterPage() {
 
       {/* Divider */}
       <div className="relative mb-6 flex items-center">
-        <div className="flex-1 border-t border-[#1E1E2A]" />
+        <div className="flex-1 border-t border-white/[0.04]" />
         <span className="mx-4 text-xs text-[#3A3A48]">or sign up with email</span>
-        <div className="flex-1 border-t border-[#1E1E2A]" />
+        <div className="flex-1 border-t border-white/[0.04]" />
       </div>
 
       {/* Form */}
@@ -142,7 +142,7 @@ export default function RegisterPage() {
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
               'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-              errors.name ? 'border-red-500/50' : 'border-[#2A2A3A]',
+              errors.name ? 'border-red-500/50' : 'border-white/[0.04]',
             )}
           />
           {errors.name && (
@@ -164,7 +164,7 @@ export default function RegisterPage() {
             className={cn(
               'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
               'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-              errors.email ? 'border-red-500/50' : 'border-[#2A2A3A]',
+              errors.email ? 'border-red-500/50' : 'border-white/[0.04]',
             )}
           />
           {errors.email && (
@@ -187,7 +187,7 @@ export default function RegisterPage() {
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
                 'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-                errors.password ? 'border-red-500/50' : 'border-[#2A2A3A]',
+                errors.password ? 'border-red-500/50' : 'border-white/[0.04]',
               )}
             />
             <button
@@ -228,7 +228,7 @@ export default function RegisterPage() {
               className={cn(
                 'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
                 'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
-                errors.confirmPassword ? 'border-red-500/50' : 'border-[#2A2A3A]',
+                errors.confirmPassword ? 'border-red-500/50' : 'border-white/[0.04]',
               )}
             />
             <button

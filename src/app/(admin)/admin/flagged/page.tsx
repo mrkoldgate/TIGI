@@ -48,7 +48,7 @@ export default function AdminFlaggedPage() {
         <FlaggedItems items={MOCK_FLAGGED_ITEMS} />
       </div>
 
-      <div className="rounded-xl border border-dashed border-[#2A2A3A] bg-[#111118] p-5 text-center">
+      <div className="rounded-xl border border-dashed border-white/[0.04] bg-[#050505] p-5 text-center">
         <div className="flex items-center justify-center gap-2">
           <Flag className="h-4 w-4 text-[#6B6B80]" />
           <p className="text-sm text-[#6B6B80]">

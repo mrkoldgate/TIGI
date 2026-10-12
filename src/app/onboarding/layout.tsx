@@ -15,7 +15,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         className="pointer-events-none absolute inset-x-0 top-0 h-96"
         style={{
           background:
-            'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(201,168,76,0.06) 0%, transparent 70%)',
+            'radial-gradient(ellipse 80% 50% at 50% -10%, rgba(99,102,241,0.06) 0%, transparent 70%)',
         }}
       />
 
@@ -24,7 +24,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         className="pointer-events-none absolute inset-0 opacity-[0.018]"
         style={{
           backgroundImage:
-            'linear-gradient(rgba(201,168,76,1) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,1) 1px, transparent 1px)',
+            'linear-gradient(rgba(99,102,241,1) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }}
       />
@@ -67,16 +67,16 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
 function TigiLogoMark() {
   return (
     <svg width="22" height="22" viewBox="0 0 28 28" fill="none" aria-hidden>
-      <rect width="28" height="28" rx="6" fill="#C9A84C" fillOpacity="0.12" />
+      <rect width="28" height="28" rx="6" fill="#6366F1" fillOpacity="0.12" />
       <path
         d="M14 6L20 10V14L14 18L8 14V10L14 6Z"
-        stroke="#C9A84C"
+        stroke="#6366F1"
         strokeWidth="1.5"
         strokeLinejoin="round"
       />
       <path
         d="M14 18V22M8 14L4 16M20 14L24 16"
-        stroke="#C9A84C"
+        stroke="#6366F1"
         strokeWidth="1.5"
         strokeLinecap="round"
       />

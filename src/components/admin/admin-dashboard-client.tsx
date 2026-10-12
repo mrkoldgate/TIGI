@@ -64,7 +64,7 @@ function AdminSectionHeader({
           {title}
         </h2>
         {count !== undefined && (
-          <span className="rounded bg-[#1A1A24] px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-[#A0A0B2]">
+          <span className="rounded bg-white/[0.04] px-1.5 py-0.5 text-[11px] font-semibold tabular-nums text-[#A0A0B2] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             {count}
           </span>
         )}
@@ -78,7 +78,7 @@ function AdminSectionHeader({
       {href && (
         <a
           href={href}
-          className="text-xs text-[#6B6B80] transition-colors hover:text-[#C9A84C]"
+          className="text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
         >
           View all →
         </a>
@@ -126,7 +126,7 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
 
         {/* System status */}
         <div className="flex flex-shrink-0 flex-col items-end gap-2">
-          <div className="flex items-center gap-2 rounded-lg border border-[#1F1F2E] bg-[#111118] px-3 py-1.5">
+          <div className="flex items-center gap-2 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             <span className="h-2 w-2 animate-pulse rounded-full bg-[#4ADE80]" />
             <span className="text-xs text-[#6B6B80]">All systems operational</span>
           </div>
@@ -250,7 +250,9 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
             count={stats.totalUsers}
             href="/admin/users"
           />
-          <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+          <div className="relative overflow-hidden rounded-xl border border-white/[0.04] bg-[#050505] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+            <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+            <div className="noise absolute inset-0 pointer-events-none" />
             <UserSummary stats={stats} recentUsers={MOCK_RECENT_USERS} />
           </div>
         </section>

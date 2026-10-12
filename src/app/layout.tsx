@@ -59,7 +59,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#020409',
+  themeColor: '#000000',
   colorScheme: 'dark',
 }
 
@@ -87,7 +87,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-screen bg-[#020409] text-[#F8FAFC] antialiased">
+      <body className="min-h-screen bg-black text-[#F8FAFC] antialiased">
         <CustomCursor />
         <Providers>{children}</Providers>
       </body>

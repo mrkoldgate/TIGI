@@ -49,7 +49,7 @@ import { SellerListingsClient } from './seller-listings-client'
 //   - MOCK_OWNER_USER / MOCK_OWNER_INQUIRIES / MOCK_OWNER_PERFORMANCE from owner-mock-data
 //
 // Visual consistency: reuses StatCard, SectionHeader from buyer dashboard.
-// Color language: property = gold (#C9A84C), land = green (#4ADE80), both = neutral.
+// Color language: property = indigo (#6366F1), land = green (#4ADE80), both = neutral.
 // ---------------------------------------------------------------------------
 
 interface OwnerDashboardClientProps {
@@ -94,7 +94,7 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
   const greeting = getGreeting(ownerUser.firstName)
 
   return (
-    <div className="animate-fade-in pt-6 pb-16 space-y-8">
+    <div className="animate-fade-in pt-8 pb-16 space-y-8">
 
       {/* ── Welcome bar ─────────────────────────────────────────────────── */}
       <OwnerWelcomeBar
@@ -104,14 +104,12 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
         newInquiryCount={newInquiryCount}
       />
 
-      {/* ── Quick Actions ───────────────────────────────────────────────── */}
-      <section aria-label="Quick actions">
-        <QuickActionsStrip />
-      </section>
-
-      {/* ── Stats row ───────────────────────────────────────────────────── */}
+      {/* ── Bento Grid: Stats + Quick Actions ────────────────────────────
+          Desktop: 5-col stats row above a 4-col quick actions row
+          This creates the classic Bento "tiled dashboard" feel.
+      ──────────────────────────────────────────────────────────────────── */}
       <section aria-label="Summary statistics">
-        <div className="stagger-children grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="stagger-children grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
           <StatCard
             label="Active Listings"
             value={stats.active}
@@ -152,44 +150,72 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
         </div>
       </section>
 
-      {/* ── Two-column: Inquiries + Performance ─────────────────────────── */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      {/* ── Quick Actions ───────────────────────────────────────────────── */}
+      <section aria-label="Quick actions">
+        <QuickActionsStrip />
+      </section>
 
-        {/* Left 2/3: Recent Inquiries */}
+      {/* ── Bento Body: Inquiries (2/3) + Performance (1/3) ──────────────
+          The two panels sit in glass containers, creating a tiled Bento feel.
+      ──────────────────────────────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+
+        {/* Left 2/3: Recent Inquiries — glass container */}
         <section aria-label="Recent inquiries" className="lg:col-span-2">
-          <SectionHeader
-            title={newInquiryCount > 0 ? `Inquiries · ${newInquiryCount} new` : 'Inquiries'}
-            description="Messages from potential buyers, tenants, and investors."
-            milestone="M6 · Full Inbox"
-          />
-          <div className="mt-4">
-            <InquiryFeed inquiries={displayInquiries} />
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6">
+            <div className="noise absolute inset-0 pointer-events-none" />
+            {/* Ambient glow */}
+            <div className="pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full bg-amber-400/[0.03] blur-[50px]" aria-hidden="true" />
+            <div className="relative">
+              <SectionHeader
+                title={newInquiryCount > 0 ? `Inquiries · ${newInquiryCount} new` : 'Inquiries'}
+                description="Messages from potential buyers, tenants, and investors."
+                milestone="M6 · Full Inbox"
+              />
+              <div className="mt-4">
+                <InquiryFeed inquiries={displayInquiries} />
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Right 1/3: Performance */}
+        {/* Right 1/3: Performance — glass container */}
         <section aria-label="Performance overview">
-          <SectionHeader
-            title="Performance"
-            description="Engagement across your portfolio."
-            milestone="M3 · Advanced"
-          />
-          <div className="mt-4 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-4">
-            <PerformancePanel stats={MOCK_OWNER_PERFORMANCE} />
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6">
+            <div className="noise absolute inset-0 pointer-events-none" />
+            {/* Ambient glow */}
+            <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full bg-violet-400/[0.04] blur-[40px]" aria-hidden="true" />
+            <div className="relative">
+              <SectionHeader
+                title="Performance"
+                description="Engagement across your portfolio."
+                milestone="M3 · Advanced"
+              />
+              <div className="mt-4">
+                <PerformancePanel stats={MOCK_OWNER_PERFORMANCE} />
+              </div>
+            </div>
           </div>
         </section>
       </div>
 
-      {/* ── My Listings (full width) ────────────────────────────────────── */}
+      {/* ── My Listings (full width) — glass container ──────────────────── */}
       <section aria-label="My listings">
-        <SectionHeader
-          title="My Listings"
-          description="Manage, publish, and track all your properties and land parcels."
-          viewAllHref="/listings/new"
-          viewAllLabel="+ New listing"
-        />
-        <div className="mt-4">
-          <SellerListingsClient listings={listings} embeddedMode />
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-6">
+          <div className="noise absolute inset-0 pointer-events-none" />
+          {/* Ambient glow */}
+          <div className="pointer-events-none absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-amber-400/[0.03] blur-[60px]" aria-hidden="true" />
+          <div className="relative">
+            <SectionHeader
+              title="My Listings"
+              description="Manage, publish, and track all your properties and land parcels."
+              viewAllHref="/listings/new"
+              viewAllLabel="+ New listing"
+            />
+            <div className="mt-4">
+              <SellerListingsClient listings={listings} embeddedMode />
+            </div>
+          </div>
         </div>
       </section>
     </div>
@@ -209,45 +235,53 @@ interface OwnerWelcomeBarProps {
 
 function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: OwnerWelcomeBarProps) {
   return (
-    <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-      {/* Left */}
-      <div>
-        <p className="text-label text-[#6B6B80]">{greeting}</p>
-        <h1 className="text-h1 mt-0.5">{user.name}</h1>
-        <div className="mt-2 flex flex-wrap items-center gap-2">
-          <span className="rounded border border-white/[0.08] bg-[#020409]/80 px-2 py-0.5 text-[11px] text-[#A0A0B2]">
-            {user.role}
-          </span>
-          <KycBadge status={user.kycStatus} />
-          {portfolioValue > 0 && (
-            <span className="rounded border border-[#C9A84C]/30 bg-[#C9A84C]/10 px-2 py-0.5 text-[11px] text-[#C9A84C]">
-              Portfolio · {formatPrice(portfolioValue)}
-            </span>
-          )}
-          {newInquiryCount > 0 && (
-            <span className="rounded-full bg-[#C9A84C] px-2 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
-              {newInquiryCount} new {newInquiryCount === 1 ? 'inquiry' : 'inquiries'}
-            </span>
-          )}
-        </div>
-      </div>
+    <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] sm:p-8">
+      <div className="noise absolute inset-0 pointer-events-none" />
+      {/* Accent hairline */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" aria-hidden="true" />
+      {/* Ambient glow */}
+      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-amber-400/[0.04] blur-[50px]" aria-hidden="true" />
 
-      {/* Right: primary CTA */}
-      <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
-        <Link
-          href="/listings/new?type=property"
-          className="flex items-center gap-1.5 rounded-lg bg-[#C9A84C] px-4 py-2 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
-        >
-          <Building2 className="h-3.5 w-3.5" />
-          New Property
-        </Link>
-        <Link
-          href="/listings/new?type=land"
-          className="flex items-center gap-1.5 rounded-lg border border-[#4ADE80]/40 bg-[#4ADE80]/10 px-4 py-2 text-sm font-semibold text-[#4ADE80] transition-colors hover:border-[#4ADE80]/60"
-        >
-          <Map className="h-3.5 w-3.5" />
-          New Land
-        </Link>
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        {/* Left */}
+        <div>
+          <p className="text-label text-zinc-500">{greeting}</p>
+          <h1 className="text-h1 mt-0.5 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{user.name}</h1>
+          <div className="mt-2 flex flex-wrap items-center gap-2">
+            <span className="rounded border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl px-2 py-0.5 text-[11px] text-zinc-400">
+              {user.role}
+            </span>
+            <KycBadge status={user.kycStatus} />
+            {portfolioValue > 0 && (
+              <span className="rounded border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] text-amber-400">
+                Portfolio · {formatPrice(portfolioValue)}
+              </span>
+            )}
+            {newInquiryCount > 0 && (
+              <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-semibold text-black shadow-[0_0_12px_rgba(251,191,36,0.4)]">
+                {newInquiryCount} new {newInquiryCount === 1 ? 'inquiry' : 'inquiries'}
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Right: primary CTA */}
+        <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
+          <Link
+            href="/listings/new?type=property"
+            className="flex items-center gap-1.5 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition-all hover:opacity-90 shadow-[0_0_20px_rgba(251,191,36,0.3)]"
+          >
+            <Building2 className="h-3.5 w-3.5" />
+            New Property
+          </Link>
+          <Link
+            href="/listings/new?type=land"
+            className="flex items-center gap-1.5 rounded-lg border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-400 transition-all hover:border-emerald-400/60 hover:shadow-[0_0_16px_rgba(52,211,153,0.2)]"
+          >
+            <Map className="h-3.5 w-3.5" />
+            New Land
+          </Link>
+        </div>
       </div>
     </div>
   )
@@ -260,7 +294,7 @@ function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: Ow
 function KycBadge({ status }: { status: 'UNVERIFIED' | 'PENDING' | 'VERIFIED' }) {
   if (status === 'VERIFIED') {
     return (
-      <span className="flex items-center gap-1 rounded border border-[#4ADE80]/30 bg-[#4ADE80]/10 px-2 py-0.5 text-[11px] text-[#4ADE80]">
+      <span className="flex items-center gap-1 rounded border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[11px] text-emerald-400 shadow-[inset_0_0_6px_rgba(52,211,153,0.15)]">
         <ShieldCheck className="h-3 w-3" />
         KYC Verified
       </span>
@@ -268,7 +302,7 @@ function KycBadge({ status }: { status: 'UNVERIFIED' | 'PENDING' | 'VERIFIED' })
   }
   if (status === 'PENDING') {
     return (
-      <span className="flex items-center gap-1 rounded border border-[#F59E0B]/30 bg-[#F59E0B]/10 px-2 py-0.5 text-[11px] text-[#F59E0B]">
+      <span className="flex items-center gap-1 rounded border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[11px] text-amber-500">
         KYC Pending
       </span>
     )
@@ -276,7 +310,7 @@ function KycBadge({ status }: { status: 'UNVERIFIED' | 'PENDING' | 'VERIFIED' })
   return (
     <Link
       href="/settings"
-      className="flex items-center gap-1 rounded border border-[#F87171]/30 bg-[#F87171]/10 px-2 py-0.5 text-[11px] text-[#F87171] hover:opacity-80"
+      className="flex items-center gap-1 rounded border border-red-400/30 bg-red-400/10 px-2 py-0.5 text-[11px] text-red-400 hover:opacity-80"
     >
       Complete KYC →
     </Link>
@@ -288,24 +322,27 @@ function KycBadge({ status }: { status: 'UNVERIFIED' | 'PENDING' | 'VERIFIED' })
 // ---------------------------------------------------------------------------
 
 function QuickActionsStrip() {
-  const ACCENT: Record<string, { border: string; bg: string; text: string; icon: string }> = {
+  const ACCENT: Record<string, { border: string; bg: string; text: string; icon: string; glow: string }> = {
     primary: {
-      border: 'border-[#C9A84C]/30 hover:border-[#C9A84C]/60',
-      bg:     'bg-[#C9A84C]/5',
-      text:   'text-[#C9A84C]',
-      icon:   'text-[#C9A84C]',
+      border: 'border-amber-400/20 hover:border-amber-400/40',
+      bg:     'bg-amber-400/[0.04]',
+      text:   'text-amber-400',
+      icon:   'text-amber-400',
+      glow:   'bg-amber-400/[0.06]',
     },
     land: {
-      border: 'border-[#4ADE80]/25 hover:border-[#4ADE80]/50',
-      bg:     'bg-[#4ADE80]/5',
-      text:   'text-[#4ADE80]',
-      icon:   'text-[#4ADE80]',
+      border: 'border-emerald-400/20 hover:border-emerald-400/40',
+      bg:     'bg-emerald-400/[0.04]',
+      text:   'text-emerald-400',
+      icon:   'text-emerald-400',
+      glow:   'bg-emerald-400/[0.06]',
     },
     default: {
-      border: 'border-white/[0.08] hover:border-white/[0.10]',
-      bg:     'bg-white/[0.04] backdrop-blur-xl',
-      text:   'text-[#A0A0B2]',
-      icon:   'text-[#6B6B80]',
+      border: 'border-white/[0.08] hover:border-white/15',
+      bg:     'bg-white/[0.04] backdrop-blur-2xl',
+      text:   'text-zinc-400',
+      icon:   'text-zinc-500',
+      glow:   'bg-white/[0.03]',
     },
   }
 
@@ -318,7 +355,7 @@ function QuickActionsStrip() {
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-      {OWNER_QUICK_ACTIONS.map((action) => {
+      {OWNER_QUICK_ACTIONS.map((action, i) => {
         const style = ACCENT[action.variant]
         const Icon = ACTION_ICONS[action.id] ?? ArrowRight
         const isLocked = Boolean(action.milestone)
@@ -326,39 +363,42 @@ function QuickActionsStrip() {
         const inner = (
           <div
             className={cn(
-              'flex flex-col gap-3 rounded-xl border p-4 transition-all',
+              'group relative flex flex-col gap-3 overflow-hidden rounded-2xl border p-6 transition-all duration-300 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]',
               style.border,
               style.bg,
-              isLocked ? 'opacity-60' : 'cursor-pointer'
+              isLocked ? 'opacity-60' : 'cursor-pointer hover:-translate-y-1'
             )}
           >
+            {/* Ambient glow */}
+            <div className={cn('pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full blur-[30px] opacity-50 transition-opacity duration-500 group-hover:opacity-80', style.glow)} aria-hidden="true" />
+
             {/* Top row: icon + milestone badge */}
-            <div className="flex items-center justify-between">
-              <div className={`flex h-8 w-8 items-center justify-center rounded-lg bg-black/20`}>
-                <Icon className={`h-4 w-4 ${style.icon}`} />
+            <div className="relative flex items-center justify-between">
+              <div className={cn('flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.06] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]', style.bg)}>
+                <Icon className={cn('h-4.5 w-4.5', style.icon)} style={{ filter: 'drop-shadow(0 0 6px currentColor)' }} />
               </div>
               {action.milestone && (
-                <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-[#020409]/80 px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
+                <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl px-1.5 py-0.5 text-[10px] text-zinc-500">
+                  <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
                   {action.milestone}
                 </span>
               )}
             </div>
 
             {/* Label */}
-            <div>
-              <p className={`text-sm font-semibold ${style.text}`}>{action.label}</p>
-              <p className="mt-0.5 text-xs text-[#6B6B80] leading-snug">{action.description}</p>
+            <div className="relative">
+              <p className={cn('text-sm font-semibold tracking-tight', style.text)}>{action.label}</p>
+              <p className="mt-0.5 text-xs text-zinc-500 leading-snug">{action.description}</p>
             </div>
           </div>
         )
 
         if (isLocked) {
-          return <div key={action.id}>{inner}</div>
+          return <div key={action.id} className="animate-slide-up" style={{ animationDelay: `${i * 50}ms` }}>{inner}</div>
         }
 
         return (
-          <Link key={action.id} href={action.href}>
+          <Link key={action.id} href={action.href} className="animate-slide-up" style={{ animationDelay: `${i * 50}ms` }}>
             {inner}
           </Link>
         )

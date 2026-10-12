@@ -54,9 +54,9 @@ interface PendingIntent {
 // ── Config ─────────────────────────────────────────────────────────────────
 
 const INTENT_CONFIG: Record<IntentType, { label: string; confirmText: string; color: string; icon?: React.ComponentType<React.SVGProps<SVGSVGElement>> }> = {
-  PREPARE_PURCHASE:  { label: 'Prepare Purchase',  confirmText: 'Confirm purchase intent',  color: '#C9A84C' },
-  PREPARE_LEASE:     { label: 'Prepare Lease',      confirmText: 'Confirm lease intent',      color: '#C9A84C' },
-  PREPARE_INVEST:    { label: 'Invest',             confirmText: 'Confirm investment intent', color: '#C9A84C', icon: Zap },
+  PREPARE_PURCHASE:  { label: 'Prepare Purchase',  confirmText: 'Confirm purchase intent',  color: '#6366F1' },
+  PREPARE_LEASE:     { label: 'Prepare Lease',      confirmText: 'Confirm lease intent',      color: '#6366F1' },
+  PREPARE_INVEST:    { label: 'Invest',             confirmText: 'Confirm investment intent', color: '#6366F1', icon: Zap },
   EXPRESS_INTEREST:  { label: 'Express Interest',   confirmText: 'Submit interest',           color: '#6B6B80' },
 }
 
@@ -81,7 +81,7 @@ function SuccessCard({
   theme:       'default' | 'land'
 }) {
   const borderColor = theme === 'land' ? 'border-[#22C55E]/25' : 'border-[#22C55E]/25'
-  const bgColor     = theme === 'land' ? 'bg-[#0D110D]'        : 'bg-[#0D0D14]'
+  const bgColor     = theme === 'land' ? 'bg-[#0D110D]'        : 'bg-white/[0.03]'
 
   return (
     <div className={cn('rounded-xl border p-4', borderColor, bgColor)}>
@@ -139,11 +139,11 @@ function ConfirmPanel({
   const [durationMonths,setDurationMonths]= useState<string>('')
   const [intendedUse,   setIntendedUse]   = useState('')
 
-  const borderClass = theme === 'land' ? 'border-[#1E2D1E]' : 'border-[#2A2A3A]'
-  const bgClass     = theme === 'land' ? 'bg-[#0D110D]'     : 'bg-[#0D0D14]'
+  const borderClass = theme === 'land' ? 'border-[#1E2D1E]' : 'border-white/[0.08]'
+  const bgClass     = theme === 'land' ? 'bg-[#0D110D]'     : 'bg-white/[0.03]'
   const inputClass  = theme === 'land'
     ? 'border-[#1E2D1E] bg-[#111A11] text-[#E8F0E8] placeholder-[#4A6A4A] focus:border-[#2A3A2A]'
-    : 'border-[#2A2A3A] bg-[#111118] text-[#F5F5F7] placeholder-[#4A4A60] focus:border-[#3A3A4A]'
+    : 'border-white/[0.08] bg-white/[0.04] text-[#F5F5F7] placeholder-[#4A4A60] focus:border-white/[0.10]'
   const labelClass  = theme === 'land' ? 'text-[#5A7060]' : 'text-[#6B6B80]'
 
   const handleSubmit = () => {
@@ -286,7 +286,7 @@ function ConfirmPanel({
           type="button"
           onClick={handleSubmit}
           disabled={isSubmitting}
-          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-[#C9A84C] py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] disabled:opacity-60 active:scale-[0.98]"
+          className="flex flex-1 items-center justify-center gap-1.5 rounded-xl bg-indigo-500 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-indigo-400 disabled:opacity-60 active:scale-[0.98]"
         >
           {isSubmitting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -298,7 +298,7 @@ function ConfirmPanel({
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          className="rounded-xl border border-[#2A2A3A] px-4 py-2.5 text-sm text-[#6B6B80] transition-all hover:border-[#3A3A4A] hover:text-[#A0A0B2] disabled:opacity-50 active:scale-[0.98]"
+          className="rounded-xl border border-white/[0.08] px-4 py-2.5 text-sm text-[#6B6B80] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] disabled:opacity-50 active:scale-[0.98]"
         >
           Cancel
         </button>
@@ -414,7 +414,7 @@ export function IntentPanel({
         <button
           type="button"
           onClick={() => openIntent('PREPARE_PURCHASE')}
-          className="w-full rounded-xl bg-[#C9A84C] py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B55A] active:scale-[0.98]"
+          className="w-full rounded-xl bg-indigo-500 py-3 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-indigo-400 active:scale-[0.98]"
         >
           {theme === 'land' ? 'Acquire Land' : 'Buy Property'}
         </button>
@@ -427,8 +427,8 @@ export function IntentPanel({
           className={cn(
             'w-full rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
             showBuy
-              ? 'border border-[#2A2A3A] text-[#A0A0B2] hover:border-[#3A3A4A] hover:text-[#F5F5F7]'
-              : 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B55A]',
+              ? 'border border-white/[0.08] text-[#A0A0B2] hover:border-white/[0.10] hover:text-[#F5F5F7]'
+              : 'bg-indigo-500 text-[#0A0A0F] hover:bg-indigo-400',
           )}
         >
           {theme === 'land' ? 'Lease Parcel' : 'Schedule Tour'}
@@ -439,7 +439,7 @@ export function IntentPanel({
         <button
           type="button"
           onClick={() => openIntent('PREPARE_INVEST')}
-          className="w-full rounded-xl bg-[#C9A84C]/15 py-2.5 text-sm font-medium text-[#C9A84C] ring-1 ring-inset ring-[#C9A84C]/25 transition-all hover:bg-[#C9A84C]/25 active:scale-[0.98]"
+          className="w-full rounded-xl bg-indigo-500/15 py-2.5 text-sm font-medium text-indigo-400 ring-1 ring-inset ring-indigo-500/25 transition-all hover:bg-indigo-500/25 active:scale-[0.98]"
         >
           <Zap className="mr-1.5 inline h-3.5 w-3.5" />
           Invest from ${tokenPricePerFraction!.toLocaleString()}
@@ -450,7 +450,7 @@ export function IntentPanel({
         <button
           type="button"
           onClick={() => openIntent('EXPRESS_INTEREST')}
-          className="w-full rounded-xl border border-[#2A2A3A] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-[#3A3A4A] hover:text-[#A0A0B2] active:scale-[0.98]"
+          className="w-full rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] active:scale-[0.98]"
         >
           Express Interest
         </button>

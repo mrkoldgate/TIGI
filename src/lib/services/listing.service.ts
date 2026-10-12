@@ -93,6 +93,9 @@ class ListingServiceImpl implements IListingService {
 
         // Tokenization
         isTokenized: input.isTokenized ?? false,
+
+        // Features
+        features: [],
       },
     })
   }

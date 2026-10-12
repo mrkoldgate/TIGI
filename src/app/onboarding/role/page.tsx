@@ -119,8 +119,8 @@ export default function RolePage() {
           className={cn(
             'flex min-w-[200px] items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold transition-all',
             selected && !loading
-              ? 'bg-[#C9A84C] text-[#0A0A0F] hover:bg-[#D4B86A] active:scale-[0.98]'
-              : 'cursor-not-allowed bg-[#1A1A24] text-[#3A3A48]',
+              ? 'bg-[#6366F1] text-[#0A0A0F] hover:bg-[#4F46E5] active:scale-[0.98]'
+              : 'cursor-not-allowed bg-white/[0.04] text-[#3A3A48]',
           )}
         >
           {loading ? (
@@ -166,10 +166,10 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
         'group relative w-full rounded-2xl border text-left transition-all duration-200',
         compact ? 'p-4' : 'p-5',
         selected
-          ? 'border-[#C9A84C]/60 shadow-[0_0_24px_rgba(201,168,76,0.1)]'
-          : 'border-[#1C1C28] hover:border-[#2A2A3A]',
+          ? 'border-[#6366F1]/60 shadow-[0_0_24px_rgba(99,102,241,0.1)]'
+          : 'border-[#1C1C28] hover:border-white/[0.04]',
       )}
-      style={{ background: selected ? 'rgba(201,168,76,0.04)' : card.gradient }}
+      style={{ background: selected ? 'rgba(99,102,241,0.04)' : card.gradient }}
       aria-pressed={selected}
     >
       {/* Selected check */}
@@ -177,8 +177,8 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
         className={cn(
           'absolute right-3 top-3 flex h-5 w-5 items-center justify-center rounded-full transition-all',
           selected
-            ? 'bg-[#C9A84C] opacity-100'
-            : 'border border-[#2A2A3A] bg-transparent opacity-0 group-hover:opacity-100',
+            ? 'bg-[#6366F1] opacity-100'
+            : 'border border-white/[0.04] bg-transparent opacity-0 group-hover:opacity-100',
         )}
       >
         <Check className={cn('h-3 w-3', selected ? 'text-[#0A0A0F]' : 'text-[#3A3A48]')} />
@@ -186,7 +186,7 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
 
       {/* Popular badge */}
       {card.badge && !compact && (
-        <span className="absolute left-3 top-3 rounded-full border border-[#C9A84C]/30 bg-[#C9A84C]/10 px-2 py-0.5 text-[10px] font-medium text-[#C9A84C]">
+        <span className="absolute left-3 top-3 rounded-full border border-[#6366F1]/30 bg-[#6366F1]/10 px-2 py-0.5 text-[10px] font-medium text-[#6366F1]">
           {card.badge}
         </span>
       )}
@@ -194,14 +194,14 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
       {/* Icon */}
       <div
         className={cn(
-          'flex items-center justify-center rounded-xl border border-[#C9A84C]/15 bg-[#C9A84C]/8',
+          'flex items-center justify-center rounded-xl border border-[#6366F1]/15 bg-[#6366F1]/8',
           compact ? 'mb-3 h-8 w-8' : 'mb-4 h-10 w-10',
           card.badge && !compact && 'mt-5',
         )}
       >
         <Icon
           className={cn(
-            'text-[#C9A84C]',
+            'text-[#6366F1]',
             compact ? 'h-4 w-4' : 'h-5 w-5',
           )}
         />
@@ -211,7 +211,7 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
       <p className={cn('font-heading font-semibold text-white', compact ? 'text-sm' : 'text-base')}>
         {card.label}
       </p>
-      <p className={cn('mt-0.5 text-[#C9A84C]/80', compact ? 'text-[10px]' : 'text-xs')}>
+      <p className={cn('mt-0.5 text-[#6366F1]/80', compact ? 'text-[10px]' : 'text-xs')}>
         {card.tagline}
       </p>
       {!compact && (

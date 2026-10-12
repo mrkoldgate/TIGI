@@ -91,7 +91,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-xl border border-[#2A2A3A] bg-[#0D0D14] p-5 space-y-4"
+      className="rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5 space-y-4"
     >
       {/* Header */}
       <div className="flex items-center justify-between">
@@ -123,7 +123,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g. Jane Smith"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
           />
         </div>
 
@@ -135,7 +135,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="jane@example.com"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
           />
         </div>
 
@@ -147,7 +147,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+1 (555) 000-0000"
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
           />
         </div>
 
@@ -157,7 +157,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
           <select
             value={relationship}
             onChange={(e) => setRelationship(e.target.value)}
-            className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-3 py-2 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
           >
             {RELATIONSHIP_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -177,7 +177,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
               max={100}
               value={allocation}
               onChange={(e) => setAllocation(e.target.value)}
-              className="w-full rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 pr-8 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+              className="w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-3 py-2 pr-8 text-sm text-[#F5F5F7] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
             />
             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#4A4A5E]">%</span>
           </div>
@@ -191,7 +191,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
             onChange={(e) => setNotes(e.target.value)}
             rows={2}
             placeholder="Any additional instructions for this beneficiary…"
-            className="w-full resize-none rounded-lg border border-[#2A2A3A] bg-[#111118] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
+            className="w-full resize-none rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#4A4A5E] outline-none focus:border-[#A78BFA]/50 focus:ring-1 focus:ring-[#A78BFA]/20"
           />
         </div>
       </div>
@@ -208,7 +208,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
         <button
           type="button"
           onClick={onCancel}
-          className="rounded-lg border border-[#2A2A3A] px-4 py-2 text-xs font-medium text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#A0A0B2] transition-colors"
+          className="rounded-lg border border-white/[0.08] px-4 py-2 text-xs font-medium text-[#6B6B80] hover:border-white/[0.10] hover:text-[#A0A0B2] transition-colors"
         >
           Cancel
         </button>
@@ -218,7 +218,7 @@ export function BeneficiaryForm({ initialData, onSave, onCancel }: BeneficiaryFo
           className={cn(
             'inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold transition-all',
             saving || !name.trim()
-              ? 'bg-[#2A2A3A] text-[#4A4A5E] cursor-not-allowed'
+              ? 'bg-white/[0.06] text-[#4A4A5E] cursor-not-allowed'
               : 'bg-[#A78BFA]/20 text-[#A78BFA] border border-[#A78BFA]/30 hover:bg-[#A78BFA]/30',
           )}
         >

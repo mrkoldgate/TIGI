@@ -57,7 +57,7 @@ export function InsightCard({ insight }: InsightCardProps) {
   return (
     <div
       className={cn(
-        'relative flex gap-3 rounded-2xl border bg-white/5 p-4 backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:bg-white/10 hover:-translate-y-0.5',
+        'relative flex gap-3 rounded-2xl border bg-white/5 p-5 backdrop-blur-2xl transition-all duration-300 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] hover:bg-white/10 hover:-translate-y-0.5',
         isHigh
           ? 'border-indigo-500/30 hover:border-indigo-500/50 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)] bg-gradient-to-r from-indigo-500/5 to-transparent'
           : 'border-white/10 hover:border-white/20'
@@ -75,17 +75,17 @@ export function InsightCard({ insight }: InsightCardProps) {
 
       {/* Body */}
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium leading-snug text-white">{insight.title}</p>
-        <p className="mt-1 text-xs leading-relaxed text-[#94A3B8]">{insight.description}</p>
+        <p className="text-sm font-medium tracking-tight leading-snug text-white">{insight.title}</p>
+        <p className="mt-1 text-xs leading-relaxed text-zinc-400">{insight.description}</p>
 
         {/* Footer: time + action */}
         <div className="mt-2.5 flex items-center justify-between gap-2">
-          <span className="text-[11px] text-[#6B6B80]">{formatTimeAgo(insight.timestamp)}</span>
+          <span className="text-[11px] text-zinc-500">{formatTimeAgo(insight.timestamp)}</span>
 
           {insight.actionHref && insight.actionLabel && (
             <Link
               href={insight.actionHref}
-              className="text-xs font-medium text-[#60A5FA] transition-opacity hover:opacity-70"
+              className="text-xs font-medium text-blue-400 transition-opacity hover:opacity-70 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
             >
               {insight.actionLabel} →
             </Link>

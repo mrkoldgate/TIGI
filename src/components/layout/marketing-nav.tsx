@@ -106,8 +106,8 @@ export function MarketingNav() {
                         layoutId="nav-hover-bg"
                         className="absolute inset-0 rounded-full"
                         style={{
-                          background: 'rgba(255,255,255,0.04)',
-                          border: '1px solid rgba(255,255,255,0.07)',
+                          background: 'rgba(255,255,255,0.03)',
+                          border: '1px solid rgba(255,255,255,0.04)',
                         }}
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -121,8 +121,8 @@ export function MarketingNav() {
                         layoutId="nav-active-bg"
                         className="absolute inset-0 rounded-full"
                         style={{
-                          background: 'rgba(59,130,246,0.10)',
-                          border: '1px solid rgba(59,130,246,0.18)',
+                          background: 'rgba(99,102,241,0.10)',
+                          border: '1px solid rgba(99,102,241,0.18)',
                         }}
                         transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                       />
@@ -230,13 +230,13 @@ export function MarketingNav() {
                       className={cn(
                         'flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-medium transition-all duration-300',
                         active
-                          ? 'glass text-[#60A5FA]'
+                          ? 'glass text-indigo-400'
                           : 'text-[#64748B] hover:text-[#F8FAFC]'
                       )}
                     >
                       <span>{item.label}</span>
                       {active && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-[#3B82F6]" />
+                        <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
                       )}
                     </Link>
                   )

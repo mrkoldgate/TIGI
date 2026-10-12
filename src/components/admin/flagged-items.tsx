@@ -33,14 +33,14 @@ const SEVERITY_CONFIG: Record<
   },
   HIGH: {
     bg:     '',
-    border: 'border-l-2 border-l-[#F59E0B] border-[#2A2A3A]',
+    border: 'border-l-2 border-l-[#F59E0B] border-white/[0.04]',
     dot:    'bg-[#F59E0B]',
     text:   'text-[#F59E0B]',
     badge:  'bg-[#F59E0B]/10 text-[#F59E0B]',
   },
   MEDIUM: {
     bg:     '',
-    border: 'border-l-2 border-l-[#EAB308] border-[#2A2A3A]',
+    border: 'border-l-2 border-l-[#EAB308] border-white/[0.04]',
     dot:    'bg-[#EAB308]',
     text:   'text-[#EAB308]',
     badge:  'bg-[#EAB308]/10 text-[#EAB308]',
@@ -49,7 +49,7 @@ const SEVERITY_CONFIG: Record<
 
 const TYPE_CONFIG: Record<FlaggedItemType, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; label: string; color: string }> = {
   USER:        { icon: User,            label: 'User',        color: 'text-[#818CF8]' },
-  LISTING:     { icon: Building2,       label: 'Listing',     color: 'text-[#C9A84C]' },
+  LISTING:     { icon: Building2,       label: 'Listing',     color: 'text-[#6366F1]' },
   TRANSACTION: { icon: ArrowLeftRight,  label: 'Transaction', color: 'text-[#A0A0B2]' },
 }
 
@@ -86,7 +86,7 @@ export function FlaggedItems({ items }: FlaggedItemsProps) {
           <div
             key={item.id}
             className={cn(
-              'flex items-start gap-3 rounded-xl border bg-[#111118] p-3.5 transition-colors hover:bg-[#141420]',
+              'flex items-start gap-3 rounded-xl border bg-[#050505] p-3.5 transition-colors hover:bg-[#141420]',
               sev.border,
               sev.bg
             )}
@@ -109,10 +109,10 @@ export function FlaggedItems({ items }: FlaggedItemsProps) {
                 >
                   {item.severity}
                 </span>
-                <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
                   {typeInfo.label}
                 </span>
-                <span className="rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
                   {formatSource(item.flaggedBy)}
                 </span>
               </div>
@@ -138,7 +138,7 @@ export function FlaggedItems({ items }: FlaggedItemsProps) {
                     'flex items-center gap-0.5 text-xs font-medium transition-colors',
                     item.severity === 'CRITICAL'
                       ? 'text-[#EF4444] hover:opacity-70'
-                      : 'text-[#A0A0B2] hover:text-[#C9A84C]'
+                      : 'text-[#A0A0B2] hover:text-[#6366F1]'
                   )}
                 >
                   Investigate

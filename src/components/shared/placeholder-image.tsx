@@ -42,7 +42,7 @@ const GRADIENT_FALLBACKS: Record<string, string> = {
   land: 'linear-gradient(135deg, #101A10 0%, #18271A 40%, #1A1F15 100%)',
   industrial: 'linear-gradient(135deg, #1A1210 0%, #261A14 40%, #201818 100%)',
   mixed: 'linear-gradient(135deg, #0F0F1A 0%, #1A1528 40%, #141528 100%)',
-  default: 'linear-gradient(135deg, #0A0A0F 0%, #141420 50%, #1A1528 100%)',
+  default: 'linear-gradient(135deg, #0A0A0F 0%, #000000 50%, #1A1528 100%)',
 }
 
 type ImageSlot = keyof typeof PLACEHOLDER_PHOTOS
@@ -141,8 +141,8 @@ export function PlaceholderImage({
             45deg,
             transparent,
             transparent 20px,
-            rgba(201, 168, 76, 1) 20px,
-            rgba(201, 168, 76, 1) 21px
+            rgba(99, 102, 241, 1) 20px,
+            rgba(99, 102, 241, 1) 21px
           )`,
         }}
       />
@@ -198,7 +198,7 @@ export function InitialsAvatar({ name, size = 'md', className }: InitialsAvatarP
   return (
     <div
       className={cn(
-        'flex flex-shrink-0 items-center justify-center rounded-md bg-[#C9A84C] font-heading font-semibold text-[#0A0A0F]',
+        'flex flex-shrink-0 items-center justify-center rounded-md bg-indigo-500 font-heading font-semibold text-white',
         sizeClasses[size],
         className
       )}

@@ -40,16 +40,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               // Base
-              'w-full rounded-lg border bg-[#22222E] text-sm text-[#F5F5F7]',
+              'w-full rounded-lg border bg-white/[0.04] backdrop-blur-sm text-sm text-[#F5F5F7]',
               'placeholder:text-[#6B6B80]',
               'py-2.5',
               // Sizing based on icons
               leftIcon ? 'pl-9 pr-4' : 'px-4',
               rightIcon ? 'pr-9' : '',
               // Default border
-              'border-[#2A2A3A]',
+              'border-white/[0.08]',
               // Focus
-              'outline-none focus:border-[#C9A84C] focus:ring-2 focus:ring-[#C9A84C]/20',
+              'outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
               // Error state
               error && 'border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]/20',
               // Disabled

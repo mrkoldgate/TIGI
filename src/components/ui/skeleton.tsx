@@ -32,7 +32,7 @@ export function Skeleton({ className, variant = 'block', ...props }: SkeletonPro
 
 export function PropertyCardSkeleton() {
   return (
-    <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-4">
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
       {/* Image */}
       <Skeleton className="mb-4 h-48 w-full rounded-lg" />
       {/* Type badge */}
@@ -98,7 +98,7 @@ export function LandCardSkeleton() {
 
 export function StatCardSkeleton() {
   return (
-    <div className="rounded-xl border border-[#2A2A3A] bg-[#111118] p-5">
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-5">
       <Skeleton variant="text" className="mb-3 h-3 w-24" />
       <Skeleton variant="text" className="mb-2 h-8 w-32" />
       <Skeleton variant="text" className="h-3 w-20" />

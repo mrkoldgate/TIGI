@@ -7,7 +7,7 @@ import { Skeleton, PropertyCardSkeleton } from '@/components/ui/skeleton'
 
 export default function MarketplaceLoading() {
   return (
-    <div className="animate-pulse pt-6 pb-16 space-y-6">
+    <div className="animate-pulse pt-8 pb-16 space-y-6">
       {/* Page header */}
       <div className="space-y-2">
         <Skeleton variant="text" className="h-8 w-48" />

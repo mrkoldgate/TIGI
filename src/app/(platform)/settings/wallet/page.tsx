@@ -52,7 +52,7 @@ export default async function WalletSettingsPage() {
         {/* Current wallet */}
         <section>
           <SectionLabel>Active wallet</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5">
             <WalletDisplay />
           </div>
         </section>
@@ -60,7 +60,7 @@ export default async function WalletSettingsPage() {
         {/* External wallet connection */}
         <section>
           <SectionLabel>External wallet</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5">
             <div className="mb-4">
               <p className="text-sm font-medium text-white">
                 {isExternalConnected ? 'Connected wallet' : 'Connect your own wallet'}
@@ -78,7 +78,7 @@ export default async function WalletSettingsPage() {
         {/* Custodial explanation */}
         <section>
           <SectionLabel>How your platform wallet works</SectionLabel>
-          <div className="rounded-2xl border border-[#1E1E2A] bg-[#111118] p-5 space-y-4">
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5 space-y-4">
             <ExplainerRow
               icon={Shield}
               title="Managed for you"
@@ -93,7 +93,7 @@ export default async function WalletSettingsPage() {
         </section>
 
         {/* Devnet notice */}
-        <div className="flex items-start gap-3 rounded-xl border border-[#2A2A3A] bg-[#0A0A0F] px-4 py-3">
+        <div className="flex items-start gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3">
           <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
           <p className="text-xs leading-relaxed text-[#6B6B80]">
             <span className="font-medium text-[#9999AA]">Devnet active.</span>{' '}
@@ -125,7 +125,7 @@ function ExplainerRow({
 }) {
   return (
     <div className="flex items-start gap-3">
-      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[#2A2A3A] bg-[#1A1A24]">
+      <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl">
         <Icon className="h-4 w-4 text-[#6B6B80]" />
       </div>
       <div>

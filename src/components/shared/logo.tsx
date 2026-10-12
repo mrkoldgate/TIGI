@@ -25,11 +25,11 @@ export function Logo({ collapsed = false, href = '/', className }: LogoProps) {
       {/* Icon mark */}
       <div className="relative flex h-8 w-8 flex-shrink-0 items-center justify-center">
         {/* Outer hexagon-inspired shape */}
-        <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-[#C9A84C] to-[#7A6018] opacity-20" />
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-[#6366F1] to-[#4338CA] opacity-20" />
         {/* Border */}
-        <div className="absolute inset-0 rounded-lg border border-[#C9A84C]/40" />
+        <div className="absolute inset-0 rounded-lg border border-[#6366F1]/40" />
         {/* T mark */}
-        <span className="relative font-heading text-sm font-700 text-[#C9A84C]">
+        <span className="relative font-heading text-sm font-700 text-[#6366F1]">
           T
         </span>
       </div>

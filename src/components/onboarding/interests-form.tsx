@@ -69,7 +69,7 @@ export function InterestsForm({ userType }: InterestsFormProps) {
           type="button"
           onClick={handleContinue}
           disabled={loading}
-          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-[#C9A84C] px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-[#D4B86A] active:scale-[0.98] disabled:opacity-60"
+          className="flex min-w-[200px] items-center justify-center gap-2 rounded-xl bg-indigo-500 px-8 py-3.5 text-sm font-semibold text-[#0A0A0F] transition-all hover:bg-indigo-400 active:scale-[0.98] disabled:opacity-60"
         >
           {loading ? (
             <Loader2 className="h-4 w-4 animate-spin" />
@@ -120,8 +120,8 @@ function QuestionBlock({ question, selected, onSelect }: QuestionBlockProps) {
               className={cn(
                 'rounded-full border px-4 py-2 text-xs font-medium transition-all duration-150',
                 isSelected
-                  ? 'border-[#C9A84C]/60 bg-[#C9A84C]/10 text-[#C9A84C] shadow-[0_0_8px_rgba(201,168,76,0.15)]'
-                  : 'border-[#2A2A3A] bg-transparent text-[#6B6B80] hover:border-[#3A3A4A] hover:text-[#9999AA]',
+                  ? 'border-indigo-500/60 bg-indigo-500/10 text-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.15)]'
+                  : 'border-white/[0.08] bg-transparent text-[#6B6B80] hover:border-white/[0.10] hover:text-[#9999AA]',
               )}
               aria-pressed={isSelected}
             >

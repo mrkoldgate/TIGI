@@ -43,14 +43,14 @@ export default function DashboardError({
       <div className="flex flex-wrap items-center justify-center gap-3">
         <button
           onClick={reset}
-          className="flex items-center gap-2 rounded-xl bg-[#C9A84C] px-4 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
+          className="flex items-center gap-2 rounded-xl bg-indigo-500 px-4 py-2.5 text-sm font-semibold text-[#0A0A0F] transition-opacity hover:opacity-90"
         >
           <RefreshCw className="h-4 w-4" />
           Try again
         </button>
         <Link
           href="/marketplace"
-          className="rounded-xl border border-[#2A2A3A] bg-[#1A1A24] px-4 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-[#3A3A4A] hover:text-[#F5F5F7]"
+          className="rounded-xl border border-white/[0.04] bg-white/[0.04] px-4 py-2.5 text-sm font-medium text-[#A0A0B2] transition-colors hover:border-white/[0.06] hover:text-[#F5F5F7]"
         >
           Browse marketplace
         </Link>

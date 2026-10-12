@@ -15,15 +15,15 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        // Base
-        'rounded-xl border border-[#2A2A3A] bg-[#111118] p-4',
+        // Base — glass card
+        'rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl p-4 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)]',
         // Variants
         variant === 'interactive' && [
-          'cursor-pointer transition-all duration-200',
-          'hover:-translate-y-0.5 hover:border-[#C9A84C] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3)]',
+          'cursor-pointer transition-all duration-300',
+          'hover:-translate-y-0.5 hover:border-indigo-500/40 hover:bg-white/[0.07] hover:shadow-[0_8px_32px_rgba(0,0,0,0.3),0_0_30px_rgba(99,102,241,0.05)]',
         ],
         variant === 'elevated' && [
-          'bg-[#1A1A24] border-[#2A2A3A]',
+          'bg-white/[0.06] border-white/[0.10] shadow-[inset_0_1px_0_0_rgba(255,255,255,0.08),0_4px_24px_rgba(0,0,0,0.25)]',
         ],
         className
       )}

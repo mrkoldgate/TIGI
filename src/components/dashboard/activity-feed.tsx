@@ -53,7 +53,7 @@ interface ActivityFeedProps {
 export function ActivityFeed({ items, className }: ActivityFeedProps) {
   if (items.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-10 text-center rounded-2xl border border-white/5 bg-white/[0.02]">
+      <div className="flex flex-col items-center justify-center py-10 text-center">
         <p className="text-sm text-[#94A3B8]">No recent activity yet.</p>
         <p className="mt-1 text-xs text-[#64748B]">Browse the marketplace to get started.</p>
       </div>

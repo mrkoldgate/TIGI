@@ -21,7 +21,7 @@ export function OnboardingProgress() {
   if (currentStepIndex === -1) return null
 
   return (
-    <div className="relative z-10 border-b border-[#111118] bg-[#0A0A0F]/80 px-6 py-4 backdrop-blur-sm">
+    <div className="relative z-10 border-b border-white/[0.06] bg-black/80 px-6 py-4 backdrop-blur-sm">
       <div className="mx-auto flex w-full max-w-3xl items-center justify-between">
         {ONBOARDING_STEPS.map((step, idx) => {
           const isCompleted = idx < currentStepIndex
@@ -36,10 +36,10 @@ export function OnboardingProgress() {
                   className={cn(
                     'flex h-7 w-7 items-center justify-center rounded-full border text-xs font-semibold transition-all duration-300',
                     isCompleted &&
-                      'border-[#C9A84C]/40 bg-[#C9A84C]/15 text-[#C9A84C]',
+                      'border-indigo-500/40 bg-indigo-500/15 text-indigo-400',
                     isActive &&
-                      'border-[#C9A84C] bg-[#C9A84C] text-[#0A0A0F] shadow-[0_0_12px_rgba(201,168,76,0.3)]',
-                    isPending && 'border-[#2A2A3A] bg-transparent text-[#3A3A48]',
+                      'border-indigo-500 bg-indigo-500 text-white shadow-[0_0_12px_rgba(99,102,241,0.3)]',
+                    isPending && 'border-white/[0.08] bg-transparent text-[#3A3A48]',
                   )}
                 >
                   {isCompleted ? (
@@ -51,9 +51,9 @@ export function OnboardingProgress() {
                 <span
                   className={cn(
                     'hidden text-[10px] font-medium sm:block',
-                    isActive && 'text-[#C9A84C]',
+                    isActive && 'text-indigo-400',
                     isCompleted && 'text-[#6B6B80]',
-                    isPending && 'text-[#2A2A3A]',
+                    isPending && 'text-[#6B6B80]/50',
                   )}
                 >
                   {step.label}
@@ -67,8 +67,8 @@ export function OnboardingProgress() {
                     className={cn(
                       'h-px transition-all duration-500',
                       isCompleted
-                        ? 'bg-[#C9A84C]/30'
-                        : 'bg-[#1E1E2A]',
+                        ? 'bg-indigo-500/30'
+                        : 'bg-white/[0.06]',
                     )}
                   />
                 </div>

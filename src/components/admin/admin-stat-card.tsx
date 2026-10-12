@@ -38,8 +38,8 @@ const URGENCY_STYLES: Record<
     value:   'text-[#F5F5F7]',
   },
   normal: {
-    border:  'border-l-[#3A3A4A]',
-    iconBg:  'bg-[#1A1A24]',
+    border:  'border-l-white/[0.06]',
+    iconBg:  'bg-white/[0.04]',
     icon:    'text-[#6B6B80]',
     value:   'text-[#F5F5F7]',
   },
@@ -82,9 +82,9 @@ export function AdminStatCard({
   const content = (
     <div
       className={cn(
-        'group flex flex-col gap-3 rounded-xl border border-[#2A2A3A] border-l-2 bg-[#111118] p-4 transition-colors',
+        'group flex flex-col gap-3 rounded-xl border border-white/[0.04] border-l-2 bg-[#050505] p-4 transition-colors',
         styles.border,
-        href && !isLocked && 'cursor-pointer hover:border-[#3A3A4A] hover:bg-[#151520]',
+        href && !isLocked && 'cursor-pointer hover:border-white/[0.06] hover:bg-[#151520]',
         className
       )}
     >
@@ -95,7 +95,7 @@ export function AdminStatCard({
         </div>
 
         {isLocked ? (
-          <span className="flex items-center gap-1 rounded border border-[#2A2A3A] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+          <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
             {lockedUntil}
           </span>
@@ -105,7 +105,7 @@ export function AdminStatCard({
               'rounded px-1.5 py-0.5 text-[10px] font-medium tabular-nums',
               delta.urgent
                 ? 'bg-[#EF4444]/10 text-[#EF4444]'
-                : 'bg-[#1A1A24] text-[#6B6B80]'
+                : 'bg-white/[0.04] text-[#6B6B80]'
             )}
           >
             {delta.value > 0 ? `+${delta.value}` : delta.value} {delta.label}

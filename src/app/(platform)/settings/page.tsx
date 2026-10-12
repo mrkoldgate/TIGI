@@ -47,7 +47,7 @@ export default async function SettingsPage() {
 
   const tierColor =
     tier === 'free'       ? 'text-[#6B6B80]'
-    : tier === 'pro'      ? 'text-[#C9A84C]'
+    : tier === 'pro'      ? 'text-[#6366F1]'
     : tier === 'pro_plus' ? 'text-[#818CF8]'
     : 'text-[#22C55E]'
 
@@ -93,23 +93,23 @@ export default async function SettingsPage() {
         description="Profile, subscription, wallet, and identity verification."
       />
 
-      <div className="mt-8 max-w-2xl space-y-2">
+      <div className="mt-8 max-w-2xl grid grid-cols-1 sm:grid-cols-2 gap-4">
         {sections.map(({ href, icon: Icon, title, description, meta, metaColor }) => (
           <Link
             key={href}
             href={href}
-            className="flex items-center gap-4 rounded-xl border border-[#1E1E2A] bg-[#111118] px-5 py-4 transition-colors hover:border-[#2A2A3A] hover:bg-[#15151E]"
+            className="group flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] px-6 py-5 transition-all duration-200 hover:border-white/15 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),_0_0_20px_-4px_rgba(99,102,241,0.15)]"
           >
-            <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-[#2A2A3A] bg-[#1A1A24]">
-              <Icon className="h-4.5 w-4.5 text-[#6B6B80]" />
+            <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[0_0_12px_-2px_rgba(99,102,241,0.08)] group-hover:shadow-[0_0_16px_-2px_rgba(99,102,241,0.15)]">
+              <Icon className="h-4.5 w-4.5 text-[#6B6B80] transition-colors group-hover:text-[#6366F1]/70" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-[#F5F5F7]">{title}</p>
-              <p className="mt-0.5 text-xs text-[#6B6B80]">{description}</p>
+              <p className="text-sm font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">{title}</p>
+              <p className="mt-0.5 text-xs text-zinc-500">{description}</p>
             </div>
             <div className="flex items-center gap-3">
               <span className={`text-xs font-medium ${metaColor}`}>{meta}</span>
-              <ChevronRight className="h-4 w-4 text-[#3A3A4A]" />
+              <ChevronRight className="h-4 w-4 text-[#3A3A4A] transition-colors group-hover:text-[#6B6B80]" />
             </div>
           </Link>
         ))}
