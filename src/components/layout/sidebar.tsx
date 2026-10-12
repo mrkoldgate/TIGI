@@ -11,7 +11,6 @@ import {
   Building2,
   Map,
   Landmark,
-  Bell,
   LineChart,
   Sparkles,
   Settings,
@@ -56,7 +55,6 @@ const NAV_GROUPS: NavGroup[] = [
     label: 'Overview',
     items: [
       { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-      { href: '/notifications', label: 'Notifications', icon: Bell },
     ],
   },
   {

@@ -44,6 +44,7 @@ export default async function WalletSettingsPage() {
   return (
     <div className="relative">
       <PageHeader
+        eyebrow="Settings"
         title="Wallet"
         description="Your on-chain identity for tokenized real estate transactions."
       />

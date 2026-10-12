@@ -539,10 +539,7 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
           <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)]" />
           <p className="text-xs text-zinc-500">
             <span className="font-medium text-zinc-400">Terra land leasing and development intents are live.</span>{' '}
-            Owner land-listing management in{' '}
-            <span className="font-medium text-emerald-400">M4</span>.{' '}
-            On-chain lease execution and fractional land crowdfunding in{' '}
-            <span className="font-medium text-emerald-400">M6</span>.
+            Owner land-listing tools, on-chain lease execution and fractional land funding are next.
           </p>
         </div>
       </div>

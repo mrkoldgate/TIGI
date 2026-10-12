@@ -24,6 +24,8 @@ interface PortfolioClientProps {
 const usd = (n: number, digits = 0) =>
   n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: digits, minimumFractionDigits: digits })
 
+const tone = (n: number) => (Math.abs(n) < 0.005 ? 'text-[#A0A0B2]' : n > 0 ? 'text-[#34D399]' : 'text-[#F87171]')
+
 const pct = (n: number, signed = false) => `${signed && n > 0 ? '+' : ''}${n.toFixed(2)}%`
 
 const TYPE_LABEL: Record<HoldingDTO['propertyType'], string> = {
@@ -86,7 +88,7 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
             </div>
             <p className="figure mt-4 text-[clamp(2.5rem,1.8rem+2.6vw,3.75rem)] leading-none">{usd(summary.totalValue, 2)}</p>
             <p className="mt-3 flex flex-wrap items-center gap-2 font-mono text-[13.5px] tabular-nums">
-              <span className={up ? 'text-[#34D399]' : 'text-[#F87171]'}>
+              <span className={tone(summary.totalGainLoss)}>
                 {up ? '+' : '−'}{usd(Math.abs(summary.totalGainLoss), 2)} ({pct(summary.totalGainLossPct, true)})
               </span>
               <span className="text-[#7A7A8A]">since purchase</span>
@@ -264,7 +266,7 @@ function HoldingsTable({ holdings, total }: { holdings: HoldingDTO[]; total: num
                   {/* Mobile summary */}
                   <div className="text-right md:hidden">
                     <p className="font-mono text-sm tabular-nums text-[#F5F5F7]">{usd(value)}</p>
-                    <p className={cn('font-mono text-xs tabular-nums', up ? 'text-[#34D399]' : 'text-[#F87171]')}>{pct(gainPct, true)}</p>
+                    <p className={cn('font-mono text-xs tabular-nums', tone(gain))}>{pct(gainPct, true)}</p>
                   </div>
 
                   <div className="hidden text-right md:block">
@@ -279,7 +281,7 @@ function HoldingsTable({ holdings, total }: { holdings: HoldingDTO[]; total: num
                     <p className="font-mono text-sm tabular-nums text-[#F5F5F7]">{usd(value)}</p>
                     <p className="font-mono text-[11px] tabular-nums text-[#7A7A8A]">{total ? ((value / total) * 100).toFixed(0) : 0}% of you</p>
                   </div>
-                  <div className={cn('hidden text-right font-mono text-sm tabular-nums md:block', up ? 'text-[#34D399]' : 'text-[#F87171]')}>
+                  <div className={cn('hidden text-right font-mono text-sm tabular-nums md:block', tone(gain))}>
                     <p>{up ? '+' : '−'}{usd(Math.abs(gain))}</p>
                     <p className="text-[11px]">{pct(gainPct, true)}</p>
                   </div>

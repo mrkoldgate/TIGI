@@ -172,7 +172,7 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
               <SectionHeader
                 title={newInquiryCount > 0 ? `Inquiries · ${newInquiryCount} new` : 'Inquiries'}
                 description="Messages from potential buyers, tenants, and investors."
-                milestone="M6 · Full Inbox"
+                milestone="Soon · Full inbox"
               />
               <div className="mt-4">
                 <InquiryFeed inquiries={displayInquiries} />
@@ -191,7 +191,7 @@ export function OwnerDashboardClient({ listings, ownerUser, inquiries }: OwnerDa
               <SectionHeader
                 title="Performance"
                 description="Engagement across your portfolio."
-                milestone="M3 · Advanced"
+                milestone="Soon · Advanced"
               />
               <div className="mt-4">
                 <PerformancePanel stats={MOCK_OWNER_PERFORMANCE} />

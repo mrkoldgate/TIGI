@@ -89,6 +89,7 @@ export default async function SettingsPage() {
   return (
     <div className="relative">
       <PageHeader
+        eyebrow="Account"
         title="Settings"
         description="Profile, subscription, wallet, and identity verification."
       />

@@ -39,6 +39,7 @@ export default async function BillingPage() {
   return (
     <div className="relative">
       <PageHeader
+        eyebrow="Settings"
         title="Plan & Billing"
         description="Choose the plan that fits your investment strategy."
       />

@@ -210,7 +210,7 @@ function Controls({
   const hasActive = filters.listingType !== 'ALL' || filters.tokenizedOnly || filters.devOpportunityOnly || filters.search.trim() !== ''
 
   return (
-    <div className="panel p-3 sm:p-4">
+    <div className="panel !bg-[#09090D]/90 p-3 sm:p-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
         {/* Categories */}
         <div className="flex gap-1.5 overflow-x-auto scrollbar-none" role="tablist" aria-label="Category">
@@ -508,7 +508,7 @@ export function MarketplaceClient({ listings, stats, initialQuery = '' }: Market
         meta={<HeaderStats stats={stats} onLand={() => patchFilters({ category: 'LAND' })} />}
       />
 
-      <div className="sticky top-[76px] z-20" data-reveal="fade">
+      <div className="z-20 lg:sticky lg:top-[80px]" data-reveal="fade">
         <Controls filters={filters} onChange={patchFilters} onClear={clearFilters} />
       </div>
 

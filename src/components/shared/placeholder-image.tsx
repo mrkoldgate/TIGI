@@ -16,21 +16,23 @@ import { cn } from '@/lib/utils'
 // Curated Unsplash photo IDs by property type
 // Update these with actual AI-generated images once seed script runs.
 const PLACEHOLDER_PHOTOS: Record<string, string> = {
+  // v5: every slot checked by eye — subject matches its type (no machinery
+  // for 'industrial', no skyline of the wrong city for 'commercial').
   'residential-1': 'photo-1570129477492-45c003edd2be',
   'residential-2': 'photo-1568605114967-8130f3a36994',
   'residential-3': 'photo-1564013799919-ab600027ffc6',
   'residential-4': 'photo-1600585154340-be6161a56a0c',
   'residential-5': 'photo-1600596542815-ffad4c1539a9',
-  'commercial-1': 'photo-1486325212027-8081e485255e',
+  'commercial-1': 'photo-1486406146926-c627a92ad1ab',
   'commercial-2': 'photo-1497366216548-37526070297c',
-  'commercial-3': 'photo-1577071278176-ed0bcd5a0bd7',
+  'commercial-3': 'photo-1460317442991-0ec209397118',
   'commercial-4': 'photo-1545324418-cc1a3fa10c00',
-  'land-1': 'photo-1500534314209-a25ddb2bd429',
-  'land-2': 'photo-1464822759023-fed622ff2c3b',
-  'land-3': 'photo-1510798831971-661eb04b3739',
-  'industrial-1': 'photo-1513828583688-c52646db42da',
-  'industrial-2': 'photo-1558618666-fcd25c85cd64',
-  'mixed-1': 'photo-1486325212027-8081e485255e',
+  'land-1': 'photo-1619719826894-89d6c4fd5739',
+  'land-2': 'photo-1703850827351-a1be4d85a095',
+  'land-3': 'photo-1604808397353-36670a4b679d',
+  'industrial-1': 'photo-1586528116311-ad8dd3c8310d',
+  'industrial-2': 'photo-1553413077-190dd305871c',
+  'mixed-1': 'photo-1545324418-cc1a3fa10c00',
   'hero-1': 'photo-1600585154526-990dced4db0d',
   'hero-2': 'photo-1600047509807-ba8f99d2cdde',
 }

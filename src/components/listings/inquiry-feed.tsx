@@ -160,7 +160,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
       {/* Full inbox CTA — M6 */}
       <p className="pt-2 text-center text-[11px] text-zinc-500">
         Reply threading and read receipts in{' '}
-        <span className="text-zinc-500">Milestone 6</span>
+        <span className="text-zinc-500">Coming soon</span>
       </p>
     </div>
   )

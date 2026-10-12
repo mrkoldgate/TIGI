@@ -72,8 +72,7 @@ export default async function TransactionsPage() {
             <span className="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.5)] animate-pulse" />
             <p className="text-xs leading-relaxed text-white/55">
               <span className="font-semibold text-amber-400">Intent layer is live.</span>{' '}
-              Full offer management, escrow step tracker, and settlement workflow arrive in{' '}
-              <span className="font-semibold text-indigo-400">M5</span> after smart contract integration.
+              Full offer management, escrow tracking and settlement arrive with the on-chain contracts.
             </p>
           </div>
         </div>

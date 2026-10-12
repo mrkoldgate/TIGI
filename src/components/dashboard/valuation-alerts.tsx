@@ -105,7 +105,7 @@ export function ValuationAlerts({ alerts, className }: ValuationAlertsProps) {
       {/* M5 feature notice */}
       <p className="pt-1 text-center text-[11px] text-[#6E6E7E]">
         Custom alert thresholds available in{' '}
-        <span className="text-[#8E8E9C]">Milestone 5</span>
+        <span className="text-[#8E8E9C]">Coming soon</span>
       </p>
     </div>
   )

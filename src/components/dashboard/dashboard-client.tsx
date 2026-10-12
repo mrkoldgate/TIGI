@@ -257,7 +257,7 @@ function PortfolioCell({
           <p className="text-label">Portfolio value</p>
           <p className="figure mt-4 text-[clamp(2.25rem,1.6rem+2vw,3.25rem)] leading-none">{usd(value, 2)}</p>
           <p className="mt-3 flex items-center gap-2 font-mono text-[13px] tabular-nums">
-            <span className={up ? 'text-[#34D399]' : 'text-[#F87171]'}>
+            <span className={Math.abs(gain) < 0.005 ? 'text-[#A0A0B2]' : up ? 'text-[#34D399]' : 'text-[#F87171]'}>
               {up ? '+' : '−'}{usd(Math.abs(gain), 2)} ({up ? '+' : '−'}{Math.abs(gainPct).toFixed(2)}%)
             </span>
             <span className="text-[#7A7A8A]">vs. cost</span>

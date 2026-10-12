@@ -44,17 +44,16 @@ export default async function ExplorePage() {
 
       {/* ── Page Header ── */}
       <PageHeader
-        title="Explore"
-        description="Discover tokenized real estate opportunities across the globe."
-        eyebrow="Discovery"
+        title="Where to look next"
+        description="Featured properties, categories and regions worth a closer look."
+        eyebrow="Explore"
         actions={
           <Link
             href="/marketplace"
-            className="group relative z-10 inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-5 py-2.5 text-sm font-semibold text-white/80 backdrop-blur-xl transition-all duration-300 hover:border-indigo-500/25 hover:bg-white/[0.06] hover:text-white hover:shadow-[0_0_24px_rgba(99,102,241,0.12)]"
+            className="btn-glass group !px-5 !py-2.5 text-sm no-underline"
           >
-            <div className="noise absolute inset-0 pointer-events-none" />
-            <Compass className="h-4 w-4 text-[#A0A0B2] group-hover:text-white transition-colors" />
-            Browse All
+            <Compass className="h-4 w-4" />
+            Browse everything
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
           </Link>
         }

@@ -67,6 +67,7 @@ export default async function ProfileSettingsPage() {
   return (
     <div className="relative">
       <PageHeader
+        eyebrow="Settings"
         title="Profile"
         description="Manage your personal information and notification preferences."
       />

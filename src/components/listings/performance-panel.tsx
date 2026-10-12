@@ -82,9 +82,9 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
         <p className="text-xs font-medium text-zinc-500">Advanced analytics</p>
 
         {[
-          { icon: TrendingUp,    label: 'View → inquiry rate',    milestone: 'M3' },
-          { icon: BarChart3,     label: 'Avg days to first inquiry', milestone: 'M3' },
-          { icon: MessageSquare, label: 'Avg response time',       milestone: 'M3' },
+          { icon: TrendingUp,    label: 'View → inquiry rate',    milestone: 'Soon' },
+          { icon: BarChart3,     label: 'Avg days to first inquiry', milestone: 'Soon' },
+          { icon: MessageSquare, label: 'Avg response time',       milestone: 'Soon' },
         ].map(({ icon: Icon, label, milestone }) => (
           <div
             key={label}
@@ -106,7 +106,7 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
       <div className="rounded-lg border border-dashed border-white/[0.08] p-3 text-center">
         <p className="text-xs text-zinc-500">
           AI listing optimisation recommendations arrive in{' '}
-          <span className="text-zinc-500">Milestone 6</span>
+          <span className="text-zinc-500">Coming soon</span>
         </p>
       </div>
     </div>

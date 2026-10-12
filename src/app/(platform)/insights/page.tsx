@@ -57,7 +57,7 @@ export default async function InsightsPage() {
             </div>
             <div className="flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3.5 py-1.5 text-xs backdrop-blur-xl">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.5)] animate-pulse" />
-              <span className="text-zinc-500">Milestone 5</span>
+              <span className="text-zinc-400">Sample data</span>
             </div>
           </div>
         }
@@ -294,7 +294,7 @@ function ChartCard({
                 <Icon className="h-4 w-4" />
               </div>
             </div>
-            <p className="text-xs font-medium text-zinc-500">Coming in M5</p>
+            <p className="text-xs font-medium text-zinc-500">Coming soon</p>
           </div>
         </div>
       </div>
