@@ -62,11 +62,11 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
       {/* ── Page header ─────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Administration
           </p>
           <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">Review Queue</h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Listings awaiting compliance review before going live.
           </p>
         </div>
@@ -78,7 +78,7 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
               {criticalCount} overdue
             </div>
           )}
-          <div className="flex items-center gap-1.5 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 text-xs text-[#6B6B80] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+          <div className="flex items-center gap-1.5 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 text-xs text-[#8E8E9C] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             <ClipboardList className="h-3 w-3" />
             {items.length} pending
           </div>
@@ -110,7 +110,7 @@ export function ReviewQueueClient({ items: initialItems }: ReviewQueueClientProp
         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="noise absolute inset-0 pointer-events-none" />
         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-[#8E8E9C]">
           <span className="font-medium text-[#A0A0B2]">Approve / Reject / Request Update / Archive</span>{' '}
           actions are live. Approved listings transition to{' '}
           <span className="font-medium text-[#A0A0B2]">Active</span> immediately.

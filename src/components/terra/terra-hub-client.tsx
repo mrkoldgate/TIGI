@@ -466,7 +466,7 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by location, features, use type…"
-              className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl py-2.5 pl-9 pr-4 text-sm text-white placeholder-zinc-600 outline-none focus:border-emerald-400/40 focus:shadow-[0_0_12px_rgba(52,211,153,0.1)] transition-all"
+              className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl py-2.5 pl-9 pr-4 text-sm text-white placeholder-zinc-500 outline-none focus:border-emerald-400/40 focus:shadow-[0_0_12px_rgba(52,211,153,0.1)] transition-all"
             />
           </div>
           <div className="relative">

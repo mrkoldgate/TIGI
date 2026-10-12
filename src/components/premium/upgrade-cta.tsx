@@ -59,7 +59,7 @@ export function UpgradeCta({ className, compact = false }: UpgradeCtaProps) {
           <Sparkles className="h-4 w-4 text-indigo-400" />
           <h3 className="text-sm font-semibold text-[#F5F5F7]">Upgrade to TIGI Pro</h3>
         </div>
-        <p className="mt-1 text-[11px] text-[#6B6B80]">
+        <p className="mt-1 text-[11px] text-[#8E8E9C]">
           Unlock advanced AI analysis, deeper insights, and priority signals.
         </p>
       </div>
@@ -79,7 +79,7 @@ export function UpgradeCta({ className, compact = false }: UpgradeCtaProps) {
             <Sparkles className="h-3.5 w-3.5" />
             Upgrade for $29/mo
           </Link>
-          <p className="mt-2 text-center text-[10px] text-[#3A3A4A]">
+          <p className="mt-2 text-center text-[10px] text-[#6E6E7E]">
             Cancel anytime · No contracts
           </p>
         </div>

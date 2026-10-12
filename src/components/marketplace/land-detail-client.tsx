@@ -61,9 +61,9 @@ const LAND_USE_CONFIG: Record<
   RESIDENTIAL_DEV: {
     label: 'Residential Dev.',
     description: 'Zoned for residential development. Suitable for single-family homes, multi-family projects, or planned unit developments pending entitlements.',
-    badgeClass: 'bg-[#1D4ED8]/15 text-[#93C5FD] ring-[#3B82F6]/25',
-    dotClass: 'bg-[#93C5FD]',
-    accentColor: '#93C5FD',
+    badgeClass: 'bg-[#6D28D9]/15 text-[#C4B5FD] ring-[#8B5CF6]/25',
+    dotClass: 'bg-[#C4B5FD]',
+    accentColor: '#C4B5FD',
   },
   COMMERCIAL_DEV: {
     label: 'Commercial Dev.',
@@ -355,7 +355,7 @@ function LandHeader({
           </span>
         )}
         {listing.listingType !== 'BUY' && (
-          <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-3 py-1 text-xs font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+          <span className="inline-flex items-center rounded-md bg-[#8B5CF6]/15 px-3 py-1 text-xs font-medium text-[#A78BFA] ring-1 ring-inset ring-[#8B5CF6]/25">
             {listing.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
           </span>
         )}
@@ -891,7 +891,7 @@ function LandActionPanel({
               </p>
             )}
             {leaseRateMonthly && (
-              <p className="mt-0.5 text-sm text-[#60A5FA]">
+              <p className="mt-0.5 text-sm text-[#A78BFA]">
                 or {formatLeaseRate(leaseRateMonthly)}
                 <span className="text-xs text-[#5A7060]"> to lease</span>
               </p>

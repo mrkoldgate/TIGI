@@ -23,7 +23,7 @@ import { cn } from '@/lib/utils'
 const KYC_CONFIG: Record<UserKycStatus, { icon: React.ComponentType<React.SVGProps<SVGSVGElement>>; color: string; label: string }> = {
   VERIFIED:   { icon: ShieldCheck, color: 'text-[#4ADE80]', label: 'Verified'   },
   PENDING:    { icon: Clock,       color: 'text-[#F59E0B]', label: 'Pending'    },
-  UNVERIFIED: { icon: ShieldOff,   color: 'text-[#6B6B80]', label: 'Unverified' },
+  UNVERIFIED: { icon: ShieldOff,   color: 'text-[#8E8E9C]', label: 'Unverified' },
 }
 
 const ROLE_COLORS: Record<UserRole, string> = {
@@ -47,8 +47,8 @@ function UserKpiTile({ label, value, sub, accent }: UserKpiTileProps) {
       <p className={cn('font-heading text-xl font-semibold tabular-nums', accent ?? 'text-[#F5F5F7]')}>
         {value}
       </p>
-      <p className="text-[11px] text-[#6B6B80]">{label}</p>
-      {sub && <p className="text-[10px] text-[#4A4A5E]">{sub}</p>}
+      <p className="text-[11px] text-[#8E8E9C]">{label}</p>
+      {sub && <p className="text-[10px] text-[#7A7A8A]">{sub}</p>}
     </div>
   )
 }
@@ -95,7 +95,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
 
       {/* Recent registrations */}
       <div>
-        <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+        <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
           Recent Registrations
         </p>
         <div className="space-y-1">
@@ -109,7 +109,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-[#050505]"
               >
                 {/* Avatar */}
-                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white/[0.04] text-[11px] font-semibold text-[#6B6B80]">
+                <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-white/[0.04] text-[11px] font-semibold text-[#8E8E9C]">
                   {user.initials}
                 </div>
 
@@ -120,13 +120,13 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
                 </div>
 
                 {/* Country */}
-                <span className="hidden text-[11px] text-[#4A4A5E] sm:block">{user.country}</span>
+                <span className="hidden text-[11px] text-[#7A7A8A] sm:block">{user.country}</span>
 
                 {/* KYC */}
                 <KycIcon className={cn('h-3.5 w-3.5 flex-shrink-0', kyc.color)} aria-label={kyc.label} />
 
                 {/* Time */}
-                <span className="w-12 flex-shrink-0 text-right text-[11px] text-[#4A4A5E]">
+                <span className="w-12 flex-shrink-0 text-right text-[11px] text-[#7A7A8A]">
                   {formatAdminRelative(user.joinedAt)}
                 </span>
               </div>
@@ -138,7 +138,7 @@ export function UserSummary({ stats, recentUsers }: UserSummaryProps) {
       {/* Footer link */}
       <Link
         href="/admin/users"
-        className="flex items-center gap-1 text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
+        className="flex items-center gap-1 text-xs text-[#8E8E9C] transition-colors hover:text-[#6366F1]"
       >
         Manage all users →
       </Link>

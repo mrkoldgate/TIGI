@@ -178,11 +178,11 @@ export function KYCOnboardingClient({
     <div className="mx-auto max-w-2xl px-4 py-10">
       {/* Header */}
       <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
           Account Verification
         </p>
         <h1 className="mt-1 text-2xl font-bold text-[#F5F5F7]">Identity Verification</h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Required to unlock investing and trading features on TIGI.
         </p>
       </div>
@@ -261,11 +261,11 @@ export function KYCOnboardingClient({
 
       {/* Legal disclaimer */}
       {step <= 6 && (
-        <p className="mt-4 text-center text-[11px] leading-relaxed text-[#4A4A5E]">
+        <p className="mt-4 text-center text-[11px] leading-relaxed text-[#7A7A8A]">
           TIGI collects identity documents solely for regulatory compliance purposes.
           Documents are encrypted in transit and at rest.
           This verification does not constitute legal compliance certification.{' '}
-          <span className="text-[#6B6B80]">Privacy Policy · Terms of Service</span>
+          <span className="text-[#8E8E9C]">Privacy Policy · Terms of Service</span>
         </p>
       )}
     </div>
@@ -290,7 +290,7 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
                   'flex h-7 w-7 items-center justify-center rounded-full border-2 text-[10px] font-semibold transition-all',
                   isCompleted ? 'border-transparent text-[#0A0A0F]' :
                     isActive ? 'border-indigo-500 text-indigo-400' :
-                      'border-white/[0.08] text-[#4A4A5E]',
+                      'border-white/[0.08] text-[#7A7A8A]',
                 )}
                 style={isCompleted ? { backgroundColor: GOLD } : {}}
               >
@@ -298,7 +298,7 @@ function KycStepProgress({ currentStep }: { currentStep: number }) {
               </div>
               <span className={cn(
                 'hidden text-[9px] font-medium sm:block',
-                isActive ? 'text-[#F5F5F7]' : isCompleted ? 'text-indigo-400' : 'text-[#4A4A5E]',
+                isActive ? 'text-[#F5F5F7]' : isCompleted ? 'text-indigo-400' : 'text-[#7A7A8A]',
               )}>
                 {step.label}
               </span>
@@ -350,7 +350,7 @@ function WelcomeStep({
 
       {/* What you'll need */}
       <div className="mb-6 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
-        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+        <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
           What You'll Need
         </p>
         <ul className="space-y-2">
@@ -372,7 +372,7 @@ function WelcomeStep({
         ].map(({ label, sub }) => (
           <div key={label} className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5 text-center">
             <p className="text-xs font-semibold text-[#F5F5F7]">{label}</p>
-            <p className="text-[10px] text-[#6B6B80]">{sub}</p>
+            <p className="text-[10px] text-[#8E8E9C]">{sub}</p>
           </div>
         ))}
       </div>
@@ -425,7 +425,7 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
         ].map(({ title, desc, notice }) => (
           <div key={title} className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
             <p className="mb-1 text-sm font-semibold text-[#F5F5F7]">{title}</p>
-            <p className="text-xs leading-relaxed text-[#6B6B80]">{desc}</p>
+            <p className="text-xs leading-relaxed text-[#8E8E9C]">{desc}</p>
             {notice && (
               <p className="mt-2 rounded-md border border-[#F59E0B]/20 bg-[#F59E0B]/8 px-2.5 py-1.5 text-[10px] text-[#F59E0B]">
                 ⚠ {notice}
@@ -436,7 +436,7 @@ function OverviewStep({ onNext, onBack }: { onNext: () => void; onBack: () => vo
       </div>
 
       <div className="mt-5 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
           <strong className="text-[#A0A0B2]">Data Retention:</strong> Identity documents are stored
           for the duration required by applicable law and deleted thereafter.
           TIGI does not sell or share verification data with third parties
@@ -500,7 +500,7 @@ function PersonalInfoStep({
         />
 
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Residential Address
           </p>
           <div className="space-y-3">
@@ -581,7 +581,7 @@ function DocumentUploadStep({
       <div className="space-y-5">
         {/* Front */}
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Front of ID <span className="text-[#EF4444]">*</span>
           </p>
           <UploadZone
@@ -601,9 +601,9 @@ function DocumentUploadStep({
 
         {/* Back */}
         <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#6B6B80]">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#8E8E9C]">
             Back of ID{' '}
-            <span className="font-normal normal-case text-[#4A4A5E]">(optional — required for national ID / driver's licence)</span>
+            <span className="font-normal normal-case text-[#7A7A8A]">(optional — required for national ID / driver's licence)</span>
           </p>
           <UploadZone
             label="Click or drag to upload back"
@@ -623,7 +623,7 @@ function DocumentUploadStep({
         {/* Tips */}
         <div className="rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
           <p className="mb-2 text-xs font-semibold text-[#A0A0B2]">Photo tips</p>
-          <ul className="space-y-1 text-xs text-[#6B6B80]">
+          <ul className="space-y-1 text-xs text-[#8E8E9C]">
             {[
               'Ensure all four corners of the document are visible',
               'Photo must be in focus and well-lit',
@@ -631,7 +631,7 @@ function DocumentUploadStep({
               'Glare and shadows should be minimised',
             ].map((tip) => (
               <li key={tip} className="flex items-start gap-1.5">
-                <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-[#3A3A4A]" />
+                <span className="mt-1 h-1 w-1 shrink-0 rounded-full bg-[#6E6E7E]" />
                 {tip}
               </li>
             ))}
@@ -661,7 +661,7 @@ function SelfieStep({ onNext, onBack }: { onNext: () => void; onBack: () => void
         <p className="mb-2 text-sm font-semibold text-[#F59E0B]">
           Liveness Check — Coming Soon
         </p>
-        <p className="max-w-sm text-xs leading-relaxed text-[#6B6B80]">
+        <p className="max-w-sm text-xs leading-relaxed text-[#8E8E9C]">
           TIGI will integrate a real-time liveness verification provider (Persona, Jumio, or Onfido)
           in a future milestone. For now, this step is bypassed during the initial KYC flow.
           Manual review by a compliance officer includes document-to-face comparison.
@@ -712,7 +712,7 @@ function ReviewSubmitStep({
             { label: 'Address', value: [personalInfo.addressLine1, personalInfo.city, personalInfo.state, personalInfo.country].filter(Boolean).join(', ') || '—' },
           ].map(({ label, value }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <span className="text-xs text-[#6B6B80]">{label}</span>
+              <span className="text-xs text-[#8E8E9C]">{label}</span>
               <span className="text-right text-xs font-medium text-[#F5F5F7]">{value}</span>
             </div>
           ))}
@@ -730,8 +730,8 @@ function ReviewSubmitStep({
             { label: 'ID Back', slot: idBack },
           ].map(({ label, slot }) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <span className="text-xs text-[#6B6B80]">{label}</span>
-              <span className={cn('text-xs font-medium', slot.status === 'done' ? 'text-[#4ADE80]' : 'text-[#4A4A5E]')}>
+              <span className="text-xs text-[#8E8E9C]">{label}</span>
+              <span className={cn('text-xs font-medium', slot.status === 'done' ? 'text-[#4ADE80]' : 'text-[#7A7A8A]')}>
                 {slot.status === 'done' ? slot.file?.name ?? 'Uploaded' : '—'}
               </span>
             </div>
@@ -741,7 +741,7 @@ function ReviewSubmitStep({
 
       {/* Legal acknowledgment */}
       <div className="mb-5 rounded-xl border border-white/[0.08] bg-white/[0.04] p-4">
-        <p className="text-xs leading-relaxed text-[#6B6B80]">
+        <p className="text-xs leading-relaxed text-[#8E8E9C]">
           By submitting, I confirm that the information provided is accurate and complete.
           I understand that providing false information may result in account termination
           and may be subject to applicable legal consequences.{' '}
@@ -823,7 +823,7 @@ function StatusScreen({
         </p>
         <StatusBadge status="SUBMITTED" />
         {submittedAt && (
-          <p className="mt-4 text-xs text-[#4A4A5E]">
+          <p className="mt-4 text-xs text-[#7A7A8A]">
             Submitted {new Date(submittedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
           </p>
         )}
@@ -861,7 +861,7 @@ function StatusScreen({
   // PENDING or NONE — shouldn't normally reach here (caught in useEffect)
   return (
     <div className="flex flex-col items-center py-12 text-center">
-      <p className="text-sm text-[#6B6B80]">Verification in progress…</p>
+      <p className="text-sm text-[#8E8E9C]">Verification in progress…</p>
     </div>
   )
 }
@@ -883,13 +883,13 @@ function KycField({
         type={type}
         className={cn(
           'w-full rounded-lg border border-white/[0.08] bg-white/[0.04]',
-          'px-4 py-2.5 text-sm text-[#F5F5F7] placeholder:text-[#4A4A5E]',
+          'px-4 py-2.5 text-sm text-[#F5F5F7] placeholder:text-[#7A7A8A]',
           'outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20',
           'transition-colors duration-150',
         )}
         {...props}
       />
-      {hint && <p className="text-[11px] text-[#4A4A5E]">{hint}</p>}
+      {hint && <p className="text-[11px] text-[#7A7A8A]">{hint}</p>}
     </div>
   )
 }
@@ -926,7 +926,7 @@ function StepActions({
 
 function StatusBadge({ status }: { status: string }) {
   const cfg: Record<string, { label: string; color: string; dot: string }> = {
-    NONE: { label: 'Not Started', color: 'text-[#6B6B80]', dot: 'bg-[#3A3A4A]' },
+    NONE: { label: 'Not Started', color: 'text-[#8E8E9C]', dot: 'bg-[#6E6E7E]' },
     PENDING: { label: 'In Progress', color: 'text-[#F59E0B]', dot: 'bg-[#F59E0B]' },
     SUBMITTED: { label: 'Under Review', color: 'text-[#818CF8]', dot: 'bg-[#818CF8]' },
     VERIFIED: { label: 'Verified', color: 'text-[#4ADE80]', dot: 'bg-[#4ADE80]' },

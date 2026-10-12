@@ -42,7 +42,7 @@ export default async function NotificationsPage() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute right-1/4 top-[1300px] h-[400px] w-[400px] rounded-full bg-blue-500/[0.025] blur-[160px] animate-float"
+        className="pointer-events-none absolute right-1/4 top-[1300px] h-[400px] w-[400px] rounded-full bg-violet-500/[0.025] blur-[160px] animate-float"
         aria-hidden="true"
       />
       <div

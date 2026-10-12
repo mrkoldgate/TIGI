@@ -38,7 +38,7 @@ export default async function SettingsPage() {
   }
 
   const kycColor: Record<string, string> = {
-    NONE:      'text-[#6B6B80]',
+    NONE:      'text-[#8E8E9C]',
     PENDING:   'text-[#F59E0B]',
     SUBMITTED: 'text-[#F59E0B]',
     VERIFIED:  'text-[#4ADE80]',
@@ -46,7 +46,7 @@ export default async function SettingsPage() {
   }
 
   const tierColor =
-    tier === 'free'       ? 'text-[#6B6B80]'
+    tier === 'free'       ? 'text-[#8E8E9C]'
     : tier === 'pro'      ? 'text-[#6366F1]'
     : tier === 'pro_plus' ? 'text-[#818CF8]'
     : 'text-[#22C55E]'
@@ -66,7 +66,7 @@ export default async function SettingsPage() {
       title:       'Identity Verification',
       description: 'Complete KYC to unlock investment transactions.',
       meta:        kycLabel[kycStatus] ?? 'Unknown',
-      metaColor:   kycColor[kycStatus] ?? 'text-[#6B6B80]',
+      metaColor:   kycColor[kycStatus] ?? 'text-[#8E8E9C]',
     },
     {
       href:        '/settings/wallet',
@@ -74,7 +74,7 @@ export default async function SettingsPage() {
       title:       'Wallet',
       description: 'Manage your platform wallet and external connections.',
       meta:        'Devnet',
-      metaColor:   'text-[#6B6B80]',
+      metaColor:   'text-[#8E8E9C]',
     },
     {
       href:        '/settings/profile',
@@ -82,7 +82,7 @@ export default async function SettingsPage() {
       title:       'Profile',
       description: 'Edit your name, avatar, and notification preferences.',
       meta:        user?.name ?? 'Set up',
-      metaColor:   user?.name ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]',
+      metaColor:   user?.name ? 'text-[#A0A0B2]' : 'text-[#7A7A8A]',
     },
   ]
 
@@ -101,7 +101,7 @@ export default async function SettingsPage() {
             className="group flex items-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] px-6 py-5 transition-all duration-200 hover:border-white/15 hover:bg-white/[0.08] hover:shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06),_0_0_20px_-4px_rgba(99,102,241,0.15)]"
           >
             <div className="relative flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[0_0_12px_-2px_rgba(99,102,241,0.08)] group-hover:shadow-[0_0_16px_-2px_rgba(99,102,241,0.15)]">
-              <Icon className="h-4.5 w-4.5 text-[#6B6B80] transition-colors group-hover:text-[#6366F1]/70" />
+              <Icon className="h-4.5 w-4.5 text-[#8E8E9C] transition-colors group-hover:text-[#6366F1]/70" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">{title}</p>
@@ -109,7 +109,7 @@ export default async function SettingsPage() {
             </div>
             <div className="flex items-center gap-3">
               <span className={`text-xs font-medium ${metaColor}`}>{meta}</span>
-              <ChevronRight className="h-4 w-4 text-[#3A3A4A] transition-colors group-hover:text-[#6B6B80]" />
+              <ChevronRight className="h-4 w-4 text-[#6E6E7E] transition-colors group-hover:text-[#8E8E9C]" />
             </div>
           </Link>
         ))}

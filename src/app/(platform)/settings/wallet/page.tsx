@@ -65,7 +65,7 @@ export default async function WalletSettingsPage() {
               <p className="text-sm font-medium text-white">
                 {isExternalConnected ? 'Connected wallet' : 'Connect your own wallet'}
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-1 text-xs leading-relaxed text-[#8E8E9C]">
                 {isExternalConnected
                   ? 'Your Phantom or Solflare wallet is active. Disconnect to return to your platform-managed wallet.'
                   : 'Use Phantom or Solflare to control your own keys. Your platform wallet is preserved and restored on disconnect.'}
@@ -95,7 +95,7 @@ export default async function WalletSettingsPage() {
         {/* Devnet notice */}
         <div className="flex items-start gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3">
           <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
-          <p className="text-xs leading-relaxed text-[#6B6B80]">
+          <p className="text-xs leading-relaxed text-[#8E8E9C]">
             <span className="font-medium text-[#9999AA]">Devnet active.</span>{' '}
             All wallets and transactions are on Solana Devnet. No real assets are involved.
             Mainnet will go live with the tokenization module.
@@ -108,7 +108,7 @@ export default async function WalletSettingsPage() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#4A4A60]">
+    <p className="mb-2 text-xs font-semibold uppercase tracking-widest text-[#7A7A8A]">
       {children}
     </p>
   )
@@ -126,11 +126,11 @@ function ExplainerRow({
   return (
     <div className="flex items-start gap-3">
       <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl">
-        <Icon className="h-4 w-4 text-[#6B6B80]" />
+        <Icon className="h-4 w-4 text-[#8E8E9C]" />
       </div>
       <div>
         <p className="text-sm font-medium text-[#CCCCDD]">{title}</p>
-        <p className="mt-0.5 text-xs leading-relaxed text-[#6B6B80]">{body}</p>
+        <p className="mt-0.5 text-xs leading-relaxed text-[#8E8E9C]">{body}</p>
       </div>
     </div>
   )

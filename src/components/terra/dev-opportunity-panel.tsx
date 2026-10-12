@@ -78,7 +78,7 @@ function DevOpportunityCompact({ opp }: { opp: DevOpportunity }) {
         ))}
       </div>
 
-      <p className="relative mt-3 text-[10px] leading-relaxed text-zinc-600">
+      <p className="relative mt-3 text-[10px] leading-relaxed text-zinc-500">
         {cfg.description} Verify entitlement status with local planning authority.
       </p>
     </div>
@@ -92,7 +92,7 @@ function Section({ icon: Icon, title, children }: { icon: React.ComponentType<Re
     <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] p-5">
       <div className="mb-4 flex items-center gap-2">
         <Icon className="h-3.5 w-3.5 text-emerald-400" />
-        <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-600">{title}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-zinc-500">{title}</p>
       </div>
       {children}
     </div>
@@ -155,7 +155,7 @@ function DevOpportunityFull({ opp }: { opp: DevOpportunity }) {
         </div>
         {opp.permitsAvailable.length > 0 && (
           <div className="mt-3 space-y-1.5">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
               Permits Available
             </p>
             {opp.permitsAvailable.map((p) => (
@@ -177,7 +177,7 @@ function DevOpportunityFull({ opp }: { opp: DevOpportunity }) {
         </div>
         {opp.utilitiesAvailable.length > 0 && (
           <div className="mt-3">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-zinc-600">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-zinc-500">
               Utilities at Site
             </p>
             <div className="flex flex-wrap gap-1.5">
@@ -202,8 +202,8 @@ function DevOpportunityFull({ opp }: { opp: DevOpportunity }) {
 
       {/* Disclaimer */}
       <div className="flex items-start gap-2 rounded-lg border border-white/[0.08] px-3 py-2.5">
-        <AlertCircle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-zinc-600" />
-        <p className="text-[10px] leading-relaxed text-zinc-600">
+        <AlertCircle className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-zinc-500" />
+        <p className="text-[10px] leading-relaxed text-zinc-500">
           Development information is provided for informational purposes only and is subject to change.
           Verify all zoning, permits, and entitlements with local authorities before making investment decisions.
           Crowdfunding and development financing structures require regulatory compliance — consult legal counsel.

@@ -57,7 +57,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
       {/* Header */}
       <div className="mb-5">
         <h3 className="font-heading text-base font-semibold text-[#F5F5F7]">{plan.name}</h3>
-        <p className="mt-0.5 text-xs text-[#6B6B80]">{plan.tagline}</p>
+        <p className="mt-0.5 text-xs text-[#8E8E9C]">{plan.tagline}</p>
       </div>
 
       {/* Price */}
@@ -77,7 +77,7 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
           </p>
         )}
         {annual && plan.priceAnnual && plan.id !== 'free' && !isEnterprise && (
-          <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
             billed ${plan.priceAnnual}/yr
           </p>
         )}
@@ -130,17 +130,17 @@ export function PlanCard({ plan, currentPlanId, annual, onUpgrade, isLoading }: 
             {feat.included ? (
               <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#4ADE80]" />
             ) : (
-              <X className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#3A3A4A]" />
+              <X className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#6E6E7E]" />
             )}
             <span
               className={cn(
                 'text-xs leading-relaxed',
-                feat.included ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]',
+                feat.included ? 'text-[#A0A0B2]' : 'text-[#7A7A8A]',
               )}
             >
               {feat.label}
               {feat.note && (
-                <span className="ml-1 text-[10px] text-[#4A4A5E]">({feat.note})</span>
+                <span className="ml-1 text-[10px] text-[#7A7A8A]">({feat.note})</span>
               )}
             </span>
           </li>

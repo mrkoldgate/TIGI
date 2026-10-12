@@ -55,7 +55,7 @@ export function ActivityFeed({ items, className }: ActivityFeedProps) {
     return (
       <div className="flex flex-col items-center justify-center py-10 text-center">
         <p className="text-sm text-[#94A3B8]">No recent activity yet.</p>
-        <p className="mt-1 text-xs text-[#64748B]">Browse the marketplace to get started.</p>
+        <p className="mt-1 text-xs text-[#8E8E9C]">Browse the marketplace to get started.</p>
       </div>
     )
   }
@@ -85,15 +85,15 @@ export function ActivityFeed({ items, className }: ActivityFeedProps) {
                 {' '}
                 <Link
                   href={`/marketplace/${item.assetId}`}
-                  className="text-cyan-400 transition-colors hover:text-cyan-300 hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]"
+                  className="text-violet-200 transition-colors hover:text-white"
                 >
                   {item.assetTitle}
                 </Link>
               </p>
               {item.detail && (
-                <p className="mt-0.5 font-mono text-[11px] text-[#64748B]">{item.detail}</p>
+                <p className="mt-0.5 font-mono text-[11px] text-[#8E8E9C]">{item.detail}</p>
               )}
-              <p className="mt-1 text-[11px] text-[#64748B]">{formatTimeAgo(item.timestamp)}</p>
+              <p className="mt-1 text-[11px] text-[#8E8E9C]">{formatTimeAgo(item.timestamp)}</p>
             </div>
           </li>
         )

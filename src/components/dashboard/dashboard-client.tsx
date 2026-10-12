@@ -4,12 +4,12 @@ import Link from 'next/link'
 import {
   Heart,
   Eye,
-  TrendingUp,
-  BarChart3,
-  ArrowRight,
-  Sparkles,
+  Layers,
   ShieldCheck,
+  ArrowRight,
+  ArrowUpRight,
   Wallet,
+  Store,
 } from 'lucide-react'
 import { useSavedListings } from '@/lib/saved/saved-context'
 import { type MockListing } from '@/lib/marketplace/mock-data'
@@ -20,428 +20,383 @@ import {
   MOCK_ACTIVITY,
   MOCK_VALUATION_ALERTS,
 } from '@/lib/dashboard/mock-dashboard'
+import type { DashboardAllocation } from '@/lib/dashboard/dashboard-query'
 import { getRecommendations, DEMO_USER_PREFERENCES } from '@/lib/recommendations/recommendation-service'
 import { RecommendationRail } from '@/components/recommendations/recommendation-rail'
 import { SubmittedInquiryFeed } from '@/components/inquiries/submitted-inquiry-feed'
 import { PremiumGate } from '@/components/premium/premium-gate'
 import { UpgradeCta } from '@/components/premium/upgrade-cta'
 import { SubscriptionBadge } from '@/components/premium/subscription-badge'
-import { PageHeader } from '@/components/shared/page-header'
-import { StatCard } from './stat-card'
-import { SectionHeader } from './section-header'
+import { PageHeader, SectionTitle } from '@/components/shared/page-header'
 import { InsightCard } from './insight-card'
 import { ActivityFeed } from './activity-feed'
 import { MiniListingRow } from './mini-listing-row'
 import { ValuationAlerts } from './valuation-alerts'
+import { cn } from '@/lib/utils'
 
 // ---------------------------------------------------------------------------
-// DashboardClient — Buyer / Investor personal dashboard (Hyper-Glass v3).
+// DashboardClient — v5
 //
-// Glassflow 3D icon centerpieces for stat cards.
-// Dimension nested glass layering for all section containers.
-// Paragon ultra-thin borders with edge-lit hover on every interactive surface.
-//
-// Layout preserved:
-//   1. PageHeader + Welcome bar
-//   2. Stats row (4 Glassflow hero cards)
-//   3. Two-column body (2/3 + 1/3)
+// Mercury-style home: a greeting, then one glass tray that answers "what do I
+// own and what is it worth" (value, gain vs cost, allocation by property),
+// with the four counts beside it. Below: picks, watchlist, signals,
+// inquiries on the left; activity, valuation alerts and plan on the right.
 // ---------------------------------------------------------------------------
 
 interface DashboardClientProps {
   allListings: MockListing[]
   user: DashboardUser
   stats: DashboardStats
+  allocation?: DashboardAllocation[]
   isPro?: boolean
   subscriptionTier?: string
 }
 
-export function DashboardClient({ allListings, user, stats: serverStats, isPro = false, subscriptionTier = 'free' }: DashboardClientProps) {
+const ALLOCATION_COLORS = ['#A78BFA', '#6366F1', '#C084FC', '#22D3EE', '#818CF8', '#7C3AED']
+
+const usd = (n: number, digits = 0) =>
+  n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: digits, minimumFractionDigits: digits })
+
+export function DashboardClient({
+  allListings,
+  user,
+  stats: serverStats,
+  allocation = [],
+  isPro = false,
+  subscriptionTier = 'free',
+}: DashboardClientProps) {
   const { savedIds, savedCount } = useSavedListings()
 
-  const recommendationResult = getRecommendations(
+  const recommended = getRecommendations(
     allListings,
     { kind: 'DASHBOARD', prefs: { ...DEMO_USER_PREFERENCES, savedListingIds: [...savedIds] } },
     4,
-  )
-  const recommended = recommendationResult.items
+  ).items
 
-  const watchlist = allListings
-    .filter((l) => savedIds.has(l.id))
-    .slice(0, 4)
-
-  const watchlistDisplay =
-    watchlist.length > 0
-      ? watchlist
-      : allListings.filter((l) => l.isTokenized).slice(0, 3)
+  const watchlist = allListings.filter((l) => savedIds.has(l.id)).slice(0, 5)
   const watchlistIsEmpty = watchlist.length === 0
+  const watchlistDisplay = watchlistIsEmpty ? allListings.filter((l) => l.isTokenized).slice(0, 3) : watchlist
 
   const stats = { ...serverStats, savedCount }
-  const greeting = getGreeting(user.firstName)
 
   return (
-    <div className="relative pt-8 pb-8 space-y-10">
-      {/* ── Dashboard Header ── */}
+    <div className="space-y-14">
       <PageHeader
-        title="Dashboard"
-        eyebrow="Portfolio Overview"
-        description="Here's what's happening with your investments today."
+        eyebrow="Dashboard"
+        title={`Welcome back, ${user.firstName}`}
+        description="Your holdings, watchlist and market signals in one place."
         actions={
-          <div className="flex items-center gap-2">
+          <>
+            <Link href="/settings/wallet" className="btn-glass !px-5 !py-2.5 text-sm no-underline">
+              <Wallet className="h-4 w-4" />
+              Connect wallet
+            </Link>
+            <Link href="/marketplace" className="btn-primary !px-5 !py-2.5 text-sm no-underline">
+              <Store className="h-4 w-4" />
+              Browse marketplace
+            </Link>
+          </>
+        }
+        meta={
+          <div className="flex flex-wrap items-center gap-2">
             <KycBadge status={user.kycStatus} />
-            <SubscriptionBadge tier={subscriptionTier} />
+            <SubscriptionBadge tier={subscriptionTier} showFree />
+            <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-[#A0A0B2]">
+              {user.role.toLowerCase()}
+            </span>
+            <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-[#7A7A8A]">
+              Member since {new Date(user.joinedAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+            </span>
           </div>
         }
       />
 
-      {/* ── Welcome & Quick Actions ── */}
-      <WelcomeBar
-        userName={user.name}
-        role={user.role}
-        subscriptionTier={subscriptionTier}
-        greeting={greeting}
-        kycStatus={user.kycStatus}
-      />
+      {/* ── Overview tray ── */}
+      <section aria-label="Overview" className="tray" data-reveal="up">
+        <div className="grid gap-1.5 lg:grid-cols-[1.35fr_1fr]">
+          <PortfolioCell value={stats.portfolioValue} invested={stats.totalInvested} allocation={allocation} />
 
-      {/* ── Stats row — Glassflow 3D centerpieces ── */}
-      <section aria-label="Summary statistics">
-        <div className="stagger-children grid grid-cols-2 gap-5 lg:grid-cols-4">
-          <StatCard
-            label="Saved Assets"
-            value={stats.savedCount}
-            hint="Properties on your watchlist"
-            icon={Heart}
-            accent="rose"
-            href="/saved"
-          />
-          <StatCard
-            label="Active Interests"
-            value={stats.activeInterestsCount}
-            hint="Properties you're evaluating"
-            icon={Eye}
-            accent="blue"
-          />
-          <StatCard
-            label="Investments"
-            value={stats.investmentCount}
-            hint="Token holdings across assets"
-            icon={TrendingUp}
-            accent="green"
-            href="/portfolio"
-          />
-          <StatCard
-            label="Portfolio Value"
-            value="—"
-            hint="Connect wallet to unlock"
-            icon={BarChart3}
-            accent="gold"
-            lockedUntil="M4 · Wallet"
-          />
+          <div className="grid grid-cols-2 gap-1.5">
+            <CountCell icon={Heart} label="Saved" value={stats.savedCount} hint="On your watchlist" href="/saved" />
+            <CountCell icon={Eye} label="Active interests" value={stats.activeInterestsCount} hint="Offers & inquiries open" href="/transactions" />
+            <CountCell icon={Layers} label="Holdings" value={stats.investmentCount} hint="Properties you own shares in" href="/portfolio" />
+            <IdentityCell status={user.kycStatus} />
+          </div>
         </div>
       </section>
 
-      {/* ── Two-column body ── */}
-      <div className="grid grid-cols-1 gap-8 lg:gap-10 lg:grid-cols-3">
-
-        {/* ── LEFT column (2/3) ── */}
-        <div className="space-y-10 lg:col-span-2">
-
-          {/* AI Insights */}
-          <section aria-label="AI insights">
-            <SectionHeader
-              title="AI Insights"
-              description="Personalized signals based on your activity and market data."
-              viewAllHref="/insights"
-              viewAllLabel="All insights"
-              milestone="M6"
+      {/* ── Body ── */}
+      <div className="grid grid-cols-1 gap-x-10 gap-y-14 lg:grid-cols-3">
+        <div className="space-y-14 lg:col-span-2">
+          <section aria-label="Recommended listings" data-reveal="up">
+            <SectionTitle
+              index="01"
+              title="Picked for you"
+              description="Ranked by what you save, view and invest in."
+              action={<ViewAll href="/marketplace" label="Browse all" />}
             />
-            <div className="mt-5">
-              <PremiumGate
-                isPro={isPro}
-                feature="advanced AI insights"
-                minHeight={220}
-              >
-                <div className="space-y-3">
-                  {MOCK_INSIGHTS.map((insight) => (
-                    <InsightCard key={insight.id} insight={insight} />
-                  ))}
-                </div>
-              </PremiumGate>
-              {!isPro && (
-                <UpgradeCta compact className="mt-3" />
-              )}
-            </div>
+            <RecommendationRail items={recommended} viewAllHref="/marketplace" viewAllLabel="View all listings" />
           </section>
 
-          {/* Recommended Listings */}
-          <section aria-label="Recommended listings">
-            <SectionHeader
-              title="Recommended for You"
-              description="Personalised by your activity, preferences, and AI signals."
-              viewAllHref="/marketplace"
-              viewAllLabel="Browse all"
+          <section aria-label="Watchlist" data-reveal="up">
+            <SectionTitle
+              index="02"
+              title={watchlistIsEmpty ? 'Watchlist' : `Watchlist · ${savedCount}`}
+              description={watchlistIsEmpty ? 'Nothing saved yet. A few tokenized listings to start with:' : 'Your saved properties at a glance.'}
+              action={<ViewAll href="/saved" label="All saved" />}
             />
-            <div className="mt-5">
-              <RecommendationRail
-                items={recommended}
-                viewAllHref="/marketplace"
-                viewAllLabel="View all listings"
-              />
-            </div>
-          </section>
-
-          {/* Watchlist / Favorites Preview */}
-          <section aria-label="Watchlist preview">
-            <SectionHeader
-              title={watchlistIsEmpty ? 'Watchlist' : `Watchlist \u00B7 ${savedCount}`}
-              description={
-                watchlistIsEmpty
-                  ? 'Save listings to build your watchlist.'
-                  : 'Your saved properties at a glance.'
-              }
-              viewAllHref="/saved"
-              viewAllLabel="View all saved"
-            />
-            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl">
-              <div className="noise absolute inset-0 pointer-events-none" />
-              {/* Edge light */}
-              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-              {/* Ambient wash */}
-              <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-500/[0.05] blur-[60px]" aria-hidden="true" />
-
-              {watchlistIsEmpty ? (
-                <div className="px-3 py-2">
-                  <p className="px-3 py-2 text-[11px] text-white/20">
-                    You haven&apos;t saved anything yet. Here are some to get you started:
-                  </p>
-                  <div className="divide-y divide-white/[0.03]">
-                    {watchlistDisplay.map((listing, i) => (
-                      <div key={listing.id} className="px-3 py-1.5">
-                        <MiniListingRow listing={listing} index={i} />
-                      </div>
-                    ))}
+            <div className="panel overflow-hidden p-2">
+              <div className="divide-y divide-white/[0.05]">
+                {watchlistDisplay.map((listing, i) => (
+                  <div key={listing.id} className="px-1 py-1">
+                    <MiniListingRow listing={listing} index={i} />
                   </div>
-                </div>
-              ) : (
-                <div className="divide-y divide-white/[0.03]">
-                  {watchlistDisplay.map((listing, i) => (
-                    <div key={listing.id} className="px-3 py-1.5">
-                      <MiniListingRow listing={listing} index={i} />
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="border-t border-white/[0.03] p-4">
-                <Link
-                  href="/saved"
-                  className="group flex items-center justify-center gap-2 rounded-full border border-white/[0.04] bg-white/[0.02] py-2.5 text-xs font-medium text-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all duration-400 hover:border-white/[0.12] hover:bg-white/[0.04] hover:text-white/70"
-                >
-                  {watchlistIsEmpty ? 'Browse marketplace' : 'View full watchlist'}
-                  <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
-                </Link>
+                ))}
               </div>
             </div>
           </section>
 
-          {/* My Inquiries */}
-          <section aria-label="My inquiries">
-            <SectionHeader
-              title="My Inquiries"
-              description="Questions and interest you've sent to listing owners."
+          <section aria-label="AI signals" data-reveal="up">
+            <SectionTitle
+              index="03"
+              title="Signals"
+              description="Price moves and new matches on the properties you follow."
+              action={<ViewAll href="/insights" label="All insights" />}
             />
-            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
-              <div className="noise absolute inset-0 pointer-events-none" />
-              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
+            <PremiumGate isPro={isPro} feature="advanced AI insights" minHeight={220}>
+              <div className="space-y-3">
+                {MOCK_INSIGHTS.map((insight) => (
+                  <InsightCard key={insight.id} insight={insight} />
+                ))}
+              </div>
+            </PremiumGate>
+            {!isPro && <UpgradeCta compact className="mt-3" />}
+          </section>
+
+          <section aria-label="My inquiries" data-reveal="up">
+            <SectionTitle index="04" title="Your inquiries" description="Questions and interest you've sent to owners." />
+            <div className="panel p-5">
               <SubmittedInquiryFeed />
             </div>
           </section>
         </div>
 
-        {/* ── RIGHT column (1/3) ── */}
-        <div className="space-y-10">
-
-          {/* Recent Activity */}
-          <section aria-label="Recent activity">
-            <SectionHeader
-              title="Recent Activity"
-              description="Your latest interactions across the platform."
-            />
-            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
-              <div className="noise absolute inset-0 pointer-events-none" />
-              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-              <div className="pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full bg-indigo-500/[0.05] blur-[60px]" />
-              <div className="relative">
-                <ActivityFeed items={MOCK_ACTIVITY} />
-              </div>
+        <aside className="space-y-10">
+          <section aria-label="Recent activity" data-reveal="up">
+            <SectionTitle title="Recent activity" />
+            <div className="panel p-5">
+              <ActivityFeed items={MOCK_ACTIVITY} />
             </div>
           </section>
 
-          {/* Valuation Alerts */}
-          <section aria-label="Valuation alerts">
-            <SectionHeader
-              title="Valuation Alerts"
-              description="AI-detected price and valuation changes."
-              milestone="M6"
-            />
-            <div className="relative mt-5 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-5 backdrop-blur-3xl shadow-2xl">
-              <div className="noise absolute inset-0 pointer-events-none" />
-              <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-              <div className="pointer-events-none absolute -right-12 -bottom-12 h-36 w-36 rounded-full bg-emerald-500/[0.04] blur-[50px]" />
-              <div className="relative">
-                <ValuationAlerts alerts={MOCK_VALUATION_ALERTS} />
-              </div>
+          <section aria-label="Valuation alerts" data-reveal="up">
+            <SectionTitle title="Valuation alerts" description="AI-detected changes. Sample data." />
+            <div className="panel p-5">
+              <ValuationAlerts alerts={MOCK_VALUATION_ALERTS} />
             </div>
           </section>
 
-          {/* Portfolio Teaser */}
-          <PortfolioTeaser />
-        </div>
+          <section aria-label="Portfolio" data-reveal="up">
+            <Link href="/portfolio" className="panel panel-hover group block overflow-hidden p-6 no-underline">
+              <p className="text-label">Portfolio</p>
+              <p className="section-title mt-3">Holdings, yield and history</p>
+              <p className="mt-2 text-sm leading-relaxed text-[#A0A0B2]">
+                Track your shares, gain against cost and rental yield across every property.
+              </p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-violet-200 transition-colors group-hover:text-white">
+                Open portfolio
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </span>
+            </Link>
+          </section>
+        </aside>
       </div>
     </div>
   )
 }
 
 // ---------------------------------------------------------------------------
-// WelcomeBar — Dimension deep container with cyan accent
+// Overview cells
 // ---------------------------------------------------------------------------
 
-interface WelcomeBarProps {
-  greeting: string
-  userName: string
-  role: string
-  kycStatus: 'UNVERIFIED' | 'PENDING' | 'VERIFIED'
-  subscriptionTier?: string
-}
-
-function WelcomeBar({ greeting, userName, role, kycStatus, subscriptionTier = 'free' }: WelcomeBarProps) {
-  return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl sm:p-8">
-      <div className="noise absolute inset-0 pointer-events-none" />
-      {/* Edge light — cyan accent */}
-      <div className="pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent" />
-      {/* Ambient wash */}
-      <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-cyan-400/[0.05] blur-[80px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-indigo-500/[0.04] blur-[60px]" aria-hidden="true" />
-
-      <div className="relative flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
-        {/* Left: greeting */}
+function PortfolioCell({
+  value,
+  invested,
+  allocation,
+}: {
+  value: number | null
+  invested: number | null
+  allocation: DashboardAllocation[]
+}) {
+  if (value === null || allocation.length === 0) {
+    return (
+      <div className="cell flex flex-col justify-between p-7">
         <div>
-          <p className="text-[10px] font-semibold tracking-[0.16em] text-white/20 uppercase">{greeting}</p>
-          <h1 className="mt-1 text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
-            {userName}
-          </h1>
-          <div className="mt-3 flex flex-wrap items-center gap-2">
-            <span className="rounded-full border border-white/[0.06] bg-white/[0.02] px-2.5 py-0.5 text-[10px] text-white/25">
-              {role}
-            </span>
-            <KycBadge status={kycStatus} />
-            <SubscriptionBadge tier={subscriptionTier} />
-          </div>
+          <p className="text-label">Portfolio value</p>
+          <p className="figure mt-4 text-[44px] leading-none text-[#F5F5F7]/40">$0</p>
+          <p className="mt-3 max-w-sm text-sm text-[#A0A0B2]">
+            You don&apos;t own any shares yet. Start from $100 on any tokenized property.
+          </p>
         </div>
+        <Link href="/marketplace" className="btn-primary mt-6 self-start !px-5 !py-2.5 text-sm no-underline">
+          Find a property
+        </Link>
+      </div>
+    )
+  }
 
-        {/* Right: quick actions */}
-        <div className="flex flex-shrink-0 flex-wrap items-center gap-2.5">
-          <Link
-            href="/marketplace"
-            className="group flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-5 py-2.5 text-xs font-medium text-white/50 backdrop-blur-xl transition-all duration-400 hover:border-cyan-400/20 hover:bg-cyan-400/[0.04] hover:text-white hover:shadow-[0_0_24px_rgba(34,211,238,0.08)]"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]" />
-            Browse marketplace
-          </Link>
-          <Link
-            href="/settings/wallet"
-            className="group flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] px-5 py-2.5 text-xs font-medium text-white/30 backdrop-blur-xl transition-all duration-400 hover:border-white/[0.1] hover:bg-white/[0.04] hover:text-white/60"
-          >
-            <Wallet className="h-3.5 w-3.5" />
-            Connect wallet
-          </Link>
+  const gain = invested !== null ? value - invested : 0
+  const gainPct = invested ? (gain / invested) * 100 : 0
+  const up = gain >= 0
+  const total = allocation.reduce((s, a) => s + a.value, 0) || 1
+
+  return (
+    <div className="cell p-7">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <p className="text-label">Portfolio value</p>
+          <p className="figure mt-4 text-[clamp(2.25rem,1.6rem+2vw,3.25rem)] leading-none">{usd(value, 2)}</p>
+          <p className="mt-3 flex items-center gap-2 font-mono text-[13px] tabular-nums">
+            <span className={up ? 'text-[#34D399]' : 'text-[#F87171]'}>
+              {up ? '+' : '−'}{usd(Math.abs(gain), 2)} ({up ? '+' : '−'}{Math.abs(gainPct).toFixed(2)}%)
+            </span>
+            <span className="text-[#7A7A8A]">vs. cost</span>
+          </p>
         </div>
+        <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 font-mono text-[10px] uppercase tracking-[0.14em] text-[#8E8E9C]">
+          Sample prices
+        </span>
+      </div>
+
+      {/* Allocation bar */}
+      <div className="mt-8">
+        <p className="text-label mb-3">Allocation</p>
+        <div className="flex h-2.5 overflow-hidden rounded-full bg-white/[0.04]" role="img" aria-label="Allocation by property">
+          {allocation.map((a, i) => (
+            <span
+              key={a.propertyId}
+              className="h-full first:rounded-l-full last:rounded-r-full"
+              style={{
+                width: `${(a.value / total) * 100}%`,
+                background: ALLOCATION_COLORS[i % ALLOCATION_COLORS.length],
+                boxShadow: `0 0 14px ${ALLOCATION_COLORS[i % ALLOCATION_COLORS.length]}66`,
+                marginRight: i < allocation.length - 1 ? 2 : 0,
+              }}
+            />
+          ))}
+        </div>
+        <ul className="mt-4 space-y-2.5">
+          {allocation.slice(0, 4).map((a, i) => (
+            <li key={a.propertyId} className="flex items-center gap-3 text-[13.5px]">
+              <span className="h-2 w-2 flex-shrink-0 rounded-full" style={{ background: ALLOCATION_COLORS[i % ALLOCATION_COLORS.length] }} />
+              <Link href={`/marketplace/${a.propertyId}`} className="min-w-0 flex-1 truncate text-[#C3C3CC] no-underline hover:text-white">
+                {a.title} <span className="text-[#7A7A8A]">· {a.city}</span>
+              </Link>
+              <span className="font-mono tabular-nums text-[#F5F5F7]">{usd(a.value)}</span>
+              <span className="w-12 text-right font-mono text-[12px] tabular-nums text-[#8E8E9C]">
+                {((a.value / total) * 100).toFixed(0)}%
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   )
 }
 
-// ---------------------------------------------------------------------------
-// KYC Badge — Paragon ultra-thin badges
-// ---------------------------------------------------------------------------
+function CountCell({
+  icon: Icon,
+  label,
+  value,
+  hint,
+  href,
+}: {
+  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
+  label: string
+  value: number | string
+  hint: string
+  href?: string
+}) {
+  const body = (
+    <>
+      <div className="flex items-center justify-between">
+        <span className="flex h-9 w-9 items-center justify-center rounded-xl border border-violet-300/20 bg-violet-500/[0.08] text-violet-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+          <Icon className="h-4 w-4" />
+        </span>
+        {href && <ArrowUpRight className="h-4 w-4 text-[#6E6E7E] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-violet-200" />}
+      </div>
+      <p className="figure mt-6 text-[34px] leading-none">{value}</p>
+      <p className="mt-2 text-[13px] font-medium text-[#F5F5F7]">{label}</p>
+      <p className="mt-0.5 text-[12px] text-[#8E8E9C]">{hint}</p>
+    </>
+  )
+  return href ? (
+    <Link href={href} className="cell group block p-5 no-underline">{body}</Link>
+  ) : (
+    <div className="cell group p-5">{body}</div>
+  )
+}
 
-function KycBadge({ status }: { status: WelcomeBarProps['kycStatus'] }) {
-  if (status === 'VERIFIED') {
-    return (
-      <span className="flex items-center gap-1 rounded-full border border-emerald-400/15 bg-emerald-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-emerald-400">
-        <ShieldCheck className="h-3 w-3 drop-shadow-[0_0_4px_rgba(52,211,153,0.5)]" />
-        KYC Verified
-      </span>
-    )
-  }
-  if (status === 'PENDING') {
-    return (
-      <span className="flex items-center gap-1 rounded-full border border-amber-400/15 bg-amber-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-amber-400">
-        KYC Pending
-      </span>
-    )
-  }
+function IdentityCell({ status }: { status: DashboardUser['kycStatus'] }) {
+  const verified = status === 'VERIFIED'
+  const pending = status === 'PENDING'
   return (
-    <Link
-      href="/settings"
-      className="flex items-center gap-1 rounded-full border border-red-400/15 bg-red-400/[0.04] px-2.5 py-0.5 text-[10px] font-medium text-red-400 transition-opacity hover:opacity-80"
-    >
-      Complete KYC →
+    <Link href="/settings/kyc" className="cell group block p-5 no-underline">
+      <div className="flex items-center justify-between">
+        <span
+          className={cn(
+            'flex h-9 w-9 items-center justify-center rounded-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]',
+            verified ? 'border-emerald-300/25 bg-emerald-400/[0.08] text-emerald-300' : pending ? 'border-amber-300/25 bg-amber-400/[0.08] text-amber-300' : 'border-violet-300/20 bg-violet-500/[0.08] text-violet-200',
+          )}
+        >
+          <ShieldCheck className="h-4 w-4" />
+        </span>
+        <ArrowUpRight className="h-4 w-4 text-[#6E6E7E] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-violet-200" />
+      </div>
+      <p className={cn('mt-6 font-display text-[22px] font-[520] leading-none tracking-[-0.02em]', verified ? 'text-emerald-300' : pending ? 'text-amber-300' : 'text-[#F5F5F7]')} style={{ fontStretch: '106%' }}>
+        {verified ? 'Verified' : pending ? 'In review' : 'Not started'}
+      </p>
+      <p className="mt-2 text-[13px] font-medium text-[#F5F5F7]">Identity check</p>
+      <p className="mt-0.5 text-[12px] text-[#8E8E9C]">{verified ? 'You can invest' : 'Needed before investing'}</p>
     </Link>
   )
 }
 
 // ---------------------------------------------------------------------------
-// Portfolio Teaser — Glassflow icon centerpiece CTA
+// Small pieces
 // ---------------------------------------------------------------------------
 
-function PortfolioTeaser() {
+function ViewAll({ href, label }: { href: string; label: string }) {
   return (
-    <div className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.08]">
-      <div className="noise absolute inset-0 pointer-events-none" />
-      {/* Edge light */}
-      <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-400/0 to-transparent transition-all duration-500 group-hover:via-cyan-400/20" />
-      {/* Ambient wash */}
-      <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-500/[0.06] blur-[60px]" />
-
-      {/* Glassflow icon centerpiece */}
-      <div className="relative mb-5 flex justify-center">
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-36 w-36 rounded-full bg-cyan-500/[0.15] blur-[50px]" />
-        <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full bg-cyan-500/[0.08] blur-[20px]" />
-        <div className="relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] shadow-2xl backdrop-blur-md">
-          <BarChart3 className="h-7 w-7 text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.7)]" />
-        </div>
-      </div>
-
-      <div className="relative text-center">
-        <h3 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
-          Your Portfolio
-        </h3>
-        <p className="mt-1.5 text-[11px] text-white/20">Holdings &amp; performance</p>
-        <p className="mx-auto mt-3 max-w-xs text-xs leading-relaxed text-white/20">
-          View your token holdings, track P&amp;L, and monitor yield performance
-          across all fractional investments.
-        </p>
-      </div>
-
-      <Link
-        href="/portfolio"
-        className="group/btn mt-5 flex w-full items-center justify-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.02] py-3 text-xs font-medium text-white/40 transition-all duration-400 hover:border-cyan-400/20 hover:bg-white/[0.04] hover:text-white/70 hover:shadow-[0_0_20px_rgba(34,211,238,0.06)]"
-      >
-        <BarChart3 className="h-3.5 w-3.5" />
-        View portfolio
-        <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover/btn:translate-x-0.5" />
-      </Link>
-    </div>
+    <Link href={href} className="group inline-flex items-center gap-1.5 text-[13px] font-medium text-[#A0A0B2] no-underline transition-colors hover:text-violet-200">
+      {label}
+      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
+    </Link>
   )
 }
 
-// ---------------------------------------------------------------------------
-// Helpers
-// ---------------------------------------------------------------------------
-
-function getGreeting(firstName: string): string {
-  const hour = new Date().getHours()
-  if (hour < 12) return `Good morning, ${firstName}`
-  if (hour < 18) return `Good afternoon, ${firstName}`
-  return `Good evening, ${firstName}`
+function KycBadge({ status }: { status: DashboardUser['kycStatus'] }) {
+  if (status === 'VERIFIED') {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.06] px-3 py-1 text-[11.5px] font-medium text-emerald-300">
+        <ShieldCheck className="h-3.5 w-3.5" />
+        Identity verified
+      </span>
+    )
+  }
+  if (status === 'PENDING') {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-400/20 bg-amber-400/[0.06] px-3 py-1 text-[11.5px] font-medium text-amber-300">
+        Identity check in review
+      </span>
+    )
+  }
+  return (
+    <Link
+      href="/settings/kyc"
+      className="inline-flex items-center gap-1.5 rounded-full border border-violet-300/25 bg-violet-500/[0.08] px-3 py-1 text-[11.5px] font-medium text-violet-200 no-underline transition-colors hover:text-white"
+    >
+      Verify your identity →
+    </Link>
+  )
 }

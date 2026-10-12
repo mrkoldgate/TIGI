@@ -85,7 +85,7 @@ export function InsightCard({ insight }: InsightCardProps) {
           {insight.actionHref && insight.actionLabel && (
             <Link
               href={insight.actionHref}
-              className="text-xs font-medium text-blue-400 transition-opacity hover:opacity-70 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.5)]"
+              className="text-xs font-medium text-violet-400 transition-opacity hover:opacity-70 hover:drop-shadow-[0_0_8px_rgba(139,92,246,0.5)]"
             >
               {insight.actionLabel} →
             </Link>

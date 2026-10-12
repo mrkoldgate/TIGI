@@ -34,21 +34,21 @@ export function SectionHeader({
             {title}
           </h2>
           {milestone && (
-            <span className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-2 py-0.5 text-[10px] text-white/25">
+            <span className="flex items-center gap-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] px-2 py-0.5 text-[10px] text-white/55">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.7)] animate-pulse" />
               {milestone}
             </span>
           )}
         </div>
         {description && (
-          <p className="mt-0.5 text-[11px] tracking-wide text-white/20">{description}</p>
+          <p className="mt-0.5 text-[11px] tracking-wide text-white/50">{description}</p>
         )}
       </div>
 
       {viewAllHref && (
         <Link
           href={viewAllHref}
-          className="group flex flex-shrink-0 items-center gap-1 text-[11px] text-white/20 transition-colors duration-300 hover:text-white/50"
+          className="group flex flex-shrink-0 items-center gap-1 text-[11px] text-white/50 transition-colors duration-300 hover:text-white/50"
         >
           {viewAllLabel}
           <ChevronRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />

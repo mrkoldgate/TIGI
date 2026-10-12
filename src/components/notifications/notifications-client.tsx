@@ -321,7 +321,7 @@ export function NotificationsClient({
 
       {/* Footer note */}
       {displayed.length > 0 && (
-        <p className="text-center text-[11px] text-zinc-600">
+        <p className="text-center text-[11px] text-zinc-500">
           Notifications are retained for 90 days.{' '}
           <Link href="/dashboard" className="underline underline-offset-2 hover:text-zinc-400 transition-colors">
             Go to dashboard

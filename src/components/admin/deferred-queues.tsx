@@ -59,7 +59,7 @@ function QueueRow({
         <div className="flex items-center gap-2">
           <p className="text-sm font-medium text-[#F5F5F7]">{title}</p>
           {milestone && (
-            <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+            <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
               <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
               {milestone}
             </span>
@@ -72,7 +72,7 @@ function QueueRow({
             <span className="font-heading text-xl font-semibold tabular-nums text-[#F5F5F7]">
               {primaryCount}
             </span>
-            <span className="text-xs text-[#6B6B80]">{primaryLabel}</span>
+            <span className="text-xs text-[#8E8E9C]">{primaryLabel}</span>
           </span>
 
           {urgentCount !== undefined && urgentCount > 0 && (
@@ -85,12 +85,12 @@ function QueueRow({
               >
                 {urgentCount}
               </span>
-              <span className="text-xs text-[#6B6B80]">{urgentLabel}</span>
+              <span className="text-xs text-[#8E8E9C]">{urgentLabel}</span>
             </span>
           )}
 
           {timeHint && (
-            <span className="text-xs text-[#4A4A5E]">{timeHint}</span>
+            <span className="text-xs text-[#7A7A8A]">{timeHint}</span>
           )}
         </div>
       </div>
@@ -98,7 +98,7 @@ function QueueRow({
       {/* Action link */}
       <Link
         href={href}
-        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
+        className="flex flex-shrink-0 items-center gap-0.5 self-center text-xs text-[#8E8E9C] transition-colors hover:text-[#6366F1]"
       >
         View
         <ChevronRight className="h-3 w-3" />

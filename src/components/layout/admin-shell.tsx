@@ -73,7 +73,7 @@ export function AdminShell({ children }: AdminShellProps) {
                     <item.icon
                       className={cn(
                         'h-4 w-4 flex-shrink-0',
-                        active ? 'text-indigo-400' : 'text-[#6B6B80]'
+                        active ? 'text-indigo-400' : 'text-[#8E8E9C]'
                       )}
                     />
                     {item.label}
@@ -88,7 +88,7 @@ export function AdminShell({ children }: AdminShellProps) {
         <div className="border-t border-white/[0.06] p-3">
           <Link
             href="/marketplace"
-            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-[#6B6B80] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2]"
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-[#8E8E9C] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2]"
           >
             <LogOut className="h-4 w-4" />
             Back to platform

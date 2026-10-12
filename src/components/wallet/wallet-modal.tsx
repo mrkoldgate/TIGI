@@ -104,7 +104,7 @@ export function WalletModal() {
           {/* Close button */}
           <Dialog.Close asChild>
             <button
-              className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
+              className="absolute right-4 top-4 flex h-7 w-7 items-center justify-center rounded-lg text-[#7A7A8A] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
               aria-label="Close"
             >
               <X className="h-4 w-4" />
@@ -116,7 +116,7 @@ export function WalletModal() {
             <Dialog.Title className="font-heading text-lg font-bold text-white">
               Connect your wallet
             </Dialog.Title>
-            <Dialog.Description id="wallet-modal-desc" className="mt-1 text-sm text-[#6B6B80]">
+            <Dialog.Description id="wallet-modal-desc" className="mt-1 text-sm text-[#8E8E9C]">
               Use an external wallet instead of your TIGI managed wallet.
             </Dialog.Description>
           </div>
@@ -170,7 +170,7 @@ export function WalletModal() {
                             )}
                           </div>
                           {description && (
-                            <p className="mt-0.5 truncate text-xs text-[#4A4A60]">
+                            <p className="mt-0.5 truncate text-xs text-[#7A7A8A]">
                               {description}
                             </p>
                           )}
@@ -179,7 +179,7 @@ export function WalletModal() {
                         {isThisConnecting ? (
                           <Loader2 className="h-4 w-4 shrink-0 animate-spin text-indigo-400" />
                         ) : (
-                          <span className="shrink-0 text-xs text-[#3A3A48] transition-colors group-hover:text-[#9999AA]">
+                          <span className="shrink-0 text-xs text-[#6E6E7E] transition-colors group-hover:text-[#9999AA]">
                             Connect →
                           </span>
                         )}
@@ -204,12 +204,12 @@ export function WalletModal() {
                         <div className="h-9 w-9 rounded-xl bg-white/[0.04]" />
                       )}
                       <div className="flex-1">
-                        <span className="text-sm font-medium text-[#6B6B80]">
+                        <span className="text-sm font-medium text-[#8E8E9C]">
                           {wallet.adapter.name}
                         </span>
-                        <p className="mt-0.5 text-xs text-[#3A3A48]">Not installed</p>
+                        <p className="mt-0.5 text-xs text-[#6E6E7E]">Not installed</p>
                       </div>
-                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-[#3A3A48]" />
+                      <ExternalLink className="h-3.5 w-3.5 shrink-0 text-[#6E6E7E]" />
                     </a>
                   )}
                 </div>
@@ -227,8 +227,8 @@ export function WalletModal() {
 
           {/* Footer — security message */}
           <div className="flex items-start gap-2.5 border-t border-white/[0.06] px-5 py-4">
-            <Shield className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#4A4A60]" />
-            <p className="text-[11px] leading-relaxed text-[#3A3A48]">
+            <Shield className="mt-0.5 h-3.5 w-3.5 shrink-0 text-[#7A7A8A]" />
+            <p className="text-[11px] leading-relaxed text-[#6E6E7E]">
               Your private key never leaves your wallet — TIGI cannot access or move your funds
               without your approval.
             </p>

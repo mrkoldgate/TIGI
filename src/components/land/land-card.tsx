@@ -213,7 +213,7 @@ function FeatureChips({
         </span>
       ))}
       {overflow > 0 && (
-        <span className="text-[10px] text-zinc-700">+{overflow}</span>
+        <span className="text-[10px] text-zinc-500">+{overflow}</span>
       )}
     </div>
   )
@@ -275,7 +275,7 @@ function TokenProgress({ info }: { info: LandTokenInfo }) {
       </div>
       <div className="h-1 overflow-hidden rounded-full bg-white/[0.06]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-700"
+          className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-700"
           style={{ width: `${soldPct}%` }}
         />
       </div>
@@ -300,7 +300,7 @@ function AcreageHero({
         {formatAcres(acres)}
       </span>
       {pricePerAcreLabel && (
-        <span className="text-[11px] text-zinc-700">{pricePerAcreLabel}</span>
+        <span className="text-[11px] text-zinc-500">{pricePerAcreLabel}</span>
       )}
     </div>
   )
@@ -313,7 +313,7 @@ function AcreageHero({
 function ListingTypePill({ type }: { type: LandListingType }) {
   if (type === 'BUY') return null
   return (
-    <span className="inline-flex items-center rounded-md bg-[#3B82F6]/20 px-2 py-0.5 text-[10px] font-medium text-[#60A5FA] backdrop-blur-sm ring-1 ring-inset ring-[#3B82F6]/30">
+    <span className="inline-flex items-center rounded-md bg-[#8B5CF6]/20 px-2 py-0.5 text-[10px] font-medium text-[#A78BFA] backdrop-blur-sm ring-1 ring-inset ring-[#8B5CF6]/30">
       {type === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
     </span>
   )
@@ -443,14 +443,14 @@ function CardVariant({
           {/* Price row */}
           <div className="flex items-end justify-between gap-2">
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-zinc-700">List Price</p>
+              <p className="text-[10px] uppercase tracking-wider text-zinc-500">List Price</p>
               <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
             </div>
             {data.isTokenized && data.tokenInfo && (
               <div className="text-right">
-                <p className="text-[10px] text-zinc-700">from</p>
+                <p className="text-[10px] text-zinc-500">from</p>
                 <p className="text-sm font-medium text-amber-400">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
                   <span className="text-[10px] font-normal text-zinc-500">/fraction</span>
@@ -524,7 +524,7 @@ function RowVariant({
                 </span>
               )}
               {data.listingType && data.listingType !== 'BUY' && (
-                <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-1.5 py-0.5 text-[9px] font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+                <span className="inline-flex items-center rounded-md bg-[#8B5CF6]/15 px-1.5 py-0.5 text-[9px] font-medium text-[#A78BFA] ring-1 ring-inset ring-[#8B5CF6]/25">
                   {data.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
                 </span>
               )}
@@ -551,7 +551,7 @@ function RowVariant({
                 {formatAcres(data.acres)}
               </span>
               {ppaLabel && (
-                <span className="text-[11px] text-zinc-700">{ppaLabel}</span>
+                <span className="text-[11px] text-zinc-500">{ppaLabel}</span>
               )}
             </div>
             {data.features && data.features.length > 0 && (
@@ -573,7 +573,7 @@ function RowVariant({
         <div className="flex shrink-0 flex-col items-end justify-between py-0.5">
           <div className="flex items-start gap-2">
             <div className="text-right">
-              <p className="text-[10px] uppercase tracking-wider text-zinc-700">List Price</p>
+              <p className="text-[10px] uppercase tracking-wider text-zinc-500">List Price</p>
               <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
@@ -600,7 +600,7 @@ function RowVariant({
               </p>
               <div className="h-0.5 overflow-hidden rounded-full bg-white/[0.06]">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-500"
+                  className="h-full rounded-full bg-gradient-to-r from-violet-500 to-purple-500"
                   style={{ width: `${tokenSoldPercent(data.tokenInfo)}%` }}
                 />
               </div>

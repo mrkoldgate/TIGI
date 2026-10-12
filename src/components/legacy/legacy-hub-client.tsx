@@ -320,7 +320,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                   onChange={(e) => setInstructions(e.target.value)}
                   rows={5}
                   placeholder="Describe your general estate wishes. For example: how assets should be distributed, any specific bequests, charitable intentions, or family priorities…"
-                  className="w-full resize-none rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
+                  className="w-full resize-none rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
                 />
               </div>
 
@@ -333,7 +333,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                   onChange={(e) => setSpecialConditions(e.target.value)}
                   rows={3}
                   placeholder="Any special conditions, contingencies, or time-based restrictions…"
-                  className="w-full resize-none rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
+                  className="w-full resize-none rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
                 />
               </div>
 
@@ -380,14 +380,14 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                       </span>
                       <button
                         onClick={() => { setEditBeneficiary(b); setShowBenefForm(true) }}
-                        className="flex-shrink-0 text-zinc-600 hover:text-zinc-400 transition-colors"
+                        className="flex-shrink-0 text-zinc-500 hover:text-zinc-400 transition-colors"
                       >
                         <Pencil className="h-3.5 w-3.5" />
                       </button>
                       <button
                         onClick={() => handleDeleteBeneficiary(b.id)}
                         disabled={deletingId === b.id}
-                        className="flex-shrink-0 text-zinc-600 hover:text-red-400 transition-colors"
+                        className="flex-shrink-0 text-zinc-500 hover:text-red-400 transition-colors"
                       >
                         {deletingId === b.id
                           ? <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -398,7 +398,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                 </ul>
               ) : (
                 <div className="rounded-xl border border-dashed border-white/[0.06] bg-white/[0.01] py-8 text-center">
-                  <Users className="mx-auto h-6 w-6 text-zinc-600" />
+                  <Users className="mx-auto h-6 w-6 text-zinc-500" />
                   <p className="mt-2 text-sm text-zinc-500">No beneficiaries added yet</p>
                 </div>
               )}
@@ -454,7 +454,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                     value={executorName}
                     onChange={(e) => setExecutorName(e.target.value)}
                     placeholder="e.g. Robert Johnson"
-                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
+                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
                   />
                 </div>
                 <div>
@@ -464,7 +464,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                     value={executorEmail}
                     onChange={(e) => setExecutorEmail(e.target.value)}
                     placeholder="executor@example.com"
-                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
+                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
                   />
                 </div>
                 <div>
@@ -474,7 +474,7 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
                     value={executorPhone}
                     onChange={(e) => setExecutorPhone(e.target.value)}
                     placeholder="+1 (555) 000-0000"
-                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-600 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
+                    className="w-full rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none focus:border-purple-400/40 focus:shadow-[0_0_12px_rgba(168,85,247,0.1)] transition-all"
                   />
                 </div>
               </div>
@@ -567,7 +567,7 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
                   'relative flex h-7 w-7 items-center justify-center rounded-full border transition-all',
                   isPast    && 'border-purple-400/30 bg-purple-400/10 text-purple-400',
                   isCurrent && 'border-purple-400/50 bg-purple-400/20 text-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.3)]',
-                  !isPast && !isCurrent && 'border-white/[0.05] text-zinc-600',
+                  !isPast && !isCurrent && 'border-white/[0.05] text-zinc-500',
                 )}
               >
                 {isPast
@@ -675,9 +675,9 @@ function DocumentUploadArea() {
     <div className="relative overflow-hidden rounded-xl border border-dashed border-white/[0.06] bg-white/[0.01] py-8 text-center">
       {/* Gold security glow */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-24 w-24 rounded-full bg-amber-400/[0.04] blur-[40px]" aria-hidden="true" />
-      <Lock className="relative mx-auto h-6 w-6 text-zinc-600" style={{ filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.3))' }} />
+      <Lock className="relative mx-auto h-6 w-6 text-zinc-500" style={{ filter: 'drop-shadow(0 0 4px rgba(251,191,36,0.3))' }} />
       <p className="relative mt-2 text-sm text-zinc-500">Document uploads coming soon</p>
-      <p className="relative mt-1 text-xs text-zinc-600">
+      <p className="relative mt-1 text-xs text-zinc-500">
         You can submit without documents — add them later in Settings.
       </p>
     </div>
@@ -716,7 +716,7 @@ function ReviewStep({
         <ReviewSection title="Estate Instructions">
           {instructions
             ? <p className="text-sm text-zinc-400 whitespace-pre-wrap">{instructions}</p>
-            : <p className="text-sm text-zinc-600 italic">Not provided</p>}
+            : <p className="text-sm text-zinc-500 italic">Not provided</p>}
         </ReviewSection>
 
         <ReviewSection title={`Beneficiaries (${beneficiaries.length})`}>
@@ -792,7 +792,7 @@ function ReviewStep({
             'inline-flex items-center gap-2 rounded-xl px-6 py-2.5 text-sm font-semibold transition-all',
             canSubmit && !saving
               ? 'bg-gradient-to-r from-purple-500/20 to-amber-500/10 text-purple-400 border border-purple-400/25 hover:from-purple-500/30 hover:to-amber-500/15 hover:shadow-[0_0_24px_rgba(168,85,247,0.15),0_0_12px_rgba(251,191,36,0.08)]'
-              : 'bg-white/[0.04] text-zinc-600 border border-white/[0.04] cursor-not-allowed',
+              : 'bg-white/[0.04] text-zinc-500 border border-white/[0.04] cursor-not-allowed',
           )}
         >
           {saving && <Loader2 className="h-4 w-4 animate-spin" />}

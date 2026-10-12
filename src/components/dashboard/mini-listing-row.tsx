@@ -77,7 +77,7 @@ export function MiniListingRow({
 
       {/* Text */}
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-white transition-all group-hover:text-cyan-400 group-hover:drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+        <p className="truncate text-sm font-medium text-white transition-all group-hover:text-violet-200">
           {listing.title}
         </p>
         <p className="mt-0.5 truncate text-xs text-[#94A3B8]">

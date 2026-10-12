@@ -69,7 +69,7 @@ export default function RolePage() {
         <h1 className="font-heading text-3xl font-bold text-white md:text-4xl">
           How will you use TIGI?
         </h1>
-        <p className="mt-3 text-sm text-[#6B6B80] md:text-base">
+        <p className="mt-3 text-sm text-[#8E8E9C] md:text-base">
           Choose the role that best describes you. You can always update this later.
         </p>
       </div>
@@ -90,7 +90,7 @@ export default function RolePage() {
       <div className="mt-4">
         <div className="mb-3 flex items-center gap-3">
           <div className="h-px flex-1 bg-[#1E1E2A]" />
-          <span className="text-xs text-[#3A3A48]">Professional access</span>
+          <span className="text-xs text-[#6E6E7E]">Professional access</span>
           <div className="h-px flex-1 bg-[#1E1E2A]" />
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -120,7 +120,7 @@ export default function RolePage() {
             'flex min-w-[200px] items-center justify-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold transition-all',
             selected && !loading
               ? 'bg-[#6366F1] text-[#0A0A0F] hover:bg-[#4F46E5] active:scale-[0.98]'
-              : 'cursor-not-allowed bg-white/[0.04] text-[#3A3A48]',
+              : 'cursor-not-allowed bg-white/[0.04] text-[#6E6E7E]',
           )}
         >
           {loading ? (
@@ -135,7 +135,7 @@ export default function RolePage() {
         <button
           type="button"
           onClick={() => router.push('/marketplace')}
-          className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="text-xs text-[#6E6E7E] transition-colors hover:text-[#8E8E9C]"
         >
           Skip setup — explore first
         </button>
@@ -181,7 +181,7 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
             : 'border border-white/[0.04] bg-transparent opacity-0 group-hover:opacity-100',
         )}
       >
-        <Check className={cn('h-3 w-3', selected ? 'text-[#0A0A0F]' : 'text-[#3A3A48]')} />
+        <Check className={cn('h-3 w-3', selected ? 'text-[#0A0A0F]' : 'text-[#6E6E7E]')} />
       </span>
 
       {/* Popular badge */}
@@ -215,7 +215,7 @@ function RoleCard({ card, selected, onClick, compact = false }: RoleCardProps) {
         {card.tagline}
       </p>
       {!compact && (
-        <p className="mt-2 text-xs leading-relaxed text-[#5A5A6E]">
+        <p className="mt-2 text-xs leading-relaxed text-[#7A7A8A]">
           {card.description}
         </p>
       )}

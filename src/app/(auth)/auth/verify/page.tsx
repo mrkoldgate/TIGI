@@ -18,14 +18,14 @@ export default function VerifyPage() {
       <h1 className="font-heading text-2xl font-bold text-white">
         Check your inbox
       </h1>
-      <p className="mt-3 text-sm leading-relaxed text-[#6B6B80]">
+      <p className="mt-3 text-sm leading-relaxed text-[#8E8E9C]">
         We&apos;ve sent a verification link to your email address. Click the link
         to activate your account and complete setup.
       </p>
 
       {/* Callout */}
       <div className="my-6 rounded-xl border border-white/[0.04] bg-[#0E0E16] px-4 py-3 text-left">
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-[#8E8E9C]">
           <span className="text-[#9999AA]">Tip:</span> If you don&apos;t see the
           email, check your spam or junk folder. The link expires in 24 hours.
         </p>
@@ -41,7 +41,7 @@ export default function VerifyPage() {
         </Link>
         <button
           type="button"
-          className="text-sm text-[#4A4A60] hover:text-[#9999AA] transition-colors"
+          className="text-sm text-[#7A7A8A] hover:text-[#9999AA] transition-colors"
         >
           Resend verification email
         </button>

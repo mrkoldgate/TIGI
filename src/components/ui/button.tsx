@@ -15,7 +15,7 @@ const buttonVariants = cva(
     'rounded-lg font-medium text-sm',
     'transition-all duration-150',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 focus-visible:ring-offset-black',
-    'disabled:pointer-events-none disabled:bg-white/[0.02] disabled:text-[#6B6B80]',
+    'disabled:pointer-events-none disabled:bg-white/[0.02] disabled:text-[#8E8E9C]',
     'active:scale-[0.98]',
     'select-none',
   ],

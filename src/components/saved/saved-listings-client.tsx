@@ -8,7 +8,7 @@
 //
 // TIGI Hyper-Glass v4 — "Deep Well" architecture:
 //   Layer 0: Pitch-black void + massive slow-drift rose/violet orbs (page.tsx)
-//   Layer 1: Deep structural well (bg-black, rounded-[2rem], ultra-thin border)
+//   Layer 1: Deep structural well (bg-black, rounded-[22px], ultra-thin border)
 //   Layer 2: White-glass floating plates (high backdrop-blur, edge-lit hover)
 //
 // Layout:
@@ -176,7 +176,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
       </div>
 
       {/* ── Layer 2: Controls — white-glass plate (tabs + toolbar) ── */}
-      <div className="relative mt-8 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl shadow-2xl">
+      <div className="relative mt-8 overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl shadow-2xl">
         {/* Paragon top-edge rose accent */}
         <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-rose-400/20 to-transparent" />
 
@@ -194,7 +194,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
               onClick={() => setTab(id)}
               className={cn(
                 'relative flex shrink-0 items-center gap-2 px-5 py-3.5 text-sm font-medium transition-all duration-200',
-                tab === id ? 'text-white' : 'text-white/20 hover:text-white/40',
+                tab === id ? 'text-white' : 'text-white/50 hover:text-white/40',
               )}
             >
               {label}
@@ -206,7 +206,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
                       ? id === 'LAND'
                         ? 'bg-emerald-400/15 text-emerald-400 border border-emerald-400/25 shadow-[0_0_8px_rgba(52,211,153,0.2)]'
                         : 'bg-rose-400/15 text-rose-400 border border-rose-400/25 shadow-[0_0_8px_rgba(251,113,133,0.2)]'
-                      : 'bg-white/[0.03] text-white/20 border border-white/[0.05]',
+                      : 'bg-white/[0.03] text-white/50 border border-white/[0.05]',
                   )}
                 >
                   {count}
@@ -233,7 +233,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             onChange={(e) => setSort(e.target.value as SortMode)}
             className={cn(
               'rounded-xl border border-white/[0.06] bg-black/40 backdrop-blur-3xl',
-              'px-3 py-2 text-sm text-white/40',
+              'px-3 py-2 text-sm text-white/60',
               'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
               'outline-none transition-all duration-200',
               'focus:border-rose-400/30 focus:shadow-[0_0_14px_rgba(251,113,133,0.08)]',
@@ -255,14 +255,14 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
             </ViewBtn>
           </div>
 
-          <span className="ml-auto text-xs text-white/20">
+          <span className="ml-auto text-xs text-white/50">
             {sorted.length} {sorted.length === 1 ? 'asset' : 'assets'}
           </span>
         </div>
       </div>
 
       {/* ── Layer 1: Deep Well structural backdrop ── */}
-      <div className="group/well relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-black backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.06]">
+      <div className="group/well relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-black backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.06]">
         {/* Paragon edge light — rose/emerald per tab */}
         <div
           className={cn(
@@ -320,7 +320,7 @@ export function SavedListingsClient({ allListings }: SavedListingsClientProps) {
 
       {/* ── All shown whisper ── */}
       {sorted.length > 0 && (
-        <p className="pt-2 text-center text-xs text-white/15">
+        <p className="pt-2 text-center text-xs text-white/45">
           All {sorted.length} saved {sorted.length === 1 ? 'asset' : 'assets'} shown
         </p>
       )}
@@ -340,7 +340,7 @@ function SavedHeader({
   confirmClear: boolean
 }) {
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-white/[0.03] p-6 backdrop-blur-3xl shadow-2xl sm:p-8">
+    <div className="relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] p-6 backdrop-blur-3xl shadow-2xl sm:p-8">
       {/* Top accent hairline — rose v4 */}
       <div className="pointer-events-none absolute inset-x-6 top-0 h-[2px] bg-gradient-to-r from-transparent via-rose-400/40 to-transparent" aria-hidden="true" />
       {/* Corner atmospheric glows */}
@@ -354,9 +354,9 @@ function SavedHeader({
             Favorites
           </p>
           <h1 className="text-h1 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
-            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-white/20">· {count}</span>}
+            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-white/50">· {count}</span>}
           </h1>
-          <p className="mt-1 text-white/25">
+          <p className="mt-1 text-white/55">
             {count === 0 ? 'Save properties and land to revisit them later.' : 'Your saved properties and land parcels.'}
           </p>
         </div>
@@ -368,7 +368,7 @@ function SavedHeader({
               'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
               confirmClear
                 ? 'border-red-400/30 bg-red-400/[0.07] text-red-400 shadow-[inset_0_1px_0_rgba(248,113,113,0.1),0_0_16px_rgba(248,113,113,0.12)]'
-                : 'border-white/[0.06] text-white/20 hover:border-red-400/25 hover:text-red-400',
+                : 'border-white/[0.06] text-white/50 hover:border-red-400/25 hover:text-red-400',
             )}
           >
             {confirmClear ? 'Confirm clear all?' : 'Clear all'}
@@ -394,7 +394,7 @@ function StatCard({
   wide?: boolean
 }) {
   return (
-    <div className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl px-6 py-6 transition-all duration-300 hover:border-white/[0.04] hover:bg-white/[0.05] hover:-translate-y-0.5 shadow-2xl">
+    <div className="group relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl px-6 py-6 transition-all duration-300 hover:border-white/[0.04] hover:bg-white/[0.05] hover:-translate-y-0.5 shadow-2xl">
       {/* Paragon top-edge lighting */}
       <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent transition-all duration-500 group-hover:via-white/[0.12]" aria-hidden="true" />
       {/* Corner glow */}
@@ -412,7 +412,7 @@ function StatCard({
         </div>
         <div>
           <p className="text-2xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{value}</p>
-          <p className="text-xs text-white/20">{label}</p>
+          <p className="text-xs text-white/50">{label}</p>
         </div>
       </div>
     </div>
@@ -542,7 +542,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
       )}
       {/* Saved-at timestamp — appears on hover */}
       <div className="pointer-events-none absolute bottom-0 left-0 right-0 z-10 flex items-center justify-between rounded-b-xl px-3 py-2 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-        <span className="rounded-full border border-white/[0.06] bg-black/80 px-2.5 py-1 text-[10px] text-white/40 backdrop-blur-xl shadow-[0_2px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.03)]">
+        <span className="rounded-full border border-white/[0.06] bg-black/80 px-2.5 py-1 text-[10px] text-white/60 backdrop-blur-xl shadow-[0_2px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.03)]">
           Saved {formatSavedAt(savedAt)}
         </span>
       </div>
@@ -555,7 +555,7 @@ function SavedCardWrapper({ listing, savedAt, isSaved, onToggle, index, isCompar
 function SavedAtChip({ savedAt }: { savedAt: number }) {
   return (
     <div className="pointer-events-none absolute right-3 top-3 z-10">
-      <span className="rounded-full border border-white/[0.06] bg-black/80 px-2 py-0.5 text-[10px] text-white/25 backdrop-blur-xl shadow-[0_2px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.03)]">
+      <span className="rounded-full border border-white/[0.06] bg-black/80 px-2 py-0.5 text-[10px] text-white/55 backdrop-blur-xl shadow-[0_2px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.03)]">
         {formatSavedAt(savedAt)}
       </span>
     </div>
@@ -582,9 +582,9 @@ function EmptyAll() {
       </div>
 
       <h2 className="mb-2 text-xl font-semibold bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">Nothing saved yet</h2>
-      <p className="mb-8 max-w-sm text-sm leading-relaxed text-white/25">
+      <p className="mb-8 max-w-sm text-sm leading-relaxed text-white/55">
         Tap the{' '}
-        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-xs text-white/40 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
+        <span className="inline-flex items-center gap-1 rounded-full border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-xs text-white/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
           <HeartSmallIcon /> save
         </span>{' '}
         icon on any property or land listing to add it here. Saved assets persist across
@@ -595,7 +595,7 @@ function EmptyAll() {
       <div className="grid w-full max-w-sm grid-cols-2 gap-4">
         <Link
           href="/marketplace"
-          className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl p-6 transition-all duration-300 hover:border-rose-400/20 hover:bg-white/[0.06] hover:-translate-y-0.5 shadow-2xl"
+          className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl p-6 transition-all duration-300 hover:border-rose-400/20 hover:bg-white/[0.06] hover:-translate-y-0.5 shadow-2xl"
         >
           <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-rose-400/15 to-transparent" />
           <div className="pointer-events-none absolute -right-8 -top-8 h-16 w-16 rounded-full bg-rose-400/[0.08] blur-[25px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -603,11 +603,11 @@ function EmptyAll() {
             <BuildingGoldIcon />
           </div>
           <span className="relative text-sm font-medium text-white">Browse Properties</span>
-          <span className="relative text-xs text-white/20">Residential & commercial</span>
+          <span className="relative text-xs text-white/50">Residential & commercial</span>
         </Link>
         <Link
           href="/marketplace?category=LAND"
-          className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl p-6 transition-all duration-300 hover:border-emerald-400/20 hover:bg-white/[0.06] hover:-translate-y-0.5 shadow-2xl"
+          className="group relative flex flex-col items-center gap-2 overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] backdrop-blur-3xl p-6 transition-all duration-300 hover:border-emerald-400/20 hover:bg-white/[0.06] hover:-translate-y-0.5 shadow-2xl"
         >
           <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-400/15 to-transparent" />
           <div className="pointer-events-none absolute -right-8 -top-8 h-16 w-16 rounded-full bg-emerald-400/[0.08] blur-[25px] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
@@ -615,7 +615,7 @@ function EmptyAll() {
             <LandGreenIcon />
           </div>
           <span className="relative text-sm font-medium text-white">Browse Land</span>
-          <span className="relative text-xs text-white/20">Parcels & development</span>
+          <span className="relative text-xs text-white/50">Parcels & development</span>
         </Link>
       </div>
     </div>
@@ -643,10 +643,10 @@ function EmptyTab({ tab }: { tab: AssetTab }) {
           {isLand ? <LandGreenIcon /> : <BuildingGoldIcon />}
         </div>
       </div>
-      <p className="mb-1 text-sm font-medium text-white/40">
+      <p className="mb-1 text-sm font-medium text-white/60">
         No saved {isLand ? 'land parcels' : 'properties'} yet
       </p>
-      <p className="mb-5 text-xs text-white/20">
+      <p className="mb-5 text-xs text-white/50">
         {isLand
           ? 'Save land parcels from the marketplace to see them here.'
           : 'Save properties from the marketplace to see them here.'}
@@ -681,7 +681,7 @@ function ViewBtn({
         'flex h-9 w-9 items-center justify-center transition-all',
         active
           ? 'bg-white/[0.06] text-rose-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),inset_0_0_8px_rgba(251,113,133,0.1)]'
-          : 'bg-transparent text-white/20 hover:text-white/40',
+          : 'bg-transparent text-white/50 hover:text-white/40',
       )}
     >
       {children}

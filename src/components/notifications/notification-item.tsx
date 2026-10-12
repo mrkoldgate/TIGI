@@ -71,7 +71,7 @@ function NotificationIcon({
         className={cn(
           'relative transition-colors duration-300',
           iconSize,
-          isUnread ? config.color : 'text-zinc-600',
+          isUnread ? config.color : 'text-zinc-500',
         )}
         style={isUnread ? { filter: `drop-shadow(0 0 8px ${config.glowColor})` } : undefined}
       />
@@ -148,7 +148,7 @@ export function NotificationItem({ notification, onRead, compact = false }: Noti
           <span className={cn(
             'shrink-0 tabular-nums transition-colors duration-300',
             compact ? 'text-[10px]' : 'text-xs',
-            isUnread ? 'text-zinc-500' : 'text-zinc-700',
+            isUnread ? 'text-zinc-500' : 'text-zinc-500',
           )}>
             {timeAgo(notification.createdAt)}
           </span>
@@ -156,7 +156,7 @@ export function NotificationItem({ notification, onRead, compact = false }: Noti
         <p className={cn(
           'mt-0.5 leading-relaxed transition-colors duration-300',
           compact ? 'line-clamp-2 text-[11px]' : 'line-clamp-3 text-xs',
-          isUnread ? 'text-zinc-400' : 'text-zinc-600',
+          isUnread ? 'text-zinc-400' : 'text-zinc-500',
         )}>
           {notification.body}
         </p>

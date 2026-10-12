@@ -63,11 +63,11 @@ const STATUS_CONFIG: Record<string, {
   },
   REVIEWING: {
     icon: AlertCircle,
-    badgeClass: 'border-blue-400/15 bg-blue-400/[0.06] text-blue-400',
-    dotColor: 'bg-blue-400',
+    badgeClass: 'border-violet-400/15 bg-violet-400/[0.06] text-violet-400',
+    dotColor: 'bg-violet-400',
     dotGlow: 'shadow-[0_0_12px_rgba(96,165,250,0.7)]',
-    ambientOrb: 'bg-blue-500/[0.08]',
-    edgeLight: 'via-blue-400/30',
+    ambientOrb: 'bg-violet-500/[0.08]',
+    edgeLight: 'via-violet-400/30',
     iconDrop: 'drop-shadow-[0_0_8px_rgba(96,165,250,0.6)]',
   },
   APPROVED: {
@@ -236,7 +236,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
       {/* Urgency gradient wash */}
       {isUrgent && (
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-blue-500/[0.02] via-transparent to-purple-500/[0.015]" aria-hidden />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-violet-500/[0.02] via-transparent to-purple-500/[0.015]" aria-hidden />
       )}
 
       <div className="relative p-6">
@@ -269,7 +269,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
                 <p className="truncate text-sm font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
                   {intent.property.title}
                 </p>
-                <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-white/20">
+                <p className="mt-0.5 flex items-center gap-1.5 text-[11px] text-white/50">
                   <MapPin className="h-3 w-3" />
                   {intent.property.city}, {intent.property.state}
                 </p>
@@ -287,7 +287,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
             {/* Intent type + detail pills — elevated inner row */}
             <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="rounded-xl border border-white/[0.05] bg-white/[0.02] px-3 py-1 text-[10px] font-medium tracking-wide text-white/40">
+              <span className="rounded-xl border border-white/[0.05] bg-white/[0.02] px-3 py-1 text-[10px] font-medium tracking-wide text-white/60">
                 {intentLabel.label}
               </span>
 
@@ -299,13 +299,13 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
               )}
 
               {intent.fractionQty != null && (
-                <span className="rounded-xl border border-white/[0.04] bg-white/[0.01] px-2.5 py-1 text-[10px] text-white/30 tabular-nums">
+                <span className="rounded-xl border border-white/[0.04] bg-white/[0.01] px-2.5 py-1 text-[10px] text-white/55 tabular-nums">
                   {intent.fractionQty} fraction{intent.fractionQty !== 1 ? 's' : ''}
                 </span>
               )}
 
               {intent.offerAmount != null && (
-                <span className="rounded-xl border border-blue-500/12 bg-blue-500/[0.04] px-3 py-1 text-[10px] font-bold text-blue-400 tabular-nums shadow-[0_0_8px_rgba(96,165,250,0.08)]">
+                <span className="rounded-xl border border-violet-500/12 bg-violet-500/[0.04] px-3 py-1 text-[10px] font-bold text-violet-400 tabular-nums shadow-[0_0_8px_rgba(96,165,250,0.08)]">
                   {formatCurrency(intent.offerAmount)}
                 </span>
               )}
@@ -315,7 +315,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
             {intent.note && (
               <div className="relative mt-4 overflow-hidden rounded-xl border border-white/[0.05] bg-white/[0.01] px-4 py-3">
                 <div className="pointer-events-none absolute inset-x-3 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.04] to-transparent" />
-                <p className="text-[11px] italic leading-relaxed text-white/25">
+                <p className="text-[11px] italic leading-relaxed text-white/55">
                   &ldquo;{intent.note}&rdquo;
                 </p>
               </div>
@@ -323,14 +323,14 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
             {/* Footer — date + actions */}
             <div className="mt-4 flex items-center justify-between gap-2 border-t border-white/[0.03] pt-4">
-              <p className="text-[11px] text-white/15 tabular-nums">
+              <p className="text-[11px] text-white/45 tabular-nums">
                 {formatDate(intent.createdAt)}
               </p>
 
               <div className="flex items-center gap-2.5">
                 <Link
                   href={`/marketplace/${intent.property.id}`}
-                  className="group/link flex items-center gap-1 text-[11px] text-white/20 transition-colors duration-300 hover:text-white/50"
+                  className="group/link flex items-center gap-1 text-[11px] text-white/50 transition-colors duration-300 hover:text-white/50"
                 >
                   View listing
                   <ExternalLink className="h-2.5 w-2.5 transition-transform duration-200 group-hover/link:translate-x-0.5" />
@@ -341,7 +341,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
                     type="button"
                     onClick={handleCancel}
                     disabled={isCancelling}
-                    className="group/cancel flex items-center gap-1.5 rounded-xl border border-white/[0.04] bg-white/[0.01] px-3 py-1.5 text-[11px] font-medium text-white/30 transition-all duration-300 hover:border-red-400/20 hover:bg-red-400/[0.04] hover:text-red-400 disabled:opacity-50"
+                    className="group/cancel flex items-center gap-1.5 rounded-xl border border-white/[0.04] bg-white/[0.01] px-3 py-1.5 text-[11px] font-medium text-white/55 transition-all duration-300 hover:border-red-400/20 hover:bg-red-400/[0.04] hover:text-red-400 disabled:opacity-50"
                   >
                     {isCancelling ? (
                       <Loader2 className="h-3 w-3 animate-spin" />
@@ -360,7 +360,7 @@ export function IntentCard({ intent, onCancel }: IntentCardProps) {
 
             {/* Status guidance */}
             {statusGuidance.nextStep && localStatus !== 'APPROVED' && localStatus !== 'READY_TO_SIGN' && (
-              <p className="mt-3 text-[11px] leading-relaxed text-white/15">
+              <p className="mt-3 text-[11px] leading-relaxed text-white/45">
                 {statusGuidance.nextStep}
               </p>
             )}

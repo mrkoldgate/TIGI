@@ -124,7 +124,7 @@ export function AvatarUploadButton({ onAvatarChange, className }: AvatarUploadBu
             ) : state === 'error' ? (
               <AlertCircle className="h-3.5 w-3.5 text-[#EF4444]" />
             ) : (
-              <Camera className="h-3.5 w-3.5 text-[#6B6B80]" />
+              <Camera className="h-3.5 w-3.5 text-[#8E8E9C]" />
             )}
           </button>
         </Tooltip.Trigger>

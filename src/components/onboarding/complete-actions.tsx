@@ -57,7 +57,7 @@ export function CompleteActions({ role, kycStatus }: CompleteActionsProps) {
         <button
           type="button"
           onClick={() => router.push('/settings/kyc')}
-          className="flex items-center gap-1.5 text-xs text-[#4A4A60] transition-colors hover:text-indigo-400"
+          className="flex items-center gap-1.5 text-xs text-[#7A7A8A] transition-colors hover:text-indigo-400"
         >
           <ShieldCheck className="h-3.5 w-3.5" />
           Complete identity verification now

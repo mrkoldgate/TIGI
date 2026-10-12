@@ -83,7 +83,7 @@ export function InterestsForm({ userType }: InterestsFormProps) {
         <button
           type="button"
           onClick={() => router.push('/onboarding/complete')}
-          className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="text-xs text-[#6E6E7E] transition-colors hover:text-[#8E8E9C]"
         >
           Skip for now
         </button>
@@ -107,7 +107,7 @@ function QuestionBlock({ question, selected, onSelect }: QuestionBlockProps) {
     <div>
       <p className="mb-3 text-sm font-medium text-[#CCCCDD]">{question.label}</p>
       {question.hint && (
-        <p className="mb-2 text-xs text-[#4A4A60]">{question.hint}</p>
+        <p className="mb-2 text-xs text-[#7A7A8A]">{question.hint}</p>
       )}
       <div className="flex flex-wrap gap-2">
         {question.options.map((option) => {
@@ -121,7 +121,7 @@ function QuestionBlock({ question, selected, onSelect }: QuestionBlockProps) {
                 'rounded-full border px-4 py-2 text-xs font-medium transition-all duration-150',
                 isSelected
                   ? 'border-indigo-500/60 bg-indigo-500/10 text-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.15)]'
-                  : 'border-white/[0.08] bg-transparent text-[#6B6B80] hover:border-white/[0.10] hover:text-[#9999AA]',
+                  : 'border-white/[0.08] bg-transparent text-[#8E8E9C] hover:border-white/[0.10] hover:text-[#9999AA]',
               )}
               aria-pressed={isSelected}
             >

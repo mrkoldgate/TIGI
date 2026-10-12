@@ -153,7 +153,7 @@ function MetricCard({
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-8 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.1] hover:bg-[#050505]/95 hover:shadow-[0_20px_50px_rgba(99,102,241,0.06)]"
+      className="group relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 p-8 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.1] hover:bg-[#050505]/95 hover:shadow-[0_20px_50px_rgba(99,102,241,0.06)]"
     >
       {/* Noise texture overlay */}
       <div className="noise absolute inset-0 pointer-events-none" />
@@ -181,14 +181,14 @@ function MetricCard({
 
       {/* Metric text — centered below the icon */}
       <div className="relative text-center">
-        <p className="text-[10px] font-semibold tracking-[0.16em] text-white/25 uppercase">{m.label}</p>
+        <p className="text-[10px] font-semibold tracking-[0.16em] text-white/55 uppercase">{m.label}</p>
         <p className={cn(
           'mt-2 text-2xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r',
           m.gradient,
         )}>
           {m.value}
         </p>
-        <p className="mt-1.5 text-[10px] text-white/20">{m.sub}</p>
+        <p className="mt-1.5 text-[10px] text-white/50">{m.sub}</p>
 
         {m.sparkline && (
           <div className="mt-3 flex justify-center">
@@ -213,9 +213,9 @@ function HeroMetrics({ summary }: { summary: PortfolioSummary }) {
       value: fmt(summary.totalValue),
       sub: 'Current market value',
       icon: DollarSign,
-      glowColor: 'bg-blue-500/20',
-      iconColor: 'text-blue-400',
-      gradient: 'from-blue-400 via-blue-300 to-indigo-500',
+      glowColor: 'bg-violet-500/20',
+      iconColor: 'text-violet-400',
+      gradient: 'from-violet-400 via-violet-300 to-indigo-500',
     },
     {
       label: 'Total Invested',
@@ -267,14 +267,14 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
   const positive      = gainLoss >= 0
 
   return (
-    <div className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.1]">
+    <div className="group relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.1]">
       {/* Noise texture overlay */}
       <div className="noise absolute inset-0 pointer-events-none" />
       {/* Edge light */}
       <div className="pointer-events-none absolute inset-x-6 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/0 to-transparent transition-all duration-500 group-hover:via-white/20" />
 
       {/* Ambient wash */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-blue-500/[0.06] blur-[80px]" />
+      <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-violet-500/[0.06] blur-[80px]" />
 
       {/* Header image strip */}
       <div className="relative h-36 overflow-hidden">
@@ -286,12 +286,12 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
         <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0F] via-[#0A0A0F]/70 to-transparent" />
 
         {/* Type badge */}
-        <span className="absolute right-4 top-4 rounded-full border border-white/[0.06] bg-[#0A0A0F]/70 px-2.5 py-1 text-[9px] font-medium tracking-[0.1em] text-white/35 uppercase backdrop-blur-sm">
+        <span className="absolute right-4 top-4 rounded-full border border-white/[0.06] bg-[#0A0A0F]/70 px-2.5 py-1 text-[9px] font-medium tracking-[0.1em] text-white/60 uppercase backdrop-blur-sm">
           {holding.propertyType.replace('_', ' ')}
         </span>
 
         {/* Ownership badge */}
-        <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full border border-blue-400/15 bg-[#0A0A0F]/70 px-3 py-1.5 text-[10px] font-semibold text-blue-400 backdrop-blur-sm shadow-[0_0_16px_rgba(96,165,250,0.1)]">
+        <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full border border-violet-400/15 bg-[#0A0A0F]/70 px-3 py-1.5 text-[10px] font-semibold text-violet-400 backdrop-blur-sm shadow-[0_0_16px_rgba(96,165,250,0.1)]">
           <Coins className="h-3 w-3 drop-shadow-[0_0_6px_rgba(96,165,250,0.7)]" />
           {ownershipPct.toFixed(2)}% owned
         </span>
@@ -306,7 +306,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
           >
             {holding.propertyTitle}
           </Link>
-          <p className="mt-0.5 text-[11px] tracking-wide text-white/20">
+          <p className="mt-0.5 text-[11px] tracking-wide text-white/50">
             {holding.propertyCity}, {holding.propertyState}
           </p>
         </div>
@@ -317,21 +317,21 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
           <div className="pointer-events-none absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
 
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-semibold tracking-[0.14em] text-white/20 uppercase">Tokens held</span>
-            <span className="text-[10px] text-white/15 tabular-nums">of {holding.totalTokens.toLocaleString()}</span>
+            <span className="text-[10px] font-semibold tracking-[0.14em] text-white/50 uppercase">Tokens held</span>
+            <span className="text-[10px] text-white/45 tabular-nums">of {holding.totalTokens.toLocaleString()}</span>
           </div>
           <div className="mt-2.5 flex items-baseline gap-2">
             <span className="text-xl font-bold tracking-tight text-white tabular-nums">
               {holding.tokensOwned.toLocaleString()}
             </span>
-            <span className="text-[11px] text-white/25 tabular-nums">
+            <span className="text-[11px] text-white/55 tabular-nums">
               @ ${holding.currentPricePerToken}/token
             </span>
           </div>
           {/* Progress bar with glow */}
           <div className="mt-3.5 h-1.5 overflow-hidden rounded-full bg-white/[0.04]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-400 shadow-[0_0_12px_rgba(59,130,246,0.5)] transition-all duration-700"
+              className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-400 shadow-[0_0_12px_rgba(139,92,246,0.5)] transition-all duration-700"
               style={{ width: `${Math.min(ownershipPct * 20, 100)}%` }}
             />
           </div>
@@ -359,7 +359,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
                 'pointer-events-none absolute inset-x-2 top-0 h-[1px] bg-gradient-to-r from-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover/cell:opacity-100',
                 metric.glow,
               )} />
-              <p className="text-[9px] font-semibold tracking-[0.14em] text-white/15 uppercase">{metric.label}</p>
+              <p className="text-[9px] font-semibold tracking-[0.14em] text-white/45 uppercase">{metric.label}</p>
               <div className={cn('mt-1.5 flex items-center justify-center gap-1', metric.color)}>
                 {metric.icon && <metric.icon className="h-3 w-3 flex-shrink-0" />}
                 <span className="text-sm font-bold tabular-nums">{metric.value}</span>
@@ -376,7 +376,7 @@ function HoldingCard({ holding }: { holding: HoldingDTO }) {
 
 function EmptyHoldings() {
   return (
-    <div className="relative flex flex-col items-center gap-6 overflow-hidden rounded-[2rem] border border-dashed border-white/[0.05] bg-[#050505]/80 py-28 text-center backdrop-blur-3xl">
+    <div className="relative flex flex-col items-center gap-6 overflow-hidden rounded-[22px] border border-dashed border-white/[0.05] bg-[#050505]/80 py-28 text-center backdrop-blur-3xl">
       {/* Atmospheric wash */}
       <div className="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-indigo-500/[0.06] blur-[80px]" aria-hidden />
       <div className="pointer-events-none absolute -right-20 -bottom-20 h-48 w-48 rounded-full bg-purple-500/[0.04] blur-[60px]" aria-hidden />
@@ -384,20 +384,20 @@ function EmptyHoldings() {
       <GlassflowIcon
         icon={Coins}
         glowColor="bg-indigo-500/15"
-        iconColor="text-white/40"
+        iconColor="text-white/60"
         size="hero"
       />
       <div>
         <p className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
           No token holdings yet
         </p>
-        <p className="mx-auto mt-2 max-w-xs text-xs leading-relaxed text-white/20">
+        <p className="mx-auto mt-2 max-w-xs text-xs leading-relaxed text-white/50">
           Browse tokenized listings and make your first fractional investment.
         </p>
       </div>
       <Link
         href="/marketplace?tokenized=true"
-        className="group inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-6 py-3 text-xs font-medium text-white/45 backdrop-blur-xl transition-all duration-400 hover:border-blue-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(59,130,246,0.1)]"
+        className="group inline-flex items-center gap-2 rounded-full border border-white/[0.06] bg-white/[0.03] px-6 py-3 text-xs font-medium text-white/65 backdrop-blur-xl transition-all duration-400 hover:border-violet-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.1)]"
       >
         Browse tokenized assets
         <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -459,7 +459,7 @@ function PerformanceChart({ totalValue }: { totalValue: number }) {
   const areaPath = `${linePath} L${w},${h} L0,${h} Z`
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl">
+    <div className="relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl">
       {/* Noise texture overlay */}
       <div className="noise absolute inset-0 pointer-events-none" />
       {/* Ambient wash */}
@@ -480,7 +480,7 @@ function PerformanceChart({ totalValue }: { totalValue: number }) {
               <h3 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
                 Performance History
               </h3>
-              <p className="mt-0.5 text-xs tracking-wide text-white/20">Portfolio value over time (Beta Live)</p>
+              <p className="mt-0.5 text-xs tracking-wide text-white/50">Portfolio value over time (Beta Live)</p>
             </div>
           </div>
           <div className="flex items-center gap-1.5 self-start sm:self-center">
@@ -494,8 +494,8 @@ function PerformanceChart({ totalValue }: { totalValue: number }) {
                 className={cn(
                   'rounded-xl px-3.5 py-1.5 text-[10px] font-semibold tracking-wide uppercase transition-all duration-300',
                   activePeriod === period
-                    ? 'border border-blue-500/20 bg-blue-500/[0.08] text-blue-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_15px_rgba(59,130,246,0.15)]'
-                    : 'text-white/20 hover:text-white/40 hover:bg-white/[0.02]',
+                    ? 'border border-violet-500/20 bg-violet-500/[0.08] text-violet-400 shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_0_15px_rgba(139,92,246,0.15)]'
+                    : 'text-white/50 hover:text-white/40 hover:bg-white/[0.02]',
                 )}
               >
                 {period}
@@ -518,7 +518,7 @@ function PerformanceChart({ totalValue }: { totalValue: number }) {
                 transform: 'translateX(-50%)',
               }}
             >
-              <span className="text-[9px] font-semibold text-white/45 uppercase tracking-wider">{hoveredPoint.date}</span>
+              <span className="text-[9px] font-semibold text-white/65 uppercase tracking-wider">{hoveredPoint.date}</span>
               <span className="text-xs font-bold text-white">${hoveredPoint.value.toLocaleString()}</span>
             </div>
           )}
@@ -585,7 +585,7 @@ function PerformanceChart({ totalValue }: { totalValue: number }) {
 
           <div className="mt-4 flex justify-between px-0.5 border-t border-white/[0.03] pt-3">
             {labels.map((m, i) => (
-              <span key={i} className="text-[8px] font-semibold tracking-wider text-white/20 uppercase">{m}</span>
+              <span key={i} className="text-[8px] font-semibold tracking-wider text-white/50 uppercase">{m}</span>
             ))}
           </div>
         </div>
@@ -611,7 +611,7 @@ function AllocationCard({ holdings }: { holdings: HoldingDTO[] }) {
   })
 
   const typeColors: Record<string, { bar: string; text: string; hex: string }> = {
-    RESIDENTIAL:  { bar: 'from-blue-500 to-blue-400',     text: 'text-blue-400',    hex: '#60A5FA' },
+    RESIDENTIAL:  { bar: 'from-violet-500 to-violet-400',     text: 'text-violet-400',    hex: '#A78BFA' },
     COMMERCIAL:   { bar: 'from-purple-500 to-purple-400', text: 'text-purple-400',  hex: '#A78BFA' },
     INDUSTRIAL:   { bar: 'from-amber-500 to-amber-400',   text: 'text-amber-400',   hex: '#FBBF24' },
     LAND:         { bar: 'from-emerald-500 to-emerald-400', text: 'text-emerald-400', hex: '#34D399' },
@@ -624,7 +624,7 @@ function AllocationCard({ holdings }: { holdings: HoldingDTO[] }) {
   let offset = 0
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-8 backdrop-blur-3xl shadow-2xl">
+    <div className="relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 p-8 backdrop-blur-3xl shadow-2xl">
       {/* Noise texture overlay */}
       <div className="noise absolute inset-0 pointer-events-none" />
       {/* Ambient glow */}
@@ -642,7 +642,7 @@ function AllocationCard({ holdings }: { holdings: HoldingDTO[] }) {
             <h3 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
               Allocation
             </h3>
-            <p className="text-[10px] tracking-wide text-white/20">By property type</p>
+            <p className="text-[10px] tracking-wide text-white/50">By property type</p>
           </div>
         </div>
 
@@ -721,7 +721,7 @@ function AllocationCard({ holdings }: { holdings: HoldingDTO[] }) {
                       className="h-2.5 w-2.5 rounded-full flex-shrink-0"
                       style={{ backgroundColor: colors.hex, boxShadow: `0 0 8px ${colors.hex}66` }}
                     />
-                    <span className="truncate text-xs text-white/40 group-hover/row:text-white/70 transition-colors duration-300">{a.label}</span>
+                    <span className="truncate text-xs text-white/60 group-hover/row:text-white/70 transition-colors duration-300">{a.label}</span>
                   </div>
                   <div className="flex items-center gap-4 flex-shrink-0">
                     <span className="text-xs font-medium text-white/60 tabular-nums">{fmt(a.value)}</span>
@@ -741,22 +741,22 @@ function AllocationCard({ holdings }: { holdings: HoldingDTO[] }) {
 
 function WalletTeaser() {
   return (
-    <div className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.08]">
+    <div className="group relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:border-white/[0.08]">
       {/* Noise texture overlay */}
       <div className="noise absolute inset-0 pointer-events-none" />
       {/* Edge light */}
-      <div className="pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/0 to-transparent transition-all duration-500 group-hover:via-blue-500/25" />
+      <div className="pointer-events-none absolute inset-x-8 top-0 h-[1px] bg-gradient-to-r from-transparent via-violet-500/0 to-transparent transition-all duration-500 group-hover:via-violet-500/25" />
 
       {/* Ambient wash */}
-      <div className="pointer-events-none absolute -left-24 -bottom-24 h-64 w-64 rounded-full bg-blue-500/[0.06] blur-[100px]" />
+      <div className="pointer-events-none absolute -left-24 -bottom-24 h-64 w-64 rounded-full bg-violet-500/[0.06] blur-[100px]" />
       <div className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-purple-500/[0.04] blur-[80px]" />
 
       <div className="relative flex items-center gap-8 p-8">
         <div className="flex-shrink-0">
           <GlassflowIcon
             icon={Wallet}
-            glowColor="bg-blue-500/20"
-            iconColor="text-blue-400"
+            glowColor="bg-violet-500/20"
+            iconColor="text-violet-400"
             size="hero"
           />
         </div>
@@ -764,13 +764,13 @@ function WalletTeaser() {
           <h3 className="text-lg font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
             Connect Your Wallet
           </h3>
-          <p className="mt-2 text-sm leading-relaxed text-white/20">
+          <p className="mt-2 text-sm leading-relaxed text-white/50">
             Link a Solana wallet to verify on-chain holdings, unlock live pricing, and sync yield distributions.
           </p>
         </div>
         <Link
           href="/settings/wallet"
-          className="flex-shrink-0 inline-flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-7 py-3.5 text-sm font-medium text-white/45 backdrop-blur-xl transition-all duration-400 hover:border-blue-500/20 hover:bg-white/[0.06] hover:text-white hover:shadow-[0_0_30px_rgba(59,130,246,0.12)]"
+          className="flex-shrink-0 inline-flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-7 py-3.5 text-sm font-medium text-white/65 backdrop-blur-xl transition-all duration-400 hover:border-violet-500/20 hover:bg-white/[0.06] hover:text-white hover:shadow-[0_0_30px_rgba(139,92,246,0.12)]"
         >
           <Wallet className="h-4 w-4" />
           Connect
@@ -785,11 +785,11 @@ function WalletTeaser() {
             { icon: Shield, label: 'Secure verification', accent: 'text-emerald-400/50' },
             { icon: Zap, label: 'Live pricing', accent: 'text-amber-400/50' },
             { icon: Activity, label: 'Auto-sync yields', accent: 'text-purple-400/50' },
-            { icon: Clock, label: 'Transaction history', accent: 'text-blue-400/50' },
+            { icon: Clock, label: 'Transaction history', accent: 'text-violet-400/50' },
           ].map((feat) => (
             <span
               key={feat.label}
-              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.04] bg-white/[0.01] px-4 py-1.5 text-[10px] text-white/20 transition-all duration-300 hover:border-white/[0.08] hover:text-white/35"
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.04] bg-white/[0.01] px-4 py-1.5 text-[10px] text-white/50 transition-all duration-300 hover:border-white/[0.08] hover:text-white/35"
             >
               <feat.icon className={cn('h-3 w-3', feat.accent)} />
               {feat.label}
@@ -823,10 +823,10 @@ function SectionHeader({
       <div className="flex items-center gap-3.5">
         {Icon && (
           <div className="relative">
-            <div className={cn('pointer-events-none absolute -inset-2 rounded-full blur-lg opacity-40', iconColor === 'text-blue-400' ? 'bg-blue-500/20' : iconColor === 'text-indigo-400' ? 'bg-indigo-500/20' : 'bg-white/10')} />
+            <div className={cn('pointer-events-none absolute -inset-2 rounded-full blur-lg opacity-40', iconColor === 'text-violet-400' ? 'bg-violet-500/20' : iconColor === 'text-indigo-400' ? 'bg-indigo-500/20' : 'bg-white/10')} />
             <div className={cn(
               'relative flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] bg-gradient-to-br from-white/[0.06] to-white/[0.02] backdrop-blur-sm',
-              iconColor ?? 'text-white/40',
+              iconColor ?? 'text-white/60',
             )}>
               <Icon className="h-4 w-4 drop-shadow-[0_0_6px_currentColor]" />
             </div>
@@ -836,13 +836,13 @@ function SectionHeader({
           <h2 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
             {title}
           </h2>
-          {sub && <p className="mt-0.5 text-[11px] tracking-wide text-white/20">{sub}</p>}
+          {sub && <p className="mt-0.5 text-[11px] tracking-wide text-white/50">{sub}</p>}
         </div>
       </div>
       {cta && ctaHref && (
         <Link
           href={ctaHref}
-          className="group flex items-center gap-1.5 text-[11px] text-white/20 transition-colors duration-300 hover:text-white/55"
+          className="group flex items-center gap-1.5 text-[11px] text-white/50 transition-colors duration-300 hover:text-white/55"
         >
           {cta}
           <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -863,17 +863,17 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
   return (
     <div className="space-y-12 pt-8">
       {/* Beta live database banner */}
-      <div className="relative overflow-hidden rounded-2xl border border-blue-500/10 bg-blue-500/[0.02]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-blue-500/25 to-transparent" />
+      <div className="relative overflow-hidden rounded-2xl border border-violet-500/10 bg-violet-500/[0.02]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-violet-500/25 to-transparent" />
         <div className="flex items-center gap-3 px-5 py-3.5">
-          <span className="h-2 w-2 flex-shrink-0 rounded-full bg-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)] animate-pulse" />
-          <p className="text-xs text-white/35">
-            <span className="font-semibold text-blue-400">Database Sync Active</span>
+          <span className="h-2 w-2 flex-shrink-0 rounded-full bg-violet-500 shadow-[0_0_10px_rgba(139,92,246,0.5)] animate-pulse" />
+          <p className="text-xs text-white/60">
+            <span className="font-semibold text-violet-400">Database Sync Active</span>
             {' '}&mdash; Your fractional holdings are synced with the local database. Connect your wallet to sign on-chain transactions.
           </p>
           <Link
             href="/settings/wallet"
-            className="ml-auto flex-shrink-0 text-[11px] font-semibold text-blue-400 transition-colors duration-200 hover:text-blue-300"
+            className="ml-auto flex-shrink-0 text-[11px] font-semibold text-violet-400 transition-colors duration-200 hover:text-violet-300"
           >
             Connect Wallet &rarr;
           </Link>
@@ -886,7 +886,7 @@ export function PortfolioClient({ holdings, summary }: PortfolioClientProps) {
           title="Portfolio Overview"
           sub="Aggregate value across all token holdings"
           icon={Layers}
-          iconColor="text-blue-400"
+          iconColor="text-violet-400"
         />
         <HeroMetrics summary={summary} />
       </section>

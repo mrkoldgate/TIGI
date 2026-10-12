@@ -74,7 +74,7 @@ const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
 
 const TYPE_BADGE: Record<PropertyType, string> = {
   RESIDENTIAL: 'bg-black/90 text-[#A0A0B2] ring-white/[0.08]',
-  COMMERCIAL: 'bg-[#3B82F6]/15 text-[#60A5FA] ring-[#3B82F6]/25',
+  COMMERCIAL: 'bg-[#8B5CF6]/15 text-[#A78BFA] ring-[#8B5CF6]/25',
   LAND: 'bg-[#22C55E]/15 text-[#4ADE80] ring-[#22C55E]/25',
   INDUSTRIAL: 'bg-[#F59E0B]/15 text-[#FCD34D] ring-[#F59E0B]/25',
   MIXED_USE: 'bg-indigo-500/15 text-indigo-400 ring-indigo-500/25',
@@ -173,7 +173,7 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
           onClick={() => setLightboxOpen(false)}
         >
-          <p className="text-[#6B6B80]">Gallery lightbox coming soon.</p>
+          <p className="text-[#8E8E9C]">Gallery lightbox coming soon.</p>
         </div>
       )}
     </div>
@@ -186,7 +186,7 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
 
 function BreadcrumbNav({ listing }: { listing: MockListing }) {
   return (
-    <nav className="flex items-center gap-1.5 text-xs text-[#6B6B80]">
+    <nav className="flex items-center gap-1.5 text-xs text-[#8E8E9C]">
       <Link href="/marketplace" className="flex items-center gap-1 transition-colors hover:text-[#A0A0B2]">
         <ArrowLeft className="h-3.5 w-3.5" />
         Marketplace
@@ -228,7 +228,7 @@ function ListingHeader({
           </span>
         )}
         {listing.listingType !== 'BUY' && (
-          <span className="inline-flex items-center rounded-md bg-[#3B82F6]/15 px-2 py-0.5 text-[10px] font-medium text-[#60A5FA] ring-1 ring-inset ring-[#3B82F6]/25">
+          <span className="inline-flex items-center rounded-md bg-[#8B5CF6]/15 px-2 py-0.5 text-[10px] font-medium text-[#A78BFA] ring-1 ring-inset ring-[#8B5CF6]/25">
             {listing.listingType === 'BOTH' ? 'Buy or Lease' : 'For Lease'}
           </span>
         )}
@@ -246,30 +246,30 @@ function ListingHeader({
             onClick={onSave}
             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-indigo-500/40 hover:bg-white/[0.04]"
           >
-            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#6B6B80]')} />
+            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#8E8E9C]')} />
           </button>
           <button
             type="button"
             aria-label="Share"
             className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-indigo-500/40 hover:bg-white/[0.04]"
           >
-            <Share2 className="h-4 w-4 text-[#6B6B80]" />
+            <Share2 className="h-4 w-4 text-[#8E8E9C]" />
           </button>
         </div>
       </div>
 
       {/* Location + meta strip */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#6B6B80]">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#8E8E9C]">
         <span className="flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#4A4A60]" />
+          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#7A7A8A]" />
           {listing.city}, {listing.state}
         </span>
         <span className="flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5 text-[#4A4A60]" />
+          <Clock className="h-3.5 w-3.5 text-[#7A7A8A]" />
           Listed {listed === 0 ? 'today' : `${listed}d ago`}
         </span>
         <span className="flex items-center gap-1.5">
-          <Eye className="h-3.5 w-3.5 text-[#4A4A60]" />
+          <Eye className="h-3.5 w-3.5 text-[#7A7A8A]" />
           {formatNumber(listing.viewCount)} views
         </span>
       </div>
@@ -297,7 +297,7 @@ function SpecRow({ label, value }: { label: string; value: string | number | nul
   if (value == null) return null
   return (
     <div className="flex items-center justify-between gap-4 py-3 text-sm">
-      <span className="text-[#6B6B80]">{label}</span>
+      <span className="text-[#8E8E9C]">{label}</span>
       <span className="font-medium text-[#F5F5F7]">{value}</span>
     </div>
   )
@@ -346,7 +346,7 @@ function TabContent({
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-indigo-400" />
             <div className="space-y-1 text-sm">
               <p className="font-medium text-[#F5F5F7]">{listing.city}, {listing.state}</p>
-              <p className="text-[#6B6B80]">
+              <p className="text-[#8E8E9C]">
                 Neighborhood context, walkability scores, and proximity data will be available when location services are integrated.
               </p>
             </div>
@@ -415,7 +415,7 @@ function TabContent({
   if (tab === 'documents') {
     return (
       <div className="space-y-4">
-        <p className="text-sm text-[#6B6B80]">
+        <p className="text-sm text-[#8E8E9C]">
           Documents are verified by TIGI and made available as part of the due diligence package. Full access unlocked after signing an NDA or submitting an offer.
         </p>
         <div className="divide-y divide-white/[0.06] overflow-hidden rounded-2xl border border-white/[0.08]">
@@ -426,11 +426,11 @@ function TabContent({
             >
               <div className="flex items-center gap-3">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.04]">
-                  <FileText className="h-4 w-4 text-[#6B6B80]" />
+                  <FileText className="h-4 w-4 text-[#8E8E9C]" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-[#F5F5F7]">{doc.name}</p>
-                  <p className="text-[11px] text-[#4A4A60]">{doc.type}</p>
+                  <p className="text-[11px] text-[#7A7A8A]">{doc.type}</p>
                 </div>
               </div>
               <span
@@ -438,7 +438,7 @@ function TabContent({
                   'inline-flex items-center rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
                   doc.status === 'available' && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
                   doc.status === 'pending' && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
-                  doc.status === 'not_available' && 'bg-white/[0.06] text-[#6B6B80] ring-white/[0.04]',
+                  doc.status === 'not_available' && 'bg-white/[0.06] text-[#8E8E9C] ring-white/[0.04]',
                 )}
               >
                 {doc.status === 'available' ? 'Available' : null}
@@ -496,7 +496,7 @@ function DetailTabs({
             onClick={() => setActiveTab(key)}
             className={cn(
               'relative px-5 py-3 text-sm font-medium transition-colors duration-150',
-              activeTab === key ? 'text-indigo-400' : 'text-[#6B6B80] hover:text-[#A0A0B2]',
+              activeTab === key ? 'text-indigo-400' : 'text-[#8E8E9C] hover:text-[#A0A0B2]',
             )}
           >
             {label}
@@ -537,9 +537,9 @@ function QuickStats({ listing }: { listing: MockListing }) {
     <div className="grid grid-cols-3 gap-2">
       {stats.slice(0, 6).map(({ icon, label, value }) => (
         <div key={label} className="flex flex-col items-center gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] py-3 text-center">
-          <span className="text-[#4A4A60]">{icon}</span>
+          <span className="text-[#7A7A8A]">{icon}</span>
           <span className="font-heading text-sm font-semibold text-[#F5F5F7]">{value}</span>
-          <span className="text-[9px] uppercase tracking-wider text-[#4A4A60]">{label}</span>
+          <span className="text-[9px] uppercase tracking-wider text-[#7A7A8A]">{label}</span>
         </div>
       ))}
     </div>
@@ -566,18 +566,18 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
 
         {/* Price per fraction */}
         <div className="mb-4">
-          <p className="text-[10px] text-[#4A4A60]">Entry from</p>
+          <p className="text-[10px] text-[#7A7A8A]">Entry from</p>
           <p className="font-heading text-2xl font-bold text-indigo-400">
             ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-sm font-normal text-[#6B6B80]">/fraction</span>
+            <span className="text-sm font-normal text-[#8E8E9C]">/fraction</span>
           </p>
         </div>
 
         {/* Progress */}
         <div className="mb-3">
           <div className="mb-1.5 flex items-center justify-between text-[11px]">
-            <span className="text-[#6B6B80]">{soldPct}% subscribed</span>
-            <span className="text-[#6B6B80]">{available.toLocaleString()} left</span>
+            <span className="text-[#8E8E9C]">{soldPct}% subscribed</span>
+            <span className="text-[#8E8E9C]">{available.toLocaleString()} left</span>
           </div>
           <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
             <div
@@ -588,7 +588,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         </div>
 
         {/* Investor count */}
-        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#6B6B80]">
+        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#8E8E9C]">
           <Users className="h-3.5 w-3.5" />
           <span>
             <span className="font-medium text-[#A0A0B2]">{listing.tokenInvestorCount}</span>{' '}
@@ -606,7 +606,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
           Invest from ${listing.tokenPricePerFraction.toLocaleString()}
         </button>
 
-        <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A4A60]">
+        <p className="mt-2.5 text-[10px] leading-relaxed text-[#7A7A8A]">
           Fractions represent proportional economic interest. Not a securities offering. See disclosures.
         </p>
       </div>
@@ -639,14 +639,14 @@ function ActionPanel({
     <div className="space-y-4">
       {/* Price card */}
       <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-5">
-        <p className="text-[10px] uppercase tracking-widest text-[#4A4A60]">List Price</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#7A7A8A]">List Price</p>
         <p className="mt-1 font-heading text-3xl font-bold text-white">
           {formatPrice(listing.price)}
         </p>
         {listing.isTokenized && listing.tokenPricePerFraction && (
           <p className="mt-1 text-sm text-indigo-400">
             from ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-xs text-[#6B6B80]">/fraction</span>
+            <span className="text-xs text-[#8E8E9C]">/fraction</span>
           </p>
         )}
 
@@ -668,7 +668,7 @@ function ActionPanel({
             'mt-2 flex w-full items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all active:scale-[0.98]',
             isSaved
               ? 'border-rose-500/30 bg-rose-500/10 text-rose-400'
-              : 'border-white/[0.08] text-[#6B6B80] hover:border-white/[0.10] hover:text-[#F5F5F7]',
+              : 'border-white/[0.08] text-[#8E8E9C] hover:border-white/[0.10] hover:text-[#F5F5F7]',
           )}
         >
           <Heart className={cn('h-4 w-4', isSaved && 'fill-rose-400')} />
@@ -679,7 +679,7 @@ function ActionPanel({
         <button
           type="button"
           onClick={() => setInquiryOpen(true)}
-          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-indigo-500/30 hover:text-indigo-400 active:scale-[0.98]"
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#8E8E9C] transition-all hover:border-indigo-500/30 hover:text-indigo-400 active:scale-[0.98]"
         >
           <MessageSquare className="h-4 w-4" />
           Ask a Question
@@ -717,7 +717,7 @@ function ActionPanel({
 
       {/* Trust signals */}
       <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.06)] p-4">
-        <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+        <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
           TIGI Verified
         </p>
         <ul className="space-y-1.5">
@@ -727,7 +727,7 @@ function ActionPanel({
             'AI-assisted due diligence',
             'Escrow-backed transactions',
           ].map((item) => (
-            <li key={item} className="flex items-center gap-2 text-xs text-[#6B6B80]">
+            <li key={item} className="flex items-center gap-2 text-xs text-[#8E8E9C]">
               <Check className="h-3 w-3 shrink-0 text-indigo-400" />
               {item}
             </li>

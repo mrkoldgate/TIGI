@@ -41,17 +41,17 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
       {/* ── Header ─────────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Administration
           </p>
           <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
             Platform Analytics
           </h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Live aggregates from the production database.
           </p>
         </div>
-        <div className="flex items-center gap-1.5 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 text-[11px] text-[#4A4A5E] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+        <div className="flex items-center gap-1.5 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 text-[11px] text-[#7A7A8A] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
           <RefreshCw className="h-3 w-3" />
           Snapshot at {snapshotTime}
         </div>
@@ -123,7 +123,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             />
           </div>
           <div className="mt-4 border-t border-white/[0.04] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Verification rate:{' '}
               <span className="font-semibold text-[#4ADE80]">
                 {users.totalUsers > 0
@@ -143,7 +143,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <TierRow label="Enterprise"  count={users.tierEnterprise} total={users.totalUsers} color="#22C55E" />
           </div>
           <div className="mt-4 border-t border-white/[0.04] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Paid conversion:{' '}
               <span className="font-semibold text-[#6366F1]">
                 {users.totalUsers > 0
@@ -154,7 +154,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
                     )
                   : 0}%
               </span>
-              <span className="ml-1 text-[#4A4A5E]">· Full data in M10+ (Stripe)</span>
+              <span className="ml-1 text-[#7A7A8A]">· Full data in M10+ (Stripe)</span>
             </p>
           </div>
         </AnalyticsCard>
@@ -170,7 +170,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
               label="Express Interest"
               count={intents.byType.EXPRESS_INTEREST}
               total={intents.totalIntents}
-              color="#6B6B80"
+              color="#8E8E9C"
             />
             <BarRow
               label="Prepare Purchase"
@@ -192,7 +192,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             />
           </div>
           <div className="mt-4 border-t border-white/[0.04] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               +{intents.newLast30d} intents in last 30 days
             </p>
           </div>
@@ -205,7 +205,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
               label="Created"
               count={intents.funnel.created}
               pct={100}
-              color="#6B6B80"
+              color="#8E8E9C"
               step={1}
             />
             <FunnelStep
@@ -233,7 +233,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
           </div>
           <div className="mt-4 border-t border-white/[0.04] pt-3 flex items-center gap-2">
             <TrendingUp className="h-3.5 w-3.5 text-[#4ADE80]" />
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Full Solana execution tracking active in M8+
             </p>
           </div>
@@ -250,10 +250,10 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <BarRow label="Under Review" count={listings.underReview}   total={listings.totalListings} color="#F59E0B" />
             <BarRow label="Draft"        count={listings.draftListings} total={listings.totalListings} color="#3A3A4E" />
             <BarRow label="Sold"         count={listings.sold}          total={listings.totalListings} color="#6366F1" />
-            <BarRow label="Delisted"     count={listings.delisted}      total={listings.totalListings} color="#6B6B80" />
+            <BarRow label="Delisted"     count={listings.delisted}      total={listings.totalListings} color="#8E8E9C" />
           </div>
           <div className="mt-4 border-t border-white/[0.04] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               {listings.tokenizedCount} tokenized listings ({listings.totalListings > 0
                 ? Math.round((listings.tokenizedCount / listings.totalListings) * 100)
                 : 0}% of total)
@@ -268,7 +268,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             <BarRow label="Commercial"  count={listings.byType.COMMERCIAL}  total={listings.totalListings} color="#818CF8" />
             <BarRow label="Land"        count={listings.byType.LAND}        total={listings.totalListings} color="#4ADE80" />
             <BarRow label="Industrial"  count={listings.byType.INDUSTRIAL}  total={listings.totalListings} color="#F59E0B" />
-            <BarRow label="Mixed-Use"   count={listings.byType.MIXED_USE}   total={listings.totalListings} color="#6B6B80" />
+            <BarRow label="Mixed-Use"   count={listings.byType.MIXED_USE}   total={listings.totalListings} color="#8E8E9C" />
           </div>
         </AnalyticsCard>
       </div>
@@ -281,7 +281,7 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
             label="Registered Users"
             value={users.totalUsers}
             pct={100}
-            color="#6B6B80"
+            color="#8E8E9C"
           />
           <FunnelBlock
             step="02"
@@ -323,14 +323,14 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
       {/* ── Inquiry summary ─────────────────────────────────────────────── */}
       <AnalyticsCard title="Inquiry Activity">
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <InquiryTile label="Total"     value={inquiries.total}    color="#6B6B80" />
+          <InquiryTile label="Total"     value={inquiries.total}    color="#8E8E9C" />
           <InquiryTile label="Unread"    value={inquiries.unread}   color="#F59E0B" />
           <InquiryTile label="Replied"   value={inquiries.replied}  color="#4ADE80" />
           <InquiryTile label="Last 7d"   value={inquiries.newLast7d} color="#6366F1" />
         </div>
         {inquiries.total > 0 && (
           <div className="mt-4 border-t border-white/[0.04] pt-3">
-            <p className="text-xs text-[#6B6B80]">
+            <p className="text-xs text-[#8E8E9C]">
               Reply rate:{' '}
               <span className="font-semibold text-[#4ADE80]">
                 {Math.round((inquiries.replied / inquiries.total) * 100)}%
@@ -345,11 +345,11 @@ export function AnalyticsClient({ data }: AnalyticsClientProps) {
         <div className="noise absolute inset-0 pointer-events-none" />
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.04] bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
-            <TrendingUp className="h-4 w-4 text-[#4A4A5E]" />
+            <TrendingUp className="h-4 w-4 text-[#7A7A8A]" />
           </div>
           <div>
-            <p className="text-sm font-medium text-[#6B6B80]">Revenue & Premium Conversion</p>
-            <p className="text-xs text-[#4A4A5E]">
+            <p className="text-sm font-medium text-[#8E8E9C]">Revenue & Premium Conversion</p>
+            <p className="text-xs text-[#7A7A8A]">
               Full revenue analytics — Stripe fee income, subscription MRR, platform fee
               per executed intent — available in M10+ when Stripe billing is activated.
             </p>
@@ -373,7 +373,7 @@ function AnalyticsCard({
     <div className="relative overflow-hidden rounded-xl border border-white/[0.04] bg-[#050505] p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
       <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       <div className="noise absolute inset-0 pointer-events-none" />
-      <p className="mb-4 text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+      <p className="mb-4 text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
         {title}
       </p>
       {children}
@@ -409,8 +409,8 @@ function KpiTile({
       <p className="mt-3 text-2xl font-bold tabular-nums text-[#F5F5F7]">
         {value.toLocaleString()}
       </p>
-      <p className="mt-0.5 text-xs font-medium text-[#6B6B80]">{label}</p>
-      <p className="mt-1 text-[10px] text-[#4A4A5E]">{sub}</p>
+      <p className="mt-0.5 text-xs font-medium text-[#8E8E9C]">{label}</p>
+      <p className="mt-1 text-[10px] text-[#7A7A8A]">{sub}</p>
     </div>
   )
 }
@@ -431,7 +431,7 @@ function BarRow({
     <div>
       <div className="mb-1 flex items-center justify-between gap-2">
         <span className="text-xs text-[#A0A0B2]">{label}</span>
-        <span className="text-xs tabular-nums text-[#6B6B80]">{count.toLocaleString()} ({pct}%)</span>
+        <span className="text-xs tabular-nums text-[#8E8E9C]">{count.toLocaleString()} ({pct}%)</span>
       </div>
       <div className="h-1.5 w-full rounded-full bg-white/[0.04]">
         <div
@@ -471,7 +471,7 @@ function FunnelStep({
       <div className="flex-1 min-w-0">
         <div className="mb-1 flex items-center justify-between gap-2">
           <span className="text-xs text-[#A0A0B2]">{label}</span>
-          <span className="text-xs tabular-nums text-[#6B6B80]">{count.toLocaleString()} · {pct}%</span>
+          <span className="text-xs tabular-nums text-[#8E8E9C]">{count.toLocaleString()} · {pct}%</span>
         </div>
         <div className="h-1.5 w-full rounded-full bg-white/[0.04]">
           <div
@@ -507,7 +507,7 @@ function FunnelBlock({
       <p className="mt-2 text-xl font-bold tabular-nums text-[#F5F5F7]">
         {locked ? locked : value.toLocaleString()}
       </p>
-      <p className="mt-0.5 text-[11px] text-[#6B6B80]">{label}</p>
+      <p className="mt-0.5 text-[11px] text-[#8E8E9C]">{label}</p>
       {!locked && (
         <div className="mt-2 h-1 w-full rounded-full bg-white/[0.04]">
           <div
@@ -539,7 +539,7 @@ function InquiryTile({
       <p className="text-xl font-bold tabular-nums" style={{ color }}>
         {value.toLocaleString()}
       </p>
-      <p className="text-xs text-[#6B6B80]">{label}</p>
+      <p className="text-xs text-[#8E8E9C]">{label}</p>
     </div>
   )
 }

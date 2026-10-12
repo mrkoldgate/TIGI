@@ -40,7 +40,7 @@ const URGENCY_STYLES: Record<
   normal: {
     border:  'border-l-white/[0.06]',
     iconBg:  'bg-white/[0.04]',
-    icon:    'text-[#6B6B80]',
+    icon:    'text-[#8E8E9C]',
     value:   'text-[#F5F5F7]',
   },
   positive: {
@@ -95,7 +95,7 @@ export function AdminStatCard({
         </div>
 
         {isLocked ? (
-          <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+          <span className="flex items-center gap-1 rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
             <span className="h-1.5 w-1.5 rounded-full bg-[#F59E0B]" />
             {lockedUntil}
           </span>
@@ -105,7 +105,7 @@ export function AdminStatCard({
               'rounded px-1.5 py-0.5 text-[10px] font-medium tabular-nums',
               delta.urgent
                 ? 'bg-[#EF4444]/10 text-[#EF4444]'
-                : 'bg-white/[0.04] text-[#6B6B80]'
+                : 'bg-white/[0.04] text-[#8E8E9C]'
             )}
           >
             {delta.value > 0 ? `+${delta.value}` : delta.value} {delta.label}
@@ -118,7 +118,7 @@ export function AdminStatCard({
         <p
           className={cn(
             'font-heading text-2xl font-semibold tabular-nums leading-none',
-            isLocked ? 'text-[#3A3A4A]' : styles.value
+            isLocked ? 'text-[#6E6E7E]' : styles.value
           )}
         >
           {isLocked ? '—' : value}
@@ -128,7 +128,7 @@ export function AdminStatCard({
       {/* Label + hint */}
       <div>
         <p className="text-xs font-medium text-[#A0A0B2]">{label}</p>
-        {hint && <p className="mt-0.5 text-[11px] text-[#6B6B80]">{hint}</p>}
+        {hint && <p className="mt-0.5 text-[11px] text-[#8E8E9C]">{hint}</p>}
       </div>
     </div>
   )

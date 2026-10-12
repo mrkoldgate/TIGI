@@ -91,7 +91,7 @@ export default function RegisterPage() {
         <h1 className="font-heading text-2xl font-bold text-white">
           Create your account
         </h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Start investing in tokenized real estate
         </p>
       </div>
@@ -122,7 +122,7 @@ export default function RegisterPage() {
       {/* Divider */}
       <div className="relative mb-6 flex items-center">
         <div className="flex-1 border-t border-white/[0.04]" />
-        <span className="mx-4 text-xs text-[#3A3A48]">or sign up with email</span>
+        <span className="mx-4 text-xs text-[#6E6E7E]">or sign up with email</span>
         <div className="flex-1 border-t border-white/[0.04]" />
       </div>
 
@@ -140,8 +140,8 @@ export default function RegisterPage() {
             autoComplete="name"
             placeholder="Alex Johnson"
             className={cn(
-              'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
+              'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
+              'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
               errors.name ? 'border-red-500/50' : 'border-white/[0.04]',
             )}
           />
@@ -162,8 +162,8 @@ export default function RegisterPage() {
             autoComplete="email"
             placeholder="you@example.com"
             className={cn(
-              'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-              'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
+              'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
+              'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
               errors.email ? 'border-red-500/50' : 'border-white/[0.04]',
             )}
           />
@@ -185,15 +185,15 @@ export default function RegisterPage() {
               autoComplete="new-password"
               placeholder="••••••••"
               className={cn(
-                'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
+                'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
+                'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
                 errors.password ? 'border-red-500/50' : 'border-white/[0.04]',
               )}
             />
             <button
               type="button"
               onClick={() => setShowPassword((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#4A4A60] hover:text-[#9999AA] transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A7A8A] hover:text-[#9999AA] transition-colors"
               aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -226,15 +226,15 @@ export default function RegisterPage() {
               autoComplete="new-password"
               placeholder="••••••••"
               className={cn(
-                'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
-                'focus:border-[#3B82F6]/50 focus:ring-1 focus:ring-[#3B82F6]/20',
+                'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
+                'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
                 errors.confirmPassword ? 'border-red-500/50' : 'border-white/[0.04]',
               )}
             />
             <button
               type="button"
               onClick={() => setShowConfirm((v) => !v)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#4A4A60] hover:text-[#9999AA] transition-colors"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#7A7A8A] hover:text-[#9999AA] transition-colors"
               aria-label={showConfirm ? 'Hide password' : 'Show password'}
             >
               {showConfirm ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -246,13 +246,13 @@ export default function RegisterPage() {
         </div>
 
         {/* Terms */}
-        <p className="text-xs text-[#4A4A60]">
+        <p className="text-xs text-[#7A7A8A]">
           By creating an account you agree to our{' '}
-          <Link href="/legal/terms" className="text-[#60A5FA] hover:underline">
+          <Link href="/legal/terms" className="text-[#A78BFA] hover:underline">
             Terms of Service
           </Link>{' '}
           and{' '}
-          <Link href="/legal/privacy" className="text-[#60A5FA] hover:underline">
+          <Link href="/legal/privacy" className="text-[#A78BFA] hover:underline">
             Privacy Policy
           </Link>
           .
@@ -262,7 +262,7 @@ export default function RegisterPage() {
         <button
           type="submit"
           disabled={isSubmitting || googleLoading}
-          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#3B82F6] to-[#2563EB] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-all hover:from-[#2563EB] hover:to-[#1D4ED8] hover:shadow-[0_0_28px_rgba(59,130,246,0.45)] active:scale-[0.98] disabled:opacity-60"
+          className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all hover:from-[#7C3AED] hover:to-[#6D28D9] hover:shadow-[0_0_28px_rgba(139,92,246,0.45)] active:scale-[0.98] disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           Create account
@@ -270,11 +270,11 @@ export default function RegisterPage() {
       </form>
 
       {/* Login link */}
-      <p className="mt-6 text-center text-sm text-[#6B6B80]">
+      <p className="mt-6 text-center text-sm text-[#8E8E9C]">
         Already have an account?{' '}
         <Link
           href="/auth/login"
-          className="font-medium text-[#60A5FA] hover:text-[#93C5FD] transition-colors"
+          className="font-medium text-[#A78BFA] hover:text-[#C4B5FD] transition-colors"
         >
           Sign in
         </Link>
@@ -288,7 +288,7 @@ function PasswordCheck({ ok, label }: { ok: boolean; label: string }) {
     <span
       className={cn(
         'flex items-center gap-1 transition-colors',
-        ok ? 'text-emerald-400' : 'text-[#4A4A60]',
+        ok ? 'text-emerald-400' : 'text-[#7A7A8A]',
       )}
     >
       <Check className="h-3 w-3" />

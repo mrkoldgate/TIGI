@@ -100,7 +100,7 @@ export default async function PortfolioPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.6)] animate-pulse" />
               {holdings.length} Active
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/[0.06] px-3 py-1.5 text-[10px] font-semibold tracking-wide uppercase text-blue-400">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-violet-500/20 bg-violet-500/[0.06] px-3 py-1.5 text-[10px] font-semibold tracking-wide uppercase text-violet-400">
               Beta Live
             </span>
           </div>

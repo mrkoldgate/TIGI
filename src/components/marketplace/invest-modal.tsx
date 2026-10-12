@@ -84,9 +84,9 @@ function CostRow({
         total && 'border-t border-white/[0.08] pt-3 mt-1',
       )}
     >
-      <span className={cn('text-[#6B6B80]', total && 'font-medium text-[#A0A0B2]')}>
+      <span className={cn('text-[#8E8E9C]', total && 'font-medium text-[#A0A0B2]')}>
         {label}
-        {sub && <span className="ml-1 text-[10px] text-[#4A4A60]">{sub}</span>}
+        {sub && <span className="ml-1 text-[10px] text-[#7A7A8A]">{sub}</span>}
       </span>
       <span
         className={cn(
@@ -112,21 +112,21 @@ function Disclosure() {
         className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left"
       >
         <div className="flex items-center gap-2">
-          <Info className="h-3.5 w-3.5 shrink-0 text-[#4A4A60]" />
-          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+          <Info className="h-3.5 w-3.5 shrink-0 text-[#7A7A8A]" />
+          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
             Important Disclosures
           </span>
         </div>
         <ChevronRight
           className={cn(
-            'h-3.5 w-3.5 shrink-0 text-[#4A4A60] transition-transform duration-200',
+            'h-3.5 w-3.5 shrink-0 text-[#7A7A8A] transition-transform duration-200',
             expanded && 'rotate-90',
           )}
         />
       </button>
 
       {expanded && (
-        <div className="border-t border-white/[0.06] px-4 pb-4 pt-3 text-[11px] leading-relaxed text-[#6B6B80] space-y-2">
+        <div className="border-t border-white/[0.06] px-4 pb-4 pt-3 text-[11px] leading-relaxed text-[#8E8E9C] space-y-2">
           <p>
             TIGI fractional tokens represent a proportional economic interest in the underlying real
             estate asset. They do not confer legal title, voting rights, or any form of direct
@@ -177,7 +177,7 @@ function SuccessScreen({
         <h2 className="font-heading text-xl font-semibold text-[#F5F5F7]">
           Investment intent submitted
         </h2>
-        <p className="text-sm text-[#6B6B80]">
+        <p className="text-sm text-[#8E8E9C]">
           Your intent to acquire{' '}
           <span className="font-medium text-indigo-400">{fractions} fraction{fractions !== 1 ? 's' : ''}</span>{' '}
           ({fmtUSD(total)} total) is pending review. Our team will be in touch within 1–2 business
@@ -186,7 +186,7 @@ function SuccessScreen({
       </div>
 
       {/* Ref */}
-      <p className="font-mono text-[11px] text-[#3A3A4A]">
+      <p className="font-mono text-[11px] text-[#6E6E7E]">
         ref: {intentId.slice(-12).toUpperCase()}
       </p>
 
@@ -209,9 +209,9 @@ function SuccessScreen({
       </div>
 
       {/* Dashboard nudge */}
-      <p className="text-xs text-[#4A4A60]">
+      <p className="text-xs text-[#7A7A8A]">
         Your active interests appear on your{' '}
-        <Link href="/dashboard" className="text-[#6B6B80] underline underline-offset-2 hover:text-[#A0A0B2]">
+        <Link href="/dashboard" className="text-[#8E8E9C] underline underline-offset-2 hover:text-[#A0A0B2]">
           dashboard
         </Link>
         .
@@ -343,7 +343,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
             onClick={handleClose}
             disabled={isSubmitting}
             aria-label="Close investment modal"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2] disabled:opacity-50"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#7A7A8A] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2] disabled:opacity-50"
           >
             <X className="h-4 w-4" />
           </button>
@@ -374,31 +374,31 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium text-[#F5F5F7]">{listing.title}</p>
-                  <p className="text-xs text-[#6B6B80]">{listing.city}, {listing.state}</p>
+                  <p className="text-xs text-[#8E8E9C]">{listing.city}, {listing.state}</p>
                   <div className="mt-1.5 flex items-center gap-2">
                     <span className="inline-flex items-center gap-1 rounded-md bg-indigo-500/15 px-1.5 py-0.5 text-[10px] font-medium text-indigo-400 ring-1 ring-inset ring-indigo-500/25">
                       <Zap className="h-2.5 w-2.5" />
                       Tokenized
                     </span>
-                    <span className="text-[11px] text-[#4A4A60]">
+                    <span className="text-[11px] text-[#7A7A8A]">
                       {available.toLocaleString()} fractions available
                     </span>
                   </div>
                 </div>
                 <div className="shrink-0 text-right">
-                  <p className="text-[10px] text-[#4A4A60]">from</p>
+                  <p className="text-[10px] text-[#7A7A8A]">from</p>
                   <p className="font-heading text-base font-bold text-indigo-400">
                     {fmtUSD(pricePerFraction)}
                   </p>
-                  <p className="text-[10px] text-[#6B6B80]">/ fraction</p>
+                  <p className="text-[10px] text-[#8E8E9C]">/ fraction</p>
                 </div>
               </div>
 
               {/* ── Availability progress ───────────────────────────────── */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-[#6B6B80]">{soldPct}% subscribed</span>
-                  <span className="flex items-center gap-1 text-[#6B6B80]">
+                  <span className="text-[#8E8E9C]">{soldPct}% subscribed</span>
+                  <span className="flex items-center gap-1 text-[#8E8E9C]">
                     <Users className="h-3 w-3" />
                     {listing.tokenInvestorCount ?? 0} investors
                   </span>
@@ -409,14 +409,14 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     style={{ width: `${soldPct}%` }}
                   />
                 </div>
-                <p className="text-[10px] text-[#4A4A60]">
+                <p className="text-[10px] text-[#7A7A8A]">
                   {available.toLocaleString()} of {(listing.tokenTotalSupply ?? 0).toLocaleString()} fractions remaining
                 </p>
               </div>
 
               {/* ── Amount selector ─────────────────────────────────────── */}
               <div className="space-y-3">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
                   Number of Fractions
                 </p>
 
@@ -432,7 +432,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-white/[0.06] accent-indigo-500"
                     aria-label="Number of fractions"
                   />
-                  <div className="flex items-center justify-between text-[10px] text-[#3A3A48]">
+                  <div className="flex items-center justify-between text-[10px] text-[#6E6E7E]">
                     <span>1</span>
                     <span>{maxFractions.toLocaleString()}</span>
                   </div>
@@ -456,7 +456,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                     />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="text-xs text-[#6B6B80]">
+                    <p className="text-xs text-[#8E8E9C]">
                       {fractions} fraction{fractions !== 1 ? 's' : ''}{' '}
                       = proportional participation in{' '}
                       <span className="font-medium text-[#A0A0B2]">
@@ -499,7 +499,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
 
               {/* ── Acknowledgements ────────────────────────────────────── */}
               <div className="space-y-3">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
                   Acknowledgements
                 </p>
                 {ACKS.map((text, i) => (
@@ -539,15 +539,15 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
 
               {/* ── Optional note ────────────────────────────────────────── */}
               <div>
-                <label className="mb-1.5 block text-[11px] text-[#6B6B80]">
-                  Note <span className="text-[#3A3A4A]">(optional)</span>
+                <label className="mb-1.5 block text-[11px] text-[#8E8E9C]">
+                  Note <span className="text-[#6E6E7E]">(optional)</span>
                 </label>
                 <textarea
                   rows={2}
                   value={note}
                   onChange={(e) => setNote(e.target.value)}
                   placeholder="Any questions or additional context for the TIGI team…"
-                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#3A3A4A] outline-none transition-colors focus:border-white/[0.10]"
+                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-3 py-2 text-sm text-[#F5F5F7] placeholder-[#6E6E7E] outline-none transition-colors focus:border-white/[0.10]"
                 />
               </div>
 
@@ -591,7 +591,7 @@ export function InvestModal({ listing, isOpen, onClose }: InvestModalProps) {
                 </>
               )}
             </button>
-            <p className="mt-2 text-center text-[10px] text-[#3A3A4A]">
+            <p className="mt-2 text-center text-[10px] text-[#6E6E7E]">
               This is a non-binding intent. No funds are collected at this stage.
             </p>
           </div>

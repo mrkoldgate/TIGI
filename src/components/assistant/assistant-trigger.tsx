@@ -36,7 +36,7 @@ export function AssistantTrigger() {
       )}
     >
       {isOpen ? (
-        <X className="h-4 w-4 text-[#6B6B80]" />
+        <X className="h-4 w-4 text-[#8E8E9C]" />
       ) : (
         <>
           <Sparkles className="h-4 w-4 text-[#6366F1]" />

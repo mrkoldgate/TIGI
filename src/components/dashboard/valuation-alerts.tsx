@@ -82,7 +82,7 @@ export function ValuationAlerts({ alerts, className }: ValuationAlertsProps) {
               <p className="mt-0.5 font-mono text-[11px] text-[#94A3B8]">
                 {formatPrice(alert.oldValue)} → {formatPrice(alert.newValue)}
               </p>
-              <p className="mt-0.5 text-[11px] text-[#64748B]">
+              <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
                 {formatTimeAgo(alert.timestamp)}
               </p>
             </div>
@@ -103,9 +103,9 @@ export function ValuationAlerts({ alerts, className }: ValuationAlertsProps) {
       })}
 
       {/* M5 feature notice */}
-      <p className="pt-1 text-center text-[11px] text-[#3A3A4A]">
+      <p className="pt-1 text-center text-[11px] text-[#6E6E7E]">
         Custom alert thresholds available in{' '}
-        <span className="text-[#6B6B80]">Milestone 5</span>
+        <span className="text-[#8E8E9C]">Milestone 5</span>
       </p>
     </div>
   )

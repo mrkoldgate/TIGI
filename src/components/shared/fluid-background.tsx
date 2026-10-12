@@ -61,7 +61,7 @@ function Scene() {
       {/* Lights */}
       <ambientLight intensity={0.12} />
       {/* Key blue light — top-left */}
-      <pointLight position={[-5, 4, 4]} color="#3B82F6" intensity={8} />
+      <pointLight position={[-5, 4, 4]} color="#8B5CF6" intensity={8} />
       {/* Fill purple light — right */}
       <pointLight position={[5, -2, 3]} color="#8B5CF6" intensity={6} />
       {/* Rim emerald light — top */}
@@ -71,7 +71,7 @@ function Scene() {
 
       {/* Main blue blob — large, left */}
       <Blob
-        color="#1D4ED8"
+        color="#6D28D9"
         position={[-3.2, 0.5, -2.5]}
         scale={2.9}
         speed={0.55}

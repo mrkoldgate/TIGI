@@ -70,7 +70,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           autoComplete="name"
           placeholder="Alex Johnson"
           className={cn(
-            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
             'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
             errors.name ? 'border-red-500/50' : 'border-white/[0.08]',
           )}
@@ -85,12 +85,12 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <label className="mb-1.5 flex items-center gap-1.5 text-sm text-[#9999AA]">
           <Mail className="h-3.5 w-3.5" />
           Email address
-          <span className="ml-auto text-[10px] text-[#3A3A48]">Verified</span>
+          <span className="ml-auto text-[10px] text-[#6E6E7E]">Verified</span>
         </label>
-        <div className="flex w-full items-center rounded-xl border border-white/[0.06] bg-black/80 px-4 py-3 text-sm text-[#4A4A60]">
+        <div className="flex w-full items-center rounded-xl border border-white/[0.06] bg-black/80 px-4 py-3 text-sm text-[#7A7A8A]">
           {defaultEmail}
         </div>
-        <p className="mt-1 text-[10px] text-[#3A3A48]">
+        <p className="mt-1 text-[10px] text-[#6E6E7E]">
           Email can be changed in Settings after setup.
         </p>
       </div>
@@ -100,7 +100,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <label htmlFor="location" className="mb-1.5 flex items-center gap-1.5 text-sm text-[#9999AA]">
           <MapPin className="h-3.5 w-3.5" />
           Location
-          <span className="ml-auto text-[10px] text-[#3A3A48]">Optional</span>
+          <span className="ml-auto text-[10px] text-[#6E6E7E]">Optional</span>
         </label>
         <input
           {...register('location')}
@@ -109,7 +109,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           autoComplete="address-level2"
           placeholder="Austin, TX"
           className={cn(
-            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'w-full rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
             'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
             'border-white/[0.08]',
           )}
@@ -120,7 +120,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
       <div>
         <label htmlFor="bio" className="mb-1.5 flex items-center gap-1.5 text-sm text-[#9999AA]">
           Bio
-          <span className="ml-auto text-[10px] text-[#3A3A48]">Optional</span>
+          <span className="ml-auto text-[10px] text-[#6E6E7E]">Optional</span>
         </label>
         <textarea
           {...register('bio', {
@@ -130,7 +130,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           rows={3}
           placeholder="Brief intro — what are you building, buying, or investing in?"
           className={cn(
-            'w-full resize-none rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#3A3A4A] outline-none transition-all',
+            'w-full resize-none rounded-xl border bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
             'focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/20',
             errors.bio ? 'border-red-500/50' : 'border-white/[0.08]',
           )}
@@ -144,7 +144,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
           <span
             className={cn(
               'text-[10px] tabular-nums',
-              charCount > MAX_BIO * 0.9 ? 'text-amber-400' : 'text-[#3A3A48]',
+              charCount > MAX_BIO * 0.9 ? 'text-amber-400' : 'text-[#6E6E7E]',
             )}
           >
             {charCount}/{MAX_BIO}
@@ -176,7 +176,7 @@ export function ProfileForm({ defaultName, defaultEmail }: ProfileFormProps) {
         <button
           type="button"
           onClick={() => router.push('/onboarding/interests')}
-          className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="text-xs text-[#6E6E7E] transition-colors hover:text-[#8E8E9C]"
         >
           Skip for now
         </button>

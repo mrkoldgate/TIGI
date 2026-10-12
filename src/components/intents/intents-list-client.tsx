@@ -34,7 +34,7 @@ export function IntentsListClient({ initialIntents }: IntentsListClientProps) {
 
   if (intents.length === 0) {
     return (
-      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-dashed border-white/[0.05] bg-[#050505]/80 py-28 text-center backdrop-blur-3xl">
+      <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-[22px] border border-dashed border-white/[0.05] bg-[#050505]/80 py-28 text-center backdrop-blur-3xl">
         {/* Noise texture overlay */}
         <div className="noise absolute inset-0 pointer-events-none" />
         {/* Atmospheric wash */}
@@ -46,20 +46,20 @@ export function IntentsListClient({ initialIntents }: IntentsListClientProps) {
           <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-48 w-48 rounded-full bg-indigo-500/[0.15] blur-[80px]" />
           <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-32 w-32 rounded-full bg-indigo-500/[0.1] blur-[30px]" />
           <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.08] to-white/[0.02] shadow-2xl backdrop-blur-md">
-            <ArrowLeftRight className="h-10 w-10 text-white/40 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
+            <ArrowLeftRight className="h-10 w-10 text-white/60 drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]" />
           </div>
         </div>
 
         <h3 className="text-lg font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
           No intents yet
         </h3>
-        <p className="mx-auto mt-2.5 max-w-sm text-sm leading-relaxed text-white/20">
+        <p className="mx-auto mt-2.5 max-w-sm text-sm leading-relaxed text-white/50">
           Browse the marketplace and use the Buy, Invest, or Express Interest buttons to create
           your first transaction intent.
         </p>
         <Link
           href="/marketplace"
-          className="group mt-7 inline-flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-6 py-3 text-xs font-medium text-white/45 backdrop-blur-xl transition-all duration-400 hover:border-blue-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(59,130,246,0.1)]"
+          className="group mt-7 inline-flex items-center gap-2.5 rounded-full border border-white/[0.06] bg-white/[0.03] px-6 py-3 text-xs font-medium text-white/65 backdrop-blur-xl transition-all duration-400 hover:border-violet-500/20 hover:text-white hover:shadow-[0_0_24px_rgba(139,92,246,0.1)]"
         >
           Browse marketplace
           <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -114,7 +114,7 @@ export function IntentsListClient({ initialIntents }: IntentsListClientProps) {
               <h2 className="text-base font-semibold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-zinc-400 to-zinc-600">
                 History
               </h2>
-              <span className="rounded-full border border-white/[0.05] bg-white/[0.02] px-2.5 py-0.5 text-[10px] font-medium text-white/25 tabular-nums">
+              <span className="rounded-full border border-white/[0.05] bg-white/[0.02] px-2.5 py-0.5 text-[10px] font-medium text-white/55 tabular-nums">
                 {terminal.length}
               </span>
             </div>

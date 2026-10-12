@@ -87,7 +87,7 @@ function tokenSoldPercent(info: PropertyTokenInfo): number {
 
 const CORNER_GLOW: Record<PropertyType, string> = {
   RESIDENTIAL:  'bg-indigo-500',
-  COMMERCIAL:   'bg-blue-500',
+  COMMERCIAL:   'bg-violet-500',
   LAND:         'bg-emerald-500',
   INDUSTRIAL:   'bg-amber-500',
   MIXED_USE:    'bg-violet-500',
@@ -157,7 +157,7 @@ function StatRow({ data }: { data: PropertyCardData }) {
   if (items.length === 0) return null
 
   return (
-    <div className="flex flex-wrap items-center gap-x-2.5 text-[11px] text-zinc-600">
+    <div className="flex flex-wrap items-center gap-x-2.5 text-[11px] text-zinc-500">
       {items.map((item, i) => (
         <span key={item} className="flex items-center gap-2.5">
           {i > 0 && <span className="h-[3px] w-[3px] rounded-full bg-white/[0.06]" />}
@@ -200,7 +200,7 @@ function SaveButton({ isSaved, onSave, className }: SaveButtonProps) {
       <Heart
         className={cn(
           'h-3.5 w-3.5 transition-colors duration-200',
-          isSaved ? 'fill-rose-400 text-rose-400 drop-shadow-[0_0_6px_rgba(251,113,133,0.5)]' : 'text-zinc-600 group-hover:text-zinc-400',
+          isSaved ? 'fill-rose-400 text-rose-400 drop-shadow-[0_0_6px_rgba(251,113,133,0.5)]' : 'text-zinc-500 group-hover:text-zinc-400',
         )}
       />
     </button>
@@ -239,7 +239,7 @@ function CompareButton({ isComparing, onCompare, className }: CompareButtonProps
     >
       {isComparing
         ? <Check className="h-3.5 w-3.5 text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]" />
-        : <GitCompare className="h-3.5 w-3.5 text-zinc-600 group-hover:text-zinc-400" />
+        : <GitCompare className="h-3.5 w-3.5 text-zinc-500 group-hover:text-zinc-400" />
       }
     </button>
   )
@@ -253,7 +253,7 @@ function TokenProgress({ info }: { info: PropertyTokenInfo }) {
   const soldPct = tokenSoldPercent(info)
   return (
     <div>
-      <div className="mb-1.5 flex items-center justify-between text-[10px] text-zinc-600">
+      <div className="mb-1.5 flex items-center justify-between text-[10px] text-zinc-500">
         <span>{soldPct}% subscribed</span>
         {info.investorCount !== undefined && <span>{info.investorCount} investors</span>}
       </div>
@@ -365,7 +365,7 @@ function CardVariant({
         {/* ── Body ── */}
         <div className="relative flex flex-1 flex-col p-5">
           {/* Location */}
-          <div className="mb-1.5 flex items-center gap-1.5 text-[11px] text-zinc-600">
+          <div className="mb-1.5 flex items-center gap-1.5 text-[11px] text-zinc-500">
             <MapPin className="h-3 w-3 shrink-0" />
             {data.city}, {data.state}
           </div>
@@ -401,17 +401,17 @@ function CardVariant({
           {/* Price row */}
           <div className="flex items-end justify-between gap-2">
             <div>
-              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-700">List Price</p>
+              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-500">List Price</p>
               <p className="font-heading text-base font-extrabold tracking-[-0.03em] bg-gradient-to-r from-white via-white to-zinc-500 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
             </div>
             {data.isTokenized && data.tokenInfo && (
               <div className="text-right">
-                <p className="text-[10px] text-zinc-700">from</p>
+                <p className="text-[10px] text-zinc-500">from</p>
                 <p className="text-sm font-semibold text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.4)]">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
-                  <span className="text-[10px] font-normal text-zinc-600">/fraction</span>
+                  <span className="text-[10px] font-normal text-zinc-500">/fraction</span>
                 </p>
               </div>
             )}
@@ -497,7 +497,7 @@ function RowVariant({
             <h3 className="truncate font-heading text-sm font-extrabold tracking-[-0.02em] bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-zinc-500">
               {data.title}
             </h3>
-            <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-600">
+            <p className="mt-1 flex items-center gap-1.5 text-xs text-zinc-500">
               <MapPin className="h-3 w-3 shrink-0" />
               {data.city}, {data.state}
             </p>
@@ -521,14 +521,14 @@ function RowVariant({
         <div className="flex shrink-0 flex-col items-end justify-between py-0.5">
           <div className="flex items-start gap-2.5">
             <div className="text-right">
-              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-700">List Price</p>
+              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-500">List Price</p>
               <p className="font-heading text-base font-extrabold tracking-[-0.03em] bg-gradient-to-r from-white via-white to-zinc-500 bg-clip-text text-transparent">
                 {formatPrice(data.price)}
               </p>
               {data.isTokenized && data.tokenInfo && (
                 <p className="text-xs text-indigo-400 drop-shadow-[0_0_4px_rgba(99,102,241,0.4)]">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
-                  <span className="text-[10px] text-zinc-600">/fraction</span>
+                  <span className="text-[10px] text-zinc-500">/fraction</span>
                 </p>
               )}
             </div>
@@ -552,7 +552,7 @@ function RowVariant({
 
           {data.isTokenized && data.tokenInfo && (
             <div className="w-28 text-right">
-              <p className="mb-1 text-[10px] text-zinc-600">
+              <p className="mb-1 text-[10px] text-zinc-500">
                 {tokenSoldPercent(data.tokenInfo)}% subscribed
               </p>
               <div className="h-1 overflow-hidden rounded-full bg-white/[0.04]">

@@ -120,7 +120,7 @@ export default async function ExplorePage() {
                 <stat.icon className="h-4 w-4" />
               </div>
               <div>
-                <p className="text-[10px] font-medium tracking-wide text-zinc-600 uppercase">{stat.label}</p>
+                <p className="text-[10px] font-medium tracking-wide text-zinc-500 uppercase">{stat.label}</p>
                 <p className="text-lg font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-white to-zinc-500 tabular-nums">{stat.value}</p>
               </div>
             </div>
@@ -134,12 +134,12 @@ export default async function ExplorePage() {
         {featuredListings[0] && (
           <Link
             href={`/marketplace/${featuredListings[0].id}`}
-            className="group relative col-span-1 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_24px_64px_rgba(0,0,0,0.8),0_0_40px_rgba(139,92,246,0.06)] md:col-span-2"
+            className="group relative col-span-1 overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 backdrop-blur-3xl shadow-2xl transition-all duration-500 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_24px_64px_rgba(0,0,0,0.8),0_0_40px_rgba(139,92,246,0.06)] md:col-span-2"
           >
             {/* Noise texture overlay */}
             <div className="noise absolute inset-0 pointer-events-none" />
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.03] via-transparent to-blue-500/[0.02]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/[0.03] via-transparent to-violet-500/[0.02]" />
             {/* Top edge light */}
             <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/25 to-transparent group-hover:via-purple-500/40 transition-all duration-500" />
 
@@ -167,7 +167,7 @@ export default async function ExplorePage() {
                   </span>
                 )}
               </div>
-              <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/40 transition-colors duration-300 group-hover:text-white">
+              <div className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-white/60 transition-colors duration-300 group-hover:text-white">
                 View Property
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </div>
@@ -176,14 +176,14 @@ export default async function ExplorePage() {
         )}
 
         {/* ── Quick Categories — tall single col card ── */}
-        <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl">
+        <div className="relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 p-7 backdrop-blur-3xl shadow-2xl">
           {/* Noise texture overlay */}
           <div className="noise absolute inset-0 pointer-events-none" />
           {/* Top edge light */}
           <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-all duration-500" />
-          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/[0.05] blur-[50px]" />
+          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-violet-500/[0.05] blur-[50px]" />
           
-          <h3 className="relative z-10 mb-5 text-[10px] font-semibold tracking-wide text-zinc-600 uppercase">
+          <h3 className="relative z-10 mb-5 text-[10px] font-semibold tracking-wide text-zinc-500 uppercase">
             Categories
           </h3>
           <div className="relative z-10 space-y-3">
@@ -203,9 +203,9 @@ export default async function ExplorePage() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-white/90">{cat.label}</p>
-                  <p className="text-xs text-white/35">{cat.desc}</p>
+                  <p className="text-xs text-white/60">{cat.desc}</p>
                 </div>
-                <ArrowRight className="ml-auto h-3.5 w-3.5 shrink-0 text-white/20 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white/50" />
+                <ArrowRight className="ml-auto h-3.5 w-3.5 shrink-0 text-white/50 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-white/50" />
               </Link>
             ))}
           </div>
@@ -216,7 +216,7 @@ export default async function ExplorePage() {
           <Link
             key={listing.id}
             href={`/marketplace/${listing.id}`}
-            className="group relative overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/80 p-6 backdrop-blur-3xl shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_20px_48px_rgba(0,0,0,0.7)]"
+            className="group relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/80 p-6 backdrop-blur-3xl shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:border-white/15 hover:shadow-[0_20px_48px_rgba(0,0,0,0.7)]"
           >
             {/* Noise texture overlay */}
             <div className="noise absolute inset-0 pointer-events-none" />
@@ -240,7 +240,7 @@ export default async function ExplorePage() {
                 )}
               </div>
               <h4 className="mb-1 text-base font-semibold tracking-tight text-white/90 line-clamp-1">{listing.title}</h4>
-              <p className="mb-3 text-xs text-white/40">{listing.city}, {listing.state}</p>
+              <p className="mb-3 text-xs text-white/60">{listing.city}, {listing.state}</p>
               <p className="text-lg font-bold tracking-tight text-white tabular-nums">
                 ${listing.price.toLocaleString()}
               </p>
@@ -249,7 +249,7 @@ export default async function ExplorePage() {
         ))}
 
         {/* ── Why TIGI — Full width info card ── */}
-        <div className="relative col-span-1 overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-2xl md:col-span-2 lg:col-span-3">
+        <div className="relative col-span-1 overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-2xl md:col-span-2 lg:col-span-3">
           {/* Noise texture overlay */}
           <div className="noise absolute inset-0 pointer-events-none" />
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/20 to-transparent" />

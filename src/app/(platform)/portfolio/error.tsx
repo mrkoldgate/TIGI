@@ -27,12 +27,12 @@ export default function PortfolioError({
 
       <div className="space-y-2">
         <h1 className="text-lg font-semibold text-[#F5F5F7]">Portfolio unavailable</h1>
-        <p className="max-w-sm text-sm text-[#6B6B80]">
+        <p className="max-w-sm text-sm text-[#8E8E9C]">
           Something went wrong loading your portfolio. Your holdings are safe —
           this is a temporary issue.
         </p>
         {error.digest && (
-          <p className="text-[11px] text-[#3A3A4A]">Reference: {error.digest}</p>
+          <p className="text-[11px] text-[#6E6E7E]">Reference: {error.digest}</p>
         )}
       </div>
 

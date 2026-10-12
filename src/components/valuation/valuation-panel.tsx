@@ -78,8 +78,8 @@ function theme(assetType: 'property' | 'land') {
     subtleBg:     'bg-white/[0.04]',
     accentColor:  '#6366F1',
     accentMuted:  'rgba(99,102,241,0.08)',
-    labelColor:   'text-[#4A4A60]',
-    subLabelColor:'text-[#6B6B80]',
+    labelColor:   'text-[#7A7A8A]',
+    subLabelColor:'text-[#8E8E9C]',
     textPrimary:  'text-[#F5F5F7]',
     rangeBg:      'bg-white/[0.06]',
     confBarBg:    'bg-white/[0.06]',
@@ -164,7 +164,7 @@ function RangeBar({
           style={{ left: `${pinPct}%`, transform: 'translate(-50%, -50%)' }}
           title={`List price: ${fmtFull(listPrice)}`}
         >
-          <div className="h-4 w-0.5 bg-[#6B6B80]" />
+          <div className="h-4 w-0.5 bg-[#8E8E9C]" />
         </div>
       </div>
 
@@ -172,7 +172,7 @@ function RangeBar({
       <div className="mt-2 flex items-center justify-between text-[9px]">
         <span className={t.labelColor}>Conservative</span>
         <span className={cn('flex items-center gap-1', t.subLabelColor)}>
-          <span className="inline-block h-0.5 w-2 bg-[#6B6B80]" />
+          <span className="inline-block h-0.5 w-2 bg-[#8E8E9C]" />
           List ${(listPrice / 1000).toFixed(0)}K
         </span>
         <span className={t.labelColor}>Optimistic</span>

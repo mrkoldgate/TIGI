@@ -75,7 +75,7 @@ export default async function CompletePage() {
       <h1 className="font-heading text-3xl font-bold text-white md:text-4xl">
         Welcome to TIGI, {firstName}.
       </h1>
-      <p className="mt-3 text-sm leading-relaxed text-[#6B6B80]">
+      <p className="mt-3 text-sm leading-relaxed text-[#8E8E9C]">
         Your account is set up as a{' '}
         <span className="text-[#6366F1]">{roleCard?.label ?? userType}</span>.
         Here&apos;s what&apos;s ready for you.
@@ -100,7 +100,7 @@ export default async function CompletePage() {
             </div>
             <div>
               <p className="text-sm font-semibold text-white">Identity verification required</p>
-              <p className="mt-1 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-1 text-xs leading-relaxed text-[#8E8E9C]">
                 To invest in or sell tokenized properties, you&apos;ll need to complete a quick
                 KYC check. It takes about 5 minutes and is fully encrypted.
               </p>
@@ -114,7 +114,7 @@ export default async function CompletePage() {
             <KycStep label="Address proof" done={false} />
           </div>
 
-          <p className="mt-3 text-[10px] text-[#3A3A48]">
+          <p className="mt-3 text-[10px] text-[#6E6E7E]">
             KYC is powered by a regulated provider. Your data is never sold.
             Full compliance module available in the platform — coming in a future update.
           </p>
@@ -142,10 +142,10 @@ function KycStep({ label, done }: { label: string; done: boolean }) {
       className={
         done
           ? 'flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-[10px] text-emerald-400'
-          : 'flex items-center gap-1 rounded-full border border-white/[0.04] bg-[#050505] px-3 py-1 text-[10px] text-[#4A4A60]'
+          : 'flex items-center gap-1 rounded-full border border-white/[0.04] bg-[#050505] px-3 py-1 text-[10px] text-[#7A7A8A]'
       }
     >
-      <span className={done ? 'text-emerald-400' : 'text-[#3A3A48]'}>{done ? '✓' : '○'}</span>
+      <span className={done ? 'text-emerald-400' : 'text-[#6E6E7E]'}>{done ? '✓' : '○'}</span>
       {label}
     </span>
   )

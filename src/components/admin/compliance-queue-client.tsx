@@ -161,11 +161,11 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
       {/* ── Page header ───────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Administration
           </p>
           <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">Compliance</h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             KYC verification, listing reviews, inheritance submissions, and flagged anomalies.
           </p>
         </div>
@@ -213,7 +213,7 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
                 <p className={cn('font-heading text-lg font-semibold tabular-nums', isActive ? color : 'text-[#F5F5F7]')}>
                   {count}
                 </p>
-                <p className="text-[11px] text-[#6B6B80]">{label}</p>
+                <p className="text-[11px] text-[#8E8E9C]">{label}</p>
               </div>
             </button>
           )
@@ -236,7 +236,7 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
                 'inline-flex items-center gap-1.5 rounded border px-2.5 py-1 text-xs font-medium transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
                 isActive
                   ? 'border-white/[0.06] bg-white/[0.04] text-[#F5F5F7]'
-                  : 'border-white/[0.04] text-[#6B6B80] hover:border-white/[0.06] hover:text-[#A0A0B2]'
+                  : 'border-white/[0.04] text-[#8E8E9C] hover:border-white/[0.06] hover:text-[#A0A0B2]'
               )}
             >
               {dot && <span className={cn('h-1.5 w-1.5 rounded-full', dot)} />}
@@ -246,7 +246,7 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
         })}
 
         {/* Live count */}
-        <span className="ml-auto text-xs text-[#4A4A5E]">
+        <span className="ml-auto text-xs text-[#7A7A8A]">
           {filtered.length} of {items.length}
         </span>
       </div>
@@ -277,7 +277,7 @@ export function ComplianceQueueClient({ items: initialItems }: ComplianceQueueCl
         <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <div className="noise absolute inset-0 pointer-events-none" />
         <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-[#22C55E]" />
-        <p className="text-xs text-[#6B6B80]">
+        <p className="text-xs text-[#8E8E9C]">
           <span className="font-medium text-[#A0A0B2]">KYC Approve / Reject / Escalate</span>{' '}
           actions are live for submitted KYC verifications.{' '}
           Document viewer and full audit trail in{' '}

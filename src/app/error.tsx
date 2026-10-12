@@ -31,11 +31,11 @@ export default function RootError({
 
           <div className="max-w-sm space-y-2">
             <h1 className="text-xl font-semibold">Something went wrong</h1>
-            <p className="text-sm text-[#6B6B80]">
+            <p className="text-sm text-[#8E8E9C]">
               TIGI encountered an unexpected error. Please try again or return home.
             </p>
             {error.digest && (
-              <p className="pt-1 font-mono text-[11px] text-[#3A3A4A]">
+              <p className="pt-1 font-mono text-[11px] text-[#6E6E7E]">
                 {error.digest}
               </p>
             )}

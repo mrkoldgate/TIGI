@@ -29,7 +29,7 @@ function PerformanceMetric({ icon: Icon, label, value, iconColor, iconBg, subtex
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-xs text-zinc-500">{label}</p>
-        {subtext && <p className="text-[11px] text-zinc-700">{subtext}</p>}
+        {subtext && <p className="text-[11px] text-zinc-500">{subtext}</p>}
       </div>
       <span className="flex-shrink-0 font-heading text-base font-semibold tabular-nums text-white">
         {value}
@@ -91,9 +91,9 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
             className="flex items-center gap-3 rounded-lg border border-dashed border-white/[0.08] px-3 py-2"
           >
             <div className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg bg-white/[0.04]">
-              <Icon className="h-3.5 w-3.5 text-zinc-700" />
+              <Icon className="h-3.5 w-3.5 text-zinc-500" />
             </div>
-            <span className="flex-1 text-xs text-zinc-700">{label}</span>
+            <span className="flex-1 text-xs text-zinc-500">{label}</span>
             <span className="flex items-center gap-1 rounded border border-white/[0.08] bg-black/80 px-1.5 py-0.5 text-[10px] text-zinc-500">
               <span className="h-1.5 w-1.5 rounded-full bg-amber-500" />
               {milestone}
@@ -104,7 +104,7 @@ export function PerformancePanel({ stats, className }: PerformancePanelProps) {
 
       {/* AI listing tips teaser — M6 */}
       <div className="rounded-lg border border-dashed border-white/[0.08] p-3 text-center">
-        <p className="text-xs text-zinc-700">
+        <p className="text-xs text-zinc-500">
           AI listing optimisation recommendations arrive in{' '}
           <span className="text-zinc-500">Milestone 6</span>
         </p>

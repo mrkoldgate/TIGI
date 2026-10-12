@@ -57,7 +57,7 @@ const INTENT_CONFIG: Record<IntentType, { label: string; confirmText: string; co
   PREPARE_PURCHASE:  { label: 'Prepare Purchase',  confirmText: 'Confirm purchase intent',  color: '#6366F1' },
   PREPARE_LEASE:     { label: 'Prepare Lease',      confirmText: 'Confirm lease intent',      color: '#6366F1' },
   PREPARE_INVEST:    { label: 'Invest',             confirmText: 'Confirm investment intent', color: '#6366F1', icon: Zap },
-  EXPRESS_INTEREST:  { label: 'Express Interest',   confirmText: 'Submit interest',           color: '#6B6B80' },
+  EXPRESS_INTEREST:  { label: 'Express Interest',   confirmText: 'Submit interest',           color: '#8E8E9C' },
 }
 
 const INTENT_LABELS: Record<IntentType, string> = {
@@ -89,14 +89,14 @@ function SuccessCard({
         <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#22C55E]" />
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-[#F5F5F7]">{INTENT_LABELS[intentType]}</p>
-          <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
             Our team will review and reach out within 1–2 business days.
           </p>
-          <p className="mt-1 font-mono text-[10px] text-[#4A4A60]">ref: {intentId.slice(-8)}</p>
+          <p className="mt-1 font-mono text-[10px] text-[#7A7A8A]">ref: {intentId.slice(-8)}</p>
         </div>
         <button
           onClick={onDismiss}
-          className="flex-shrink-0 text-[#4A4A60] hover:text-[#6B6B80]"
+          className="flex-shrink-0 text-[#7A7A8A] hover:text-[#8E8E9C]"
           aria-label="Dismiss"
         >
           <X className="h-3.5 w-3.5" />
@@ -143,8 +143,8 @@ function ConfirmPanel({
   const bgClass     = theme === 'land' ? 'bg-[#0D110D]'     : 'bg-white/[0.03]'
   const inputClass  = theme === 'land'
     ? 'border-[#1E2D1E] bg-[#111A11] text-[#E8F0E8] placeholder-[#4A6A4A] focus:border-[#2A3A2A]'
-    : 'border-white/[0.08] bg-white/[0.04] text-[#F5F5F7] placeholder-[#4A4A60] focus:border-white/[0.10]'
-  const labelClass  = theme === 'land' ? 'text-[#5A7060]' : 'text-[#6B6B80]'
+    : 'border-white/[0.08] bg-white/[0.04] text-[#F5F5F7] placeholder-[#7A7A8A] focus:border-white/[0.10]'
+  const labelClass  = theme === 'land' ? 'text-[#5A7060]' : 'text-[#8E8E9C]'
 
   const handleSubmit = () => {
     const leaseDetails = pending.showLeaseDetails ? {
@@ -244,7 +244,7 @@ function ConfirmPanel({
       {pending.showOffer && (
         <div>
           <label className={cn('mb-1 block text-[11px]', labelClass)}>
-            Offer amount <span className="text-[#4A4A60]">(optional)</span>
+            Offer amount <span className="text-[#7A7A8A]">(optional)</span>
           </label>
           <input
             type="number"
@@ -263,7 +263,7 @@ function ConfirmPanel({
 
       <div>
         <label className={cn('mb-1 block text-[11px]', labelClass)}>
-          Note <span className="text-[#4A4A60]">(optional)</span>
+          Note <span className="text-[#7A7A8A]">(optional)</span>
         </label>
         <textarea
           rows={2}
@@ -298,7 +298,7 @@ function ConfirmPanel({
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          className="rounded-xl border border-white/[0.08] px-4 py-2.5 text-sm text-[#6B6B80] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] disabled:opacity-50 active:scale-[0.98]"
+          className="rounded-xl border border-white/[0.08] px-4 py-2.5 text-sm text-[#8E8E9C] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] disabled:opacity-50 active:scale-[0.98]"
         >
           Cancel
         </button>
@@ -450,7 +450,7 @@ export function IntentPanel({
         <button
           type="button"
           onClick={() => openIntent('EXPRESS_INTEREST')}
-          className="w-full rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#6B6B80] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] active:scale-[0.98]"
+          className="w-full rounded-xl border border-white/[0.08] py-2.5 text-sm font-medium text-[#8E8E9C] transition-all hover:border-white/[0.10] hover:text-[#A0A0B2] active:scale-[0.98]"
         >
           Express Interest
         </button>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   LayoutDashboard,
+  Store,
   Compass,
   TrendingUp,
   ArrowLeftRight,
@@ -11,7 +12,7 @@ import {
   Map,
   Landmark,
   Bell,
-  Lightbulb,
+  LineChart,
   Sparkles,
   Settings,
   ChevronLeft,
@@ -24,14 +25,12 @@ import { cn } from '@/lib/utils'
 import { useSavedListings } from '@/lib/saved/saved-context'
 
 // ---------------------------------------------------------------------------
-// Sidebar — Platform navigation
+// Sidebar — v5
 //
-// Nav vocabulary aligns with the public marketing nav (user-facing labels).
-// Routes map to actual Next.js app routes via (platform) group.
-//
-// Widths: 240px expanded | 64px icon-only collapsed
-// Mobile: overlay mode — full-width drawer over content, closable via backdrop
-// Active state: gold left indicator + gold text
+// Grouped like a bank app (Mercury / Revolut): mono group labels, calm rows,
+// one violet active state with a glowing rail. Cyan is kept for the single
+// "live" signal (devnet / private beta) at the bottom.
+// Widths: 248px expanded | 72px icon-only collapsed. Mobile: overlay drawer.
 // ---------------------------------------------------------------------------
 
 interface SidebarProps {
@@ -45,32 +44,60 @@ interface NavItem {
   href: string
   label: string
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>
-  milestone?: string
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/explore', label: 'Explore', icon: Compass },
-  { href: '/saved', label: 'Saved', icon: Heart },
-  { href: '/portfolio', label: 'Invest', icon: TrendingUp },
-  { href: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
-  { href: '/listings', label: 'My Properties', icon: Building2 },
-  { href: '/leasing', label: 'Land', icon: Map },
-  { href: '/inheritance', label: 'Legacy', icon: Landmark },
-  { href: '/notifications', label: 'Notifications', icon: Bell },
-  { href: '/insights', label: 'Insights', icon: Lightbulb, milestone: 'M5' },
+interface NavGroup {
+  label: string
+  items: NavItem[]
+}
+
+const NAV_GROUPS: NavGroup[] = [
+  {
+    label: 'Overview',
+    items: [
+      { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+      { href: '/notifications', label: 'Notifications', icon: Bell },
+    ],
+  },
+  {
+    label: 'Market',
+    items: [
+      { href: '/marketplace', label: 'Marketplace', icon: Store },
+      { href: '/explore', label: 'Explore', icon: Compass },
+      { href: '/saved', label: 'Saved', icon: Heart },
+    ],
+  },
+  {
+    label: 'Holdings',
+    items: [
+      { href: '/portfolio', label: 'Portfolio', icon: TrendingUp },
+      { href: '/transactions', label: 'Transactions', icon: ArrowLeftRight },
+    ],
+  },
+  {
+    label: 'Your assets',
+    items: [
+      { href: '/listings', label: 'My properties', icon: Building2 },
+      { href: '/leasing', label: 'Land', icon: Map },
+      { href: '/inheritance', label: 'Legacy', icon: Landmark },
+    ],
+  },
+  {
+    label: 'Intelligence',
+    items: [
+      { href: '/insights', label: 'Insights', icon: LineChart },
+      { href: '/assistant', label: 'Aria', icon: Sparkles },
+    ],
+  },
 ]
 
-const BOTTOM_NAV: NavItem[] = [
-  { href: '/assistant', label: 'Aria', icon: Sparkles },
-  { href: '/settings', label: 'Settings', icon: Settings },
-]
+const BOTTOM_NAV: NavItem[] = [{ href: '/settings', label: 'Settings', icon: Settings }]
 
 export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: SidebarProps) {
   const pathname = usePathname()
+  const isCollapsed = collapsed && !mobileOpen
 
-  const isActive = (href: string) =>
-    pathname === href || pathname.startsWith(`${href}/`)
+  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`)
 
   return (
     <>
@@ -85,89 +112,81 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.03] bg-black/80 backdrop-blur-3xl transition-all duration-200 shadow-[4px_0_60px_-8px_rgba(0,0,0,0.9),0_0_80px_rgba(99,102,241,0.02)]',
-          // Desktop: collapsed or expanded
-          collapsed ? 'md:w-16' : 'md:w-60',
-          // Mobile: full drawer when open, hidden when closed
-          'max-md:w-72',
+          'fixed inset-y-0 left-0 z-40 flex flex-col border-r border-white/[0.06] bg-[#030305]/85 backdrop-blur-2xl transition-[width,transform] duration-300 ease-out',
+          collapsed ? 'md:w-[72px]' : 'md:w-[248px]',
+          'max-md:w-[280px]',
           mobileOpen ? 'translate-x-0' : 'max-md:-translate-x-full'
         )}
       >
-        {/* Top atmospheric glow — Paragon depth */}
+        {/* Violet wash at the top, like light falling on glass */}
         <div
-          className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-indigo-600/[0.05] via-violet-600/[0.02] to-transparent"
+          className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(120%_70%_at_0%_0%,rgba(139,92,246,0.14),transparent_70%)]"
           aria-hidden="true"
         />
-        {/* Noise texture */}
-        <div className="noise pointer-events-none absolute inset-0" aria-hidden="true" />
 
         {/* Logo row */}
-        <div
-          className={cn(
-            'flex h-16 flex-shrink-0 items-center border-b border-white/[0.03] px-4',
-            collapsed && !mobileOpen ? 'md:justify-center' : 'gap-2.5'
-          )}
-        >
-          <Logo collapsed={collapsed && !mobileOpen} />
-
-          {/* Mobile close button */}
+        <div className={cn('relative flex h-[68px] flex-shrink-0 items-center px-5', isCollapsed && 'md:justify-center md:px-0')}>
+          <Logo collapsed={isCollapsed} />
           <button
             onClick={onMobileClose}
-            className="ml-auto flex h-8 w-8 items-center justify-center rounded-lg text-[#6B6B80] transition-colors hover:bg-white/5 hover:text-[#A0A0B2] md:hidden"
+            className="ml-auto flex h-9 w-9 items-center justify-center rounded-full text-[#8E8E9C] transition-colors hover:bg-white/[0.06] hover:text-white md:hidden"
             aria-label="Close menu"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
-        {/* Primary nav */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden py-4" aria-label="Platform navigation">
-          <ul className="space-y-0.5 px-2">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.href}>
-                <SidebarLink
-                  item={item}
-                  active={isActive(item.href)}
-                  collapsed={collapsed && !mobileOpen}
-                  onClick={onMobileClose}
-                />
-              </li>
-            ))}
-          </ul>
+        {/* Groups */}
+        <nav className="relative flex-1 overflow-y-auto overflow-x-hidden px-3 pb-4 pt-2" aria-label="Platform navigation">
+          {NAV_GROUPS.map((group, gi) => (
+            <div key={group.label} className={cn(gi > 0 && 'mt-5')}>
+              {isCollapsed ? (
+                gi > 0 && <div className="mx-auto mb-3 h-px w-6 bg-white/[0.08]" aria-hidden="true" />
+              ) : (
+                <p className="text-label mb-1.5 px-3 !text-[10px] !text-[#6E6E7E]">{group.label}</p>
+              )}
+              <ul className="space-y-0.5">
+                {group.items.map((item) => (
+                  <li key={item.href}>
+                    <SidebarLink item={item} active={isActive(item.href)} collapsed={isCollapsed} onClick={onMobileClose} />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </nav>
 
-        {/* Bottom nav */}
-        <div className="flex-shrink-0 border-t border-white/[0.03] py-3">
-          <ul className="space-y-0.5 px-2">
+        {/* Bottom */}
+        <div className="relative flex-shrink-0 border-t border-white/[0.06] px-3 py-3">
+          {!isCollapsed && (
+            <div className="mb-3 rounded-2xl border border-white/[0.06] bg-white/[0.02] px-3.5 py-3">
+              <p className="flex items-center gap-2 text-[12px] font-medium text-[#F5F5F7]">
+                <span className="live-dot" aria-hidden="true" />
+                Private beta
+              </p>
+              <p className="mt-1 text-[11.5px] leading-snug text-[#8E8E9C]">
+                Solana devnet. Listings and balances are sample data.
+              </p>
+            </div>
+          )}
+
+          <ul className="space-y-0.5">
             {BOTTOM_NAV.map((item) => (
               <li key={item.href}>
-                <SidebarLink
-                  item={item}
-                  active={isActive(item.href)}
-                  collapsed={collapsed && !mobileOpen}
-                  onClick={onMobileClose}
-                />
+                <SidebarLink item={item} active={isActive(item.href)} collapsed={isCollapsed} onClick={onMobileClose} />
               </li>
             ))}
           </ul>
 
-          {/* Desktop collapse toggle */}
           <button
             onClick={onToggle}
             className={cn(
-              'mt-2 hidden w-full items-center gap-2 rounded-lg px-3 py-2 text-xs text-[#6B6B80] transition-colors hover:bg-white/5 hover:text-[#A0A0B2] md:flex',
-              collapsed ? 'justify-center' : ''
+              'mt-1 hidden w-full items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] text-[#8E8E9C] transition-colors hover:bg-white/[0.04] hover:text-white md:flex',
+              collapsed && 'justify-center'
             )}
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            {collapsed ? (
-              <ChevronRight className="h-4 w-4" />
-            ) : (
-              <>
-                <ChevronLeft className="h-4 w-4" />
-                <span>Collapse</span>
-              </>
-            )}
+            {collapsed ? <ChevronRight className="h-4 w-4" /> : (<><ChevronLeft className="h-4 w-4" /><span>Collapse</span></>)}
           </button>
         </div>
       </aside>
@@ -176,72 +195,62 @@ export function Sidebar({ collapsed, mobileOpen, onToggle, onMobileClose }: Side
 }
 
 // ---------------------------------------------------------------------------
-// Individual sidebar link
+// Link row
 // ---------------------------------------------------------------------------
 
-interface SidebarLinkProps {
+function SidebarLink({
+  item,
+  active,
+  collapsed,
+  onClick,
+}: {
   item: NavItem
   active: boolean
   collapsed: boolean
   onClick?: () => void
-}
-
-function SidebarLink({ item, active, collapsed, onClick }: SidebarLinkProps) {
+}) {
   return (
     <Link
       href={item.href}
       title={collapsed ? item.label : undefined}
+      aria-current={active ? 'page' : undefined}
       onClick={onClick}
       className={cn(
-        'group relative flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all duration-300',
+        'group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] no-underline transition-all duration-300',
         active
-          ? 'bg-white/[0.05] text-white shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),0_0_24px_rgba(34,211,238,0.04)]'
-          : 'text-[#94A3B8] hover:bg-white/[0.03] hover:text-white',
-        collapsed ? 'justify-center' : ''
+          ? 'bg-[linear-gradient(90deg,rgba(139,92,246,0.2),rgba(139,92,246,0.04))] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),inset_0_0_0_1px_rgba(167,139,250,0.18),0_0_30px_-10px_rgba(139,92,246,0.8)]'
+          : 'text-[#B4B4C0] hover:bg-white/[0.04] hover:text-white',
+        collapsed && 'justify-center px-0'
       )}
     >
-      {/* Active left indicator */}
       {active && (
-        <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-cyan-400 shadow-[0_0_16px_rgba(34,211,238,0.8)]" />
+        <span
+          className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-violet-400 shadow-[0_0_14px_rgba(167,139,250,0.95)]"
+          aria-hidden="true"
+        />
       )}
-
-      {/* Icon */}
       <item.icon
         className={cn(
-          'h-4 w-4 flex-shrink-0 transition-colors',
-          active ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]' : 'text-[#64748B] group-hover:text-[#94A3B8]'
+          'h-[17px] w-[17px] flex-shrink-0 transition-colors duration-300',
+          active ? 'text-violet-300 drop-shadow-[0_0_8px_rgba(167,139,250,0.7)]' : 'text-[#7E7E8E] group-hover:text-violet-200'
         )}
       />
-
-      {/* Label + badge (milestone or saved count) */}
       {!collapsed && (
         <span className="flex flex-1 items-center justify-between">
-          <span className="font-medium tracking-tight">{item.label}</span>
-          {item.href === '/saved' ? (
-            <SavedCountBadge />
-          ) : item.milestone ? (
-            <span className="rounded border border-white/10 bg-black/40 px-1.5 py-0.5 text-[10px] text-[#94A3B8]">
-              {item.milestone}
-            </span>
-          ) : null}
+          <span className="font-medium tracking-[-0.005em]">{item.label}</span>
+          {item.href === '/saved' && <SavedCountBadge />}
         </span>
       )}
-
-      {/* Collapsed: saved dot indicator when count > 0 */}
       {collapsed && item.href === '/saved' && <SavedDotBadge />}
     </Link>
   )
 }
 
-// ---------------------------------------------------------------------------
-// Saved count badge — reads from context, renders only when count > 0
-// ---------------------------------------------------------------------------
-
 function SavedCountBadge() {
   const { savedCount } = useSavedListings()
   if (savedCount === 0) return null
   return (
-    <span className="rounded-full bg-rose-500/90 px-1.5 py-0.5 text-[10px] font-semibold leading-none text-white">
+    <span className="rounded-full bg-violet-500/20 px-1.5 py-0.5 font-mono text-[10px] font-medium leading-none text-violet-200 ring-1 ring-inset ring-violet-400/30">
       {savedCount > 99 ? '99+' : savedCount}
     </span>
   )
@@ -250,7 +259,5 @@ function SavedCountBadge() {
 function SavedDotBadge() {
   const { savedCount } = useSavedListings()
   if (savedCount === 0) return null
-  return (
-    <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-rose-500" />
-  )
+  return <span className="absolute right-3 top-2 h-1.5 w-1.5 rounded-full bg-violet-400 shadow-[0_0_8px_rgba(167,139,250,0.9)]" />
 }

@@ -133,7 +133,7 @@ function TypeCard({
           <p className={cn('text-sm font-medium', selected ? 'text-[#F5F5F7]' : 'text-[#A0A0B2]')}>
             {option.label}
           </p>
-          <p className="mt-0.5 text-[11px] leading-relaxed text-[#6B6B80]">
+          <p className="mt-0.5 text-[11px] leading-relaxed text-[#8E8E9C]">
             {option.description}
           </p>
         </div>
@@ -161,22 +161,22 @@ function SuccessCard({
 
       <div className="space-y-1">
         <p className="font-heading text-base font-semibold text-[#F5F5F7]">Inquiry sent</p>
-        <p className="text-sm text-[#6B6B80]">
+        <p className="text-sm text-[#8E8E9C]">
           {INQUIRY_TYPE_LABELS[inquiryType]} inquiry delivered to the listing owner.
           You'll be notified when they respond.
         </p>
       </div>
 
       <div className="w-full rounded-xl border border-white/[0.08] bg-white/[0.04] p-3 text-left">
-        <p className="text-[11px] font-medium uppercase tracking-wider text-[#4A4A60]">What happens next</p>
+        <p className="text-[11px] font-medium uppercase tracking-wider text-[#7A7A8A]">What happens next</p>
         <ul className="mt-2 space-y-1.5">
           {[
             'The owner receives your message in their TIGI inbox.',
             'Most owners respond within 48 hours.',
             "You'll see their reply in your dashboard under My Inquiries.",
           ].map((step) => (
-            <li key={step} className="flex items-start gap-2 text-[11px] text-[#6B6B80]">
-              <ChevronRight className="mt-0.5 h-3 w-3 shrink-0 text-[#3A3A4A]" />
+            <li key={step} className="flex items-start gap-2 text-[11px] text-[#8E8E9C]">
+              <ChevronRight className="mt-0.5 h-3 w-3 shrink-0 text-[#6E6E7E]" />
               {step}
             </li>
           ))}
@@ -284,14 +284,14 @@ export function InquiryModal({
             </div>
             <div>
               <p className="text-sm font-semibold text-[#F5F5F7]">Make an Inquiry</p>
-              <p className="max-w-[200px] truncate text-[11px] text-[#6B6B80]">{propertyTitle}</p>
+              <p className="max-w-[200px] truncate text-[11px] text-[#8E8E9C]">{propertyTitle}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close"
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#6B6B80] transition hover:bg-white/[0.04] hover:text-[#A0A0B2]"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#8E8E9C] transition hover:bg-white/[0.04] hover:text-[#A0A0B2]"
           >
             <X className="h-4 w-4" />
           </button>
@@ -305,7 +305,7 @@ export function InquiryModal({
             <div className="space-y-4">
               {/* Type selector */}
               <div>
-                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+                <p className="mb-2 text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
                   What's your inquiry about?
                 </p>
                 <div className="space-y-2">
@@ -322,7 +322,7 @@ export function InquiryModal({
 
               {/* Message */}
               <div>
-                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+                <label className="mb-1.5 block text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
                   Your message
                 </label>
                 <textarea
@@ -334,7 +334,7 @@ export function InquiryModal({
                   }}
                   rows={4}
                   placeholder="Share what you'd like to know, your timeline, or any specific requirements…"
-                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 text-sm text-[#F5F5F7] placeholder-[#3A3A4A] outline-none transition focus:border-indigo-500/40 focus:ring-1 focus:ring-indigo-500/20"
+                  className="w-full resize-none rounded-xl border border-white/[0.08] bg-white/[0.04] px-3.5 py-3 text-sm text-[#F5F5F7] placeholder-[#6E6E7E] outline-none transition focus:border-indigo-500/40 focus:ring-1 focus:ring-indigo-500/20"
                 />
                 <div className="mt-1 flex items-center justify-between">
                   {error ? (
@@ -342,14 +342,14 @@ export function InquiryModal({
                   ) : (
                     <span />
                   )}
-                  <p className={cn('ml-auto text-[11px]', charNearMax ? 'text-rose-400' : 'text-[#3A3A4A]')}>
+                  <p className={cn('ml-auto text-[11px]', charNearMax ? 'text-rose-400' : 'text-[#6E6E7E]')}>
                     {charCount}/{charMax}
                   </p>
                 </div>
               </div>
 
               {/* Trust note */}
-              <p className="text-[11px] leading-relaxed text-[#3A3A4A]">
+              <p className="text-[11px] leading-relaxed text-[#6E6E7E]">
                 Your message is sent directly to the listing owner and logged securely on TIGI.
                 We do not share your contact details without your consent.
               </p>
@@ -362,7 +362,7 @@ export function InquiryModal({
                 className={cn(
                   'flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
                   loading || message.trim().length < 10
-                    ? 'cursor-not-allowed bg-white/[0.04] text-[#3A3A4A]'
+                    ? 'cursor-not-allowed bg-white/[0.04] text-[#6E6E7E]'
                     : 'bg-indigo-500 text-white hover:bg-indigo-600 shadow-[0_0_20px_rgba(99,102,241,0.15)]',
                 )}
               >

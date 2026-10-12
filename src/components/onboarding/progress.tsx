@@ -39,7 +39,7 @@ export function OnboardingProgress() {
                       'border-indigo-500/40 bg-indigo-500/15 text-indigo-400',
                     isActive &&
                       'border-indigo-500 bg-indigo-500 text-white shadow-[0_0_12px_rgba(99,102,241,0.3)]',
-                    isPending && 'border-white/[0.08] bg-transparent text-[#3A3A48]',
+                    isPending && 'border-white/[0.08] bg-transparent text-[#6E6E7E]',
                   )}
                 >
                   {isCompleted ? (
@@ -52,8 +52,8 @@ export function OnboardingProgress() {
                   className={cn(
                     'hidden text-[10px] font-medium sm:block',
                     isActive && 'text-indigo-400',
-                    isCompleted && 'text-[#6B6B80]',
-                    isPending && 'text-[#6B6B80]/50',
+                    isCompleted && 'text-[#8E8E9C]',
+                    isPending && 'text-[#8E8E9C]/50',
                   )}
                 >
                   {step.label}

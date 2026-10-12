@@ -87,7 +87,7 @@ function QueueBadge({ daysInQueue, priority }: { daysInQueue: number; priority: 
         'rounded px-1.5 py-0.5 text-[11px] font-semibold tabular-nums',
         priority === 'CRITICAL' ? 'bg-[#EF4444]/15 text-[#EF4444]' :
         priority === 'HIGH'     ? 'bg-[#F59E0B]/10 text-[#F59E0B]' :
-                                  'bg-white/[0.04] text-[#6B6B80]'
+                                  'bg-white/[0.04] text-[#8E8E9C]'
       )}
     >
       {label}
@@ -111,7 +111,7 @@ interface ComplianceQueueProps {
 export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningId }: ComplianceQueueProps) {
   if (items.length === 0) {
     return (
-      <div className="flex items-center justify-center rounded-xl border border-white/[0.04] bg-[#050505] py-16 text-sm text-[#6B6B80]">
+      <div className="flex items-center justify-center rounded-xl border border-white/[0.04] bg-[#050505] py-16 text-sm text-[#8E8E9C]">
         No items match the current filters.
       </div>
     )
@@ -128,7 +128,7 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
               {['Type', 'Subject', 'Notes', 'Docs', 'Queue', 'Status', ''].map((h) => (
                 <th
                   key={h}
-                  className="px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]"
+                  className="px-4 py-2.5 text-left text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]"
                 >
                   {h}
                 </th>
@@ -166,20 +166,20 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
                       {item.subjectLabel}
                     </p>
                     {item.subjectMeta && (
-                      <p className="text-[10px] text-[#6B6B80]">{item.subjectMeta}</p>
+                      <p className="text-[10px] text-[#8E8E9C]">{item.subjectMeta}</p>
                     )}
                     {item.subjectCountry && (
-                      <p className="text-[10px] text-[#4A4A5E]">{item.subjectCountry}</p>
+                      <p className="text-[10px] text-[#7A7A8A]">{item.subjectCountry}</p>
                     )}
                   </td>
 
                   {/* Notes */}
                   <td className="px-4 py-3">
-                    <p className="max-w-[240px] truncate text-xs text-[#6B6B80]">
+                    <p className="max-w-[240px] truncate text-xs text-[#8E8E9C]">
                       {item.notes}
                     </p>
                     {item.assignedTo && (
-                      <p className="text-[10px] text-[#4A4A5E]">→ {item.assignedTo}</p>
+                      <p className="text-[10px] text-[#7A7A8A]">→ {item.assignedTo}</p>
                     )}
                   </td>
 
@@ -191,7 +191,7 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
                         {item.documentCount}
                       </span>
                     ) : (
-                      <span className="text-xs text-[#4A4A5E]">—</span>
+                      <span className="text-xs text-[#7A7A8A]">—</span>
                     )}
                   </td>
 
@@ -283,14 +283,14 @@ export function ComplianceQueue({ items, onKycAction, onLegacyAction, actioningI
                 {/* Subject */}
                 <p className="mt-1 truncate text-sm font-medium text-[#F5F5F7]">{item.subjectLabel}</p>
                 {item.subjectMeta && (
-                  <p className="text-[10px] text-[#6B6B80]">{item.subjectMeta}</p>
+                  <p className="text-[10px] text-[#8E8E9C]">{item.subjectMeta}</p>
                 )}
 
                 {/* Notes */}
-                <p className="mt-0.5 line-clamp-2 text-xs text-[#6B6B80]">{item.notes}</p>
+                <p className="mt-0.5 line-clamp-2 text-xs text-[#8E8E9C]">{item.notes}</p>
 
                 {/* Footer row */}
-                <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[11px] text-[#4A4A5E]">
+                <div className="mt-1.5 flex flex-wrap items-center gap-2 text-[11px] text-[#7A7A8A]">
                   {item.documentCount !== undefined && (
                     <span className="flex items-center gap-0.5">
                       <FileText className="h-3 w-3" />
@@ -378,8 +378,8 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         <CheckCircle2 className="h-3.5 w-3.5" />
@@ -393,8 +393,8 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         <XCircle className="h-3.5 w-3.5" />
@@ -408,8 +408,8 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         <RefreshCw className="h-3.5 w-3.5" />
@@ -423,12 +423,12 @@ function KycActionButtons({ item, onKycAction, actioning, compact }: KycActionBu
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#FB923C]/40 hover:text-[#FB923C] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#FB923C]/40 hover:text-[#FB923C] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         {actioning
-          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
+          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#8E8E9C] border-t-transparent" />
           : <ChevronsUp className="h-3.5 w-3.5" />}
       </button>
     </div>
@@ -480,8 +480,8 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#4ADE80]/40 hover:text-[#4ADE80] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         <CheckCircle2 className="h-3.5 w-3.5" />
@@ -495,8 +495,8 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#EF4444]/40 hover:text-[#EF4444] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         <XCircle className="h-3.5 w-3.5" />
@@ -510,12 +510,12 @@ function LegacyActionButtons({ item, onLegacyAction, actioning, compact }: Legac
         className={cn(
           'flex h-6 w-6 items-center justify-center rounded border border-white/[0.04] transition-all',
           live && !actioning
-            ? 'text-[#3A3A4A] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
-            : 'cursor-not-allowed text-[#3A3A4A] opacity-20',
+            ? 'text-[#6E6E7E] hover:border-[#F59E0B]/40 hover:text-[#F59E0B] hover:opacity-100 opacity-40'
+            : 'cursor-not-allowed text-[#6E6E7E] opacity-20',
         )}
       >
         {actioning
-          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#6B6B80] border-t-transparent" />
+          ? <span className="h-3 w-3 animate-spin rounded-full border border-[#8E8E9C] border-t-transparent" />
           : <RefreshCw className="h-3.5 w-3.5" />}
       </button>
     </div>

@@ -69,7 +69,7 @@ interface FlaggedItemsProps {
 export function FlaggedItems({ items }: FlaggedItemsProps) {
   if (items.length === 0) {
     return (
-      <div className="flex items-center justify-center py-10 text-sm text-[#6B6B80]">
+      <div className="flex items-center justify-center py-10 text-sm text-[#8E8E9C]">
         No flagged items. All clear.
       </div>
     )
@@ -109,10 +109,10 @@ export function FlaggedItems({ items }: FlaggedItemsProps) {
                 >
                   {item.severity}
                 </span>
-                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
                   {typeInfo.label}
                 </span>
-                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#6B6B80]">
+                <span className="rounded border border-white/[0.04] bg-[#0A0A0F] px-1.5 py-0.5 text-[10px] text-[#8E8E9C]">
                   {formatSource(item.flaggedBy)}
                 </span>
               </div>
@@ -123,13 +123,13 @@ export function FlaggedItems({ items }: FlaggedItemsProps) {
               </p>
 
               {/* Reason */}
-              <p className="mt-0.5 text-xs leading-relaxed text-[#6B6B80]">
+              <p className="mt-0.5 text-xs leading-relaxed text-[#8E8E9C]">
                 {item.reason}
               </p>
 
               {/* Footer */}
               <div className="mt-2 flex items-center justify-between gap-2">
-                <span className="text-[11px] text-[#4A4A5E]">
+                <span className="text-[11px] text-[#7A7A8A]">
                   {formatAdminRelative(item.flaggedAt)}
                 </span>
                 <Link

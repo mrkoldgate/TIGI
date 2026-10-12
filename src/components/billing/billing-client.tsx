@@ -143,7 +143,7 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
       {/* Billing toggle */}
       <div>
         <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Plans
           </h2>
           <BillingToggle annual={annual} onToggle={setAnnual} />
@@ -167,7 +167,7 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
       {/* Feature comparison footnote */}
       <div className="relative rounded-xl border border-white/[0.06] bg-white/[0.03] px-5 py-4">
         <div className="noise absolute inset-0 pointer-events-none" />
-        <p className="text-xs text-[#4A4A5E]">
+        <p className="text-xs text-[#7A7A8A]">
           All plans include access to the TIGI marketplace, property detail pages, and basic AI
           valuation estimates. Premium features unlock deeper intelligence and are billed monthly or
           annually. Cancel anytime. No long-term contracts.
@@ -179,7 +179,7 @@ export function BillingClient({ currentTier, endsAt, isMockMode }: BillingClient
         <div className="relative flex items-start gap-3 rounded-xl border border-white/[0.08] bg-black/80 px-4 py-3">
           <div className="noise absolute inset-0 pointer-events-none" />
           <span className="mt-0.5 h-2 w-2 flex-shrink-0 rounded-full bg-[#F59E0B]" />
-          <p className="text-xs text-[#6B6B80]">
+          <p className="text-xs text-[#8E8E9C]">
             <span className="font-medium text-[#9999AA]">Demo mode.</span>{' '}
             Billing is simulated — no payment is required. Upgrading will instantly change your plan.
             Set <code className="rounded bg-white/[0.04] px-1 font-mono text-[10px]">BILLING_PROVIDER=stripe</code> to
@@ -207,7 +207,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(false)}
         className={`text-xs font-medium transition-colors ${
-          !annual ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]'
+          !annual ? 'text-[#F5F5F7]' : 'text-[#8E8E9C] hover:text-[#A0A0B2]'
         }`}
       >
         Monthly
@@ -230,7 +230,7 @@ function BillingToggle({
       <button
         onClick={() => onToggle(true)}
         className={`flex items-center gap-1.5 text-xs font-medium transition-colors ${
-          annual ? 'text-[#F5F5F7]' : 'text-[#6B6B80] hover:text-[#A0A0B2]'
+          annual ? 'text-[#F5F5F7]' : 'text-[#8E8E9C] hover:text-[#A0A0B2]'
         }`}
       >
         Annual

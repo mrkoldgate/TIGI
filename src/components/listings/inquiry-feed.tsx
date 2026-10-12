@@ -74,12 +74,12 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
   if (inquiries.length === 0) {
     return (
       <div className={cn('flex flex-col items-center gap-3 py-10 text-center', className)}>
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-zinc-700">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-zinc-500">
           <MessageSquare className="h-5 w-5" />
         </div>
         <div>
           <p className="text-sm text-zinc-500">No inquiries yet.</p>
-          <p className="mt-0.5 text-xs text-zinc-700">Once your listings go live, messages will appear here.</p>
+          <p className="mt-0.5 text-xs text-zinc-500">Once your listings go live, messages will appear here.</p>
         </div>
       </div>
     )
@@ -158,7 +158,7 @@ export function InquiryFeed({ inquiries, className }: InquiryFeedProps) {
       })}
 
       {/* Full inbox CTA — M6 */}
-      <p className="pt-2 text-center text-[11px] text-zinc-700">
+      <p className="pt-2 text-center text-[11px] text-zinc-500">
         Reply threading and read receipts in{' '}
         <span className="text-zinc-500">Milestone 6</span>
       </p>

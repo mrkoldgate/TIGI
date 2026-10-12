@@ -198,7 +198,7 @@ export function WalletPreparationPanel({
             Interest recorded on Solana
           </p>
         </div>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           Your fractional economic interest record has been confirmed on the Solana blockchain.
           Our team will reach out within 1–2 business days.
         </p>
@@ -211,7 +211,7 @@ export function WalletPreparationPanel({
           <ExternalLink className="h-3 w-3" />
           View on Solana Explorer
         </a>
-        <p className="font-mono text-[10px] text-[#4A4A60]">
+        <p className="font-mono text-[10px] text-[#7A7A8A]">
           sig: {confirmed.signature.slice(0, 16)}…
         </p>
       </div>
@@ -227,7 +227,7 @@ export function WalletPreparationPanel({
         className,
       )}>
         <div className="flex items-center gap-2">
-          <Wallet className="h-4 w-4 text-[#6B6B80]" />
+          <Wallet className="h-4 w-4 text-[#8E8E9C]" />
           <p className="text-sm font-medium text-[#A0A0B2]">
             Wallet signature required
           </p>
@@ -235,7 +235,7 @@ export function WalletPreparationPanel({
 
         {walletMode === 'custodial' ? (
           <>
-            <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+            <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
               Your transaction is ready to sign. Connect a Phantom or Solflare wallet to sign
               directly. Server-assisted signing for your platform wallet is coming in a future update.
             </p>
@@ -249,7 +249,7 @@ export function WalletPreparationPanel({
             </button>
           </>
         ) : (
-          <p className="text-[11px] text-[#6B6B80]">
+          <p className="text-[11px] text-[#8E8E9C]">
             No wallet found. Please set up your wallet in Settings.
           </p>
         )}
@@ -269,7 +269,7 @@ export function WalletPreparationPanel({
           <AlertTriangle className="h-3.5 w-3.5 text-[#F59E0B]" />
           <p className="text-sm font-medium text-[#F59E0B]">Preparation window expired</p>
         </div>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           Solana transactions embed a recent block reference that expires after ~90 seconds.
           This is a network-level safety mechanism — not an error. Refresh to generate a fresh
           transaction and continue signing.
@@ -311,7 +311,7 @@ export function WalletPreparationPanel({
       {/* What will happen */}
       <div className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
         <p className="text-[11px] font-medium text-[#A0A0B2]">What this signs</p>
-        <p className="mt-0.5 text-[11px] text-[#6B6B80]">
+        <p className="mt-0.5 text-[11px] text-[#8E8E9C]">
           A digital record of your fractional economic interest will be written to the
           Solana blockchain. No funds are transferred at this step.
         </p>
@@ -319,14 +319,14 @@ export function WalletPreparationPanel({
 
       {/* Wallet info */}
       <div className="flex items-center justify-between text-[11px]">
-        <span className="text-[#4A4A60]">Signing with</span>
+        <span className="text-[#7A7A8A]">Signing with</span>
         <span className="font-medium text-[#A0A0B2]">{walletLabel}</span>
       </div>
 
       {/* Program + network */}
       <div className="flex items-center justify-between text-[11px]">
-        <span className="text-[#4A4A60]">Program</span>
-        <span className="font-mono text-[#6B6B80]">{getProgramInfo(preparation.program).displayName}</span>
+        <span className="text-[#7A7A8A]">Program</span>
+        <span className="font-mono text-[#8E8E9C]">{getProgramInfo(preparation.program).displayName}</span>
       </div>
 
       {/* Signer mismatch warning */}
@@ -385,7 +385,7 @@ export function WalletPreparationPanel({
         )}
       </button>
 
-      <p className="text-[10px] leading-relaxed text-[#4A4A60]">
+      <p className="text-[10px] leading-relaxed text-[#7A7A8A]">
         Your wallet will open to confirm. No funds are transferred at this step.
         A nominal network fee (~0.000005 SOL) applies.
       </p>

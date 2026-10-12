@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { cn } from '@/lib/utils'
 
 // ---------------------------------------------------------------------------
-// Logo — TIGI wordmark in wide-set Archivo with a gold hairline mark.
+// Logo — TIGI wordmark in wide-set Archivo with a violet glass mark.
 // Collapsed mode shows the mark only (sidebar).
 // ---------------------------------------------------------------------------
 
@@ -20,7 +20,7 @@ export function Logo({ collapsed = false, href = '/', className }: LogoProps) {
       aria-label="TIGI — Home"
     >
       <span
-        className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[6px] border border-[#6366F1]/70 font-display text-[13px] font-[560] text-[#6366F1]"
+        className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-[8px] border border-violet-300/40 bg-[linear-gradient(160deg,rgba(143,130,250,0.35),rgba(90,66,230,0.15))] font-display text-[13px] font-[600] text-violet-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_0_18px_-4px_rgba(139,92,246,0.8)]"
         style={{ fontStretch: '112%' }}
         aria-hidden="true"
       >

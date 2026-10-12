@@ -35,7 +35,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
       return (
         <div className="space-y-2">
           {block.title && (
-            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#6B6B80]">
+            <p className="text-[11px] font-semibold uppercase tracking-widest text-[#8E8E9C]">
               {block.title}
             </p>
           )}
@@ -60,7 +60,7 @@ function ContentBlockRenderer({ block }: { block: ContentBlock }) {
         >
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium text-[#F5F5F7]">{block.title}</p>
-            <p className="text-xs text-[#6B6B80]">{block.location}</p>
+            <p className="text-xs text-[#8E8E9C]">{block.location}</p>
             {block.price !== null && (
               <p className="mt-0.5 text-xs font-semibold text-indigo-400">
                 {formatCurrency(block.price, { compact: true })}
@@ -157,7 +157,7 @@ function TypingIndicator() {
         {[0, 150, 300].map((delay) => (
           <span
             key={delay}
-            className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#6B6B80]"
+            className="h-1.5 w-1.5 animate-bounce rounded-full bg-[#8E8E9C]"
             style={{ animationDelay: `${delay}ms` }}
           />
         ))}
@@ -185,7 +185,7 @@ function EmptyState({ onSuggestion }: { onSuggestion: (text: string) => void }) 
 
       {/* Suggestion chips */}
       <div className="space-y-1.5">
-        <p className="text-[11px] font-medium uppercase tracking-widest text-[#4A4A5E]">
+        <p className="text-[11px] font-medium uppercase tracking-widest text-[#7A7A8A]">
           Try asking
         </p>
         <div className="flex flex-col gap-1.5">
@@ -235,7 +235,7 @@ function InputBar({ value, onChange, onSend, disabled, showDisclaimer = true, cl
           onKeyDown={handleKeyDown}
           placeholder="Ask Aria anything..."
           disabled={disabled}
-          className="flex-1 bg-transparent text-sm text-[#F5F5F7] placeholder:text-[#4A4A5E] focus:outline-none disabled:opacity-50"
+          className="flex-1 bg-transparent text-sm text-[#F5F5F7] placeholder:text-[#7A7A8A] focus:outline-none disabled:opacity-50"
         />
         <button
           onClick={onSend}
@@ -247,7 +247,7 @@ function InputBar({ value, onChange, onSend, disabled, showDisclaimer = true, cl
         </button>
       </div>
       {showDisclaimer && (
-        <p className="mt-2 text-center text-[10px] text-[#3A3A4A]">
+        <p className="mt-2 text-center text-[10px] text-[#6E6E7E]">
           Aria provides general guidance · Not financial or legal advice
         </p>
       )}
@@ -349,7 +349,7 @@ function PanelHeader({
         >
           Aria
         </p>
-        <p className="text-[10px] text-[#4A4A5E]">
+        <p className="text-[10px] text-[#7A7A8A]">
           {variant === 'panel'
             ? 'TIGI Advisor'
             : 'Your TIGI advisor — ask about listings, investments, or platform features'}
@@ -362,7 +362,7 @@ function PanelHeader({
           <button
             onClick={onClear}
             title="Clear conversation"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#4A4A5E] transition-colors hover:bg-white/[0.04] hover:text-[#6B6B80]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#7A7A8A] transition-colors hover:bg-white/[0.04] hover:text-[#8E8E9C]"
           >
             <Trash2 className="h-3.5 w-3.5" />
           </button>
@@ -371,7 +371,7 @@ function PanelHeader({
           <button
             onClick={onClose}
             aria-label="Close Aria"
-            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#6B6B80] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2]"
+            className="flex h-8 w-8 items-center justify-center rounded-lg text-[#8E8E9C] transition-colors hover:bg-white/[0.04] hover:text-[#A0A0B2]"
           >
             <X className="h-4 w-4" />
           </button>

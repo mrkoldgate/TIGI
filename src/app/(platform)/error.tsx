@@ -31,11 +31,11 @@ export default function PlatformError({
 
       <div className="max-w-sm space-y-2">
         <h1 className="text-lg font-semibold text-[#F5F5F7]">Something went wrong</h1>
-        <p className="text-sm text-[#6B6B80]">
+        <p className="text-sm text-[#8E8E9C]">
           An unexpected error occurred. Your data is safe — this is a temporary issue on our end.
         </p>
         {error.digest && (
-          <p className="pt-1 text-[11px] text-[#3A3A4A]">
+          <p className="pt-1 text-[11px] text-[#6E6E7E]">
             Reference: {error.digest}
           </p>
         )}

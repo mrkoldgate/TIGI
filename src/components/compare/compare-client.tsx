@@ -46,7 +46,7 @@ const PROPERTY_TYPE_LABELS: Record<PropertyType, string> = {
 
 const TYPE_BADGE: Record<PropertyType, string> = {
   RESIDENTIAL: 'bg-black/90 text-[#A0A0B2] ring-white/[0.08]',
-  COMMERCIAL:  'bg-[#3B82F6]/15 text-[#60A5FA] ring-[#3B82F6]/25',
+  COMMERCIAL:  'bg-[#8B5CF6]/15 text-[#A78BFA] ring-[#8B5CF6]/25',
   LAND:        'bg-[#22C55E]/15 text-[#4ADE80] ring-[#22C55E]/25',
   INDUSTRIAL:  'bg-[#F59E0B]/15 text-[#FCD34D] ring-[#F59E0B]/25',
   MIXED_USE:   'bg-indigo-500/15 text-indigo-400 ring-indigo-500/25',
@@ -65,7 +65,7 @@ function SectionRow({ label, cols }: { label: string; cols: number }) {
       className="col-span-full grid border-t border-white/[0.06] bg-white/[0.03] px-4 py-2.5"
       style={{ gridTemplateColumns: `1fr repeat(${cols}, 1fr)` }}
     >
-      <p className="col-span-full text-[10px] font-semibold uppercase tracking-widest text-[#4A4A60]">
+      <p className="col-span-full text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
         {label}
       </p>
     </div>
@@ -90,13 +90,13 @@ function DataRow({
       )}
       style={{ gridTemplateColumns: `180px repeat(${values.length}, 1fr)` }}
     >
-      <span className="self-start text-xs text-[#6B6B80]">{label}</span>
+      <span className="self-start text-xs text-[#8E8E9C]">{label}</span>
       {values.map((v, i) => (
         <span
           key={i}
           className={cn(
             'self-start text-sm font-medium',
-            v == null    ? 'text-[#3A3A48]'  : 'text-[#F5F5F7]',
+            v == null    ? 'text-[#6E6E7E]'  : 'text-[#F5F5F7]',
             i === highlight && v != null && 'text-indigo-400',
           )}
         >
@@ -175,7 +175,7 @@ function PropertyHeader({
         <h3 className="font-heading text-sm font-semibold leading-snug text-[#F5F5F7] line-clamp-2">
           {listing.title}
         </h3>
-        <p className="mt-1 flex items-center gap-1 text-xs text-[#6B6B80]">
+        <p className="mt-1 flex items-center gap-1 text-xs text-[#8E8E9C]">
           <MapPin className="h-3 w-3 shrink-0" />
           {listing.city}, {listing.state}
         </p>
@@ -183,14 +183,14 @@ function PropertyHeader({
 
       {/* Price */}
       <div>
-        <p className="text-[10px] uppercase tracking-widest text-[#4A4A60]">List Price</p>
+        <p className="text-[10px] uppercase tracking-widest text-[#7A7A8A]">List Price</p>
         <p className="font-heading text-xl font-bold text-white">
           {formatPrice(listing.price)}
         </p>
         {listing.isTokenized && listing.tokenPricePerFraction && (
           <p className="text-xs text-indigo-400">
             from ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-[10px] text-[#6B6B80]">/fraction</span>
+            <span className="text-[10px] text-[#8E8E9C]">/fraction</span>
           </p>
         )}
       </div>
@@ -198,7 +198,7 @@ function PropertyHeader({
       {/* Token progress */}
       {listing.isTokenized && listing.tokenTotalSupply && (
         <div className="space-y-1">
-          <div className="flex items-center justify-between text-[10px] text-[#6B6B80]">
+          <div className="flex items-center justify-between text-[10px] text-[#8E8E9C]">
             <span>{soldPct}% subscribed</span>
             <span className="flex items-center gap-1">
               <Users className="h-2.5 w-2.5" />
@@ -245,20 +245,20 @@ function FeaturesRow({ listings }: { listings: MockListing[] }) {
       className="col-span-full grid border-t border-white/[0.06] px-4 py-3"
       style={{ gridTemplateColumns: `180px repeat(${listings.length}, 1fr)` }}
     >
-      <span className="pt-1 text-xs text-[#6B6B80]">Highlights</span>
+      <span className="pt-1 text-xs text-[#8E8E9C]">Highlights</span>
       {listings.map((l) => (
         <div key={l.id} className="flex flex-wrap gap-1.5">
           {l.features.slice(0, 4).map((f) => (
             <span
               key={f}
-              className="inline-flex items-center gap-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1 text-[10px] text-[#6B6B80] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+              className="inline-flex items-center gap-1 rounded-md border border-white/[0.08] bg-white/[0.04] px-2 py-1 text-[10px] text-[#8E8E9C] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
             >
               <Check className="h-2.5 w-2.5 shrink-0 text-indigo-400" />
               {f}
             </span>
           ))}
           {l.features.length > 4 && (
-            <span className="text-[10px] text-[#4A4A60]">+{l.features.length - 4} more</span>
+            <span className="text-[10px] text-[#7A7A8A]">+{l.features.length - 4} more</span>
           )}
         </div>
       ))}
@@ -283,7 +283,7 @@ export function CompareClient({ listings }: CompareClientProps) {
         <p className="font-heading text-lg font-semibold text-[#F5F5F7]">
           Select at least 2 properties to compare
         </p>
-        <p className="max-w-sm text-sm text-[#6B6B80]">
+        <p className="max-w-sm text-sm text-[#8E8E9C]">
           Browse the marketplace and use the compare button on property cards to build your comparison.
         </p>
         <Link
@@ -313,19 +313,19 @@ export function CompareClient({ listings }: CompareClientProps) {
       <div className="mb-6 flex items-center gap-4">
         <Link
           href="/marketplace"
-          className="flex items-center gap-1.5 text-xs text-[#6B6B80] transition-colors hover:text-[#A0A0B2]"
+          className="flex items-center gap-1.5 text-xs text-[#8E8E9C] transition-colors hover:text-[#A0A0B2]"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
           Marketplace
         </Link>
-        <span className="text-[#3A3A48]">/</span>
+        <span className="text-[#6E6E7E]">/</span>
         <span className="text-xs text-[#A0A0B2]">Compare ({count} properties)</span>
       </div>
 
       {/* Page title */}
       <div className="mb-6">
         <h1 className="font-heading text-2xl font-semibold text-[#F5F5F7]">Property Comparison</h1>
-        <p className="mt-1 text-sm text-[#6B6B80]">
+        <p className="mt-1 text-sm text-[#8E8E9C]">
           Side-by-side analysis of {count} selected properties.
           <Link href="/marketplace" className="ml-1.5 text-indigo-400 hover:opacity-80">
             Change selection
@@ -343,7 +343,7 @@ export function CompareClient({ listings }: CompareClientProps) {
         >
           {/* Row label cell */}
           <div className="border-r border-white/[0.06] bg-white/[0.03] p-4">
-            <p className="text-xs font-semibold text-[#4A4A60]">Property</p>
+            <p className="text-xs font-semibold text-[#7A7A8A]">Property</p>
           </div>
           {listings.map((l) => (
             <div key={l.id} className="border-l border-white/[0.06] first:border-l-0">
@@ -360,7 +360,7 @@ export function CompareClient({ listings }: CompareClientProps) {
             className="grid border-t border-white/[0.08] bg-white/[0.03] px-4 py-2.5"
             style={{ gridTemplateColumns: `180px repeat(${count}, 1fr)` }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A60]">Pricing</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">Pricing</p>
           </div>
 
           <DataRow
@@ -401,7 +401,7 @@ export function CompareClient({ listings }: CompareClientProps) {
             className="grid border-t border-white/[0.08] bg-white/[0.03] px-4 py-2.5"
             style={{ gridTemplateColumns: `180px repeat(${count}, 1fr)` }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A60]">Specs</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">Specs</p>
           </div>
 
           <DataRow
@@ -439,7 +439,7 @@ export function CompareClient({ listings }: CompareClientProps) {
             className="grid border-t border-white/[0.08] bg-white/[0.03] px-4 py-2.5"
             style={{ gridTemplateColumns: `180px repeat(${count}, 1fr)` }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A60]">Investment</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">Investment</p>
           </div>
 
           <DataRow
@@ -450,7 +450,7 @@ export function CompareClient({ listings }: CompareClientProps) {
                   <Zap className="h-3 w-3" /> Yes
                 </span>
               ) : (
-                <span className="text-[#4A4A60]">No</span>
+                <span className="text-[#7A7A8A]">No</span>
               ),
             )}
           />
@@ -486,7 +486,7 @@ export function CompareClient({ listings }: CompareClientProps) {
             className="grid border-t border-white/[0.08] bg-white/[0.03] px-4 py-2.5"
             style={{ gridTemplateColumns: `180px repeat(${count}, 1fr)` }}
           >
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A60]">Highlights</p>
+            <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">Highlights</p>
           </div>
 
           {/* Features row (custom layout) */}
@@ -496,7 +496,7 @@ export function CompareClient({ listings }: CompareClientProps) {
       </div>
 
       {/* Legal note */}
-      <p className="mt-4 text-center text-[10px] text-[#3A3A48]">
+      <p className="mt-4 text-center text-[10px] text-[#6E6E7E]">
         AI valuations are estimates only. Fractional tokens represent economic interest, not legal title or securities.
       </p>
 

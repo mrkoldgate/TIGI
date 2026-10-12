@@ -45,7 +45,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       </div>
 
       {/* Footer line */}
-      <p className="relative mt-8 text-center text-xs text-[#3A3A48]">
+      <p className="relative mt-8 text-center text-xs text-[#6E6E7E]">
         © {new Date().getFullYear()} TIGI. All rights reserved.{' '}
         <Link href="/legal" className="hover:text-[#818CF8] transition-colors">
           Privacy

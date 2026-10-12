@@ -46,7 +46,7 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         >
           <button
             type="submit"
-            className="text-xs text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+            className="text-xs text-[#6E6E7E] transition-colors hover:text-[#8E8E9C]"
           >
             Sign out
           </button>

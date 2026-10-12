@@ -25,7 +25,7 @@ export function CurrentPlanCard({
   const isFree = tier === 'free'
 
   const tierColor = {
-    free:       'text-[#6B6B80]',
+    free:       'text-[#8E8E9C]',
     pro:        'text-indigo-400',
     pro_plus:   'text-[#818CF8]',
     enterprise: 'text-[#22C55E]',
@@ -51,7 +51,7 @@ export function CurrentPlanCard({
             <Sparkles className={cn('h-5 w-5', tierColor)} />
           </div>
           <div>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#4A4A5E]">
+            <p className="text-xs font-semibold uppercase tracking-widest text-[#7A7A8A]">
               Current plan
             </p>
             <p className={cn('mt-0.5 text-lg font-bold', tierColor)}>
@@ -74,7 +74,7 @@ export function CurrentPlanCard({
 
       {/* Renewal info */}
       {!isFree && endsAt && (
-        <div className="mt-4 flex items-center gap-2 text-xs text-[#6B6B80]">
+        <div className="mt-4 flex items-center gap-2 text-xs text-[#8E8E9C]">
           <Calendar className="h-3.5 w-3.5" />
           Renews {endsAt.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         </div>
@@ -82,14 +82,14 @@ export function CurrentPlanCard({
 
       {/* Demo mode notice */}
       {isMockMode && !isFree && (
-        <p className="mt-3 text-[11px] text-[#4A4A5E]">
+        <p className="mt-3 text-[11px] text-[#7A7A8A]">
           Demo mode — payments are simulated. Connect Stripe to enable real billing.
         </p>
       )}
 
       {/* Free plan prompt */}
       {isFree && (
-        <p className="mt-3 text-xs text-[#6B6B80]">
+        <p className="mt-3 text-xs text-[#8E8E9C]">
           Upgrade to Pro to unlock deep AI valuations, unlimited watchlists, and recommendation signals.
         </p>
       )}

@@ -46,7 +46,7 @@ export default async function InsightsPage() {
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute left-1/4 top-[900px] h-[320px] w-[320px] rounded-full bg-blue-500/[0.04] blur-[100px]"
+        className="pointer-events-none absolute left-1/4 top-[900px] h-[320px] w-[320px] rounded-full bg-violet-500/[0.04] blur-[100px]"
         aria-hidden="true"
       />
 
@@ -72,7 +72,7 @@ export default async function InsightsPage() {
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
         {[
           { label: 'Avg. Yield', value: '7.4%', change: '+0.3%', icon: TrendingUp, glow: 'bg-emerald-500/[0.12]', iconColor: 'text-emerald-400', changeColor: 'text-emerald-400' },
-          { label: 'Market Index', value: '1,247', change: '+12.8', icon: Activity, glow: 'bg-blue-500/[0.12]', iconColor: 'text-blue-400', changeColor: 'text-blue-400' },
+          { label: 'Market Index', value: '1,247', change: '+12.8', icon: Activity, glow: 'bg-violet-500/[0.12]', iconColor: 'text-violet-400', changeColor: 'text-violet-400' },
           { label: 'Tokenized Vol.', value: '$48.2M', change: '+18%', icon: Zap, glow: 'bg-purple-500/[0.12]', iconColor: 'text-purple-400', changeColor: 'text-purple-400' },
           { label: 'AI Signals', value: '24', change: '6 new', icon: Brain, glow: 'bg-amber-500/[0.12]', iconColor: 'text-amber-400', changeColor: 'text-amber-400' },
         ].map((stat) => (
@@ -88,7 +88,7 @@ export default async function InsightsPage() {
                 </div>
                 <span className={`rounded-full border border-white/[0.06] bg-white/[0.03] px-2 py-0.5 text-[10px] font-semibold ${stat.changeColor}`}>{stat.change}</span>
               </div>
-              <p className="text-[11px] font-medium tracking-wide text-zinc-600 uppercase">{stat.label}</p>
+              <p className="text-[11px] font-medium tracking-wide text-zinc-500 uppercase">{stat.label}</p>
               <p className="mt-0.5 text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500 tabular-nums">{stat.value}</p>
             </div>
           </div>
@@ -103,9 +103,9 @@ export default async function InsightsPage() {
           title="Market Price Trends"
           subtitle="90-day rolling average across asset classes"
           icon={LineChart}
-          iconColor="text-blue-400"
-          glowColor="bg-blue-500/[0.06]"
-          accentColor="via-blue-500/30"
+          iconColor="text-violet-400"
+          glowColor="bg-violet-500/[0.06]"
+          accentColor="via-violet-500/30"
           colSpan="md:col-span-2"
         >
           <TrendChartVisual />
@@ -192,7 +192,7 @@ export default async function InsightsPage() {
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
               {[
                 { signal: 'Undervalued Asset', region: 'Miami, FL', confidence: 'High', type: 'BUY', color: 'text-emerald-400', borderColor: 'border-emerald-500/15', bgColor: 'bg-emerald-500/[0.04]' },
-                { signal: 'Yield Spike Detected', region: 'Austin, TX', confidence: 'Medium', type: 'WATCH', color: 'text-blue-400', borderColor: 'border-blue-500/15', bgColor: 'bg-blue-500/[0.04]' },
+                { signal: 'Yield Spike Detected', region: 'Austin, TX', confidence: 'Medium', type: 'WATCH', color: 'text-violet-400', borderColor: 'border-violet-500/15', bgColor: 'bg-violet-500/[0.04]' },
                 { signal: 'Price Correction Risk', region: 'Phoenix, AZ', confidence: 'High', type: 'CAUTION', color: 'text-amber-400', borderColor: 'border-amber-500/15', bgColor: 'bg-amber-500/[0.04]' },
               ].map((item) => (
                 <div
@@ -203,7 +203,7 @@ export default async function InsightsPage() {
                     <span className={`rounded-md border ${item.borderColor} px-2 py-0.5 text-[9px] font-bold tracking-wider ${item.color}`}>
                       {item.type}
                     </span>
-                    <span className="text-[10px] text-zinc-600">{item.confidence}</span>
+                    <span className="text-[10px] text-zinc-500">{item.confidence}</span>
                   </div>
                   <p className="text-xs font-semibold text-white">{item.signal}</p>
                   <p className="mt-0.5 flex items-center gap-1 text-[10px] text-zinc-500">
@@ -281,7 +281,7 @@ function ChartCard({
           </div>
           <div>
             <h3 className="text-sm font-semibold tracking-tight text-white">{title}</h3>
-            <p className="text-[10px] text-zinc-600">{subtitle}</p>
+            <p className="text-[10px] text-zinc-500">{subtitle}</p>
           </div>
         </div>
 
@@ -311,7 +311,7 @@ function ChartCard({
 
 function TrendChartVisual() {
   const lines = [
-    { points: '0,80 30,72 60,75 90,55 120,60 150,42 180,48 210,30 240,35 270,22 300,18', color: '#3B82F6', label: 'Residential' },
+    { points: '0,80 30,72 60,75 90,55 120,60 150,42 180,48 210,30 240,35 270,22 300,18', color: '#8B5CF6', label: 'Residential' },
     { points: '0,90 30,85 60,82 90,78 120,70 150,65 180,60 210,55 240,50 270,48 300,42', color: '#8B5CF6', label: 'Commercial' },
     { points: '0,70 30,75 60,68 90,72 120,65 150,68 180,58 210,62 240,55 270,50 300,45', color: '#10B981', label: 'Land' },
   ]
@@ -361,7 +361,7 @@ function TrendChartVisual() {
 function ConfidenceVisual() {
   const segments = [
     { label: 'High', pct: 62, color: 'from-emerald-500 to-emerald-400' },
-    { label: 'Medium', pct: 28, color: 'from-blue-500 to-blue-400' },
+    { label: 'Medium', pct: 28, color: 'from-violet-500 to-violet-400' },
     { label: 'Low', pct: 10, color: 'from-amber-500 to-amber-400' },
   ]
 
@@ -373,12 +373,12 @@ function ConfidenceVisual() {
           <svg viewBox="0 0 36 36" className="h-full w-full -rotate-90">
             <circle cx="18" cy="18" r="15.5" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="3" />
             <circle cx="18" cy="18" r="15.5" fill="none" stroke="#10B981" strokeWidth="3" strokeDasharray={`${62} ${100 - 62}`} strokeDashoffset="0" strokeLinecap="round" />
-            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#3B82F6" strokeWidth="3" strokeDasharray={`${28} ${100 - 28}`} strokeDashoffset={`-${62}`} strokeLinecap="round" />
+            <circle cx="18" cy="18" r="15.5" fill="none" stroke="#8B5CF6" strokeWidth="3" strokeDasharray={`${28} ${100 - 28}`} strokeDashoffset={`-${62}`} strokeLinecap="round" />
             <circle cx="18" cy="18" r="15.5" fill="none" stroke="#F59E0B" strokeWidth="3" strokeDasharray={`${10} ${100 - 10}`} strokeDashoffset={`-${62 + 28}`} strokeLinecap="round" />
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-lg font-bold tracking-tight text-white">82%</span>
-            <span className="text-[9px] text-zinc-600">avg score</span>
+            <span className="text-[9px] text-zinc-500">avg score</span>
           </div>
         </div>
       </div>
@@ -450,11 +450,11 @@ function ActivityDotsVisual() {
         ))}
       </div>
       <div className="mt-2 flex items-center gap-1.5">
-        <span className="text-[9px] text-zinc-600">Less</span>
+        <span className="text-[9px] text-zinc-500">Less</span>
         {intensities.map((cls, i) => (
           <div key={i} className={`h-2 w-2 rounded-sm ${cls}`} />
         ))}
-        <span className="text-[9px] text-zinc-600">More</span>
+        <span className="text-[9px] text-zinc-500">More</span>
       </div>
     </div>
   )
@@ -482,7 +482,7 @@ function HeatGridVisual() {
       <div className="mb-2 flex">
         <div className="w-16" />
         {quarters.map((q) => (
-          <div key={q} className="flex-1 text-center text-[9px] text-zinc-600">{q}</div>
+          <div key={q} className="flex-1 text-center text-[9px] text-zinc-500">{q}</div>
         ))}
       </div>
       <div className="space-y-1.5">

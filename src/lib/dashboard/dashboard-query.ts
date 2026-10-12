@@ -32,9 +32,20 @@ function mapDashboardRole(role: string): DashboardUser['role'] {
 
 // ── Main export ───────────────────────────────────────────────────────────────
 
+export interface DashboardAllocation {
+  propertyId: string
+  title:      string
+  city:       string
+  type:       string
+  value:      number
+  invested:   number
+}
+
 export interface DashboardData {
-  user:  DashboardUser
-  stats: DashboardStats
+  user:       DashboardUser
+  stats:      DashboardStats
+  /** Per-holding value, largest first — drives the allocation bar. */
+  allocation: DashboardAllocation[]
 }
 
 /**
@@ -45,7 +56,7 @@ export interface DashboardData {
  * - stats.savedCount:      0 here — overridden client-side by SavedListingsContext
  *                          (the context is already seeded from DB via platform layout)
  * - stats.activeInterestsCount: live from TransactionIntent table
- * - portfolio fields: null until wallet integration (M5)
+ * - portfolio fields: holdings × current token price (sample prices on devnet)
  */
 export async function getDashboardData(sessionUser: {
   id: string
@@ -77,15 +88,31 @@ export async function getDashboardData(sessionUser: {
     joinedAt,
   }
 
-  // Investment count — number of distinct tokenized assets held
+  // Holdings — count plus value at the current token price (sample prices on devnet)
   let investmentCount = 0
+  let allocation: DashboardAllocation[] = []
   try {
-    investmentCount = await prisma.tokenHolding.count({
-      where: { userId: sessionUser.id },
+    const holdings = await prisma.tokenHolding.findMany({
+      where:   { userId: sessionUser.id },
+      include: { token: { include: { property: true } } },
     })
+    investmentCount = holdings.length
+    allocation = holdings
+      .map((h) => ({
+        propertyId: h.token.property.id,
+        title:      h.token.property.title,
+        city:       h.token.property.city,
+        type:       String(h.token.property.type),
+        value:      h.quantity * Number(h.token.pricePerFraction),
+        invested:   Number(h.costBasis),
+      }))
+      .sort((a, b) => b.value - a.value)
   } catch (err) {
-    logger.warn('[dashboard-query] Failed to fetch investment count', { error: (err as Error).message })
+    logger.warn('[dashboard-query] Failed to fetch holdings', { error: (err as Error).message })
   }
+
+  const portfolioValue = allocation.length ? allocation.reduce((s, a) => s + a.value, 0) : null
+  const totalInvested  = allocation.length ? allocation.reduce((s, a) => s + a.invested, 0) : null
 
   const activeInterestsCount = await getActiveIntentCount(sessionUser.id)
 
@@ -93,10 +120,10 @@ export async function getDashboardData(sessionUser: {
     savedCount:           0,    // overridden by SavedListingsContext.savedCount client-side
     activeInterestsCount,
     investmentCount,
-    portfolioValue:       null, // TODO M4: aggregate token holdings × current price
+    portfolioValue,
     portfolioChange24h:   null,
-    totalInvested:        null,
+    totalInvested,
   }
 
-  return { user, stats }
+  return { user, stats, allocation }
 }

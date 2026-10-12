@@ -33,14 +33,12 @@ export function AppShell({ children, user }: AppShellProps) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
 
   return (
-    <div className="relative flex min-h-screen bg-black text-white selection:bg-indigo-500/30">
-      {/* Background Atmosphere — pure black void with slow-drift orbs */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-0 right-0 w-[900px] h-[900px] bg-indigo-900/[0.07] rounded-full blur-[160px] -translate-y-1/2 translate-x-1/3 animate-float-slow" />
-        <div className="absolute bottom-0 left-0 w-[700px] h-[700px] bg-violet-900/[0.06] rounded-full blur-[140px] translate-y-1/3 -translate-x-1/3 animate-float" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-900/[0.03] rounded-full blur-[120px]" />
-        {/* Noise texture overlay */}
-        <div className="noise absolute inset-0" />
+    <div className="relative flex min-h-screen bg-black text-white selection:bg-violet-500/30">
+      {/* Atmosphere — same orbs as the public site: indigo + violet, a trace of cyan */}
+      <div className="pointer-events-none fixed inset-0 z-0" aria-hidden="true">
+        <div className="absolute -right-40 -top-56 h-[760px] w-[760px] rounded-full bg-violet-600/[0.08] blur-[180px]" />
+        <div className="absolute -bottom-64 left-[10%] h-[680px] w-[680px] rounded-full bg-indigo-500/[0.07] blur-[180px]" />
+        <div className="absolute right-[20%] top-[45%] h-[420px] w-[420px] rounded-full bg-cyan-500/[0.03] blur-[160px]" />
       </div>
 
       {/* Sidebar — fixed left column (desktop) / overlay (mobile) */}
@@ -59,7 +57,7 @@ export function AppShell({ children, user }: AppShellProps) {
       <div 
         className={cn(
           "grid min-h-screen w-full transition-all duration-300",
-          sidebarCollapsed ? "md:grid-cols-[64px_1fr]" : "md:grid-cols-[240px_1fr]",
+          sidebarCollapsed ? "md:grid-cols-[72px_1fr]" : "md:grid-cols-[248px_1fr]",
           "grid-cols-1"
         )}
       >
@@ -75,8 +73,8 @@ export function AppShell({ children, user }: AppShellProps) {
           />
 
           {/* Scrollable content area */}
-          <main className="flex-1 overflow-auto">
-            <div className="px-4 pb-16 sm:px-6 lg:px-12">
+          <main className="relative z-[1] flex-1 overflow-auto">
+            <div className="mx-auto w-full max-w-[1360px] px-4 pb-20 pt-8 sm:px-6 lg:px-10">
               {children}
             </div>
           </main>

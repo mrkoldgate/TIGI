@@ -68,7 +68,7 @@ function CheckRow({ check, onWalletConnect }: {
         )}>
           {check.label}
         </p>
-        <p className="mt-0.5 text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="mt-0.5 text-[11px] leading-relaxed text-[#8E8E9C]">
           {check.detail}
         </p>
 
@@ -129,7 +129,7 @@ export function IntentReadinessChecklist({
     <div className={cn('space-y-4', className)}>
       {/* Checklist */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-4">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[#4A4A60]">
+        <p className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
           Signing requirements
         </p>
 
@@ -156,25 +156,25 @@ export function IntentReadinessChecklist({
 
       {/* "What signing does" explanation */}
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.04] p-4">
-        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#4A4A60]">
+        <p className="mb-1.5 text-[11px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
           What signing does
         </p>
-        <p className="text-[11px] leading-relaxed text-[#6B6B80]">
+        <p className="text-[11px] leading-relaxed text-[#8E8E9C]">
           {programInfo.userExplanation}
         </p>
         <div className="mt-2.5 flex items-center gap-3 border-t border-white/[0.06] pt-2.5">
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[#4A4A60]">Program</span>
-            <span className="font-mono text-[10px] text-[#6B6B80]">{programInfo.displayName}</span>
+            <span className="text-[10px] text-[#7A7A8A]">Program</span>
+            <span className="font-mono text-[10px] text-[#8E8E9C]">{programInfo.displayName}</span>
           </div>
-          <span className="text-white/20">·</span>
+          <span className="text-white/50">·</span>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[#4A4A60]">Fee</span>
-            <span className="text-[10px] text-[#6B6B80]">~0.000005 SOL</span>
+            <span className="text-[10px] text-[#7A7A8A]">Fee</span>
+            <span className="text-[10px] text-[#8E8E9C]">~0.000005 SOL</span>
           </div>
-          <span className="text-white/20">·</span>
+          <span className="text-white/50">·</span>
           <div className="flex items-center gap-1.5">
-            <span className="text-[10px] text-[#4A4A60]">Funds moved</span>
+            <span className="text-[10px] text-[#7A7A8A]">Funds moved</span>
             <span className="text-[10px] text-[#4ADE80]">None</span>
           </div>
         </div>
@@ -196,7 +196,7 @@ export function IntentReadinessChecklist({
           'flex w-full items-center justify-center gap-2 rounded-xl py-3 text-sm font-semibold transition-all active:scale-[0.98]',
           readiness.canPrepare
             ? 'bg-indigo-500 text-[#0A0A0F] hover:bg-indigo-400 disabled:opacity-60'
-            : 'cursor-not-allowed border border-white/[0.08] bg-white/[0.03] text-[#4A4A60]',
+            : 'cursor-not-allowed border border-white/[0.08] bg-white/[0.03] text-[#7A7A8A]',
         )}
       >
         {isPreparing ? (

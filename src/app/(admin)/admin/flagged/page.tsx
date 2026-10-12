@@ -23,13 +23,13 @@ export default function AdminFlaggedPage() {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Administration
           </p>
           <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
             Flagged Items
           </h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Active flags across users, listings, and transactions.
           </p>
         </div>
@@ -50,8 +50,8 @@ export default function AdminFlaggedPage() {
 
       <div className="rounded-xl border border-dashed border-white/[0.04] bg-[#050505] p-5 text-center">
         <div className="flex items-center justify-center gap-2">
-          <Flag className="h-4 w-4 text-[#6B6B80]" />
-          <p className="text-sm text-[#6B6B80]">
+          <Flag className="h-4 w-4 text-[#8E8E9C]" />
+          <p className="text-sm text-[#8E8E9C]">
             Flag resolution workflow (dismiss / escalate / suspend) arrives in{' '}
             <span className="font-medium text-[#A0A0B2]">Milestone 2</span>.
           </p>

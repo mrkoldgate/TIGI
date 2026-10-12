@@ -63,7 +63,7 @@ export function PremiumGate({
         </div>
         <div>
           <p className="text-xs font-semibold text-[#F5F5F7]">Pro feature</p>
-          <p className="mt-0.5 max-w-[200px] text-[11px] leading-relaxed text-[#6B6B80]">
+          <p className="mt-0.5 max-w-[200px] text-[11px] leading-relaxed text-[#8E8E9C]">
             Upgrade to access {feature}.
           </p>
         </div>

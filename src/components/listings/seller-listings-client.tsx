@@ -62,7 +62,7 @@ const STATUS_CONFIG: Record<
     label: 'Paused',
     dotColor: 'rgb(96 165 250)',
     badgeBg: 'rgba(96,165,250,0.10)',
-    badgeText: 'text-blue-300',
+    badgeText: 'text-violet-300',
   },
   ARCHIVED: {
     label: 'Archived',
@@ -243,7 +243,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
             <StatTile
               label="Total Views"
               value={stats.totalViews.toLocaleString()}
-              accent="#60A5FA"
+              accent="#A78BFA"
               icon={<EyeIcon />}
             />
             <StatTile
@@ -316,7 +316,7 @@ export function SellerListingsClient({ listings, embeddedMode = false }: SellerL
               onChange={(e) => setSearch(e.target.value)}
               className={cn(
                 'w-full rounded-lg border border-white/[0.04] bg-[#050505]',
-                'py-2 pl-9 pr-4 text-sm text-white placeholder:text-zinc-600',
+                'py-2 pl-9 pr-4 text-sm text-white placeholder:text-zinc-500',
                 'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
                 'outline-none focus:border-amber-400/60 focus:shadow-[0_0_12px_rgba(251,191,36,0.15)]',
                 'transition-colors duration-150',
@@ -580,25 +580,25 @@ function ListingsTable({ listings }: { listings: SellerListing[] }) {
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="border-b border-white/[0.08] bg-white/[0.02]">
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Listing
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Type
               </th>
-              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Status
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Price
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Views
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Inquiries
               </th>
-              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-600">
+              <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-widest text-zinc-500">
                 Updated
               </th>
               <th className="w-12 px-4 py-3" />
@@ -654,7 +654,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
             <p className="mt-0.5 text-xs text-zinc-500">
               {listing.city}, {listing.state}
               {getSubtitle(listing) && (
-                <span className="ml-2 text-zinc-600">· {getSubtitle(listing)}</span>
+                <span className="ml-2 text-zinc-500">· {getSubtitle(listing)}</span>
               )}
             </p>
             {listing.isTokenized && (
@@ -671,7 +671,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
         <div className="flex flex-col gap-1">
           <AssetTypeBadge listing={listing} />
           <span className="text-xs text-zinc-500">{SUBTYPE_LABELS[listing.subtype]}</span>
-          <span className="text-[10px] text-zinc-600">{LISTING_TYPE_LABELS[listing.listingType]}</span>
+          <span className="text-[10px] text-zinc-500">{LISTING_TYPE_LABELS[listing.listingType]}</span>
         </div>
       </td>
 
@@ -698,7 +698,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
 
       {/* Views */}
       <td className="px-4 py-3 text-right">
-        <span className={listing.viewCount > 0 ? 'text-white' : 'text-zinc-700'}>
+        <span className={listing.viewCount > 0 ? 'text-white' : 'text-zinc-500'}>
           {listing.viewCount > 0 ? listing.viewCount.toLocaleString() : '—'}
         </span>
       </td>
@@ -709,7 +709,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
           className={cn(
             listing.inquiryCount > 0
               ? 'font-semibold text-amber-400'
-              : 'text-zinc-700',
+              : 'text-zinc-500',
           )}
         >
           {listing.inquiryCount > 0 ? listing.inquiryCount : '—'}
@@ -717,7 +717,7 @@ function TableRow({ listing, index }: { listing: SellerListing; index: number })
       </td>
 
       {/* Updated */}
-      <td className="px-4 py-3 text-right text-xs text-zinc-600">
+      <td className="px-4 py-3 text-right text-xs text-zinc-500">
         {formatDate(listing.updatedAt)}
       </td>
 
@@ -844,7 +844,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         <p className="text-xs text-zinc-500">
           {listing.city}, {listing.state}
           {getSubtitle(listing) && (
-            <span className="ml-1 text-zinc-600">· {getSubtitle(listing)}</span>
+            <span className="ml-1 text-zinc-500">· {getSubtitle(listing)}</span>
           )}
         </p>
 
@@ -881,7 +881,7 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         )}
 
         {/* Date */}
-        <p className="text-[10px] text-zinc-600">Updated {formatDate(listing.updatedAt)}</p>
+        <p className="text-[10px] text-zinc-500">Updated {formatDate(listing.updatedAt)}</p>
       </div>
 
       {/* Footer actions */}
@@ -905,11 +905,11 @@ function ListingCard({ listing, index }: { listing: SellerListing; index: number
         ) : listing.status === 'PENDING_REVIEW' ? (
           <span className="text-xs text-amber-500/80">Under review · est. 1–2 days</span>
         ) : listing.status === 'PAUSED' ? (
-          <button className="text-xs font-medium text-blue-400 hover:underline">
+          <button className="text-xs font-medium text-violet-400 hover:underline">
             Resume listing
           </button>
         ) : (
-          <span className="text-xs text-zinc-600">Archived</span>
+          <span className="text-xs text-zinc-500">Archived</span>
         )}
 
         <ActionMenu listing={listing} />

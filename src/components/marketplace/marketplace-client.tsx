@@ -194,7 +194,7 @@ function StatChip({
       >
         {value}
       </span>
-      <span className="relative text-[12px] font-medium tracking-wide uppercase text-zinc-600">{label}</span>
+      <span className="relative text-[12px] font-medium tracking-wide uppercase text-zinc-500">{label}</span>
     </Tag>
   )
 }
@@ -225,7 +225,7 @@ function CategoryTabs({
           onClick={() => onChange(key)}
           className={cn(
             'relative flex shrink-0 items-center gap-2 px-6 py-4 text-sm font-medium transition-all duration-300',
-            active === key ? 'text-white' : 'text-zinc-600 hover:text-zinc-400',
+            active === key ? 'text-white' : 'text-zinc-500 hover:text-zinc-400',
           )}
         >
           {icon && (
@@ -236,7 +236,7 @@ function CategoryTabs({
                   ? key === 'LAND'
                     ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]'
                     : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]'
-                  : 'text-zinc-700',
+                  : 'text-zinc-500',
               )}
             >
               {icon}
@@ -270,7 +270,7 @@ function SearchBar({
   const isLand = category === 'LAND'
   return (
     <div className="relative">
-      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-600" />
+      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
       <input
         type="search"
         value={value}
@@ -278,7 +278,7 @@ function SearchBar({
         placeholder={getSearchPlaceholder(category)}
         className={cn(
           'w-full rounded-2xl border bg-[#050505] py-3.5 pl-12 pr-12 text-sm text-white',
-          'placeholder-zinc-700 outline-none transition-all duration-300',
+          'placeholder-zinc-500 outline-none transition-all duration-300',
           'shadow-[inset_0_1px_0_rgba(255,255,255,0.03),inset_0_-1px_0_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.4)]',
           'border-white/[0.04]',
           isLand
@@ -290,7 +290,7 @@ function SearchBar({
         <button
           type="button"
           onClick={() => onChange('')}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-600 transition-colors hover:text-white"
+          className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors hover:text-white"
         >
           <X className="h-4 w-4" />
         </button>
@@ -337,7 +337,7 @@ function FilterBar({
               'rounded-lg px-4 py-2 text-xs font-medium transition-all duration-300',
               filters.listingType === key
                 ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.4)]'
-                : 'text-zinc-600 hover:text-zinc-400',
+                : 'text-zinc-500 hover:text-zinc-400',
             )}
           >
             {label}
@@ -354,7 +354,7 @@ function FilterBar({
           'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
           filters.tokenizedOnly
             ? 'border-indigo-400/25 bg-indigo-400/[0.08] text-indigo-400 shadow-[0_0_18px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(99,102,241,0.12)]'
-            : 'border-white/[0.04] bg-[#050505] text-zinc-600 hover:border-white/[0.1] hover:text-zinc-400',
+            : 'border-white/[0.04] bg-[#050505] text-zinc-500 hover:border-white/[0.1] hover:text-zinc-400',
         )}
       >
         <Zap className="h-3.5 w-3.5" style={filters.tokenizedOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
@@ -371,7 +371,7 @@ function FilterBar({
             'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
             filters.devOpportunityOnly
               ? 'border-emerald-400/25 bg-emerald-400/[0.08] text-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.15),inset_0_1px_0_rgba(52,211,153,0.12)]'
-              : 'border-white/[0.04] bg-[#050505] text-zinc-600 hover:border-white/[0.1] hover:text-zinc-400',
+              : 'border-white/[0.04] bg-[#050505] text-zinc-500 hover:border-white/[0.1] hover:text-zinc-400',
           )}
         >
           <Layers className="h-3.5 w-3.5" style={filters.devOpportunityOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
@@ -384,7 +384,7 @@ function FilterBar({
         <button
           type="button"
           onClick={onClear}
-          className="flex items-center gap-1.5 text-xs text-zinc-600 transition-colors hover:text-white"
+          className="flex items-center gap-1.5 text-xs text-zinc-500 transition-colors hover:text-white"
         >
           <X className="h-3.5 w-3.5" />
           Clear filters
@@ -412,7 +412,7 @@ function ResultsHeader({
 
   return (
     <div className="flex items-center justify-between gap-4">
-      <p className="text-sm text-zinc-600">
+      <p className="text-sm text-zinc-500">
         <span className={cn(
           'font-semibold',
           isLand ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]',
@@ -442,7 +442,7 @@ function ResultsHeader({
             <option value="POPULAR">Most Popular</option>
           </select>
           <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-            <ChevronDown className="h-3 w-3 text-zinc-600" />
+            <ChevronDown className="h-3 w-3 text-zinc-500" />
           </div>
         </div>
 
@@ -456,7 +456,7 @@ function ResultsHeader({
               'px-3 py-2.5 transition-all duration-300',
               filters.view === 'grid'
                 ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
-                : 'text-zinc-700 hover:text-zinc-400',
+                : 'text-zinc-500 hover:text-zinc-400',
             )}
           >
             <LayoutGrid className="h-4 w-4" />
@@ -469,7 +469,7 @@ function ResultsHeader({
               'border-l border-white/[0.04] px-3 py-2.5 transition-all duration-300',
               filters.view === 'list'
                 ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
-                : 'text-zinc-700 hover:text-zinc-400',
+                : 'text-zinc-500 hover:text-zinc-400',
             )}
           >
             <List className="h-4 w-4" />
@@ -515,7 +515,7 @@ function EmptyState({
           aria-hidden="true"
         />
         {/* Layer 3: Nested glass icon shell */}
-        <div className="relative z-10 flex h-28 w-28 items-center justify-center rounded-[2.5rem] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl">
+        <div className="relative z-10 flex h-28 w-28 items-center justify-center rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl">
           <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           {isLand ? (
             <Trees className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
@@ -530,7 +530,7 @@ function EmptyState({
           ? `No ${isLand ? 'land parcels' : 'listings'} match your search`
           : `No ${isLand ? 'land parcels' : 'listings'} match your filters`}
       </h3>
-      <p className="relative mt-3 max-w-xs text-sm text-zinc-600">
+      <p className="relative mt-3 max-w-xs text-sm text-zinc-500">
         {hasSearch
           ? 'Try a different keyword or location.'
           : 'Try adjusting your filters or broadening your search.'}
@@ -711,8 +711,8 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
         onChange={(cat) => patchFilters({ category: cat })}
       />
 
-      {/* ── Controls bar — v4 Outer Tray: #050505/50, rounded-[2.5rem] ── */}
-      <div className="relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-[#050505]/50 p-8 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)]">
+      {/* ── Controls bar — v4 Outer Tray: #050505/50, rounded-[24px] ── */}
+      <div className="relative overflow-hidden rounded-[24px] border border-white/[0.04] bg-[#050505]/50 p-8 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)]">
         <div className="noise absolute inset-0 pointer-events-none" />
         {/* Paragon top-edge light */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
@@ -743,7 +743,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
       />
 
       {/* ── v4 Outer Tray wrapping the listing grid ── */}
-      <div className="group/container relative overflow-hidden rounded-[2.5rem] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-white/[0.08]">
+      <div className="group/container relative overflow-hidden rounded-[24px] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-white/[0.08]">
         <div className="noise absolute inset-0 pointer-events-none" />
         {/* Paragon top-edge structural lighting */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-all duration-500 group-hover/container:via-white/30" aria-hidden="true" />
@@ -833,7 +833,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
             <ChevronDown className="h-4 w-4" />
             {getLoadMoreLabel(filters.category)}
           </button>
-          <p className="text-[12px] font-medium tracking-wide uppercase text-zinc-600">
+          <p className="text-[12px] font-medium tracking-wide uppercase text-zinc-500">
             Showing {visibleCount} of {filteredListings.length}{' '}
             {getListingLabel(filteredListings.length, filters.category)}
           </p>
@@ -842,7 +842,7 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
 
       {/* ── All shown indicator ── */}
       {!hasMore && filteredListings.length > PAGE_SIZE && (
-        <p className="pt-6 text-center text-[12px] font-medium tracking-wide uppercase text-zinc-600">
+        <p className="pt-6 text-center text-[12px] font-medium tracking-wide uppercase text-zinc-500">
           All {filteredListings.length}{' '}
           {getListingLabel(filteredListings.length, filters.category)} shown
         </p>

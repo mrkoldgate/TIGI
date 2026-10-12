@@ -39,11 +39,11 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
         )}
       >
         <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/[0.04]">
-          <Shield className="h-4 w-4 text-[#3A3A48]" />
+          <Shield className="h-4 w-4 text-[#6E6E7E]" />
         </div>
         <div>
-          <p className="text-sm text-[#4A4A60]">No wallet available</p>
-          <p className="text-xs text-[#3A3A48]">Account setup may still be in progress</p>
+          <p className="text-sm text-[#7A7A8A]">No wallet available</p>
+          <p className="text-xs text-[#6E6E7E]">Account setup may still be in progress</p>
         </div>
       </div>
     )
@@ -85,7 +85,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
             )}
           </div>
           {/* Full address in monospace */}
-          <p className="mt-1 truncate font-mono text-xs text-[#4A4A60]">{displayAddress}</p>
+          <p className="mt-1 truncate font-mono text-xs text-[#7A7A8A]">{displayAddress}</p>
         </div>
 
         {/* Actions */}
@@ -94,7 +94,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
             type="button"
             onClick={handleCopy}
             title="Copy address"
-            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
+            className="flex h-7 w-7 items-center justify-center rounded-lg text-[#7A7A8A] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
           >
             {copied ? (
               <Check className="h-3.5 w-3.5 text-emerald-400" />
@@ -108,7 +108,7 @@ export function WalletDisplay({ className }: WalletDisplayProps) {
               target="_blank"
               rel="noopener noreferrer"
               title="View on Solana Explorer"
-              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#4A4A60] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
+              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#7A7A8A] transition-colors hover:bg-white/[0.04] hover:text-[#9999AA]"
             >
               <ExternalLink className="h-3.5 w-3.5" />
             </a>
@@ -149,7 +149,7 @@ export function WalletStatusBadge({ className, showAddress = true }: WalletStatu
         <Shield className="h-3 w-3 text-indigo-400" />
       )}
       {showAddress && (
-        <span className="font-mono text-[11px] text-[#6B6B80]">{displayAddress}</span>
+        <span className="font-mono text-[11px] text-[#8E8E9C]">{displayAddress}</span>
       )}
       {walletMode === 'connected' && (
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-label="Connected" />

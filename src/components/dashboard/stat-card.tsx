@@ -53,7 +53,7 @@ const ACCENT_STYLES: Record<AccentColor, {
     glowBg: 'bg-cyan-500/20',
     haloBg: 'bg-cyan-500/10',
     edgeLight: 'via-cyan-400/30',
-    gradient: 'from-cyan-400 via-cyan-300 to-blue-500',
+    gradient: 'from-cyan-400 via-cyan-300 to-violet-500',
   },
   rose: {
     iconColor: 'text-rose-400',
@@ -81,7 +81,7 @@ export function StatCard({
   const content = (
     <div
       className={cn(
-        'group relative flex flex-col items-center overflow-hidden rounded-[2rem] border border-white/[0.04] bg-[#0A0A0F]/80 p-8 backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-500 hover:border-white/[0.1] hover:bg-[#0A0A0F]/90',
+        'group relative flex flex-col items-center overflow-hidden rounded-[22px] border border-white/[0.04] bg-[#0A0A0F]/80 p-8 backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_25px_50px_-12px_rgba(0,0,0,0.25)] transition-all duration-500 hover:border-white/[0.1] hover:bg-[#0A0A0F]/90',
         href && !isLocked && 'cursor-pointer',
         className,
       )}
@@ -114,7 +114,7 @@ export function StatCard({
       {lockedUntil && (
         <div className="mb-3 flex items-center gap-1.5 rounded-full border border-white/[0.04] bg-white/[0.02] px-2.5 py-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
           <span className="h-1.5 w-1.5 rounded-full bg-amber-400 shadow-[0_0_6px_rgba(251,191,36,0.5)]" />
-          <span className="text-[10px] text-white/25">{lockedUntil}</span>
+          <span className="text-[10px] text-white/55">{lockedUntil}</span>
         </div>
       )}
 
@@ -123,7 +123,7 @@ export function StatCard({
         className={cn(
           'text-center text-3xl font-extrabold tracking-tight tabular-nums',
           isLocked
-            ? 'text-white/15'
+            ? 'text-white/45'
             : cn('bg-clip-text text-transparent bg-gradient-to-r', styles.gradient),
         )}
       >
@@ -144,8 +144,8 @@ export function StatCard({
 
       {/* Label + hint */}
       <div className="mt-3 text-center">
-        <p className="text-[10px] font-semibold tracking-[0.16em] text-white/25 uppercase">{label}</p>
-        {hint && <p className="mt-1 text-[10px] text-white/15">{hint}</p>}
+        <p className="text-[10px] font-semibold tracking-[0.16em] text-white/55 uppercase">{label}</p>
+        {hint && <p className="mt-1 text-[10px] text-white/45">{hint}</p>}
       </div>
     </div>
   )

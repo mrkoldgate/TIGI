@@ -65,14 +65,14 @@ const KYC_LABEL: Record<string, string> = {
   REJECTED:  'Rejected',
 }
 const KYC_COLOR: Record<string, string> = {
-  NONE:      'text-[#6B6B80]',
+  NONE:      'text-[#8E8E9C]',
   PENDING:   'text-[#F59E0B]',
   SUBMITTED: 'text-[#F59E0B]',
   VERIFIED:  'text-[#4ADE80]',
   REJECTED:  'text-[#EF4444]',
 }
 const TIER_COLOR: Record<string, string> = {
-  free:       'text-[#6B6B80]',
+  free:       'text-[#8E8E9C]',
   pro:        'text-indigo-400',
   pro_plus:   'text-[#818CF8]',
   enterprise: 'text-[#22C55E]',
@@ -150,11 +150,11 @@ export function ProfileClient({ user }: ProfileClientProps) {
           <p className="text-base font-semibold text-[#F5F5F7]">{user.name ?? 'Anonymous'}</p>
           <p className="text-sm text-zinc-500">{user.email}</p>
           <div className="mt-1.5 flex items-center gap-2">
-            <span className={cn('text-xs font-medium', TIER_COLOR[user.subscriptionTier] ?? 'text-[#6B6B80]')}>
+            <span className={cn('text-xs font-medium', TIER_COLOR[user.subscriptionTier] ?? 'text-[#8E8E9C]')}>
               {TIER_LABEL[user.subscriptionTier] ?? user.subscriptionTier}
             </span>
-            <span className="text-[#3A3A4A]">·</span>
-            <span className={cn('text-xs font-medium', KYC_COLOR[user.kycStatus] ?? 'text-[#6B6B80]')}>
+            <span className="text-[#6E6E7E]">·</span>
+            <span className={cn('text-xs font-medium', KYC_COLOR[user.kycStatus] ?? 'text-[#8E8E9C]')}>
               {KYC_LABEL[user.kycStatus] ?? user.kycStatus}
             </span>
           </div>
@@ -257,7 +257,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
         <div className="space-y-2">
           {/* Email — not editable */}
           <div className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3">
-            <Mail className="h-4 w-4 shrink-0 text-[#4A4A5E]" />
+            <Mail className="h-4 w-4 shrink-0 text-[#7A7A8A]" />
             <div className="flex-1 min-w-0">
               <p className="text-xs text-zinc-500">Email address</p>
               <p className="truncate text-sm text-zinc-400">{user.email}</p>
@@ -293,7 +293,7 @@ export function ProfileClient({ user }: ProfileClientProps) {
                 ? `${user.walletAddress.slice(0, 6)}…${user.walletAddress.slice(-4)}`
                 : 'Platform-managed'
             }
-            valueColor="text-[#6B6B80]"
+            valueColor="text-[#8E8E9C]"
           />
         </div>
       </SectionCard>
@@ -382,7 +382,7 @@ function SectionCard({
 
 const inputClass = cn(
   'w-full rounded-lg border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl',
-  'px-3 py-3 text-sm text-[#F5F5F7] placeholder-[#4A4A5E]',
+  'px-3 py-3 text-sm text-[#F5F5F7] placeholder-[#7A7A8A]',
   'outline-none transition-colors focus:border-indigo-500/60 hover:border-white/15 hover:bg-white/[0.08]',
 )
 
@@ -440,7 +440,7 @@ function NotifToggle({
     >
       <div className="flex items-start gap-3">
         <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
-          <Bell className="h-3.5 w-3.5 text-[#4A4A5E]" />
+          <Bell className="h-3.5 w-3.5 text-[#7A7A8A]" />
         </div>
         <div>
           <p className="text-sm font-medium text-[#D0D0E0]">{label}</p>
@@ -488,11 +488,11 @@ function AccountLink({
       className="flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl px-4 py-3 transition-colors hover:border-white/15 hover:bg-white/[0.08]"
     >
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04]">
-        <Icon className="h-3.5 w-3.5 text-[#6B6B80]" />
+        <Icon className="h-3.5 w-3.5 text-[#8E8E9C]" />
       </div>
       <p className="flex-1 text-sm text-zinc-400">{label}</p>
-      <span className={cn('text-xs font-medium', valueColor ?? 'text-[#6B6B80]')}>{value}</span>
-      <ChevronRight className="h-3.5 w-3.5 text-[#3A3A4A]" />
+      <span className={cn('text-xs font-medium', valueColor ?? 'text-[#8E8E9C]')}>{value}</span>
+      <ChevronRight className="h-3.5 w-3.5 text-[#6E6E7E]" />
     </Link>
   )
 }

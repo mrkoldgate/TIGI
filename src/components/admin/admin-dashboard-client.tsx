@@ -60,7 +60,7 @@ function AdminSectionHeader({
   return (
     <div className="mb-3 flex items-center justify-between gap-3">
       <div className="flex items-center gap-2">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-[#6B6B80]">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-[#8E8E9C]">
           {title}
         </h2>
         {count !== undefined && (
@@ -78,7 +78,7 @@ function AdminSectionHeader({
       {href && (
         <a
           href={href}
-          className="text-xs text-[#6B6B80] transition-colors hover:text-[#6366F1]"
+          className="text-xs text-[#8E8E9C] transition-colors hover:text-[#6366F1]"
         >
           View all →
         </a>
@@ -113,13 +113,13 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
       {/* ── Command bar ─────────────────────────────────────────────────── */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#4A4A5E]">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
             Administration
           </p>
           <h1 className="mt-1 font-heading text-2xl font-semibold text-[#F5F5F7]">
             Command Center
           </h1>
-          <p className="mt-1 text-sm text-[#6B6B80]">
+          <p className="mt-1 text-sm text-[#8E8E9C]">
             Platform overview and moderation controls.
           </p>
         </div>
@@ -128,9 +128,9 @@ export function AdminDashboardClient({ pendingReviewCount, kycStats, inquirySumm
         <div className="flex flex-shrink-0 flex-col items-end gap-2">
           <div className="flex items-center gap-2 rounded-lg border border-white/[0.04] bg-[#050505] px-3 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
             <span className="h-2 w-2 animate-pulse rounded-full bg-[#4ADE80]" />
-            <span className="text-xs text-[#6B6B80]">All systems operational</span>
+            <span className="text-xs text-[#8E8E9C]">All systems operational</span>
           </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-[#4A4A5E]">
+          <div className="flex items-center gap-1.5 text-[11px] text-[#7A7A8A]">
             <RefreshCw className="h-3 w-3" />
             {pendingReviewCount !== undefined ? 'Live · KYC, Reviews & Inquiries' : 'Mock data'}
           </div>

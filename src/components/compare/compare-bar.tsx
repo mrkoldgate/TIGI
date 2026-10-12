@@ -42,7 +42,7 @@ export function CompareBar() {
           <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-indigo-500/10">
             <GitCompare className="h-3.5 w-3.5 text-indigo-400" />
           </div>
-          <span className="hidden text-sm text-[#6B6B80] sm:block">
+          <span className="hidden text-sm text-[#8E8E9C] sm:block">
             <span className="font-semibold text-[#F5F5F7]">{compareEntries.length}</span>
             <span>/{MAX_COMPARE} selected</span>
           </span>
@@ -60,7 +60,7 @@ export function CompareBar() {
                 type="button"
                 onClick={() => removeFromCompare(entry.id)}
                 aria-label={`Remove ${entry.title} from comparison`}
-                className="ml-0.5 shrink-0 rounded text-[#4A4A60] transition-colors hover:text-[#EF4444]"
+                className="ml-0.5 shrink-0 rounded text-[#7A7A8A] transition-colors hover:text-[#EF4444]"
               >
                 <X className="h-2.5 w-2.5" />
               </button>
@@ -71,7 +71,7 @@ export function CompareBar() {
           {Array.from({ length: MAX_COMPARE - compareEntries.length }).map((_, i) => (
             <div
               key={i}
-              className="hidden items-center rounded-lg border border-dashed border-white/[0.08] px-3 py-1.5 text-[10px] text-[#3A3A48] sm:flex"
+              className="hidden items-center rounded-lg border border-dashed border-white/[0.08] px-3 py-1.5 text-[10px] text-[#6E6E7E] sm:flex"
             >
               + add
             </div>
@@ -102,7 +102,7 @@ export function CompareBar() {
           type="button"
           onClick={clearCompare}
           aria-label="Clear all comparisons"
-          className="shrink-0 text-[#3A3A48] transition-colors hover:text-[#6B6B80]"
+          className="shrink-0 text-[#6E6E7E] transition-colors hover:text-[#8E8E9C]"
         >
           <X className="h-4 w-4" />
         </button>

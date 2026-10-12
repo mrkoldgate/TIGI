@@ -27,12 +27,12 @@ import {
 
 const STATUS_CONFIG: Record<InquiryStatus, { dot: string; text: string }> = {
   NEW:     { dot: 'bg-[#6366F1]',  text: 'text-[#6366F1]'  },
-  READ:    { dot: 'bg-[#6B6B80]',  text: 'text-[#6B6B80]'  },
+  READ:    { dot: 'bg-[#8E8E9C]',  text: 'text-[#8E8E9C]'  },
   REPLIED: { dot: 'bg-[#4ADE80]',  text: 'text-[#4ADE80]'  },
 }
 
 const TYPE_STYLE: Record<InquiryType, string> = {
-  GENERAL:              'border-white/[0.08] text-[#6B6B80]',
+  GENERAL:              'border-white/[0.08] text-[#8E8E9C]',
   INTERESTED_BUYING:    'border-[#6366F1]/30 text-[#6366F1]',
   INTERESTED_INVESTING: 'border-[#4ADE80]/30 text-[#4ADE80]',
   INTERESTED_LEASING:   'border-[#818CF8]/30 text-[#818CF8]',
@@ -70,17 +70,17 @@ function InquiryRow({ inquiry }: { inquiry: InquiryDTO }) {
       <div className="flex items-start justify-between gap-3">
         <Link
           href={`/marketplace/${inquiry.propertyId}`}
-          className="flex min-w-0 items-center gap-1.5 text-[11px] text-[#6B6B80] hover:text-[#6366F1]"
+          className="flex min-w-0 items-center gap-1.5 text-[11px] text-[#8E8E9C] hover:text-[#6366F1]"
         >
           <span className={cn(
             'h-1.5 w-1.5 shrink-0 rounded-full',
             inquiry.propertyType === 'LAND' ? 'bg-[#4ADE80]' : 'bg-[#6366F1]',
           )} />
           <span className="truncate font-medium text-[#A0A0B2]">{inquiry.propertyTitle}</span>
-          <span className="text-[#4A4A60]">{inquiry.propertyCity}, {inquiry.propertyState}</span>
+          <span className="text-[#7A7A8A]">{inquiry.propertyCity}, {inquiry.propertyState}</span>
           <ExternalLink className="h-2.5 w-2.5 shrink-0 opacity-40" />
         </Link>
-        <span className="shrink-0 text-[11px] text-[#4A4A60]">{formatTimeAgo(inquiry.createdAt)}</span>
+        <span className="shrink-0 text-[11px] text-[#7A7A8A]">{formatTimeAgo(inquiry.createdAt)}</span>
       </div>
 
       {/* Type badge + status pill */}
@@ -95,7 +95,7 @@ function InquiryRow({ inquiry }: { inquiry: InquiryDTO }) {
       </div>
 
       {/* Message preview */}
-      <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-[#6B6B80]">
+      <p className="mt-1.5 line-clamp-2 text-xs leading-relaxed text-[#8E8E9C]">
         {inquiry.message}
       </p>
     </div>
@@ -109,14 +109,14 @@ function InquiryRow({ inquiry }: { inquiry: InquiryDTO }) {
 function EmptyState() {
   return (
     <div className="flex flex-col items-center gap-3 py-8 text-center">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#3A3A4A]">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/[0.04] text-[#6E6E7E]">
         <MessageSquare className="h-5 w-5" />
       </div>
       <div>
-        <p className="text-sm text-[#6B6B80]">No inquiries yet.</p>
-        <p className="mt-0.5 text-xs text-[#3A3A4A]">
+        <p className="text-sm text-[#8E8E9C]">No inquiries yet.</p>
+        <p className="mt-0.5 text-xs text-[#6E6E7E]">
           Use the{' '}
-          <span className="text-[#6B6B80]">Ask a Question</span>
+          <span className="text-[#8E8E9C]">Ask a Question</span>
           {' '}button on any listing to get started.
         </p>
       </div>
@@ -162,14 +162,14 @@ export function SubmittedInquiryFeed({ className, initialInquiries }: SubmittedI
   if (loading) {
     return (
       <div className={cn('flex items-center justify-center py-8', className)}>
-        <Loader2 className="h-5 w-5 animate-spin text-[#3A3A4A]" />
+        <Loader2 className="h-5 w-5 animate-spin text-[#6E6E7E]" />
       </div>
     )
   }
 
   if (error) {
     return (
-      <p className={cn('py-4 text-center text-xs text-[#6B6B80]', className)}>
+      <p className={cn('py-4 text-center text-xs text-[#8E8E9C]', className)}>
         Could not load inquiries.
       </p>
     )
@@ -185,7 +185,7 @@ export function SubmittedInquiryFeed({ className, initialInquiries }: SubmittedI
         <InquiryRow key={inq.id} inquiry={inq} />
       ))}
       {inquiries.length > 5 && (
-        <p className="pt-1 text-center text-[11px] text-[#4A4A60]">
+        <p className="pt-1 text-center text-[11px] text-[#7A7A8A]">
           +{inquiries.length - 5} more in your full history
         </p>
       )}

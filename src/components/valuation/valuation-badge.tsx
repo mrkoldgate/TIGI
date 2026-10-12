@@ -66,7 +66,7 @@ function BlockBadge({
       {/* Left: icon + label */}
       <div className="flex items-center gap-1.5">
         <SparkleIcon color={accentColor} size={11} />
-        <span className="text-[9px] font-semibold uppercase tracking-wider text-[#4A4A60]">
+        <span className="text-[9px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
           AI Estimate
         </span>
       </div>
@@ -107,7 +107,7 @@ function InlineBadge({
   const delta = listPrice != null ? getDelta(estimatedValue, listPrice) : null
 
   return (
-    <div className="flex items-center gap-1.5 text-[10px] text-[#6B6B80]">
+    <div className="flex items-center gap-1.5 text-[10px] text-[#8E8E9C]">
       <SparkleIcon color={accentColor} size={10} />
       <span>
         AI est.{' '}
