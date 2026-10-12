@@ -21,6 +21,11 @@ const r2ExtraHostname = (() => {
 })()
 
 const nextConfig: NextConfig = {
+  // Ship the build-time demo database (see scripts/build-demo-db.mjs) with
+  // every server function so Vercel previews can sign in.
+  outputFileTracingIncludes: {
+    '/**/*': ['./prisma/dev.db'],
+  },
   experimental: {
     // Enable React 19 features
     reactCompiler: false,
