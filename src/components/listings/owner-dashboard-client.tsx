@@ -14,6 +14,7 @@ import {
   Compass,
   Coins,
   ArrowRight,
+  Plus,
 } from 'lucide-react'
 import { type SellerListing, getSellerStats, formatPrice } from '@/lib/listings/seller-mock-data'
 import {
@@ -25,6 +26,7 @@ import {
 } from '@/lib/listings/owner-mock-data'
 import type { InquiryDTO } from '@/lib/inquiries/inquiry-types'
 
+import { PageHeader } from '@/components/shared/page-header'
 import { cn } from '@/lib/utils'
 import { StatCard } from '@/components/dashboard/stat-card'
 import { SectionHeader } from '@/components/dashboard/section-header'
@@ -235,55 +237,39 @@ interface OwnerWelcomeBarProps {
 
 function OwnerWelcomeBar({ greeting, user, portfolioValue, newInquiryCount }: OwnerWelcomeBarProps) {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.03] p-6 backdrop-blur-2xl shadow-[inset_0_1px_0_0_rgba(255,255,255,0.07)] sm:p-8">
-      <div className="noise absolute inset-0 pointer-events-none" />
-      {/* Accent hairline */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent" aria-hidden="true" />
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-amber-400/[0.04] blur-[50px]" aria-hidden="true" />
-
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        {/* Left */}
-        <div>
-          <p className="text-label text-zinc-500">{greeting}</p>
-          <h1 className="text-h1 mt-0.5 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">{user.name}</h1>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
-            <span className="rounded border border-white/[0.08] bg-white/[0.03] backdrop-blur-2xl px-2 py-0.5 text-[11px] text-zinc-400">
-              {user.role}
+    <PageHeader
+      eyebrow="My properties"
+      title={user.name}
+      description={`${greeting}. Your listings, inquiries and what they are worth.`}
+      actions={
+        <>
+          <Link href="/listings/new?type=land" className="btn-glass !px-5 !py-2.5 text-sm no-underline">
+            <Map className="h-4 w-4" />
+            List land
+          </Link>
+          <Link href="/listings/new?type=property" className="btn-primary !px-5 !py-2.5 text-sm no-underline">
+            <Plus className="h-4 w-4" />
+            List a property
+          </Link>
+        </>
+      }
+      meta={
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 font-mono text-[10.5px] uppercase tracking-[0.12em] text-[#A0A0B2]">{user.role}</span>
+          <KycBadge status={user.kycStatus} />
+          {portfolioValue > 0 && (
+            <span className="rounded-full border border-violet-300/25 bg-violet-500/[0.08] px-3 py-1 text-[11.5px] text-violet-200">
+              Listed value · {formatPrice(portfolioValue)}
             </span>
-            <KycBadge status={user.kycStatus} />
-            {portfolioValue > 0 && (
-              <span className="rounded border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-[11px] text-amber-400">
-                Portfolio · {formatPrice(portfolioValue)}
-              </span>
-            )}
-            {newInquiryCount > 0 && (
-              <span className="rounded-full bg-amber-400 px-2 py-0.5 text-[11px] font-semibold text-black shadow-[0_0_12px_rgba(251,191,36,0.4)]">
-                {newInquiryCount} new {newInquiryCount === 1 ? 'inquiry' : 'inquiries'}
-              </span>
-            )}
-          </div>
+          )}
+          {newInquiryCount > 0 && (
+            <span className="rounded-full bg-violet-500 px-3 py-1 text-[11.5px] font-semibold text-white shadow-[0_0_16px_rgba(139,92,246,0.6)]">
+              {newInquiryCount} new {newInquiryCount === 1 ? 'inquiry' : 'inquiries'}
+            </span>
+          )}
         </div>
-
-        {/* Right: primary CTA */}
-        <div className="flex flex-shrink-0 flex-wrap items-center gap-2">
-          <Link
-            href="/listings/new?type=property"
-            className="flex items-center gap-1.5 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-black transition-all hover:opacity-90 shadow-[0_0_20px_rgba(251,191,36,0.3)]"
-          >
-            <Building2 className="h-3.5 w-3.5" />
-            New Property
-          </Link>
-          <Link
-            href="/listings/new?type=land"
-            className="flex items-center gap-1.5 rounded-lg border border-emerald-400/40 bg-emerald-400/10 px-4 py-2 text-sm font-semibold text-emerald-400 transition-all hover:border-emerald-400/60 hover:shadow-[0_0_16px_rgba(52,211,153,0.2)]"
-          >
-            <Map className="h-3.5 w-3.5" />
-            New Land
-          </Link>
-        </div>
-      </div>
-    </div>
+      }
+    />
   )
 }
 

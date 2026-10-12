@@ -35,12 +35,7 @@ export default async function InsightsPage() {
   await requireAuth('/insights')
 
   return (
-    <div className="animate-fade-in relative pt-8 pb-16">
-      {/* ── Ambient atmospheric orbs ── */}
-      <div
-        className="pointer-events-none absolute -left-36 top-12 h-[480px] w-[480px] rounded-full bg-indigo-500/[0.07] blur-[120px]"
-        aria-hidden="true"
-      />
+    <div className="relative">
       <div
         className="pointer-events-none absolute -right-28 top-[400px] h-[400px] w-[400px] rounded-full bg-violet-500/[0.05] blur-[100px]"
         aria-hidden="true"

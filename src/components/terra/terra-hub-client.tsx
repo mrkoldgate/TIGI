@@ -35,6 +35,7 @@ import {
   Check,
   ChevronRight,
 } from 'lucide-react'
+import { PageHeader } from '@/components/shared/page-header'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import type { TerraListing, TerraListingTypeFilter, TerraSortOption } from '@/lib/terra/terra-types'
@@ -371,44 +372,17 @@ export function TerraHubClient({ initialListings, stats }: TerraHubClientProps) 
       {/* ═══════════════════════════════════════════════════════════════════
           Layer 2 — Header plate (floating glass)
           ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.05] bg-[#050505] p-6 backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_0_rgba(255,255,255,0.01),0_4px_24px_rgba(0,0,0,0.3)] sm:p-8">
-        <div className="noise absolute inset-0 pointer-events-none" />
-        {/* h-[2px] emerald accent top-edge */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" aria-hidden="true" />
-        {/* Dual corner glows */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-emerald-400/[0.08] blur-[40px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full bg-teal-500/[0.06] blur-[35px]" aria-hidden="true" />
-        {/* Decorative map grid lines */}
-        <div className="pointer-events-none absolute inset-0 opacity-[0.015]" aria-hidden="true">
-          <div className="absolute inset-0" style={{ backgroundImage: 'linear-gradient(rgba(52,211,153,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(52,211,153,0.3) 1px, transparent 1px)', backgroundSize: '60px 60px' }} />
-        </div>
-
-        <div className="relative flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-emerald-400/20 bg-emerald-400/10 backdrop-blur-xl shadow-[inset_0_0_12px_rgba(52,211,153,0.15),0_0_16px_rgba(52,211,153,0.1)]">
-                <Trees className="h-5 w-5 text-emerald-400" style={{ filter: 'drop-shadow(0 0 6px rgba(52,211,153,0.6))' }} />
-              </div>
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
-                Terra — Land Platform
-              </p>
-            </div>
-            <h1 className="mt-2 font-heading text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-emerald-300">
-              Land Leasing &amp; Development
-            </h1>
-            <p className="mt-1 text-sm text-zinc-400">
-              Agricultural leases, development sites, and investment parcels across the country.
-            </p>
-          </div>
-          <Link
-            href="/marketplace?category=LAND"
-            className="hidden flex-shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl px-3 py-1.5 text-xs text-zinc-400 hover:border-emerald-400/30 hover:text-white transition-all sm:flex"
-          >
-            All marketplace
-            <ArrowUpRight className="h-3 w-3" />
+      <PageHeader
+        eyebrow="Land · Terra"
+        title="Lease, develop, hold land"
+        description="Farm leases, development sites and investment parcels. Owners earn rent, investors buy shares."
+        actions={
+          <Link href="/marketplace?category=LAND" className="btn-glass !px-5 !py-2.5 text-sm no-underline">
+            All land in the marketplace
+            <ArrowUpRight className="h-4 w-4" />
           </Link>
-        </div>
-      </div>
+        }
+      />
 
       {/* ═══════════════════════════════════════════════════════════════════
           Layer 2 — Stats plates (floating glass)

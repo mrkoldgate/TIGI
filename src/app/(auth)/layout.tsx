@@ -1,80 +1,80 @@
 import Link from 'next/link'
+import Image from 'next/image'
+import { Logo } from '@/components/shared/logo'
+import { photoUrl, PHOTOS } from '@/lib/photography'
 
 // ---------------------------------------------------------------------------
-// Auth layout — minimal centered layout for sign in / sign up / verify.
-// No nav, no footer. Just TIGI logo + centered card on dark background.
+// Auth layout — v5
+// Split screen: a full-height photograph with the brand line on the left
+// (Mercury / Wealthsimple sign-in), the form on black glass on the right.
+// On small screens the photo becomes a short band above the form.
 // ---------------------------------------------------------------------------
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center bg-black">
-      {/* Radial glow behind card */}
-      <div
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.04) 50%, transparent 70%)',
-        }}
-      />
+    <div className="relative grid min-h-screen bg-black lg:grid-cols-[1.05fr_1fr]">
+      {/* Photo side */}
+      <aside className="relative hidden overflow-hidden lg:block">
+        <Image
+          src={photoUrl('houseDusk', 1600, 80)}
+          alt={PHOTOS.houseDusk.alt}
+          fill
+          priority
+          sizes="50vw"
+          className="object-cover"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 35%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.9) 100%),' +
+              'linear-gradient(90deg, rgba(0,0,0,0) 70%, rgba(0,0,0,0.85) 100%)',
+          }}
+          aria-hidden="true"
+        />
+        <div className="relative flex h-full flex-col justify-between p-10">
+          <Logo />
+          <div className="max-w-md">
+            <p className="text-label mb-4 flex items-center gap-2 !text-cyan-100/90">
+              <span className="live-dot" aria-hidden="true" />
+              Private beta
+            </p>
+            <p
+              className="font-display text-[clamp(2rem,1.2rem+2vw,3rem)] font-[520] leading-[1.04] tracking-[-0.035em] text-[#F5F5F7]"
+              style={{ fontStretch: '110%' }}
+            >
+              Own real estate by the share.
+            </p>
+            <p className="mt-4 text-[15px] leading-relaxed text-[#C3C3CC]">
+              Homes, apartments and land from $100. Lease out what you own. Pass it on to who you choose.
+            </p>
+            <p className="mt-8 font-mono text-[10.5px] uppercase tracking-[0.12em] text-white/50">
+              Photo · {PHOTOS.houseDusk.credit}
+            </p>
+          </div>
+        </div>
+      </aside>
 
-      {/* Grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.015]"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(99,179,237,1) 1px, transparent 1px), linear-gradient(90deg, rgba(99,179,237,1) 1px, transparent 1px)',
-          backgroundSize: '60px 60px',
-        }}
-      />
+      {/* Form side */}
+      <main className="relative flex flex-col items-center justify-center px-5 py-12 sm:px-8">
+        {/* Violet light behind the form */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{ background: 'radial-gradient(60% 50% at 50% 30%, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.05) 45%, transparent 75%)' }}
+          aria-hidden="true"
+        />
 
-      {/* Logo */}
-      <Link
-        href="/"
-        className="relative mb-8 flex items-center gap-2 text-[#818CF8] transition-opacity hover:opacity-80"
-        aria-label="TIGI home"
-      >
-        <TigiLogoMark />
-        <span className="font-heading text-xl font-bold tracking-tight text-white">
-          TIGI
-        </span>
-      </Link>
+        <div className="relative mb-10 lg:hidden">
+          <Logo />
+        </div>
 
-      {/* Card */}
-      <div className="relative w-full max-w-[440px] px-4">
-        {children}
-      </div>
+        <div className="relative w-full max-w-[440px]">{children}</div>
 
-      {/* Footer line */}
-      <p className="relative mt-8 text-center text-xs text-[#6E6E7E]">
-        © {new Date().getFullYear()} TIGI. All rights reserved.{' '}
-        <Link href="/legal" className="hover:text-[#818CF8] transition-colors">
-          Privacy
-        </Link>
-        {' · '}
-        <Link href="/legal/terms" className="hover:text-[#818CF8] transition-colors">
-          Terms
-        </Link>
-      </p>
+        <p className="relative mt-10 text-center text-xs text-[#7A7A8A]">
+          © {new Date().getFullYear()} TIGI · Private beta on Solana devnet ·{' '}
+          <Link href="/" className="transition-colors hover:text-violet-200">Back to site</Link>
+        </p>
+      </main>
     </div>
-  )
-}
-
-function TigiLogoMark() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden>
-      <rect width="28" height="28" rx="6" fill="#6366F1" fillOpacity="0.12" />
-      <path
-        d="M14 6L20 10V14L14 18L8 14V10L14 6Z"
-        stroke="#6366F1"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14 18V22M8 14L4 16M20 14L24 16"
-        stroke="#6366F1"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
   )
 }

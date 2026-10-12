@@ -40,20 +40,7 @@ export default async function ExplorePage() {
   const totalValue = listings.reduce((sum, l) => sum + l.price, 0)
 
   return (
-    <div className="animate-fade-in relative pt-8 pb-16">
-      {/* ── TIGI v4 Elite Atmospheric Orbs ── */}
-      <div
-        className="pointer-events-none absolute -left-48 top-12 h-[650px] w-[650px] rounded-full bg-purple-500/[0.06] blur-[200px] animate-float-slow"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-40 top-[350px] h-[550px] w-[550px] rounded-full bg-indigo-500/[0.05] blur-[160px] animate-float"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-1/3 top-[800px] h-[450px] w-[450px] rounded-full bg-emerald-500/[0.04] blur-[140px] animate-float-slow"
-        aria-hidden="true"
-      />
+    <div className="relative">
 
       {/* ── Page Header ── */}
       <PageHeader

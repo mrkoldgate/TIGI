@@ -64,7 +64,7 @@ export function PropertyCardSkeleton() {
 
 export function LandCardSkeleton() {
   return (
-    <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
+    <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
       {/* Panoramic image — 21/9 ratio placeholder */}
       <Skeleton className="mb-4 h-[7.5rem] w-full rounded-lg opacity-60" />
       {/* Land use badge */}
@@ -82,7 +82,7 @@ export function LandCardSkeleton() {
         <Skeleton className="h-5 w-16 rounded opacity-40" />
       </div>
       {/* Price row */}
-      <div className="flex justify-between border-t border-[#1A2B1A] pt-3">
+      <div className="flex justify-between border-t border-white/[0.08] pt-3">
         <div className="space-y-1.5">
           <Skeleton variant="text" className="h-3 w-16 opacity-40" />
           <Skeleton variant="text" className="h-5 w-20 opacity-60" />

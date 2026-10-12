@@ -31,6 +31,7 @@ import {
 } from '@/components/marketplace/land-card'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { PageHeader } from '@/components/shared/page-header'
 import { type MockListing } from '@/lib/marketplace/mock-data'
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -340,42 +341,21 @@ function SavedHeader({
   confirmClear: boolean
 }) {
   return (
-    <div className="relative overflow-hidden rounded-[22px] border border-white/[0.04] bg-white/[0.03] p-6 backdrop-blur-3xl shadow-2xl sm:p-8">
-      {/* Top accent hairline — rose v4 */}
-      <div className="pointer-events-none absolute inset-x-6 top-0 h-[2px] bg-gradient-to-r from-transparent via-rose-400/40 to-transparent" aria-hidden="true" />
-      {/* Corner atmospheric glows */}
-      <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-rose-400/[0.04] blur-[60px] animate-float-slow" aria-hidden="true" />
-      <div className="pointer-events-none absolute -left-16 -bottom-16 h-40 w-40 rounded-full bg-violet-500/[0.025] blur-[50px] animate-float" aria-hidden="true" />
-
-      <div className="relative flex items-start justify-between gap-4">
-        <div>
-          <p className="text-label mb-1">
-            <span className="mr-1.5 inline-block h-[1.5px] w-[1.5px] rounded-full bg-rose-400 shadow-[0_0_4px_rgba(251,113,133,0.6)]" />
-            Favorites
-          </p>
-          <h1 className="text-h1 bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
-            Saved{count > 0 && <span className="ml-2 text-2xl font-medium text-white/50">· {count}</span>}
-          </h1>
-          <p className="mt-1 text-white/55">
-            {count === 0 ? 'Save properties and land to revisit them later.' : 'Your saved properties and land parcels.'}
-          </p>
-        </div>
-        {count > 0 && (
+    <PageHeader
+      eyebrow="Saved"
+      title={count > 0 ? `Saved · ${count}` : 'Saved'}
+      description={count === 0 ? 'Save properties and land to come back to them later.' : 'Properties and land you are keeping an eye on.'}
+      actions={
+        count > 0 ? (
           <button
             onClick={onClearAll}
-            className={cn(
-              'mt-1 shrink-0 rounded-xl border px-3.5 py-2 text-xs font-medium backdrop-blur-xl transition-all duration-200',
-              'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]',
-              confirmClear
-                ? 'border-red-400/30 bg-red-400/[0.07] text-red-400 shadow-[inset_0_1px_0_rgba(248,113,113,0.1),0_0_16px_rgba(248,113,113,0.12)]'
-                : 'border-white/[0.06] text-white/50 hover:border-red-400/25 hover:text-red-400',
-            )}
+            className={cn('btn-glass !px-4 !py-2 text-sm', confirmClear && '!border-red-400/40 !text-red-300')}
           >
-            {confirmClear ? 'Confirm clear all?' : 'Clear all'}
+            {confirmClear ? 'Confirm: clear all?' : 'Clear all'}
           </button>
-        )}
-      </div>
-    </div>
+        ) : undefined
+      }
+    />
   )
 }
 

@@ -56,18 +56,18 @@ interface ValuationPanelProps {
 function theme(assetType: 'property' | 'land') {
   if (assetType === 'land') {
     return {
-      border:       'border-[#1E2D1E]',
-      bg:           'bg-[#0D110D]',
-      headerBg:     'bg-[#111D11]',
-      divider:      'border-[#1E2D1E]',
-      subtleBg:     'bg-[#111D11]',
+      border:       'border-white/[0.07]',
+      bg:           'bg-white/[0.03]',
+      headerBg:     'bg-white/[0.05]',
+      divider:      'border-white/[0.07]',
+      subtleBg:     'bg-white/[0.05]',
       accentColor:  '#4ADE80',
       accentMuted:  'rgba(74,222,128,0.08)',
-      labelColor:   'text-[#4A6A4A]',
-      subLabelColor:'text-[#5A7060]',
-      textPrimary:  'text-[#E8F0E8]',
-      rangeBg:      'bg-[#1A2B1A]',
-      confBarBg:    'bg-[#1A2B1A]',
+      labelColor:   'text-[#7A7A8A]',
+      subLabelColor:'text-[#8E8E9C]',
+      textPrimary:  'text-[#F5F5F7]',
+      rangeBg:      'bg-white/[0.06]',
+      confBarBg:    'bg-white/[0.06]',
     }
   }
   return {

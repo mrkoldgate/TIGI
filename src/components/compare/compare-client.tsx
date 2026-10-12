@@ -28,6 +28,7 @@ import {
   Users,
   ArrowLeft,
 } from 'lucide-react'
+import { PageHeader } from '@/components/shared/page-header'
 import { cn } from '@/lib/utils'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import { InvestModal } from '@/components/marketplace/invest-modal'
@@ -308,33 +309,22 @@ export function CompareClient({ listings }: CompareClientProps) {
   const bestAiIdx = aiVals.indexOf(Math.max(...aiVals))
 
   return (
-    <div className="animate-fade-in pb-16 pt-6">
-      {/* Back nav */}
-      <div className="mb-6 flex items-center gap-4">
-        <Link
-          href="/marketplace"
-          className="flex items-center gap-1.5 text-xs text-[#8E8E9C] transition-colors hover:text-[#A0A0B2]"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          Marketplace
-        </Link>
-        <span className="text-[#6E6E7E]">/</span>
-        <span className="text-xs text-[#A0A0B2]">Compare ({count} properties)</span>
-      </div>
-
-      {/* Page title */}
-      <div className="mb-6">
-        <h1 className="font-heading text-2xl font-semibold text-[#F5F5F7]">Property Comparison</h1>
-        <p className="mt-1 text-sm text-[#8E8E9C]">
-          Side-by-side analysis of {count} selected properties.
-          <Link href="/marketplace" className="ml-1.5 text-indigo-400 hover:opacity-80">
+    <div>
+      <PageHeader
+        eyebrow="Compare"
+        title="Side by side"
+        description={`${count} properties, line by line: price, size, yield and AI value.`}
+        actions={
+          <Link href="/marketplace" className="btn-glass !px-5 !py-2.5 text-sm no-underline">
+            <ArrowLeft className="h-4 w-4" />
             Change selection
           </Link>
-        </p>
-      </div>
+        }
+        className="mb-8"
+      />
 
       {/* Comparison grid */}
-      <div className="relative overflow-x-auto rounded-2xl border border-white/[0.08] bg-[#050505]">
+      <div className="panel relative overflow-x-auto">
         <div className="noise absolute inset-0 pointer-events-none" />
         {/* ── Column headers (property cards) ─────────────────────────── */}
         <div

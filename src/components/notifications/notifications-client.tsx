@@ -28,6 +28,7 @@ import Link from 'next/link'
 import { Bell, Check, ChevronDown, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { NotificationItem } from './notification-item'
+import { PageHeader } from '@/components/shared/page-header'
 import type { NotificationRecord } from '@/lib/notifications/notification-query'
 
 // ── Types ────────────────────────────────────────────────────────────────────
@@ -133,60 +134,24 @@ export function NotificationsClient({
           Layer 2 — Header plate (floating glass)
           Novu/Wope style: glowing bell icon, unread badge with neon halo
           ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.05] bg-[#050505] backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_0_rgba(255,255,255,0.01),0_4px_24px_rgba(0,0,0,0.3)] p-6 sm:p-8">
-        <div className="noise absolute inset-0 pointer-events-none" />
-        {/* h-[2px] cyan accent top-edge */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" aria-hidden="true" />
-        {/* Dual corner glows */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-cyan-400/[0.08] blur-[40px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full bg-indigo-500/[0.06] blur-[35px]" aria-hidden="true" />
-
-        <div className="relative flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-3">
-              {/* ── Glowing bell icon — Novu/Wope signature ── */}
-              <div className="relative flex h-12 w-12 items-center justify-center rounded-xl border border-cyan-400/20 bg-cyan-400/10 backdrop-blur-xl shadow-[inset_0_0_16px_rgba(34,211,238,0.12),0_0_24px_rgba(34,211,238,0.15)]">
-                <div className="pointer-events-none absolute inset-0 rounded-xl bg-cyan-400/[0.08] blur-[8px]" aria-hidden="true" />
-                <Bell
-                  className="relative h-6 w-6 text-cyan-400"
-                  style={{ filter: 'drop-shadow(0 0 8px rgba(34,211,238,0.7))' }}
-                />
-                {/* Unread count badge — neon halo */}
-                {unreadCount > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full border border-cyan-400/40 bg-cyan-500 px-1 text-[10px] font-bold text-black shadow-[0_0_12px_rgba(34,211,238,0.6),0_0_4px_rgba(34,211,238,0.8)]">
-                    {unreadCount > 99 ? '99+' : unreadCount}
-                  </span>
-                )}
-              </div>
-              <div>
-                <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">Activity</p>
-                <h1 className="font-heading text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-100 to-cyan-300">
-                  Notifications
-                </h1>
-              </div>
-            </div>
-            <p className="mt-2 text-sm text-zinc-400">
-              Activity updates from your listings, compliance reviews, and transactions.
-            </p>
-          </div>
-
-          {/* Mark all read button */}
-          {unreadCount > 0 && (
+      <PageHeader
+        eyebrow="Notifications"
+        title="What changed"
+        description="Updates from your listings, identity checks, offers and holdings."
+        actions={
+          unreadCount > 0 ? (
             <button
               type="button"
               onClick={handleMarkAllRead}
               disabled={markingAll}
-              className="flex shrink-0 items-center gap-1.5 rounded-lg border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] px-3 py-1.5 text-xs text-zinc-500 transition-all hover:border-cyan-400/30 hover:text-cyan-300 hover:shadow-[0_0_16px_rgba(34,211,238,0.1)] disabled:opacity-50"
+              className="btn-glass !px-4 !py-2 text-sm disabled:opacity-50"
             >
-              {markingAll
-                ? <Loader2 className="h-3 w-3 animate-spin" />
-                : <Check className="h-3 w-3" />
-              }
-              Mark all read
+              {markingAll ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+              Mark all read · {unreadCount}
             </button>
-          )}
-        </div>
-      </div>
+          ) : undefined
+        }
+      />
 
       {/* ═══════════════════════════════════════════════════════════════════
           Layer 2 — Tab bar plate (floating glass strip)

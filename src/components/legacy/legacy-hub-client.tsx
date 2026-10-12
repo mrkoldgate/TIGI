@@ -54,6 +54,7 @@ import {
   Lock,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { PageHeader } from '@/components/shared/page-header'
 import { LEGACY_MESSAGING } from '@/lib/legacy/legacy-messaging'
 import type { LegacyPlanRecord, LegacyBeneficiaryRecord } from '@/lib/legacy/legacy-query'
 import { BeneficiaryForm } from './beneficiary-form'
@@ -194,41 +195,11 @@ export function LegacyHubClient({ initialPlan }: LegacyHubClientProps) {
           Layer 2 — Header plate (floating glass)
           Glassflow Safe/Security — monumental shield icon
           ═══════════════════════════════════════════════════════════════════ */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_0_rgba(255,255,255,0.01),0_4px_24px_rgba(0,0,0,0.3)] p-6 sm:p-8">
-        <div className="noise absolute inset-0 pointer-events-none" />
-        {/* h-[2px] purple accent top-edge */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent" aria-hidden="true" />
-        {/* Dual corner glows — purple + gold */}
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-purple-500/[0.08] blur-[40px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full bg-amber-500/[0.06] blur-[35px]" aria-hidden="true" />
-
-        <div className="relative flex items-center gap-4">
-          {/* ── Monumental shield icon — triple-layer glow ── */}
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-purple-400/20 bg-purple-500/10 backdrop-blur-xl shadow-[inset_0_0_20px_rgba(168,85,247,0.12),0_0_30px_rgba(168,85,247,0.12)]">
-            {/* Layer 1 — deep purple glow */}
-            <div className="pointer-events-none absolute -inset-3 rounded-2xl bg-purple-500/[0.06] blur-[12px]" aria-hidden="true" />
-            {/* Layer 2 — gold accent ring */}
-            <div className="pointer-events-none absolute -inset-1 rounded-2xl bg-amber-400/[0.04] blur-[8px]" aria-hidden="true" />
-            {/* Layer 3 — inner glow */}
-            <div className="pointer-events-none absolute inset-0 rounded-2xl bg-purple-400/[0.08] blur-[6px]" aria-hidden="true" />
-            <ShieldCheck
-              className="relative h-7 w-7 text-purple-400"
-              style={{ filter: 'drop-shadow(0 0 10px rgba(168,85,247,0.7))' }}
-            />
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
-              Structured Planning Tool
-            </p>
-            <h1 className="mt-0.5 font-heading text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-purple-300">
-              {LEGACY_MESSAGING.moduleTitle}
-            </h1>
-            <p className="mt-0.5 text-sm text-zinc-400">
-              {LEGACY_MESSAGING.shortDescription}
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Legacy"
+        title="Pass it on to who you choose"
+        description={LEGACY_MESSAGING.shortDescription}
+      />
 
       {/* ═══════════════════════════════════════════════════════════════════
           Layer 2 — Step indicator plate (floating glass strip)
@@ -834,30 +805,11 @@ function StatusView({ plan, onRequestEdit }: { plan: LegacyPlanRecord; onRequest
     <div className="relative space-y-6">
 
       {/* Header plate */}
-      <div className="relative overflow-hidden rounded-2xl border border-white/[0.05] bg-white/[0.02] backdrop-blur-3xl shadow-[inset_0_1px_0_rgba(255,255,255,0.04),inset_0_-1px_0_rgba(255,255,255,0.01),0_4px_24px_rgba(0,0,0,0.3)] p-6 sm:p-8">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-purple-400/40 to-transparent" aria-hidden="true" />
-        <div className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full bg-purple-500/[0.08] blur-[40px]" aria-hidden="true" />
-        <div className="pointer-events-none absolute -left-12 -bottom-12 h-32 w-32 rounded-full bg-amber-500/[0.06] blur-[35px]" aria-hidden="true" />
-
-        <div className="relative flex items-center gap-4">
-          <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-purple-400/20 bg-purple-500/10 backdrop-blur-xl shadow-[inset_0_0_20px_rgba(168,85,247,0.12),0_0_30px_rgba(168,85,247,0.12)]">
-            <div className="pointer-events-none absolute -inset-3 rounded-2xl bg-purple-500/[0.06] blur-[12px]" aria-hidden="true" />
-            <div className="pointer-events-none absolute -inset-1 rounded-2xl bg-amber-400/[0.04] blur-[8px]" aria-hidden="true" />
-            <ShieldCheck
-              className="relative h-7 w-7 text-purple-400"
-              style={{ filter: 'drop-shadow(0 0 10px rgba(168,85,247,0.7))' }}
-            />
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-widest text-zinc-500">
-              Structured Planning Tool
-            </p>
-            <h1 className="mt-0.5 font-heading text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-100 to-purple-300">
-              {LEGACY_MESSAGING.moduleTitle}
-            </h1>
-          </div>
-        </div>
-      </div>
+      <PageHeader
+        eyebrow="Legacy"
+        title={LEGACY_MESSAGING.moduleTitle}
+        description="Your plan's status and who it names."
+      />
 
       {/* Status card — deep structural backdrop */}
       <div className={cn(

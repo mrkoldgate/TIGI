@@ -24,6 +24,8 @@ import {
   MessageSquare,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { WaveChars } from '@/components/motion/wave-text'
+import { PhotoLightbox } from '@/components/shared/photo-lightbox'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
 import { MarketplaceLandCard, inferLandUse, inferDevOpportunity } from '@/components/marketplace/land-card'
 import { type LandUseType } from '@/components/land/land-card'
@@ -208,27 +210,27 @@ function getLandGallerySlots(listing: MockListing): string[] {
 
 function LandGallery({ listing }: { listing: MockListing }) {
   const slots = getLandGallerySlots(listing)
-  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const [open, setOpen] = useState<number | null>(null)
 
   return (
-    <div className="space-y-2 overflow-hidden rounded-2xl">
+    <div className="space-y-2" data-reveal="up">
       {/* Panoramic hero — full width */}
-      <div className="relative overflow-hidden rounded-2xl">
+      <div className="plate group relative overflow-hidden rounded-[24px]">
         <PlaceholderImage
           slot={slots[0]}
           propertyType="land"
           alt={listing.title}
-          className="aspect-[21/9] w-full transition-transform duration-700 md:aspect-[3/1]"
+          className="zoom-img aspect-[21/9] w-full md:aspect-[3/1]"
           priority
         />
         {/* Bottom gradient blends into the page */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/60 via-[#050505]/10 to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
 
         {/* Photo count badge */}
         {slots.length > 1 && (
           <button
-            onClick={() => setLightboxOpen(true)}
-            className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-[#0D110D]/85 px-3 py-1.5 text-xs font-medium text-[#E8F0E8] backdrop-blur-sm ring-1 ring-[#1E2D1E] transition hover:bg-[#0D110D]"
+            onClick={() => setOpen(0)}
+            className="btn-glass absolute bottom-4 right-4 !px-4 !py-2 text-sm"
           >
             <LayoutGrid className="h-3.5 w-3.5" />
             {slots.length} photos
@@ -253,10 +255,10 @@ function LandGallery({ listing }: { listing: MockListing }) {
               {/* Last thumb: "view all" overlay when there are more */}
               {i === 1 && slots.length > 3 && (
                 <button
-                  onClick={() => setLightboxOpen(true)}
+                  onClick={() => setOpen(0)}
                   className="absolute inset-0 flex items-center justify-center bg-black/60"
                 >
-                  <span className="text-sm font-medium text-[#E8F0E8]">+{slots.length - 3} more</span>
+                  <span className="text-sm font-medium text-[#F5F5F7]">+{slots.length - 3} more</span>
                 </button>
               )}
             </div>
@@ -264,14 +266,8 @@ function LandGallery({ listing }: { listing: MockListing }) {
         </div>
       )}
 
-      {/* Lightbox placeholder */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-sm"
-          onClick={() => setLightboxOpen(false)}
-        >
-          <p className="text-[#5A7060]">Gallery lightbox coming soon.</p>
-        </div>
+      {open !== null && (
+        <PhotoLightbox slots={slots} index={open} title={listing.title} propertyType="land" onIndex={setOpen} onClose={() => setOpen(null)} />
       )}
     </div>
   )
@@ -306,7 +302,7 @@ function AcreageHeroBlock({ listing, landUse }: { listing: MockListing; landUse:
   ]
 
   return (
-    <div className="flex divide-x divide-[#1E2D1E] overflow-hidden rounded-xl border border-[#1E2D1E] bg-[#0D110D]">
+    <div className="flex divide-x divide-white/[0.07] overflow-hidden rounded-xl border border-white/[0.07] bg-white/[0.03]">
       {stats.map(({ value, unit, accent }) => (
         <div key={unit} className="flex flex-1 flex-col items-center justify-center px-4 py-4">
           <span
@@ -315,7 +311,7 @@ function AcreageHeroBlock({ listing, landUse }: { listing: MockListing; landUse:
           >
             {value}
           </span>
-          <span className="mt-0.5 text-[9px] uppercase tracking-widest text-[#4A6A4A]">{unit}</span>
+          <span className="mt-0.5 text-[9px] uppercase tracking-widest text-[#7A7A8A]">{unit}</span>
         </div>
       ))}
     </div>
@@ -363,40 +359,40 @@ function LandHeader({
 
       {/* Title + save/share */}
       <div className="flex items-start justify-between gap-4">
-        <h1 className="font-heading text-2xl font-semibold leading-snug text-[#E8F0E8] sm:text-3xl">
-          {listing.title}
+        <h1 className="page-title !text-[clamp(1.9rem,1.3rem+2vw,3rem)]" data-reveal="wave">
+          <WaveChars text={listing.title} step={24} />
         </h1>
         <div className="flex shrink-0 items-center gap-2">
           <button
             type="button"
             aria-label={isSaved ? 'Remove from saved' : 'Save parcel'}
             onClick={onSave}
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.07] bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-white/[0.05]"
           >
-            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#5A7060]')} />
+            <Heart className={cn('h-4 w-4 transition-colors', isSaved ? 'fill-rose-400 text-rose-400' : 'text-[#8E8E9C]')} />
           </button>
           <button
             type="button"
             aria-label="Share"
-            className="flex h-9 w-9 items-center justify-center rounded-xl border border-[#1E2D1E] bg-[#0D110D] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-[#111D11]"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/[0.07] bg-white/[0.03] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)] transition-all hover:border-[#4ADE80]/30 hover:bg-white/[0.05]"
           >
-            <Share2 className="h-4 w-4 text-[#5A7060]" />
+            <Share2 className="h-4 w-4 text-[#8E8E9C]" />
           </button>
         </div>
       </div>
 
       {/* Location + meta */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#5A7060]">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm text-[#8E8E9C]">
         <span className="flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#3A5A3A]" />
+          <MapPin className="h-3.5 w-3.5 shrink-0 text-[#6E6E7E]" />
           {listing.city}, {listing.state}
         </span>
         <span className="flex items-center gap-1.5">
-          <Clock className="h-3.5 w-3.5 text-[#3A5A3A]" />
+          <Clock className="h-3.5 w-3.5 text-[#6E6E7E]" />
           Listed {listed === 0 ? 'today' : `${listed}d ago`}
         </span>
         <span className="flex items-center gap-1.5">
-          <Eye className="h-3.5 w-3.5 text-[#3A5A3A]" />
+          <Eye className="h-3.5 w-3.5 text-[#6E6E7E]" />
           {listing.viewCount.toLocaleString()} views
         </span>
       </div>
@@ -413,10 +409,10 @@ function LandHeader({
 
 function BreadcrumbNav({ listing }: { listing: MockListing }) {
   return (
-    <nav className="flex items-center gap-1.5 text-xs text-[#5A7060]">
+    <nav className="flex items-center gap-1.5 text-xs text-[#8E8E9C]">
       <Link
         href="/marketplace"
-        className="flex items-center gap-1 transition-colors hover:text-[#8A9E8A]"
+        className="flex items-center gap-1 transition-colors hover:text-[#A0A0B2]"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         Marketplace
@@ -429,12 +425,12 @@ function BreadcrumbNav({ listing }: { listing: MockListing }) {
             window.location.href = '/marketplace?category=LAND'
           }
         }}
-        className="transition-colors hover:text-[#8A9E8A]"
+        className="transition-colors hover:text-[#A0A0B2]"
       >
         Land & Development
       </button>
       <ChevronRight className="h-3 w-3" />
-      <span className="text-[#8A9E8A]">{listing.city}, {listing.state}</span>
+      <span className="text-[#A0A0B2]">{listing.city}, {listing.state}</span>
     </nav>
   )
 }
@@ -458,9 +454,9 @@ const LAND_DOCUMENTS = [
 
 function FeatureChip({ label }: { label: string }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-[#1E2D1E] bg-[#0D110D] px-3 py-2.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
+    <div className="flex items-center gap-2 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]">
       <Check className="h-3.5 w-3.5 shrink-0 text-[#4ADE80]" />
-      <span className="text-[#8A9E8A]">{label}</span>
+      <span className="text-[#A0A0B2]">{label}</span>
     </div>
   )
 }
@@ -469,13 +465,13 @@ function OverviewTab({ listing }: { listing: MockListing }) {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">About this parcel</h2>
-        <p className="text-sm leading-relaxed text-[#8A9E8A]">{listing.description}</p>
+        <h2 className="section-title mb-4 !text-[19px]">About this parcel</h2>
+        <p className="text-sm leading-relaxed text-[#A0A0B2]">{listing.description}</p>
       </section>
 
       {listing.features.length > 0 && (
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Key attributes</h2>
+          <h2 className="section-title mb-4 !text-[19px]">Key attributes</h2>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {listing.features.map((f) => <FeatureChip key={f} label={f} />)}
           </div>
@@ -483,12 +479,12 @@ function OverviewTab({ listing }: { listing: MockListing }) {
       )}
 
       <section>
-        <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Location context</h2>
-        <div className="flex items-start gap-3 rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
+        <h2 className="section-title mb-4 !text-[19px]">Location context</h2>
+        <div className="flex items-start gap-3 rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
           <Compass className="mt-0.5 h-4 w-4 shrink-0 text-[#4ADE80]" />
           <div className="space-y-1 text-sm">
-            <p className="font-medium text-[#E8F0E8]">{listing.city}, {listing.state}</p>
-            <p className="text-[#5A7060]">
+            <p className="font-medium text-[#F5F5F7]">{listing.city}, {listing.state}</p>
+            <p className="text-[#8E8E9C]">
               Proximity data, drive-time analysis, and regional market context will be available when mapping services are integrated.
             </p>
           </div>
@@ -519,8 +515,8 @@ function ZoningTab({
     <div className="space-y-8">
       {/* Land use type card */}
       <section>
-        <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Land Use Classification</h2>
-        <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
+        <h2 className="section-title mb-4 !text-[19px]">Land Use Classification</h2>
+        <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
           <div className="mb-3 flex items-center gap-3">
             <span
               className="flex h-9 w-9 items-center justify-center rounded-xl ring-1"
@@ -529,26 +525,26 @@ function ZoningTab({
               <TreePine className="h-4 w-4" style={{ color: config.accentColor }} />
             </span>
             <div>
-              <p className="font-heading text-sm font-semibold text-[#E8F0E8]">{config.label}</p>
-              <p className="text-[10px] uppercase tracking-wider text-[#4A6A4A]">Primary classification</p>
+              <p className="font-heading text-sm font-semibold text-[#F5F5F7]">{config.label}</p>
+              <p className="text-[10px] uppercase tracking-wider text-[#7A7A8A]">Primary classification</p>
             </div>
             <span className="ml-auto">
               <LandUseBadge landUse={landUse} />
             </span>
           </div>
-          <p className="text-sm text-[#8A9E8A]">{config.description}</p>
+          <p className="text-sm text-[#A0A0B2]">{config.description}</p>
         </div>
       </section>
 
       {/* Permitted uses */}
       {permittedUses.length > 0 && (
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Permitted Uses</h2>
+          <h2 className="section-title mb-4 !text-[19px]">Permitted Uses</h2>
           <div className="space-y-2">
             {permittedUses.map((use) => (
-              <div key={use} className="flex items-center gap-2.5 rounded-lg border border-[#1E2D1E] bg-[#0D110D] px-3 py-2.5">
+              <div key={use} className="flex items-center gap-2.5 rounded-lg border border-white/[0.07] bg-white/[0.03] px-3 py-2.5">
                 <Check className="h-3.5 w-3.5 shrink-0 text-[#4ADE80]" />
-                <span className="text-sm text-[#8A9E8A]">{use}</span>
+                <span className="text-sm text-[#A0A0B2]">{use}</span>
               </div>
             ))}
           </div>
@@ -557,16 +553,16 @@ function ZoningTab({
 
       {/* Infrastructure */}
       <section>
-        <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Infrastructure & Site Readiness</h2>
-        <div className="divide-y divide-[#1A2B1A] overflow-hidden rounded-xl border border-[#1E2D1E]">
+        <h2 className="section-title mb-4 !text-[19px]">Infrastructure & Site Readiness</h2>
+        <div className="divide-y divide-white/[0.06] overflow-hidden rounded-xl border border-white/[0.07]">
           {infrastructure.map(({ label, available }) => (
-            <div key={label} className="flex items-center justify-between bg-[#0D110D] px-4 py-3">
-              <span className="text-sm text-[#8A9E8A]">{label}</span>
+            <div key={label} className="flex items-center justify-between bg-white/[0.03] px-4 py-3">
+              <span className="text-sm text-[#A0A0B2]">{label}</span>
               <span className={cn(
                 'inline-flex items-center gap-1 rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
                 available
                   ? 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20'
-                  : 'bg-[#1A2B1A] text-[#4A6A4A] ring-[#1E2D1E]',
+                  : 'bg-white/[0.06] text-[#7A7A8A] ring-white/[0.07]',
               )}>
                 {available ? <Check className="h-2.5 w-2.5" /> : null}
                 {available ? 'Confirmed' : 'Not confirmed'}
@@ -579,21 +575,21 @@ function ZoningTab({
       {/* Development opportunity */}
       {devOpportunity ? (
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Development Opportunity</h2>
+          <h2 className="section-title mb-4 !text-[19px]">Development Opportunity</h2>
           <TerraDevOpportunityPanel opportunity={devOpportunity} variant="full" />
         </section>
       ) : isDevOpportunity && (
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Development Opportunity</h2>
-          <div className="rounded-xl border border-[#22C55E]/20 bg-[#0D110D] p-4">
+          <h2 className="section-title mb-4 !text-[19px]">Development Opportunity</h2>
+          <div className="rounded-xl border border-[#22C55E]/20 bg-white/[0.03] p-4">
             <div className="mb-3 flex items-center gap-2">
               <Layers className="h-4 w-4 text-[#4ADE80]" />
               <span className="text-sm font-semibold text-[#4ADE80]">Active Development Signals</span>
             </div>
-            <p className="mb-3 text-sm text-[#8A9E8A]">
+            <p className="mb-3 text-sm text-[#A0A0B2]">
               This parcel exhibits one or more attributes that indicate development readiness or active entitlement. Buyers should conduct independent due diligence on permitting status and timelines.
             </p>
-            <div className="grid grid-cols-2 gap-2 text-xs text-[#5A7060]">
+            <div className="grid grid-cols-2 gap-2 text-xs text-[#8E8E9C]">
               {[
                 'Verify zoning with local authority',
                 'Confirm utility connection costs',
@@ -613,14 +609,14 @@ function ZoningTab({
       {/* Lease terms */}
       {leaseTerms && (
         <section>
-          <h2 className="mb-3 font-heading text-base font-semibold text-[#E8F0E8]">Lease Terms</h2>
+          <h2 className="section-title mb-4 !text-[19px]">Lease Terms</h2>
           <LeaseTermsPanel terms={leaseTerms} acres={listing.lotAcres ?? undefined} variant="full" />
         </section>
       )}
 
       {/* Regulatory notice */}
-      <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] px-4 py-3">
-        <p className="text-[11px] leading-relaxed text-[#4A6A4A]">
+      <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] px-4 py-3">
+        <p className="text-[11px] leading-relaxed text-[#7A7A8A]">
           Zoning classifications and permitted uses shown are inferred from listing attributes and are not a substitute for official municipal records. Always verify with the relevant local planning authority before making acquisition or development decisions.
         </p>
       </div>
@@ -631,26 +627,26 @@ function ZoningTab({
 function DocumentsTab() {
   return (
     <div className="space-y-4">
-      <p className="text-sm text-[#5A7060]">
+      <p className="text-sm text-[#8E8E9C]">
         Documents are assembled by TIGI as part of the land due diligence package. Full access is granted after completing buyer verification or submitting a letter of intent.
       </p>
-      <div className="divide-y divide-[#1A2B1A] overflow-hidden rounded-xl border border-[#1E2D1E]">
+      <div className="divide-y divide-white/[0.06] overflow-hidden rounded-xl border border-white/[0.07]">
         {LAND_DOCUMENTS.map((doc) => (
-          <div key={doc.name} className="flex items-center justify-between gap-4 bg-[#0D110D] px-4 py-3">
+          <div key={doc.name} className="flex items-center justify-between gap-4 bg-white/[0.03] px-4 py-3">
             <div className="flex items-center gap-3">
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#111D11]">
-                <FileText className="h-4 w-4 text-[#4A6A4A]" />
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/[0.05]">
+                <FileText className="h-4 w-4 text-[#7A7A8A]" />
               </div>
               <div>
-                <p className="text-sm font-medium text-[#E8F0E8]">{doc.name}</p>
-                <p className="text-[11px] text-[#4A6A4A]">{doc.type}</p>
+                <p className="text-sm font-medium text-[#F5F5F7]">{doc.name}</p>
+                <p className="text-[11px] text-[#7A7A8A]">{doc.type}</p>
               </div>
             </div>
             <span className={cn(
               'inline-flex items-center rounded px-2 py-0.5 text-[10px] font-medium ring-1 ring-inset',
               doc.status === 'available' && 'bg-[#22C55E]/10 text-[#4ADE80] ring-[#22C55E]/20',
               doc.status === 'pending' && 'bg-[#F59E0B]/10 text-[#FCD34D] ring-[#F59E0B]/20',
-              doc.status === 'not_available' && 'bg-[#1A2B1A] text-[#4A6A4A] ring-[#1E2D1E]',
+              doc.status === 'not_available' && 'bg-white/[0.06] text-[#7A7A8A] ring-white/[0.07]',
             )}>
               {doc.status === 'available' ? 'Available' : null}
               {doc.status === 'pending' ? 'Pending' : null}
@@ -709,7 +705,7 @@ function LandDetailTabs({
 
   return (
     <div>
-      <div className="flex overflow-x-auto border-b border-[#1E2D1E] scrollbar-none">
+      <div className="flex overflow-x-auto border-b border-white/[0.07] scrollbar-none">
         {tabs.map(({ key, label }) => (
           <button
             key={key}
@@ -717,7 +713,7 @@ function LandDetailTabs({
             onClick={() => setActiveTab(key)}
             className={cn(
               'relative shrink-0 px-5 py-3 text-sm font-medium transition-colors duration-150',
-              activeTab === key ? 'text-[#4ADE80]' : 'text-[#5A7060] hover:text-[#8A9E8A]',
+              activeTab === key ? 'text-[#4ADE80]' : 'text-[#8E8E9C] hover:text-[#A0A0B2]',
             )}
           >
             {label}
@@ -767,10 +763,10 @@ function LandMetricsGrid({ listing, landUse }: { listing: MockListing; landUse: 
   return (
     <div className="grid grid-cols-3 gap-2">
       {items.map(({ icon, label, value }) => (
-        <div key={label} className="flex flex-col items-center gap-1 rounded-xl border border-[#1E2D1E] bg-[#0D110D] py-3 text-center">
-          <span className="text-[#3A5A3A]">{icon}</span>
-          <span className="font-heading text-sm font-semibold text-[#E8F0E8] leading-tight">{value}</span>
-          <span className="text-[9px] uppercase tracking-wider text-[#4A6A4A]">{label}</span>
+        <div key={label} className="flex flex-col items-center gap-1 rounded-xl border border-white/[0.07] bg-white/[0.03] py-3 text-center">
+          <span className="text-[#6E6E7E]">{icon}</span>
+          <span className="font-heading text-sm font-semibold text-[#F5F5F7] leading-tight">{value}</span>
+          <span className="text-[9px] uppercase tracking-wider text-[#7A7A8A]">{label}</span>
         </div>
       ))}
     </div>
@@ -785,7 +781,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
   const available = listing.tokenAvailableSupply ?? 0
 
   return (
-    <div className="rounded-xl border border-indigo-500/20 bg-[#0D110D] p-4">
+    <div className="rounded-xl border border-indigo-500/20 bg-white/[0.03] p-4">
       <div className="mb-3 flex items-center gap-2">
         <Zap className="h-3.5 w-3.5 text-indigo-400" />
         <span className="text-[11px] font-semibold uppercase tracking-wider text-indigo-400">
@@ -793,18 +789,18 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         </span>
       </div>
       <div className="mb-4">
-        <p className="text-[10px] text-[#4A6A4A]">Entry from</p>
+        <p className="text-[10px] text-[#7A7A8A]">Entry from</p>
         <p className="font-heading text-2xl font-bold text-indigo-400">
           ${listing.tokenPricePerFraction.toLocaleString()}
-          <span className="text-sm font-normal text-[#5A7060]">/fraction</span>
+          <span className="text-sm font-normal text-[#8E8E9C]">/fraction</span>
         </p>
       </div>
       <div className="mb-3">
         <div className="mb-1.5 flex items-center justify-between text-[11px]">
-          <span className="text-[#5A7060]">{soldPct}% subscribed</span>
-          <span className="text-[#5A7060]">{available.toLocaleString()} available</span>
+          <span className="text-[#8E8E9C]">{soldPct}% subscribed</span>
+          <span className="text-[#8E8E9C]">{available.toLocaleString()} available</span>
         </div>
-        <div className="h-1.5 overflow-hidden rounded-full bg-[#1A2B1A]">
+        <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.06]">
           <div
             className="h-full rounded-full bg-gradient-to-r from-[#166534] to-[#4ADE80] transition-all duration-700"
             style={{ width: `${soldPct}%` }}
@@ -812,10 +808,10 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         </div>
       </div>
       {listing.tokenInvestorCount != null && (
-        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#5A7060]">
+        <div className="mb-4 flex items-center gap-1.5 text-xs text-[#8E8E9C]">
           <Users className="h-3.5 w-3.5" />
           <span>
-            <span className="font-medium text-[#8A9E8A]">{listing.tokenInvestorCount}</span> investors have participated
+            <span className="font-medium text-[#A0A0B2]">{listing.tokenInvestorCount}</span> investors have participated
           </span>
         </div>
       )}
@@ -827,7 +823,7 @@ function InvestmentPanel({ listing }: { listing: MockListing }) {
         only={['PREPARE_INVEST']}
         theme="land"
       />
-      <p className="mt-2.5 text-[10px] leading-relaxed text-[#4A6A4A]">
+      <p className="mt-2.5 text-[10px] leading-relaxed text-[#7A7A8A]">
         Fractional tokens represent proportional economic interest. Not a securities offering. See disclosures.
       </p>
     </div>
@@ -864,15 +860,15 @@ function LandActionPanel({
   return (
     <div className="space-y-4">
       {/* Price card */}
-      <div className="rounded-2xl border border-[#1E2D1E] bg-[#0D110D] p-5">
+      <div className="panel p-5">
         {isLeaseOnly && leaseRateMonthly ? (
           <>
-            <p className="text-[10px] uppercase tracking-widest text-[#4A6A4A]">Lease Rate</p>
-            <p className="mt-1 font-heading text-3xl font-bold text-[#E8F0E8]">
+            <p className="text-[10px] uppercase tracking-widest text-[#7A7A8A]">Lease Rate</p>
+            <p className="mt-1 font-heading text-3xl font-bold text-[#F5F5F7]">
               {formatLeaseRate(leaseRateMonthly)}
             </p>
             {acres > 0 && (
-              <p className="mt-0.5 text-sm text-[#5A7060]">
+              <p className="mt-0.5 text-sm text-[#8E8E9C]">
                 {formatPricePerAcre(leaseRateMonthly * 12, acres)}
                 <span className="text-xs"> per acre / yr</span>
               </p>
@@ -880,12 +876,12 @@ function LandActionPanel({
           </>
         ) : (
           <>
-            <p className="text-[10px] uppercase tracking-widest text-[#4A6A4A]">List Price</p>
-            <p className="mt-1 font-heading text-3xl font-bold text-[#E8F0E8]">
+            <p className="text-[10px] uppercase tracking-widest text-[#7A7A8A]">List Price</p>
+            <p className="mt-1 font-heading text-3xl font-bold text-[#F5F5F7]">
               {formatPrice(listing.price)}
             </p>
             {acres > 0 && (
-              <p className="mt-0.5 text-sm text-[#5A7060]">
+              <p className="mt-0.5 text-sm text-[#8E8E9C]">
                 {formatPricePerAcre(listing.price, acres)}
                 <span className="text-xs"> per acre</span>
               </p>
@@ -893,7 +889,7 @@ function LandActionPanel({
             {leaseRateMonthly && (
               <p className="mt-0.5 text-sm text-[#A78BFA]">
                 or {formatLeaseRate(leaseRateMonthly)}
-                <span className="text-xs text-[#5A7060]"> to lease</span>
+                <span className="text-xs text-[#8E8E9C]"> to lease</span>
               </p>
             )}
           </>
@@ -901,7 +897,7 @@ function LandActionPanel({
         {listing.isTokenized && listing.tokenPricePerFraction && (
           <p className="mt-0.5 text-sm text-indigo-400">
             from ${listing.tokenPricePerFraction.toLocaleString()}
-            <span className="text-xs text-[#5A7060]">/fraction</span>
+            <span className="text-xs text-[#8E8E9C]">/fraction</span>
           </p>
         )}
 
@@ -924,7 +920,7 @@ function LandActionPanel({
             'mt-2 flex w-full items-center justify-center gap-2 rounded-xl border py-2.5 text-sm font-medium transition-all active:scale-[0.98]',
             isSaved
               ? 'border-rose-500/30 bg-rose-500/10 text-rose-400'
-              : 'border-[#1E2D1E] text-[#5A7060] hover:border-[#2A3A2A] hover:text-[#E8F0E8]',
+              : 'border-white/[0.07] text-[#8E8E9C] hover:border-[#2A3A2A] hover:text-[#F5F5F7]',
           )}
         >
           <Heart className={cn('h-4 w-4', isSaved && 'fill-rose-400')} />
@@ -935,7 +931,7 @@ function LandActionPanel({
         <button
           type="button"
           onClick={() => setInquiryOpen(true)}
-          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-[#1E2D1E] py-2.5 text-sm font-medium text-[#5A7060] transition-all hover:border-[#4ADE80]/25 hover:text-[#4ADE80] active:scale-[0.98]"
+          className="mt-1 flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.07] py-2.5 text-sm font-medium text-[#8E8E9C] transition-all hover:border-[#4ADE80]/25 hover:text-[#4ADE80] active:scale-[0.98]"
         >
           <MessageSquare className="h-4 w-4" />
           Ask a Question
@@ -965,14 +961,14 @@ function LandActionPanel({
       {devOpportunity ? (
         <TerraDevOpportunityPanel opportunity={devOpportunity} variant="compact" />
       ) : isDevOpportunity && (
-        <div className="rounded-xl border border-[#22C55E]/25 bg-[#0D110D] p-4">
+        <div className="rounded-xl border border-[#22C55E]/25 bg-white/[0.03] p-4">
           <div className="mb-3 flex items-center gap-2">
             <Layers className="h-3.5 w-3.5 text-[#4ADE80]" />
             <span className="text-[11px] font-semibold uppercase tracking-wider text-[#4ADE80]">
               Development Opportunity
             </span>
           </div>
-          <p className="text-[10px] leading-relaxed text-[#4A6A4A]">
+          <p className="text-[10px] leading-relaxed text-[#7A7A8A]">
             Development signals identified from listing attributes. Verify entitlement status with local planning authority.
           </p>
         </div>
@@ -995,8 +991,8 @@ function LandActionPanel({
       )}
 
       {/* Trust signals */}
-      <div className="rounded-xl border border-[#1E2D1E] bg-[#0D110D] p-4">
-        <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-[#4A6A4A]">
+      <div className="rounded-xl border border-white/[0.07] bg-white/[0.03] p-4">
+        <p className="mb-2.5 text-[11px] font-semibold uppercase tracking-wider text-[#7A7A8A]">
           TIGI Verified
         </p>
         <ul className="space-y-1.5">
@@ -1006,7 +1002,7 @@ function LandActionPanel({
             'Parcel boundary confirmation',
             'Escrow-backed transactions',
           ].map((item) => (
-            <li key={item} className="flex items-center gap-2 text-xs text-[#5A7060]">
+            <li key={item} className="flex items-center gap-2 text-xs text-[#8E8E9C]">
               <Check className="h-3 w-3 shrink-0 text-indigo-400" />
               {item}
             </li>
@@ -1046,7 +1042,7 @@ export function LandDetailClient({
   const isDevOpportunity = inferDevOpportunity(listing.features)
 
   return (
-    <div className="animate-fade-in space-y-6 pt-6 pb-16">
+    <div className="space-y-8">
       {/* Breadcrumb */}
       <BreadcrumbNav listing={listing} />
 
@@ -1063,7 +1059,7 @@ export function LandDetailClient({
       />
 
       {/* Divider */}
-      <div className="border-t border-[#1A2B1A]" />
+      <div className="border-t border-white/[0.08]" />
 
       {/* 2-column layout */}
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
@@ -1078,7 +1074,7 @@ export function LandDetailClient({
           />
         </div>
         <div className="lg:col-span-5 xl:col-span-4">
-          <div className="lg:sticky lg:top-6">
+          <div className="lg:sticky lg:top-[92px]">
             <LandActionPanel
               listing={listing}
               landUse={landUse}

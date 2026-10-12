@@ -81,7 +81,7 @@ function SuccessCard({
   theme:       'default' | 'land'
 }) {
   const borderColor = theme === 'land' ? 'border-[#22C55E]/25' : 'border-[#22C55E]/25'
-  const bgColor     = theme === 'land' ? 'bg-[#0D110D]'        : 'bg-white/[0.03]'
+  const bgColor     = theme === 'land' ? 'bg-white/[0.03]'        : 'bg-white/[0.03]'
 
   return (
     <div className={cn('rounded-xl border p-4', borderColor, bgColor)}>
@@ -139,12 +139,12 @@ function ConfirmPanel({
   const [durationMonths,setDurationMonths]= useState<string>('')
   const [intendedUse,   setIntendedUse]   = useState('')
 
-  const borderClass = theme === 'land' ? 'border-[#1E2D1E]' : 'border-white/[0.08]'
-  const bgClass     = theme === 'land' ? 'bg-[#0D110D]'     : 'bg-white/[0.03]'
+  const borderClass = theme === 'land' ? 'border-white/[0.07]' : 'border-white/[0.08]'
+  const bgClass     = theme === 'land' ? 'bg-white/[0.03]'     : 'bg-white/[0.03]'
   const inputClass  = theme === 'land'
-    ? 'border-[#1E2D1E] bg-[#111A11] text-[#E8F0E8] placeholder-[#4A6A4A] focus:border-[#2A3A2A]'
+    ? 'border-white/[0.07] bg-[#111A11] text-[#F5F5F7] placeholder-[#4A6A4A] focus:border-[#2A3A2A]'
     : 'border-white/[0.08] bg-white/[0.04] text-[#F5F5F7] placeholder-[#7A7A8A] focus:border-white/[0.10]'
-  const labelClass  = theme === 'land' ? 'text-[#5A7060]' : 'text-[#8E8E9C]'
+  const labelClass  = theme === 'land' ? 'text-[#8E8E9C]' : 'text-[#8E8E9C]'
 
   const handleSubmit = () => {
     const leaseDetails = pending.showLeaseDetails ? {

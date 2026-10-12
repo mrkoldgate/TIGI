@@ -26,6 +26,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react'
 import { cn } from '@/lib/utils'
+import { PageHeader } from '@/components/shared/page-header'
 import { UploadZone } from '@/components/ui/upload-zone'
 import type { KycStatusData } from '@/lib/compliance/kyc-query'
 
@@ -175,17 +176,13 @@ export function KYCOnboardingClient({
   // ── Render ─────────────────────────────────────────────────────────────
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-10">
-      {/* Header */}
-      <div className="mb-8">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-[#7A7A8A]">
-          Account Verification
-        </p>
-        <h1 className="mt-1 text-2xl font-bold text-[#F5F5F7]">Identity Verification</h1>
-        <p className="mt-1 text-sm text-[#8E8E9C]">
-          Required to unlock investing and trading features on TIGI.
-        </p>
-      </div>
+    <div className="mx-auto max-w-2xl">
+      <PageHeader
+        eyebrow="Identity check"
+        title="Verify your identity"
+        description="Needed once, before you can buy shares, list property or set up a Legacy plan."
+        className="mb-8"
+      />
 
       {/* Step progress (shown for in-progress steps 1–6) */}
       {step <= 6 && (
@@ -193,7 +190,7 @@ export function KYCOnboardingClient({
       )}
 
       {/* Step content */}
-      <div className="mt-6 rounded-2xl border border-white/[0.08] bg-black/80 p-6 shadow-xl sm:p-8">
+      <div className="panel mt-6 p-6 sm:p-8">
         {step === 1 && (
           <WelcomeStep
             status={status}

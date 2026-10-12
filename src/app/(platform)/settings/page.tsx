@@ -87,7 +87,7 @@ export default async function SettingsPage() {
   ]
 
   return (
-    <div className="animate-fade-in pt-8 pb-16">
+    <div className="relative">
       <PageHeader
         title="Settings"
         description="Profile, subscription, wallet, and identity verification."

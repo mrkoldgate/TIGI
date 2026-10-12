@@ -25,6 +25,7 @@ import {
 import { cn } from '@/lib/utils'
 import { WaveChars } from '@/components/motion/wave-text'
 import { PlaceholderImage } from '@/components/shared/placeholder-image'
+import { PhotoLightbox } from '@/components/shared/photo-lightbox'
 import { PropertyCard } from '@/components/marketplace/property-card'
 import { MarketplaceLandCard } from '@/components/marketplace/land-card'
 import { ValuationPanel } from '@/components/valuation/valuation-panel'
@@ -97,23 +98,6 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
   const slots = getGallerySlots(listing)
   const [open, setOpen] = useState<number | null>(null)
 
-  // Keyboard: Esc closes, arrows step through photos
-  useEffect(() => {
-    if (open === null) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(null)
-      if (e.key === 'ArrowRight') setOpen((i) => (i === null ? i : (i + 1) % slots.length))
-      if (e.key === 'ArrowLeft') setOpen((i) => (i === null ? i : (i - 1 + slots.length) % slots.length))
-    }
-    window.addEventListener('keydown', onKey)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      document.body.style.overflow = prev
-    }
-  }, [open, slots.length])
-
   const tile = (i: number, className?: string, priority?: boolean) => (
     <button
       type="button"
@@ -169,50 +153,14 @@ function GalleryMosaic({ listing }: { listing: MockListing }) {
 
       {/* Lightbox */}
       {open !== null && (
-        <div
-          className="fixed inset-0 z-[60] flex flex-col bg-black/95 backdrop-blur-md animate-fade-in"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Photo gallery"
-          onClick={() => setOpen(null)}
-        >
-          <div className="flex items-center justify-between px-6 py-5">
-            <p className="font-mono text-[12px] tabular-nums text-[#A0A0B2]">
-              {open + 1} / {slots.length}
-            </p>
-            <button onClick={() => setOpen(null)} className="btn-glass !px-4 !py-2 text-sm">Close</button>
-          </div>
-          <div className="relative mx-auto flex w-full max-w-6xl flex-1 items-center px-6 pb-10" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-[3/2] w-full overflow-hidden rounded-[20px]">
-              <PlaceholderImage
-                key={open}
-                slot={slots[open]}
-                propertyType={listing.imagePropertyType}
-                alt={`${listing.title} — photo ${open + 1}`}
-                className="h-full w-full animate-fade-in"
-                priority
-              />
-            </div>
-            {slots.length > 1 && (
-              <>
-                <button
-                  onClick={() => setOpen((open - 1 + slots.length) % slots.length)}
-                  className="btn-glass absolute left-8 top-1/2 !h-12 !w-12 -translate-y-1/2 !p-0"
-                  aria-label="Previous photo"
-                >
-                  <ChevronRight className="h-5 w-5 rotate-180" />
-                </button>
-                <button
-                  onClick={() => setOpen((open + 1) % slots.length)}
-                  className="btn-glass absolute right-8 top-1/2 !h-12 !w-12 -translate-y-1/2 !p-0"
-                  aria-label="Next photo"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </>
-            )}
-          </div>
-        </div>
+        <PhotoLightbox
+          slots={slots}
+          index={open}
+          title={listing.title}
+          propertyType={listing.imagePropertyType}
+          onIndex={setOpen}
+          onClose={() => setOpen(null)}
+        />
       )}
     </div>
   )

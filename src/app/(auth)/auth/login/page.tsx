@@ -57,9 +57,9 @@ function LoginContent() {
   }
 
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-white/[0.04] p-8 shadow-2xl backdrop-blur-xl" style={{ boxShadow: '0 0 0 0.5px rgba(255,255,255,0.06) inset, 0 32px 64px rgba(0,0,0,0.5)' }}>
+    <div className="panel p-8 sm:p-9">
       <div className="mb-8">
-        <h1 className="font-heading text-2xl font-bold text-white">
+        <h1 className="page-title !text-[34px]">
           Welcome back
         </h1>
         <p className="mt-1 text-sm text-[#8E8E9C]">
@@ -80,7 +80,7 @@ function LoginContent() {
         type="button"
         onClick={handleGoogleSignIn}
         disabled={isSubmitting || googleLoading}
-        className="mb-6 flex w-full items-center justify-center gap-3 rounded-xl border border-white/[0.04] bg-[#16161F] px-4 py-3 text-sm font-medium text-white transition-all hover:border-[#3A3A50] hover:bg-[#1C1C28] disabled:opacity-60"
+        className="btn-glass mb-6 w-full !py-3 text-sm disabled:opacity-60"
       >
         {googleLoading ? (
           <Loader2 className="h-4 w-4 animate-spin" />
@@ -101,7 +101,7 @@ function LoginContent() {
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
         {/* Email */}
         <div>
-          <label htmlFor="email" className="mb-1.5 block text-sm text-[#9999AA]">
+          <label htmlFor="email" className="mb-1.5 block text-sm text-[#C3C3CC]">
             Email address
           </label>
           <input
@@ -111,9 +111,8 @@ function LoginContent() {
             autoComplete="email"
             placeholder="you@example.com"
             className={cn(
-              'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
-              'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
-              errors.email ? 'border-red-500/50' : 'border-white/[0.04]',
+              'field',
+              errors.email && '!border-red-500/50',
             )}
           />
           {errors.email && (
@@ -124,15 +123,9 @@ function LoginContent() {
         {/* Password */}
         <div>
           <div className="mb-1.5 flex items-center justify-between">
-            <label htmlFor="password" className="text-sm text-[#9999AA]">
+            <label htmlFor="password" className="text-sm text-[#C3C3CC]">
               Password
             </label>
-            <Link
-              href="/auth/forgot-password"
-              className="text-xs text-[#A78BFA] hover:text-[#C4B5FD] transition-colors"
-            >
-              Forgot password?
-            </Link>
           </div>
           <div className="relative">
             <input
@@ -142,9 +135,8 @@ function LoginContent() {
               autoComplete="current-password"
               placeholder="••••••••"
               className={cn(
-                'w-full rounded-xl border bg-[#0E0E16] px-4 py-3 pr-11 text-sm text-white placeholder-[#6E6E7E] outline-none transition-all',
-                'focus:border-[#8B5CF6]/50 focus:ring-1 focus:ring-[#8B5CF6]/20',
-                errors.password ? 'border-red-500/50' : 'border-white/[0.04]',
+                'field !pr-11',
+                errors.password && '!border-red-500/50',
               )}
             />
             <button
@@ -165,7 +157,7 @@ function LoginContent() {
         <button
           type="submit"
           disabled={isSubmitting || googleLoading}
-          className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#8B5CF6] to-[#7C3AED] px-4 py-3 text-sm font-semibold text-white shadow-[0_0_20px_rgba(139,92,246,0.3)] transition-all hover:from-[#7C3AED] hover:to-[#6D28D9] hover:shadow-[0_0_28px_rgba(139,92,246,0.45)] active:scale-[0.98] disabled:opacity-60"
+          className="btn-primary mt-3 w-full !py-3 text-sm disabled:opacity-60"
         >
           {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
           Sign in

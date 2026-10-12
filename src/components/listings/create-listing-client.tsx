@@ -399,7 +399,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
           onSelect={() => setForm((f) => ({ ...f, assetType: 'LAND' }))}
           assetType={form.assetType}
         >
-          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-[#0D110D]">
+          <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-white/[0.03]">
             <LandIcon />
           </div>
           <p className="mb-1 text-base font-semibold text-[#F5F5F7]">Land</p>
@@ -411,7 +411,7 @@ function AssetTypeStep({ form, setForm, onNext }: Step1Props) {
             {['Agricultural', 'Dev. Opportunity', 'Recreational', 'Waterfront'].map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-[#1E2D1E] px-2.5 py-0.5 text-[10px] text-[#8E8E9C]"
+                className="rounded-full border border-white/[0.07] px-2.5 py-0.5 text-[10px] text-[#8E8E9C]"
               >
                 {t}
               </span>
@@ -723,14 +723,14 @@ function PricingStep({ form, setForm, onNext, onBack }: Step3Props) {
         {/* Land: per-acre callout */}
         {isLand && form.lotAcres && form.price && (
           <div
-            className="rounded-xl border border-[#1E2D1E] p-4"
+            className="rounded-xl border border-white/[0.07] p-4"
             style={{ backgroundColor: 'rgba(74,222,128,0.06)' }}
           >
             <p className="mb-1 text-xs font-semibold uppercase tracking-widest text-[#4ADE80]">
               Per-Acre Rate
             </p>
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-bold text-[#E8F0E8]">
+              <span className="text-2xl font-bold text-[#F5F5F7]">
                 ${inferredPPA ?? '—'}
               </span>
               <span className="text-xs text-[#8E8E9C]">/ acre (calculated)</span>

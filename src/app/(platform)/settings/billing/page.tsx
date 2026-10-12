@@ -37,7 +37,7 @@ export default async function BillingPage() {
   const isMockMode = (process.env.BILLING_PROVIDER ?? 'mock') === 'mock'
 
   return (
-    <div className="animate-fade-in pt-8 pb-16">
+    <div className="relative">
       <PageHeader
         title="Plan & Billing"
         description="Choose the plan that fits your investment strategy."

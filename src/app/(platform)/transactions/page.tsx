@@ -32,24 +32,7 @@ export default async function TransactionsPage() {
   const totalVolume = intents.reduce((sum, i) => sum + (i.offerAmount ?? 0), 0)
 
   return (
-    <div className="animate-fade-in relative pt-8 pb-20 space-y-8">
-      {/* ── TIGI v4 Elite atmospheric depth field — massive slow-drifting orbs ── */}
-      <div
-        className="pointer-events-none absolute -left-60 -top-32 h-[720px] w-[720px] rounded-full bg-indigo-500/[0.07] blur-[200px] animate-float-slow"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute -right-48 top-[280px] h-[600px] w-[600px] rounded-full bg-purple-500/[0.06] blur-[180px] animate-float"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute left-1/4 top-[800px] h-[500px] w-[500px] rounded-full bg-cyan-500/[0.045] blur-[160px] animate-float-slow"
-        aria-hidden="true"
-      />
-      <div
-        className="pointer-events-none absolute right-1/5 top-[1200px] h-[400px] w-[400px] rounded-full bg-emerald-500/[0.035] blur-[140px]"
-        aria-hidden="true"
-      />
+    <div className="relative space-y-8">
 
       <PageHeader
         title="Transactions"
