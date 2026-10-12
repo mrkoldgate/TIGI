@@ -79,6 +79,7 @@ async function main() {
     where:  { email: 'admin@tigi.com' },
     update: {},
     create: {
+      id:               'demo-admin', // stable across rebuilt demo databases
       email:            'admin@tigi.com',
       name:             'TIGI Admin',
       passwordHash,
@@ -96,6 +97,7 @@ async function main() {
     where:  { email: 'owner@tigi.com' },
     update: {},
     create: {
+      id:               'demo-owner', // stable across rebuilt demo databases
       email:            'owner@tigi.com',
       name:             'Taylor Realty',
       passwordHash,
@@ -113,6 +115,7 @@ async function main() {
     where:  { email: 'investor@tigi.com' },
     update: {},
     create: {
+      id:               'demo-investor', // stable across rebuilt demo databases
       email:            'investor@tigi.com',
       name:             'Jordan Wells',
       passwordHash,
@@ -130,6 +133,7 @@ async function main() {
     where:  { email: 'compliance@tigi.com' },
     update: {},
     create: {
+      id:               'demo-compliance', // stable across rebuilt demo databases
       email:            'compliance@tigi.com',
       name:             'Morgan Clarke',
       passwordHash,

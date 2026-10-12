@@ -99,6 +99,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           (user as { onboardingComplete?: boolean }).onboardingComplete ?? false
       }
 
+      // Vercel previews run on a demo database rebuilt at every deploy. If this
+      // session points at a user id that no longer exists, re-link it by email.
+      if (process.env.VERCEL && !user && token.id && token.email) {
+        try {
+          const exists = await prisma.user.findUnique({ where: { id: token.id as string }, select: { id: true } })
+          if (!exists) {
+            const byEmail = await prisma.user.findUnique({ where: { email: token.email }, select: { id: true } })
+            if (byEmail) token.id = byEmail.id
+          }
+        } catch {
+          // keep the token as is
+        }
+      }
+
       // Re-fetch from DB on: OAuth sign-ins OR explicit session update() call
       // This ensures subscription tier changes (billing upgrades) reflect immediately
       const shouldRefresh =
