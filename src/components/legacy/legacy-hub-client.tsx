@@ -54,7 +54,8 @@ import {
   Lock,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { LEGACY_MESSAGING, type LegacyPlanRecord, type LegacyBeneficiaryRecord } from '@/lib/legacy/legacy-query'
+import { LEGACY_MESSAGING } from '@/lib/legacy/legacy-messaging'
+import type { LegacyPlanRecord, LegacyBeneficiaryRecord } from '@/lib/legacy/legacy-query'
 import { BeneficiaryForm } from './beneficiary-form'
 
 // ── Step config ─────────────────────────────────────────────────────────────
