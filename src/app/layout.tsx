@@ -1,19 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
 import { Providers } from '@/components/providers'
-import { CustomCursor } from '@/components/ui/custom-cursor'
+import { RevealScript } from '@/components/motion/reveal-script'
 import './globals.css'
 
-// ---------------------------------------------------------------------------
-// Font — Inter: geometric sans-serif, premium tech aesthetic
-// ---------------------------------------------------------------------------
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  weight: ['300', '400', '500', '600', '700', '800', '900'],
-})
+// Fonts are self-hosted via @fontsource (Archivo wide display, Inter UI, JetBrains Mono data).
 
 // ---------------------------------------------------------------------------
 // Metadata
@@ -25,7 +18,7 @@ export const metadata: Metadata = {
     template: '%s | TIGI',
   },
   description:
-    'Own real estate one fraction at a time. TIGI makes property investment accessible to everyone through tokenized fractional ownership powered by Solana.',
+    'Own real estate and land one fraction at a time. TIGI turns property into digital shares you can buy, hold, lease and pass on, with AI research on every listing. Private beta.',
   keywords: [
     'real estate',
     'fractional ownership',
@@ -76,19 +69,11 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={inter.variable}
     >
       <head>
-        {/* JetBrains Mono via Google Fonts CDN — code / mono contexts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap"
-          rel="stylesheet"
-        />
+        <RevealScript />
       </head>
-      <body className="min-h-screen bg-black text-[#F8FAFC] antialiased">
-        <CustomCursor />
+      <body className="min-h-screen bg-black text-[#F5F5F7] antialiased">
         <Providers>{children}</Providers>
       </body>
     </html>

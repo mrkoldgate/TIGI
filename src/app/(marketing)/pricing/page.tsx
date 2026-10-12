@@ -62,13 +62,13 @@ export default function PricingPage() {
 
               <div className="mb-6">
                 {isEnterprise ? (
-                  <p className="text-3xl font-bold text-[#F5F5F7]">Custom</p>
+                  <p className="font-display text-3xl font-[480] text-[#F5F5F7]">Custom</p>
                 ) : (
                   <div>
-                    <p className="text-3xl font-bold tabular-nums text-[#F5F5F7]">
+                    <p className="font-display text-3xl font-[480] tabular-nums text-[#F5F5F7]">
                       {plan.priceMonthly === 0 ? 'Free' : `$${plan.priceMonthly}/mo`}
                     </p>
-                    {plan.priceAnnual && plan.priceMonthly !== 0 && (
+                    {!!plan.priceAnnual && plan.priceMonthly !== 0 && (
                       <p className="mt-1 text-xs text-[#6B6B80]">
                         or ${plan.priceAnnual}/yr — save {plan.annualSavingsPercent}%
                       </p>

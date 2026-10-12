@@ -161,7 +161,7 @@ export function TextReveal({ text, className, style, delay = 0, by = 'word' }: {
 export function MouseTiltCard({
     children,
     className,
-    spotlightColor = 'rgba(59,130,246,0.12)',
+    spotlightColor = 'rgba(99,102,241,0.12)',
     maxTilt = 10,
     perspective = 1200,
 }: {
@@ -250,8 +250,8 @@ export function NavProgressBar({ className }: { className?: string }) {
             <div
                 className="h-full w-full"
                 style={{
-                    background: 'linear-gradient(90deg, #3B82F6 0%, #8B5CF6 50%, #10B981 100%)',
-                    boxShadow: '0 0 8px rgba(59,130,246,0.6)',
+                    background: 'linear-gradient(90deg, #6366F1 0%, #A5B4FC 100%)',
+                    boxShadow: '0 0 10px rgba(99, 102, 241, 0.6)',
                 }}
             />
         </motion.div>

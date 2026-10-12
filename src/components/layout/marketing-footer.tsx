@@ -1,46 +1,50 @@
 import Link from 'next/link'
 import { Logo } from '@/components/shared/logo'
-import { FOOTER_LINKS } from '@/lib/nav-config'
 
 // ---------------------------------------------------------------------------
-// MarketingFooter — Public site footer
-// Platform views do NOT have a footer.
-// Footer links sourced from nav-config.ts for consistency with marketing nav.
+// MarketingFooter — v4. Only links to pages that exist; legal copy kept plain.
 // ---------------------------------------------------------------------------
+
+const COLUMNS: Record<string, Array<{ label: string; href: string }>> = {
+  Platform: [
+    { label: 'Marketplace', href: '/marketplace' },
+    { label: 'Land & leasing', href: '/leasing' },
+    { label: 'Legacy planning', href: '/inheritance' },
+    { label: 'Insights', href: '/insights' },
+    { label: 'Pricing', href: '/pricing' },
+  ],
+  Learn: [
+    { label: 'How it works', href: '/#how' },
+    { label: 'Intelligence', href: '/#intelligence' },
+    { label: 'Trust & safety', href: '/#trust' },
+    { label: 'Questions', href: '/#faq' },
+  ],
+  Account: [
+    { label: 'Get early access', href: '/auth/register' },
+    { label: 'Sign in', href: '/auth/login' },
+    { label: 'List a property', href: '/auth/register?role=owner' },
+  ],
+}
 
 export function MarketingFooter() {
   return (
-    <footer className="border-t border-white/[0.06] bg-black/80">
-      <div className="mx-auto max-w-[1280px] px-6 py-16 lg:px-8">
-        {/* Top row */}
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          {/* Brand column */}
-          <div className="lg:col-span-2">
+    <footer className="border-t border-[rgba(255,255,255,0.08)]">
+      <div className="mx-auto max-w-[1200px] px-5 py-16 sm:px-8">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_repeat(3,1fr)]">
+          <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-[#6B6B80]">
-              TIGI makes real estate investment accessible to everyone through
-              tokenized fractional ownership. AI-powered. Solana-backed.
-            </p>
-            {/* Legal disclaimer */}
-            <p className="mt-4 text-xs leading-relaxed text-[#6B6B80]">
-              Tokens represent economic interest as defined in offering documents.
-              Investments carry risk, including potential loss of principal. This
-              is not financial advice.
+            <p className="mt-5 max-w-[34ch] text-sm leading-relaxed text-[#C3C3CC]">
+              Real estate and land, owned by the share. Researched with AI, recorded on Solana.
             </p>
           </div>
-
-          {/* Link columns */}
-          {Object.entries(FOOTER_LINKS).map(([group, links]) => (
+          {Object.entries(COLUMNS).map(([group, links]) => (
             <div key={group}>
-              <h4 className="text-label mb-4">{group}</h4>
-              <ul className="space-y-2.5">
-                {links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-sm text-[#6B6B80] transition-colors hover:text-[#A0A0B2]"
-                    >
-                      {link.label}
+              <p className="text-label mb-4">{group}</p>
+              <ul className="space-y-3">
+                {links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-sm text-[#C3C3CC] no-underline transition-colors hover:text-[#F5F5F7]">
+                      {l.label}
                     </Link>
                   </li>
                 ))}
@@ -49,15 +53,15 @@ export function MarketingFooter() {
           ))}
         </div>
 
-        {/* Bottom row */}
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-center">
-          <p className="text-xs text-[#6B6B80]">
-            &copy; {new Date().getFullYear()} TIGI — Tokenized Intelligent Global Infrastructure.
-            All rights reserved.
+        <div className="mt-14 space-y-3 border-t border-[rgba(255,255,255,0.08)] pt-8 text-xs leading-relaxed text-[#8E8E9C]">
+          <p className="max-w-[110ch]">
+            TIGI is in private beta. No real money moves and no live offerings are made during the beta. When
+            offerings open, shares will represent an economic interest in the entity that holds each property,
+            as defined in its offering documents. Investing in real estate involves risk, including loss of
+            principal, and shares may be difficult to sell. AI valuations are estimates, not appraisals. Nothing
+            on this site is financial, legal or tax advice.
           </p>
-          <p className="text-xs text-[#6B6B80]">
-            Built on Solana. AI-powered. Compliance-first.
-          </p>
+          <p>&copy; {new Date().getFullYear()} TIGI. All rights reserved.</p>
         </div>
       </div>
     </footer>
