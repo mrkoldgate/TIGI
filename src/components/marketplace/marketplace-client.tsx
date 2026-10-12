@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import {
   Search,
   X,
@@ -11,7 +11,9 @@ import {
   Layers,
   ChevronDown,
   Trees,
+  SlidersHorizontal,
 } from 'lucide-react'
+import { PageHeader } from '@/components/shared/page-header'
 import { cn } from '@/lib/utils'
 import { PropertyCard, PropertyRow } from '@/components/marketplace/property-card'
 import {
@@ -144,166 +146,58 @@ function getGridCols(category: CategoryTab): string {
 }
 
 // ---------------------------------------------------------------------------
-// StatChip — v4 Elite: #050505 bg, sharp 1px border, inset shadow, neon glow
+// Header stats — Mercury-style figures separated by hairlines
 // ---------------------------------------------------------------------------
 
-function StatChip({
-  value,
-  label,
-  gold = false,
-  green = false,
-  onClick,
-}: {
-  value: string
-  label: string
-  gold?: boolean
-  green?: boolean
-  onClick?: () => void
-}) {
-  const Tag = onClick ? 'button' : 'div'
-  return (
-    <Tag
-      type={onClick ? 'button' : undefined}
-      onClick={onClick}
-      className={cn(
-        'group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full border px-4 py-2 transition-all duration-300',
-        'bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_2px_8px_rgba(0,0,0,0.5)]',
-        gold  && 'border-indigo-400/20',
-        green && 'border-emerald-400/20',
-        !gold && !green && 'border-white/[0.04]',
-        onClick && 'cursor-pointer hover:-translate-y-0.5 hover:border-white/[0.15] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.06),0_8px_24px_rgba(0,0,0,0.6)]',
-      )}
-    >
-      {/* Ambient glow */}
-      {(gold || green) && (
-        <div
-          className={cn(
-            'pointer-events-none absolute -right-4 -top-4 h-14 w-14 rounded-full blur-[20px] opacity-30 transition-opacity duration-500 group-hover:opacity-60',
-            gold ? 'bg-indigo-400/50' : 'bg-emerald-400/50',
-          )}
-          aria-hidden="true"
-        />
-      )}
-      {/* Top-edge light */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" aria-hidden="true" />
-      <span
-        className={cn(
-          'relative font-heading text-sm font-semibold tabular-nums',
-          gold  ? 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]' : green ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' : 'text-white',
-        )}
-      >
-        {value}
-      </span>
-      <span className="relative text-[12px] font-medium tracking-wide uppercase text-zinc-500">{label}</span>
-    </Tag>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// CategoryTabs — v4 Elite: #050505 base, structural underline, neon accents
-// ---------------------------------------------------------------------------
-
-function CategoryTabs({
-  active,
-  onChange,
-}: {
-  active: CategoryTab
-  onChange: (tab: CategoryTab) => void
-}) {
-  const tabs: { key: CategoryTab; label: string; icon?: React.ReactNode; accent: string; glow: string }[] = [
-    { key: 'ALL', label: 'All Listings', accent: 'bg-indigo-400', glow: 'shadow-[0_0_12px_rgba(99,102,241,0.6),0_2px_8px_rgba(99,102,241,0.3)]' },
-    { key: 'PROPERTIES', label: 'Residential & Commercial', icon: <Building2 className="h-3.5 w-3.5" />, accent: 'bg-indigo-400', glow: 'shadow-[0_0_12px_rgba(99,102,241,0.6),0_2px_8px_rgba(99,102,241,0.3)]' },
-    { key: 'LAND', label: 'Land & Development', icon: <Trees className="h-3.5 w-3.5" />, accent: 'bg-emerald-400', glow: 'shadow-[0_0_12px_rgba(52,211,153,0.6),0_2px_8px_rgba(52,211,153,0.3)]' },
+function HeaderStats({ stats, onLand }: { stats: MarketplaceStats; onLand: () => void }) {
+  const items: { value: string; label: string; onClick?: () => void }[] = [
+    { value: String(stats.totalActive), label: 'Active listings' },
+    { value: String(stats.tokenizedCount), label: 'Tokenized' },
+    { value: `$${(stats.totalValue / 1_000_000).toFixed(1)}M`, label: 'Listed value' },
+    { value: String(stats.landCount), label: 'Land parcels', onClick: onLand },
   ]
-
   return (
-    <div className="flex overflow-x-auto border-b border-white/[0.04] scrollbar-none">
-      {tabs.map(({ key, label, icon, accent, glow }) => (
-        <button
-          key={key}
-          type="button"
-          onClick={() => onChange(key)}
-          className={cn(
-            'relative flex shrink-0 items-center gap-2 px-6 py-4 text-sm font-medium transition-all duration-300',
-            active === key ? 'text-white' : 'text-zinc-500 hover:text-zinc-400',
-          )}
-        >
-          {icon && (
-            <span
-              className={cn(
-                'transition-all duration-300',
-                active === key
-                  ? key === 'LAND'
-                    ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.6)]'
-                    : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.6)]'
-                  : 'text-zinc-500',
-              )}
-            >
-              {icon}
-            </span>
-          )}
-          {label}
-          {active === key && (
-            <span
-              className={cn('absolute inset-x-0 bottom-0 h-[2px] rounded-t-full', accent, glow)}
-            />
-          )}
-        </button>
-      ))}
-    </div>
+    <dl className="grid grid-cols-2 gap-y-5 sm:grid-cols-4 sm:divide-x sm:divide-white/[0.06]">
+      {items.map((it, i) => {
+        const inner = (
+          <>
+            <dd className="figure text-[28px] leading-none">{it.value}</dd>
+            <dt className="text-label mt-2 !text-[10px]">{it.label}</dt>
+          </>
+        )
+        return (
+          <div key={it.label} className={cn('flex flex-col', i > 0 && 'sm:pl-6')}>
+            {it.onClick ? (
+              <button type="button" onClick={it.onClick} className="group flex flex-col text-left">
+                {inner}
+              </button>
+            ) : (
+              inner
+            )}
+          </div>
+        )
+      })}
+    </dl>
   )
 }
 
 // ---------------------------------------------------------------------------
-// SearchBar — v4 Elite: #050505 input, sharp border, inset shadow
+// Controls — one glass bar: category pills, search, filters, sort, view
 // ---------------------------------------------------------------------------
 
-function SearchBar({
-  value,
-  category,
-  onChange,
-}: {
-  value: string
-  category: CategoryTab
-  onChange: (v: string) => void
-}) {
-  const isLand = category === 'LAND'
-  return (
-    <div className="relative">
-      <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500" />
-      <input
-        type="search"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={getSearchPlaceholder(category)}
-        className={cn(
-          'w-full rounded-2xl border bg-[#050505] py-3.5 pl-12 pr-12 text-sm text-white',
-          'placeholder-zinc-500 outline-none transition-all duration-300',
-          'shadow-[inset_0_1px_0_rgba(255,255,255,0.03),inset_0_-1px_0_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.4)]',
-          'border-white/[0.04]',
-          isLand
-            ? 'focus:border-emerald-400/30 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_0_24px_rgba(52,211,153,0.08)]'
-            : 'focus:border-indigo-400/30 focus:shadow-[inset_0_1px_0_rgba(255,255,255,0.03),0_0_24px_rgba(99,102,241,0.08)]',
-        )}
-      />
-      {value && (
-        <button
-          type="button"
-          onClick={() => onChange('')}
-          className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 transition-colors hover:text-white"
-        >
-          <X className="h-4 w-4" />
-        </button>
-      )}
-    </div>
-  )
-}
+const CATEGORY_TABS: { key: CategoryTab; label: string; icon?: React.ComponentType<{ className?: string }> }[] = [
+  { key: 'ALL', label: 'Everything' },
+  { key: 'PROPERTIES', label: 'Homes & buildings', icon: Building2 },
+  { key: 'LAND', label: 'Land', icon: Trees },
+]
 
-// ---------------------------------------------------------------------------
-// FilterBar — v4 Elite: #050505 pill containers, sharp structural borders
-// ---------------------------------------------------------------------------
+const LISTING_TYPES: { key: ListingTypeFilter; label: string }[] = [
+  { key: 'ALL', label: 'Buy or lease' },
+  { key: 'BUY', label: 'For sale' },
+  { key: 'LEASE', label: 'For lease' },
+]
 
-function FilterBar({
+function Controls({
   filters,
   onChange,
   onClear,
@@ -312,240 +206,163 @@ function FilterBar({
   onChange: (patch: Partial<Filters>) => void
   onClear: () => void
 }) {
-  const showDevOpportunity = filters.category === 'LAND' || filters.category === 'ALL'
-  const hasActiveFilters =
-    filters.listingType !== 'ALL' ||
-    filters.tokenizedOnly ||
-    filters.devOpportunityOnly
-
-  const listingTypeOptions: { key: ListingTypeFilter; label: string }[] = [
-    { key: 'ALL', label: 'All' },
-    { key: 'BUY', label: 'For Sale' },
-    { key: 'LEASE', label: 'For Lease' },
-  ]
+  const showDev = filters.category === 'LAND' || filters.category === 'ALL'
+  const hasActive = filters.listingType !== 'ALL' || filters.tokenizedOnly || filters.devOpportunityOnly || filters.search.trim() !== ''
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      {/* Listing type pills — Paragon structural container */}
-      <div className="flex items-center rounded-xl border border-white/[0.04] bg-[#050505] p-0.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-        {listingTypeOptions.map(({ key, label }) => (
+    <div className="panel p-3 sm:p-4">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        {/* Categories */}
+        <div className="flex gap-1.5 overflow-x-auto scrollbar-none" role="tablist" aria-label="Category">
+          {CATEGORY_TABS.map(({ key, label, icon: Icon }) => (
+            <button
+              key={key}
+              type="button"
+              role="tab"
+              aria-selected={filters.category === key}
+              onClick={() => onChange({ category: key })}
+              className="pill shrink-0"
+            >
+              {Icon && <Icon className="h-3.5 w-3.5" />}
+              {label}
+            </button>
+          ))}
+        </div>
+
+        {/* Search */}
+        <div className="relative min-w-0 flex-1">
+          <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-[#7E7E8E]" aria-hidden="true" />
+          <label htmlFor="market-search" className="sr-only">Search listings</label>
+          <input
+            id="market-search"
+            type="search"
+            value={filters.search}
+            onChange={(e) => onChange({ search: e.target.value })}
+            placeholder={getSearchPlaceholder(filters.category)}
+            className="field !rounded-full !py-2.5 !pl-11 !pr-10 !text-[14px]"
+          />
+          {filters.search && (
+            <button
+              type="button"
+              onClick={() => onChange({ search: '' })}
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#8E8E9C] transition-colors hover:text-white"
+              aria-label="Clear search"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-white/[0.06] pt-3">
+        <SlidersHorizontal className="mr-1 h-4 w-4 text-[#7E7E8E]" aria-hidden="true" />
+        {LISTING_TYPES.map(({ key, label }) => (
           <button
             key={key}
             type="button"
+            aria-pressed={filters.listingType === key}
             onClick={() => onChange({ listingType: key })}
-            className={cn(
-              'rounded-lg px-4 py-2 text-xs font-medium transition-all duration-300',
-              filters.listingType === key
-                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_2px_4px_rgba(0,0,0,0.4)]'
-                : 'text-zinc-500 hover:text-zinc-400',
-            )}
+            className="pill !py-1.5 !text-[12.5px]"
           >
             {label}
           </button>
         ))}
-      </div>
-
-      {/* Tokenized toggle */}
-      <button
-        type="button"
-        onClick={() => onChange({ tokenizedOnly: !filters.tokenizedOnly })}
-        className={cn(
-          'flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300',
-          'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
-          filters.tokenizedOnly
-            ? 'border-indigo-400/25 bg-indigo-400/[0.08] text-indigo-400 shadow-[0_0_18px_rgba(99,102,241,0.15),inset_0_1px_0_rgba(99,102,241,0.12)]'
-            : 'border-white/[0.04] bg-[#050505] text-zinc-500 hover:border-white/[0.1] hover:text-zinc-400',
-        )}
-      >
-        <Zap className="h-3.5 w-3.5" style={filters.tokenizedOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
-        Tokenized
-      </button>
-
-      {/* Dev. opportunity toggle */}
-      {showDevOpportunity && (
+        <span className="mx-1 hidden h-5 w-px bg-white/[0.08] sm:block" aria-hidden="true" />
         <button
           type="button"
-          onClick={() => onChange({ devOpportunityOnly: !filters.devOpportunityOnly })}
-          className={cn(
-            'flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-medium transition-all duration-300',
-            'shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
-            filters.devOpportunityOnly
-              ? 'border-emerald-400/25 bg-emerald-400/[0.08] text-emerald-400 shadow-[0_0_18px_rgba(52,211,153,0.15),inset_0_1px_0_rgba(52,211,153,0.12)]'
-              : 'border-white/[0.04] bg-[#050505] text-zinc-500 hover:border-white/[0.1] hover:text-zinc-400',
-          )}
+          aria-pressed={filters.tokenizedOnly}
+          onClick={() => onChange({ tokenizedOnly: !filters.tokenizedOnly })}
+          className="pill !py-1.5 !text-[12.5px]"
         >
-          <Layers className="h-3.5 w-3.5" style={filters.devOpportunityOnly ? { filter: 'drop-shadow(0 0 6px currentColor)' } : undefined} />
-          Dev. Opportunity
+          <Zap className="h-3.5 w-3.5" />
+          Tokenized only
         </button>
-      )}
-
-      {/* Clear */}
-      {hasActiveFilters && (
-        <button
-          type="button"
-          onClick={onClear}
-          className="flex items-center gap-1.5 text-xs text-zinc-500 transition-colors hover:text-white"
-        >
-          <X className="h-3.5 w-3.5" />
-          Clear filters
-        </button>
-      )}
-    </div>
-  )
-}
-
-// ---------------------------------------------------------------------------
-// ResultsHeader — v4 Elite with Paragon structural controls
-// ---------------------------------------------------------------------------
-
-function ResultsHeader({
-  count,
-  filters,
-  onChange,
-}: {
-  count: number
-  filters: Filters
-  onChange: (patch: Partial<Filters>) => void
-}) {
-  const label = getListingLabel(count, filters.category)
-  const isLand = filters.category === 'LAND'
-
-  return (
-    <div className="flex items-center justify-between gap-4">
-      <p className="text-sm text-zinc-500">
-        <span className={cn(
-          'font-semibold',
-          isLand ? 'text-emerald-400 drop-shadow-[0_0_6px_rgba(52,211,153,0.5)]' : 'text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.5)]',
-        )}>
-          {count}
-        </span>{' '}
-        {label} found
-      </p>
-
-      <div className="flex items-center gap-3">
-        {/* Sort */}
-        <div className="relative">
-          <select
-            value={filters.sort}
-            onChange={(e) => onChange({ sort: e.target.value as SortOption })}
-            className={cn(
-              'appearance-none rounded-xl border border-white/[0.04] bg-[#050505] py-2.5 pl-4 pr-9 text-xs text-zinc-400 outline-none transition-all duration-300',
-              'shadow-[inset_0_1px_0_rgba(255,255,255,0.03)] hover:border-white/[0.1]',
-              isLand
-                ? 'focus:border-emerald-400/30 focus:shadow-[0_0_18px_rgba(52,211,153,0.08)]'
-                : 'focus:border-indigo-400/30 focus:shadow-[0_0_18px_rgba(99,102,241,0.08)]',
-            )}
+        {showDev && (
+          <button
+            type="button"
+            aria-pressed={filters.devOpportunityOnly}
+            onClick={() => onChange({ devOpportunityOnly: !filters.devOpportunityOnly })}
+            className="pill !py-1.5 !text-[12.5px]"
           >
-            <option value="NEWEST">Newest</option>
-            <option value="PRICE_ASC">Price: Low → High</option>
-            <option value="PRICE_DESC">Price: High → Low</option>
-            <option value="POPULAR">Most Popular</option>
-          </select>
-          <div className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2">
-            <ChevronDown className="h-3 w-3 text-zinc-500" />
+            <Layers className="h-3.5 w-3.5" />
+            Development potential
+          </button>
+        )}
+        {hasActive && (
+          <button
+            type="button"
+            onClick={onClear}
+            className="ml-1 inline-flex items-center gap-1.5 text-[12.5px] text-[#A0A0B2] transition-colors hover:text-white"
+          >
+            <X className="h-3.5 w-3.5" />
+            Clear
+          </button>
+        )}
+
+        <div className="ml-auto flex items-center gap-2">
+          <div className="relative">
+            <label htmlFor="market-sort" className="sr-only">Sort</label>
+            <select
+              id="market-sort"
+              value={filters.sort}
+              onChange={(e) => onChange({ sort: e.target.value as SortOption })}
+              className="field !w-auto appearance-none !rounded-full !py-1.5 !pl-4 !pr-9 !text-[12.5px]"
+            >
+              <option value="NEWEST">Newest</option>
+              <option value="PRICE_ASC">Price: low to high</option>
+              <option value="PRICE_DESC">Price: high to low</option>
+              <option value="POPULAR">Most viewed</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-[#8E8E9C]" />
+          </div>
+          <div className="flex rounded-full border border-white/[0.08] bg-white/[0.03] p-0.5">
+            {([
+              { key: 'grid', icon: LayoutGrid, label: 'Grid view' },
+              { key: 'list', icon: List, label: 'List view' },
+            ] as const).map(({ key, icon: Icon, label }) => (
+              <button
+                key={key}
+                type="button"
+                aria-pressed={filters.view === key}
+                aria-label={label}
+                onClick={() => onChange({ view: key })}
+                className={cn(
+                  'rounded-full px-2.5 py-1.5 transition-all duration-300',
+                  filters.view === key
+                    ? 'bg-violet-500/25 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.15),0_0_16px_-4px_rgba(139,92,246,0.8)]'
+                    : 'text-[#8E8E9C] hover:text-white',
+                )}
+              >
+                <Icon className="h-4 w-4" />
+              </button>
+            ))}
           </div>
         </div>
-
-        {/* View toggle — Paragon structural */}
-        <div className="flex overflow-hidden rounded-xl border border-white/[0.04] bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-          <button
-            type="button"
-            onClick={() => onChange({ view: 'grid' })}
-            title="Grid view"
-            className={cn(
-              'px-3 py-2.5 transition-all duration-300',
-              filters.view === 'grid'
-                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
-                : 'text-zinc-500 hover:text-zinc-400',
-            )}
-          >
-            <LayoutGrid className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            onClick={() => onChange({ view: 'list' })}
-            title="List view"
-            className={cn(
-              'border-l border-white/[0.04] px-3 py-2.5 transition-all duration-300',
-              filters.view === 'list'
-                ? 'bg-white/[0.08] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
-                : 'text-zinc-500 hover:text-zinc-400',
-            )}
-          >
-            <List className="h-4 w-4" />
-          </button>
-        </div>
       </div>
     </div>
   )
 }
 
 // ---------------------------------------------------------------------------
-// EmptyState — Glassflow 3-layer centerpiece + Dimension container
+// Empty state
 // ---------------------------------------------------------------------------
 
-function EmptyState({
-  category,
-  hasSearch,
-  onClear,
-}: {
-  category: CategoryTab
-  hasSearch: boolean
-  onClear: () => void
-}) {
+function EmptyState({ category, hasSearch, onClear }: { category: CategoryTab; hasSearch: boolean; onClear: () => void }) {
   const isLand = category === 'LAND'
+  const Icon = isLand ? Trees : Building2
   return (
-    <div className="relative flex flex-col items-center justify-center py-32 text-center">
-      {/* Glassflow 3-layer centerpiece */}
-      <div className="relative flex items-center justify-center mb-8">
-        {/* Layer 1: Massive diffused backlight */}
-        <div
-          className={cn(
-            'pointer-events-none absolute inset-0 rounded-full blur-[120px]',
-            isLand ? 'bg-emerald-500/10' : 'bg-indigo-500/10',
-          )}
-          aria-hidden="true"
-        />
-        {/* Layer 2: Secondary core glow */}
-        <div
-          className={cn(
-            'pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-40 w-40 rounded-full blur-[60px]',
-            isLand ? 'bg-emerald-400/20' : 'bg-indigo-400/20',
-          )}
-          aria-hidden="true"
-        />
-        {/* Layer 3: Nested glass icon shell */}
-        <div className="relative z-10 flex h-28 w-28 items-center justify-center rounded-[24px] border border-white/10 bg-white/5 backdrop-blur-2xl shadow-2xl">
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-          {isLand ? (
-            <Trees className="h-12 w-12 text-emerald-400 drop-shadow-[0_0_15px_rgba(52,211,153,0.4)]" />
-          ) : (
-            <Building2 className="h-12 w-12 text-indigo-400 drop-shadow-[0_0_15px_rgba(99,102,241,0.4)]" />
-          )}
-        </div>
-      </div>
-
-      <h3 className="relative font-heading text-lg font-extrabold tracking-[-0.05em] bg-clip-text text-transparent bg-gradient-to-br from-white via-white to-zinc-500">
-        {hasSearch
-          ? `No ${isLand ? 'land parcels' : 'listings'} match your search`
-          : `No ${isLand ? 'land parcels' : 'listings'} match your filters`}
+    <div className="panel flex flex-col items-center px-6 py-20 text-center">
+      <span className="flex h-14 w-14 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-500/[0.08] text-violet-200 shadow-[0_0_40px_-8px_rgba(139,92,246,0.7)]">
+        <Icon className="h-6 w-6" />
+      </span>
+      <h3 className="section-title mt-6">
+        No {isLand ? 'parcels' : 'listings'} match {hasSearch ? 'that search' : 'these filters'}
       </h3>
-      <p className="relative mt-3 max-w-xs text-sm text-zinc-500">
-        {hasSearch
-          ? 'Try a different keyword or location.'
-          : 'Try adjusting your filters or broadening your search.'}
+      <p className="mt-2 max-w-sm text-sm text-[#A0A0B2]">
+        {hasSearch ? 'Try a city, a state or a simpler keyword.' : 'Loosen a filter or switch category.'}
       </p>
-      <button
-        type="button"
-        onClick={onClear}
-        className={cn(
-          'relative mt-8 rounded-xl border px-7 py-3 text-sm font-medium text-zinc-500 transition-all duration-300',
-          'bg-[#050505] shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]',
-          'hover:text-white hover:-translate-y-0.5 hover:border-white/[0.15]',
-          'border-white/[0.04]',
-        )}
-      >
-        Clear all filters
+      <button type="button" onClick={onClear} className="btn-glass mt-7 !px-6 !py-2.5 text-sm">
+        Clear filters
       </button>
     </div>
   )
@@ -644,11 +461,18 @@ function ListingRow({
 interface MarketplaceClientProps {
   listings: MockListing[]
   stats: MarketplaceStats
+  /** Search passed in from the URL (?q=) — e.g. from the top-bar search. */
+  initialQuery?: string
 }
 
-export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
-  const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS)
+export function MarketplaceClient({ listings, stats, initialQuery = '' }: MarketplaceClientProps) {
+  const [filters, setFilters] = useState<Filters>({ ...DEFAULT_FILTERS, search: initialQuery })
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+
+  // Keep in sync when the top-bar search navigates here again with a new ?q=
+  useEffect(() => {
+    setFilters((prev) => (prev.search === initialQuery ? prev : { ...prev, search: initialQuery }))
+  }, [initialQuery])
 
   const { savedIds, toggleSave } = useSavedListings()
   const { compareIds: compareIdsArr, addToCompare, removeFromCompare, isComparing } = useCompare()
@@ -661,191 +485,89 @@ export function MarketplaceClient({ listings, stats }: MarketplaceClientProps) {
 
   function patchFilters(patch: Partial<Filters>) {
     setFilters((prev) => ({ ...prev, ...patch }))
-    if (!('view' in patch) && !('sort' in patch)) {
-      setVisibleCount(PAGE_SIZE)
-    }
+    if (!('view' in patch) && !('sort' in patch)) setVisibleCount(PAGE_SIZE)
   }
 
   function clearFilters() {
-    setFilters((prev) => ({
-      ...DEFAULT_FILTERS,
-      category: prev.category,
-      view: prev.view,
-      sort: prev.sort,
-    }))
+    setFilters((prev) => ({ ...DEFAULT_FILTERS, category: prev.category, view: prev.view, sort: prev.sort }))
     setVisibleCount(PAGE_SIZE)
   }
 
-  const handleSave = toggleSave
-
-  const filteredListings = useMemo(
-    () => applyFilters(listings, filters),
-    [listings, filters],
-  )
-
+  const filteredListings = useMemo(() => applyFilters(listings, filters), [listings, filters])
   const visibleListings = filteredListings.slice(0, visibleCount)
   const hasMore = visibleCount < filteredListings.length
-  const totalValueDisplay = `$${(stats.totalValue / 1_000_000).toFixed(1)}M`
   const gridCols = getGridCols(filters.category)
-  const isLand = filters.category === 'LAND'
+  const label = getListingLabel(filteredListings.length, filters.category)
 
   return (
-    <div className="animate-fade-in space-y-8">
-
-      {/* ── Stats strip ── */}
-      <div className="flex flex-wrap items-center gap-3">
-        <StatChip value={String(stats.totalActive)} label="active listings" />
-        <StatChip value={String(stats.tokenizedCount)} label="tokenized" gold />
-        <StatChip value={totalValueDisplay} label="total listed value" />
-        <StatChip
-          value={String(stats.landCount)}
-          label="land parcels"
-          green
-          onClick={() => patchFilters({ category: 'LAND' })}
-        />
-      </div>
-
-      {/* ── Category tabs ── */}
-      <CategoryTabs
-        active={filters.category}
-        onChange={(cat) => patchFilters({ category: cat })}
+    <div className="space-y-10">
+      <PageHeader
+        eyebrow="Marketplace"
+        title="Own a share of real places"
+        description="Homes, apartment blocks and land, split into shares from $100. Filter, compare, then invest."
+        meta={<HeaderStats stats={stats} onLand={() => patchFilters({ category: 'LAND' })} />}
       />
 
-      {/* ── Controls bar — v4 Outer Tray: #050505/50, rounded-[24px] ── */}
-      <div className="relative overflow-hidden rounded-[24px] border border-white/[0.04] bg-[#050505]/50 p-8 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)]">
-        <div className="noise absolute inset-0 pointer-events-none" />
-        {/* Paragon top-edge light */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" aria-hidden="true" />
-        {/* Corner atmospheric glow */}
-        <div className={cn(
-          'pointer-events-none absolute -left-16 -top-16 h-40 w-40 rounded-full blur-[60px] opacity-30',
-          isLand ? 'bg-emerald-500' : 'bg-indigo-500',
-        )} aria-hidden="true" />
-        <div className="relative space-y-5">
-          <SearchBar
-            value={filters.search}
-            category={filters.category}
-            onChange={(v) => patchFilters({ search: v })}
-          />
-          <FilterBar
-            filters={filters}
-            onChange={patchFilters}
-            onClear={clearFilters}
-          />
-        </div>
+      <div className="sticky top-[76px] z-20" data-reveal="fade">
+        <Controls filters={filters} onChange={patchFilters} onClear={clearFilters} />
       </div>
 
-      {/* ── Results header ── */}
-      <ResultsHeader
-        count={filteredListings.length}
-        filters={filters}
-        onChange={patchFilters}
-      />
-
-      {/* ── v4 Outer Tray wrapping the listing grid ── */}
-      <div className="group/container relative overflow-hidden rounded-[24px] border border-white/[0.04] bg-[#050505]/50 backdrop-blur-3xl shadow-[inset_0_2px_60px_rgba(99,102,241,0.02),0_4px_40px_rgba(0,0,0,0.5)] transition-all duration-500 hover:border-white/[0.08]">
-        <div className="noise absolute inset-0 pointer-events-none" />
-        {/* Paragon top-edge structural lighting */}
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-all duration-500 group-hover/container:via-white/30" aria-hidden="true" />
-
-        {/* Inner atmospheric orbs — category-colored */}
-        <div
-          className={cn(
-            'pointer-events-none absolute -left-28 -top-28 h-64 w-64 rounded-full blur-[100px] opacity-25 transition-opacity duration-700 group-hover/container:opacity-40',
-            isLand ? 'bg-emerald-500' : 'bg-indigo-500',
+      <div className="flex items-center justify-between">
+        <p className="text-sm text-[#A0A0B2]" aria-live="polite">
+          <span className="font-mono tabular-nums text-[#F5F5F7]">{filteredListings.length}</span> {label}
+          {filters.search.trim() && (
+            <> for <span className="text-[#F5F5F7]">“{filters.search.trim()}”</span></>
           )}
-          aria-hidden="true"
-        />
-        <div className="pointer-events-none absolute -right-24 -bottom-24 h-52 w-52 rounded-full bg-violet-500/20 blur-[80px] opacity-25 transition-opacity duration-700 group-hover/container:opacity-40" aria-hidden="true" />
-        <div
-          className={cn(
-            'pointer-events-none absolute right-1/3 top-1/2 h-40 w-40 rounded-full blur-[80px] opacity-10',
-            isLand ? 'bg-cyan-500' : 'bg-rose-500',
-          )}
-          aria-hidden="true"
-        />
-
-        {/* Inner content — v4 uses p-10 for massive breathing room */}
-        <div className="relative p-8 sm:p-10">
-          {filteredListings.length === 0 ? (
-            <EmptyState
-              category={filters.category}
-              hasSearch={filters.search.trim().length > 0}
-              onClear={clearFilters}
-            />
-          ) : filters.view === 'grid' ? (
-            <div className={cn('grid gap-12', gridCols)}>
-              {visibleListings.map((listing, i) => (
-                <div
-                  key={listing.id}
-                  className="animate-slide-up"
-                  style={{ animationDelay: `${Math.min(i, 11) * 50}ms` }}
-                >
-                  <ListingCard
-                    listing={listing}
-                    index={i}
-                    savedIds={savedIds}
-                    onSave={handleSave}
-                    compareIds={compareIdsSet}
-                    onCompare={handleCompare}
-                    priority={i < 3}
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4">
-              {visibleListings.map((listing, i) => (
-                <div
-                  key={listing.id}
-                  className="animate-slide-up"
-                  style={{ animationDelay: `${Math.min(i, 11) * 40}ms` }}
-                >
-                  <ListingRow
-                    listing={listing}
-                    index={i}
-                    savedIds={savedIds}
-                    onSave={handleSave}
-                    compareIds={compareIdsSet}
-                    onCompare={handleCompare}
-                    priority={i < 5}
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        </p>
+        <p className="hidden text-label !text-[10px] sm:block">Sample listings · devnet</p>
       </div>
 
-      {/* ── Load more — v4 structural glass button ── */}
-      {hasMore && (
-        <div className="flex flex-col items-center gap-4 pt-6">
-          <button
-            type="button"
-            onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-            className={cn(
-              'flex items-center gap-2.5 rounded-xl border px-8 py-3.5 text-sm font-medium',
-              'bg-[#050505] text-zinc-500 transition-all duration-300 hover:text-white hover:-translate-y-0.5 active:scale-[0.98]',
-              'shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_4px_16px_rgba(0,0,0,0.5)]',
-              'border-white/[0.04] hover:border-white/[0.15]',
-            )}
-          >
-            <ChevronDown className="h-4 w-4" />
-            {getLoadMoreLabel(filters.category)}
-          </button>
-          <p className="text-[12px] font-medium tracking-wide uppercase text-zinc-500">
-            Showing {visibleCount} of {filteredListings.length}{' '}
-            {getListingLabel(filteredListings.length, filters.category)}
-          </p>
+      {filteredListings.length === 0 ? (
+        <EmptyState category={filters.category} hasSearch={filters.search.trim().length > 0} onClear={clearFilters} />
+      ) : filters.view === 'grid' ? (
+        <div className={cn('grid gap-6 lg:gap-7', gridCols)}>
+          {visibleListings.map((listing, i) => (
+            <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 45}ms` }}>
+              <ListingCard
+                listing={listing}
+                index={i}
+                savedIds={savedIds}
+                onSave={toggleSave}
+                compareIds={compareIdsSet}
+                onCompare={handleCompare}
+                priority={i < 3}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {visibleListings.map((listing, i) => (
+            <div key={listing.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i, 11) * 35}ms` }}>
+              <ListingRow
+                listing={listing}
+                index={i}
+                savedIds={savedIds}
+                onSave={toggleSave}
+                compareIds={compareIdsSet}
+                onCompare={handleCompare}
+                priority={i < 5}
+              />
+            </div>
+          ))}
         </div>
       )}
 
-      {/* ── All shown indicator ── */}
-      {!hasMore && filteredListings.length > PAGE_SIZE && (
-        <p className="pt-6 text-center text-[12px] font-medium tracking-wide uppercase text-zinc-500">
-          All {filteredListings.length}{' '}
-          {getListingLabel(filteredListings.length, filters.category)} shown
-        </p>
+      {hasMore && (
+        <div className="flex flex-col items-center gap-3 pt-4">
+          <button type="button" onClick={() => setVisibleCount((c) => c + PAGE_SIZE)} className="btn-glass !px-7 !py-3 text-sm">
+            <ChevronDown className="h-4 w-4" />
+            {getLoadMoreLabel(filters.category)}
+          </button>
+          <p className="text-label !text-[10px]">
+            Showing {visibleCount} of {filteredListings.length}
+          </p>
+        </div>
       )}
     </div>
   )

@@ -337,7 +337,7 @@ function CardVariant({
   return (
     <Link href={resolvedHref} className="group block h-full" tabIndex={0}>
       <article
-        className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.04] bg-[#050505] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.8)] hover:-translate-y-1 hover:border-white/[0.15] hover:bg-[#0A0A0F] hover:shadow-[0_12px_48px_rgba(0,0,0,1),0_0_40px_rgba(74,222,128,0.08)]"
+        className="panel panel-hover relative flex h-full flex-col overflow-hidden !rounded-[22px] transition-transform duration-500 ease-out hover:-translate-y-1"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 50}ms` }}
       >
         {/* ── Paragon top-edge lighting ── */}
@@ -350,7 +350,7 @@ function CardVariant({
             slot={data.imageSlot}
             propertyType="land"
             alt={data.title}
-            className="aspect-[21/9] w-full transition-transform duration-500 group-hover:scale-110"
+            className="aspect-[21/9] w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
             priority={priority}
           />
 
@@ -407,7 +407,7 @@ function CardVariant({
           </div>
 
           {/* Title */}
-          <h3 className="line-clamp-1 font-heading text-sm font-medium leading-snug bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-300">
+          <h3 className="line-clamp-1 font-display text-[17px] font-[520] leading-snug tracking-[-0.015em] text-[#F5F5F7]" style={{ fontStretch: '104%' }}>
             {data.title}
           </h3>
 
@@ -444,7 +444,7 @@ function CardVariant({
           <div className="flex items-end justify-between gap-2">
             <div>
               <p className="text-[10px] uppercase tracking-wider text-zinc-500">List Price</p>
-              <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+              <p className="figure text-[20px] leading-none">
                 {formatPrice(data.price)}
               </p>
             </div>
@@ -574,7 +574,7 @@ function RowVariant({
           <div className="flex items-start gap-2">
             <div className="text-right">
               <p className="text-[10px] uppercase tracking-wider text-zinc-500">List Price</p>
-              <p className="font-heading text-base font-semibold bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+              <p className="figure text-[20px] leading-none">
                 {formatPrice(data.price)}
               </p>
               {data.isTokenized && data.tokenInfo && (

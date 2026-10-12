@@ -253,13 +253,13 @@ function TokenProgress({ info }: { info: PropertyTokenInfo }) {
   const soldPct = tokenSoldPercent(info)
   return (
     <div>
-      <div className="mb-1.5 flex items-center justify-between text-[10px] text-zinc-500">
+      <div className="mb-1.5 flex items-center justify-between font-mono text-[10.5px] text-[#8E8E9C]">
         <span>{soldPct}% subscribed</span>
         {info.investorCount !== undefined && <span>{info.investorCount} investors</span>}
       </div>
       <div className="h-1.5 overflow-hidden rounded-full bg-white/[0.04]">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 shadow-[0_0_10px_rgba(99,102,241,0.4)]"
+          className="h-full rounded-full bg-gradient-to-r from-violet-500 to-indigo-300 shadow-[0_0_12px_rgba(139,92,246,0.6)]"
           style={{ width: `${soldPct}%` }}
         />
       </div>
@@ -290,7 +290,7 @@ function CardVariant({
   return (
     <Link href={resolvedHref} className="group block h-full" tabIndex={0}>
       <article
-        className="relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/[0.04] bg-[#050505] transition-all duration-400 shadow-[0_4px_32px_rgba(0,0,0,0.9)] hover:-translate-y-1.5 hover:border-white/20 hover:shadow-[0_16px_64px_rgba(0,0,0,1),0_0_48px_rgba(99,102,241,0.06)]"
+        className="panel panel-hover relative flex h-full flex-col overflow-hidden !rounded-[22px] transition-transform duration-500 ease-out hover:-translate-y-1"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 50}ms` }}
       >
         {/* ── Paragon top-edge lighting — 1px gradient ── */}
@@ -312,12 +312,12 @@ function CardVariant({
             slot={data.imageSlot}
             propertyType={data.imagePropertyType}
             alt={data.title}
-            className="aspect-[16/9] w-full transition-transform duration-700 group-hover:scale-110"
+            className="aspect-[4/3] w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
             priority={priority}
           />
 
           {/* Hard gradient wipe to black */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0B0B10] via-[#0B0B10]/10 to-transparent" />
 
           {/* Type badge — top-left */}
           <div className="absolute left-3.5 top-3.5">
@@ -365,13 +365,13 @@ function CardVariant({
         {/* ── Body ── */}
         <div className="relative flex flex-1 flex-col p-5">
           {/* Location */}
-          <div className="mb-1.5 flex items-center gap-1.5 text-[11px] text-zinc-500">
+          <div className="mb-2 flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.12em] text-[#8E8E9C]">
             <MapPin className="h-3 w-3 shrink-0" />
             {data.city}, {data.state}
           </div>
 
           {/* Title — metallic gradient */}
-          <h3 className="line-clamp-1 font-heading text-sm font-extrabold tracking-[-0.02em] leading-snug bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-zinc-500">
+          <h3 className="line-clamp-1 font-display text-[17px] font-[520] leading-snug tracking-[-0.015em] text-[#F5F5F7]" style={{ fontStretch: '104%' }}>
             {data.title}
           </h3>
 
@@ -401,17 +401,17 @@ function CardVariant({
           {/* Price row */}
           <div className="flex items-end justify-between gap-2">
             <div>
-              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-500">List Price</p>
-              <p className="font-heading text-base font-extrabold tracking-[-0.03em] bg-gradient-to-r from-white via-white to-zinc-500 bg-clip-text text-transparent">
+              <p className="text-label !text-[10px]">List price</p>
+              <p className="figure mt-1 text-[20px] leading-none">
                 {formatPrice(data.price)}
               </p>
             </div>
             {data.isTokenized && data.tokenInfo && (
               <div className="text-right">
-                <p className="text-[10px] text-zinc-500">from</p>
-                <p className="text-sm font-semibold text-indigo-400 drop-shadow-[0_0_6px_rgba(99,102,241,0.4)]">
+                <p className="text-label !text-[10px]">From</p>
+                <p className="mt-1 font-mono text-[14px] font-medium tabular-nums text-violet-200">
                   ${data.tokenInfo.pricePerFraction.toLocaleString()}
-                  <span className="text-[10px] font-normal text-zinc-500">/fraction</span>
+                  <span className="text-[11px] font-normal text-[#8E8E9C]"> / share</span>
                 </p>
               </div>
             )}
@@ -448,7 +448,7 @@ function RowVariant({
   return (
     <Link href={resolvedHref} className="group block" tabIndex={0}>
       <article
-        className="relative flex flex-col overflow-hidden rounded-2xl border border-white/[0.04] bg-[#050505] transition-all duration-400 shadow-[0_4px_24px_rgba(0,0,0,0.8)] hover:border-white/20 hover:shadow-[0_12px_48px_rgba(0,0,0,1),0_0_40px_rgba(99,102,241,0.06)]"
+        className="panel panel-hover relative flex flex-col overflow-hidden !rounded-[20px]"
         style={{ animationDelay: `${Math.min(index ?? 0, 11) * 40}ms` }}
       >
         {/* ── Paragon top-edge lighting ── */}
@@ -463,7 +463,7 @@ function RowVariant({
             slot={data.imageSlot}
             propertyType={data.imagePropertyType}
             alt={data.title}
-            className="aspect-[4/3] w-full transition-transform duration-500 group-hover:scale-110"
+            className="aspect-[4/3] w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.06]"
             priority={priority}
           />
           {data.isTokenized && (
@@ -521,8 +521,8 @@ function RowVariant({
         <div className="flex shrink-0 flex-col items-end justify-between py-0.5">
           <div className="flex items-start gap-2.5">
             <div className="text-right">
-              <p className="text-[10px] font-medium tracking-wide uppercase text-zinc-500">List Price</p>
-              <p className="font-heading text-base font-extrabold tracking-[-0.03em] bg-gradient-to-r from-white via-white to-zinc-500 bg-clip-text text-transparent">
+              <p className="text-label !text-[10px]">List price</p>
+              <p className="figure mt-1 text-[20px] leading-none">
                 {formatPrice(data.price)}
               </p>
               {data.isTokenized && data.tokenInfo && (

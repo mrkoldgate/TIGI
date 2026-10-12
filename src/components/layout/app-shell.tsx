@@ -73,7 +73,7 @@ export function AppShell({ children, user }: AppShellProps) {
           />
 
           {/* Scrollable content area */}
-          <main className="relative z-[1] flex-1 overflow-auto">
+          <main className="relative z-[1] min-w-0 flex-1 overflow-x-clip">
             <div className="mx-auto w-full max-w-[1360px] px-4 pb-20 pt-8 sm:px-6 lg:px-10">
               {children}
             </div>
