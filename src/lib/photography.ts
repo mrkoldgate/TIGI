@@ -169,6 +169,11 @@ export const PHOTOS = {
     alt: 'Red two-storey houses along a sandy street on Gorée Island, Dakar, Senegal',
     credit: 'Anton Lecock',
   },
+  josDusk: {
+    id: 'photo-1699052350053-7ca70a8b9ea3',
+    alt: 'Dusk settling over the city of Jos, Nigeria',
+    credit: 'HisArt Photos',
+  },
 } satisfies Record<string, Photo>
 
 export type PhotoKey = keyof typeof PHOTOS

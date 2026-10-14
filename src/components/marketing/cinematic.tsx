@@ -31,7 +31,7 @@ import { cn } from '@/lib/utils'
 const pad = (n: number) => String(n).padStart(2, '0')
 
 /** Night photos keep more of their own light; daytime photos are pushed darker. */
-const NIGHT: PhotoKey[] = ['lagosNight', 'nigeriaNight']
+const NIGHT: PhotoKey[] = ['lagosNight', 'nigeriaNight', 'josDusk']
 const grade = (p: PhotoKey) => (NIGHT.includes(p) ? 'night-grade night-grade--lit' : 'night-grade')
 
 // ── PageHero ────────────────────────────────────────────────────────────────

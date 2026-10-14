@@ -97,7 +97,8 @@ export default function VerifyPage() {
     <div className="pb-24 md:pb-32">
       <PageHero
         live
-        photo="lagosNight"
+        photo="josDusk"
+        position="50% 72%"
         eyebrow="TIGI Verify · Launching in Nigeria, Senegal and Mali"
         title="Know it’s real before you pay."
         lede={
