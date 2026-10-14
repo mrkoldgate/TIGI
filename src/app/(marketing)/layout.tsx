@@ -15,7 +15,7 @@ export default function MarketingLayout({
         <div className="animate-float absolute -right-48 top-[55%] h-[600px] w-[600px] rounded-full bg-indigo-500/[0.07] blur-[180px]" />
         {/* Neon skyline — the brand motif, along the bottom of every public page */}
         <div className="absolute inset-x-0 bottom-0 [mask-image:linear-gradient(to_top,black_55%,transparent)]">
-          <NeonSkyline className="h-[32vh] min-h-[200px] w-full opacity-60" />
+          <NeonSkyline className="h-[28vh] min-h-[180px] w-full opacity-40" />
         </div>
       </div>
       <MarketingNav />

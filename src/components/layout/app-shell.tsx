@@ -41,7 +41,7 @@ export function AppShell({ children, user }: AppShellProps) {
         <div className="absolute -bottom-64 left-[10%] h-[680px] w-[680px] rounded-full bg-indigo-500/[0.07] blur-[180px]" />
         <div className="absolute right-[20%] top-[45%] h-[420px] w-[420px] rounded-full bg-cyan-500/[0.03] blur-[160px]" />
         <div className="absolute inset-x-0 bottom-0 [mask-image:linear-gradient(to_top,black_50%,transparent)]">
-          <NeonSkyline className="h-[26vh] min-h-[180px] w-full opacity-35" />
+          <NeonSkyline className="h-[24vh] min-h-[160px] w-full opacity-25" />
         </div>
       </div>
 
