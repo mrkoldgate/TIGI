@@ -7,6 +7,7 @@ import { ParallaxImage } from '@/components/motion/parallax'
 import { HeroFilm } from '@/components/marketing/hero-film'
 import { MouseTiltCard } from '@/components/ui/interactions'
 import { MarketTable } from '@/components/marketing/market-table'
+import { OrderTicket } from '@/components/marketing/order-ticket'
 import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
 
 // ---------------------------------------------------------------------------
@@ -475,52 +476,7 @@ function SharesChapter() {
 
           {/* Order ticket illustration */}
           <figure aria-label="Illustration of buying shares" className="self-start" data-reveal="right">
-            <MouseTiltCard maxTilt={6} spotlightColor="rgba(139, 92, 246, 0.10)" className="rounded-xl">
-              <div className="glass-glossy edge-lit rounded-2xl p-6">
-                <div className="flex items-center gap-4">
-                  <div className="plate h-14 w-14 flex-shrink-0 rounded-md">
-                    <Image src={photoUrl('nairobiSkyline', 200, 70)} alt="" fill sizes="56px" className="object-cover" />
-                  </div>
-                  <div>
-                    <p className="text-[15px] font-medium text-[#F5F5F7]">Westlands Residences</p>
-                    <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8E8E9C]">Nairobi · Sample · $100 / share</p>
-                  </div>
-                </div>
-
-                <div className="mt-6 rounded-lg bg-black px-5 py-5">
-                  <p className="text-label">Amount</p>
-                  <p className="mt-2 font-display text-[40px] font-[480] leading-none tracking-[0.01em] text-[#F5F5F7]" style={{ fontStretch: '112%' }}>
-                    $500
-                  </p>
-                  <div className="mt-4 flex gap-2">
-                    {['$100', '$500', '$1,000', '$2,500'].map((a) => (
-                      <span
-                        key={a}
-                        className={`rounded-full px-3 py-1.5 font-mono text-xs ${a === '$500' ? 'bg-[#F5F5F7] text-black' : 'bg-[#14141B] text-[#C3C3CC]'}`}
-                      >
-                        {a}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <dl className="mt-5 space-y-3 text-sm">
-                  {[
-                    ['You receive', '5 shares'],
-                    ['Fees', 'Shown in the offering'],
-                    ['Payment held by', 'Licensed escrow'],
-                    ['Recorded on', 'Share register'],
-                  ].map(([k, v]) => (
-                    <div key={k} className="flex justify-between gap-4">
-                      <dt className="text-[#8E8E9C]">{k}</dt>
-                      <dd className="text-[#F5F5F7]">{v}</dd>
-                    </div>
-                  ))}
-                </dl>
-
-                <div className="btn-primary mt-6 w-full">Review order</div>
-              </div>
-            </MouseTiltCard>
+            <OrderTicket />
             <figcaption className="mt-3 text-caption">Illustration · Not a live offering · Available only where licensed</figcaption>
           </figure>
         </div>
