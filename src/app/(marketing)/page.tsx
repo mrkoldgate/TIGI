@@ -21,7 +21,8 @@ import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
 export default function HomePage() {
   return (
     <>
-      <Hero />
+      <HeroFilm />
+      <Intro />
       <Problem />
       <Products />
       <VerifyChapter />
@@ -105,16 +106,16 @@ function Plate({
 
 
 // ---------------------------------------------------------------------------
-// Header — the brand film plays behind the rotating wave headline
+// Header — the brand film (land → buildings → vortex → glass "T" lockup)
 // ---------------------------------------------------------------------------
-// HeroFilm (components/marketing/hero-film.tsx) handles the video, its
-// placement and controls; the copy below is passed in as children.
+// HeroFilm lives in components/marketing/hero-film.tsx (client: playback,
+// sound, replay). Below it, the intro carries the page's h1 and the message.
 
-function Hero() {
+function Intro() {
   return (
-    <HeroFilm>
-      <Wrap className="flex flex-1 flex-col pb-10 pt-8 lg:pt-[120px]">
-        <div className="animate-fade-in flex items-center justify-between text-label text-[#C3C3CC]">
+    <section id="intro" className="scroll-mt-24 pb-10 pt-16 md:pt-24">
+      <Wrap>
+        <div className="flex items-center justify-between text-label text-[#C3C3CC]">
           <span>Property in Africa · Verify · Shares · Legacy</span>
           <span className="hidden sm:inline">
             <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-[#22D3EE] align-middle shadow-[0_0_10px_rgba(34,211,238,0.9)] animate-pulse-glow" />
@@ -122,49 +123,55 @@ function Hero() {
           </span>
         </div>
 
-        <div className="hidden flex-1 lg:block" />
-
-        <div className="mt-10 lg:mt-0 lg:max-w-[46%]">
-          <WaveHeadline
-            className="text-hero max-w-[15ch] min-h-[2.1em]"
-            phrases={[
-              'Own property in Africa, safely.',
-              'Every title checked at the registry.',
-              'Your money held until the deed moves.',
-              'Pass it on to who you choose.',
-            ]}
-          />
-          <p className="animate-slide-up mt-6 max-w-[54ch] text-[18px] leading-relaxed text-[#D4D4DE]" style={{ animationDelay: '650ms' }}>
-            Buying a plot or a home back home shouldn&apos;t mean trusting a paper nobody can check. TIGI
-            verifies the title at the official registry, holds your money with a licensed escrow partner
-            until the deed is yours, and records who inherits it.
-          </p>
-          <div className="animate-slide-up mt-9 flex flex-wrap items-center gap-3" style={{ animationDelay: '800ms' }}>
-            <Link href="/waitlist" className="btn-primary no-underline">
-              Join the waitlist <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link href="/verify" className="btn-glass no-underline">
-              How Verify works
-            </Link>
+        <div className="mt-12 grid items-end gap-12 lg:grid-cols-[1.25fr_1fr] lg:gap-16">
+          <div>
+            <WaveHeadline
+              className="text-hero max-w-[15ch] min-h-[2.1em]"
+              phrases={[
+                'Own property in Africa, safely.',
+                'Every title checked at the registry.',
+                'Your money held until the deed moves.',
+                'Pass it on to who you choose.',
+              ]}
+            />
+            <p data-reveal="up" className="mt-6 max-w-[54ch] text-[18px] leading-relaxed text-[#D4D4DE]">
+              Buying a plot or a home back home shouldn&apos;t mean trusting a paper nobody can check. TIGI
+              verifies the title at the official registry, holds your money with a licensed escrow partner
+              until the deed is yours, and records who inherits it.
+            </p>
+            <div data-reveal="up" data-reveal-delay="120" className="mt-9 flex flex-wrap items-center gap-3">
+              <Link href="/waitlist" className="btn-primary no-underline">
+                Join the waitlist <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/verify" className="btn-glass no-underline">
+                How Verify works
+              </Link>
+            </div>
           </div>
+          <Plate
+            photo="kigaliSunset"
+            className="aspect-[4/3] lg:aspect-[4/5]"
+            sizes="(min-width: 1024px) 40vw, 100vw"
+            caption="Kigali, Rwanda"
+          />
         </div>
 
         {/* Facts strip — product rules, not marketing stats */}
-        <dl className="animate-slide-up tray mt-14 grid grid-cols-2 gap-1.5 md:grid-cols-4" style={{ animationDelay: '950ms' }}>
+        <dl data-reveal="up" className="tray mt-14 grid grid-cols-2 gap-1.5 md:grid-cols-4">
           {[
             ['Title check', 'At the official registry'],
             ['Your money', 'Held by licensed escrow'],
             ['Launching', 'Nigeria · Senegal · Mali'],
             ['Crypto wallet', 'Never required'],
           ].map(([k, v]) => (
-            <div key={k} className="cell !bg-black/60 px-5 py-4">
+            <div key={k} className="cell px-5 py-4">
               <dt className="text-label">{k}</dt>
               <dd className="mt-1.5 text-[15px] text-[#F5F5F7]">{v}</dd>
             </div>
           ))}
         </dl>
       </Wrap>
-    </HeroFilm>
+    </section>
   )
 }
 
