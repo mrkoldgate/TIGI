@@ -118,6 +118,57 @@ export const PHOTOS = {
     alt: 'A woman carrying a child on her back walks past an orange house',
     credit: 'Vince Gx',
   },
+  // Launch markets — Nigeria and Senegal
+  lagosSkyline: {
+    id: 'photo-1618828665347-d870c38c95c7',
+    alt: 'The Lagos skyline and Civic Centre on the lagoon, Nigeria',
+    credit: 'Nupo Deyon Daniel',
+  },
+  lagosNight: {
+    id: 'photo-1648023200201-8fcede127835',
+    alt: 'The Lekki–Ikoyi Link Bridge lit up at night, Lagos, Nigeria',
+    credit: 'Opeyemi Adisa',
+  },
+  lagosAerial: {
+    id: 'photo-1594538756542-8c88bda491c5',
+    alt: 'Homes, offices and towers across Lagos from above, Nigeria',
+    credit: 'Obinna Okerekeocha',
+  },
+  abujaHomes: {
+    id: 'photo-1537372023620-37161b1ad8ac',
+    alt: 'Houses spread across a hillside in Abuja, Nigeria',
+    credit: 'Ovinuchi Ejiohuo',
+  },
+  abujaHaze: {
+    id: 'photo-1707406534088-09c4b6958cfa',
+    alt: 'Abuja from above on a hazy morning, Nigeria',
+    credit: 'Sage David',
+  },
+  nigeriaNight: {
+    id: 'photo-1593717191400-84f38ee95485',
+    alt: 'Light trails past a domed building at night, Nigeria',
+    credit: 'Seun Idowu',
+  },
+  dakarCity: {
+    id: 'photo-1690323223790-4df744a1a033',
+    alt: 'Dakar stretching to the ocean, seen from a high point, Senegal',
+    credit: 'Karen Nash',
+  },
+  dakarMonument: {
+    id: 'photo-1637166514815-8b923a08f8e8',
+    alt: 'The African Renaissance Monument above Dakar at sunset, Senegal',
+    credit: 'Bamby Diagne',
+  },
+  dakarCoast: {
+    id: 'photo-1611258490565-4a06c019e631',
+    alt: 'Homes and a white mosque on the cliffs by the ocean, Dakar, Senegal',
+    credit: 'Eyelit Studio',
+  },
+  goreeStreet: {
+    id: 'photo-1528047705243-ebb19baf436f',
+    alt: 'Red two-storey houses along a sandy street on Gorée Island, Dakar, Senegal',
+    credit: 'Anton Lecock',
+  },
 } satisfies Record<string, Photo>
 
 export type PhotoKey = keyof typeof PHOTOS

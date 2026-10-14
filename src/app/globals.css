@@ -1351,3 +1351,137 @@
     .neon-sky-window { animation: none; }
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Cinematic blocks (components/marketing/cinematic.tsx)
+   --------------------------------------------------------------------------- */
+@layer components {
+  /* StepStory: giant glowing numeral and title that rise in on each step */
+  .story-numeral {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 520;
+    font-size: clamp(5rem, 3rem + 6vw, 9rem);
+    line-height: 0.95;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(221, 214, 254, 0.9);
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.65);
+    animation: storyRise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .story-title { color: #fff; animation: storyRise 900ms 120ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  @keyframes storyRise {
+    from { opacity: 0; transform: translateY(22px); filter: blur(6px); }
+    to   { opacity: 1; transform: none; filter: none; }
+  }
+
+  /* ReportCard: a scan line sweeps the card while rows tick on in turn */
+  .report-card { box-shadow: 0 40px 120px -40px rgba(110, 91, 243, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+  .report-scan {
+    position: absolute;
+    inset-inline: 0;
+    top: -30%;
+    height: 30%;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(139, 92, 246, 0.22) 70%, rgba(221, 214, 254, 0.55) 99%, transparent);
+    animation: reportScan 1.8s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  @keyframes reportScan { to { top: 100%; } }
+  .report-tick circle { fill: rgba(139, 92, 246, 0.0); stroke: rgba(255, 255, 255, 0.16); stroke-width: 1.2; transition: all 500ms ease; }
+  .report-tick path {
+    fill: none; stroke: #DDD6FE; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 1; stroke-dashoffset: 1;
+    transition: stroke-dashoffset 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .report-value { opacity: 0.25; transition: opacity 500ms ease; }
+  .report-row[data-on] .report-tick circle,
+  .report-row[data-on] .report-tick path,
+  .report-row[data-on] .report-value { transition-delay: calc(var(--i) * var(--step) + 250ms); }
+  .report-row[data-on] .report-tick circle { fill: rgba(139, 92, 246, 0.28); stroke: rgba(196, 181, 253, 0.9); filter: drop-shadow(0 0 6px rgba(139, 92, 246, 0.9)); }
+  .report-row[data-on] .report-tick path { stroke-dashoffset: 0; }
+  .report-row[data-on] .report-value { opacity: 1; }
+
+  /* GlowTile: glass tile with an edge that lights up and a cursor spotlight */
+  .glow-tile {
+    position: relative;
+    background: linear-gradient(180deg, rgba(18, 16, 30, 0.88) 0%, rgba(9, 9, 13, 0.9) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 20px 60px -30px rgba(0, 0, 0, 0.9);
+    transition: border-color 450ms ease, box-shadow 450ms ease;
+  }
+  .glow-tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, -20%), rgba(139, 92, 246, 0.22), rgba(99, 102, 241, 0.06) 40%, transparent 70%);
+    opacity: 0;
+    transition: opacity 450ms ease;
+  }
+  .glow-tile:hover { border-color: rgba(196, 181, 253, 0.38); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 0 0 1px rgba(139, 92, 246, 0.15), 0 30px 80px -30px rgba(110, 91, 243, 0.7); }
+  .glow-tile:hover::after { opacity: 1; }
+  .glow-tile .tile-icon {
+    display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px;
+    background: linear-gradient(160deg, rgba(143, 130, 250, 0.28), rgba(90, 66, 230, 0.08));
+    border: 1px solid rgba(196, 181, 253, 0.28);
+    color: #DDD6FE;
+    box-shadow: 0 0 24px rgba(110, 91, 243, 0.35);
+    transition: box-shadow 450ms ease, transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .glow-tile:hover .tile-icon { box-shadow: 0 0 34px rgba(139, 92, 246, 0.8); transform: translateY(-2px) scale(1.04); }
+
+  /* Photo cards that zoom and light up on hover */
+  .photo-card { position: relative; overflow: hidden; border-radius: 18px; isolation: isolate; }
+  .photo-card img { transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1), filter 700ms ease; }
+  .photo-card:hover img { transform: scale(1.07); filter: saturate(1.12); }
+  .photo-card::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    transition: box-shadow 500ms ease;
+  }
+  .photo-card:hover::after { box-shadow: inset 0 0 0 1px rgba(196, 181, 253, 0.55), inset 0 -80px 120px -60px rgba(110, 91, 243, 0.65); }
+  .photo-card { transition: box-shadow 500ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+  .photo-card:hover { box-shadow: 0 30px 90px -30px rgba(110, 91, 243, 0.75); transform: translateY(-4px); }
+
+  /* CityMarquee */
+  .city-word {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 520;
+    font-size: clamp(2rem, 1.3rem + 2.6vw, 3.75rem);
+    line-height: 1;
+    color: #F5F5F7;
+    white-space: nowrap;
+  }
+  .city-word--outline { color: transparent; -webkit-text-stroke: 1.2px rgba(196, 181, 253, 0.75); text-shadow: 0 0 30px rgba(139, 92, 246, 0.35); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .story-numeral, .story-title { animation: none; }
+    .report-scan { display: none; }
+    .photo-card img, .photo-card { transition: none; }
+  }
+}
+
+@property --tier-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+
+@layer components {
+  /* Highlighted plan: a light that travels around the border */
+  .tier-hot { position: relative; }
+  .tier-hot::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: 0;
+    border-radius: 21px;
+    padding: 1px;
+    background: conic-gradient(from var(--tier-angle), rgba(139, 92, 246, 0.1) 0deg, rgba(221, 214, 254, 0.95) 60deg, rgba(139, 92, 246, 0.1) 140deg, rgba(139, 92, 246, 0.1) 360deg);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: tierSpin 6s linear infinite;
+    pointer-events: none;
+  }
+  .tier-hot > * { position: relative; z-index: 1; }
+  @keyframes tierSpin { to { --tier-angle: 360deg; } }
+  @media (prefers-reduced-motion: reduce) { .tier-hot::before { animation: none; } }
+}

@@ -149,10 +149,10 @@ function Intro() {
             </div>
           </div>
           <Plate
-            photo="kigaliSunset"
+            photo="lagosSkyline"
             className="aspect-[4/3] lg:aspect-[4/5]"
             sizes="(min-width: 1024px) 40vw, 100vw"
-            caption="Kigali, Rwanda"
+            caption="Lagos, Nigeria"
           />
         </div>
 
@@ -214,7 +214,7 @@ function Problem() {
 // ---------------------------------------------------------------------------
 
 const PRODUCT_PHOTOS: Record<string, PhotoKey> = {
-  verify: 'brickHome',
+  verify: 'abujaHomes',
   shares: 'nairobiSkyline',
   legacy: 'orangeHouse',
 }
@@ -349,11 +349,12 @@ function VerifyChapter() {
 // ---------------------------------------------------------------------------
 
 const PLACES: Array<{ title: string; meta: string; photo: PhotoKey }> = [
-  { title: 'Lagos', meta: 'Nigeria · Verify', photo: 'lagosWaterfront' },
-  { title: 'Dakar', meta: 'Senegal · Verify, Legacy', photo: 'dakarPink' },
+  { title: 'Lagos', meta: 'Nigeria · Verify', photo: 'lagosSkyline' },
+  { title: 'Abuja', meta: 'Nigeria · Verify', photo: 'abujaHaze' },
+  { title: 'Dakar', meta: 'Senegal · Verify, Legacy', photo: 'dakarCoast' },
   { title: 'Nairobi', meta: 'Kenya · Shares', photo: 'nairobiSkyline' },
   { title: 'Kigali', meta: 'Rwanda · Shares showcase', photo: 'kigaliHomes' },
-  { title: 'Family homes', meta: 'Completed homes only', photo: 'modernVilla' },
+  { title: 'Lekki, Lagos', meta: 'Nigeria · Verify', photo: 'lagosNight' },
   { title: 'Plots and land', meta: 'Verify first, leasing later', photo: 'greenPlots' },
 ]
 
@@ -374,8 +375,8 @@ function Markets() {
           {PLACES.map((c, i) => (
             <li key={c.title} data-reveal="up" data-reveal-delay={String(i * 80)} className="w-[78vw] max-w-[400px] snap-start sm:w-[340px]">
               <div className="group">
-                <div className="plate aspect-[16/10] rounded-lg">
-                  <Image src={photoUrl(c.photo, 900, 75)} alt={PHOTOS[c.photo].alt} fill sizes="400px" className="zoom-img object-cover" />
+                <div className="photo-card plate aspect-[16/10]">
+                  <Image src={photoUrl(c.photo, 900, 75)} alt={PHOTOS[c.photo].alt} fill sizes="400px" className="object-cover" />
                 </div>
                 <p className="mt-3 text-[15px] font-medium text-[#F5F5F7]">{c.title}</p>
                 <p className="text-caption mt-0.5">{c.meta}</p>
