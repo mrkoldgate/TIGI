@@ -6,6 +6,7 @@ import { PRODUCTS, LISTING_CHECKS, MARKETS, MARKET_STATUS_LABEL, PRINCIPLES } fr
 import { ParallaxImage } from '@/components/motion/parallax'
 import { HeroFilm } from '@/components/marketing/hero-film'
 import { MouseTiltCard } from '@/components/ui/interactions'
+import { MarketTable } from '@/components/marketing/market-table'
 import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
 
 // ---------------------------------------------------------------------------
@@ -522,6 +523,17 @@ function SharesChapter() {
             </MouseTiltCard>
             <figcaption className="mt-3 text-caption">Illustration · Not a live offering · Available only where licensed</figcaption>
           </figure>
+        </div>
+
+        {/* Sample market — asset-table pattern */}
+        <div className="mt-20">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <h3 data-reveal="wave" className="text-h2 max-w-[26ch]">
+              <WaveChars text="A market for property, priced like one." />
+            </h3>
+            <p className="text-caption max-w-[40ch]">Sample listings in the markets where Shares is planned. Not live offerings; figures are hypothetical.</p>
+          </div>
+          <MarketTable />
         </div>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
