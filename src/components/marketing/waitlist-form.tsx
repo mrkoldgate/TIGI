@@ -116,7 +116,7 @@ export function WaitlistForm({ initialInterest, source }: { initialInterest?: Wa
           </select>
         </label>
         <label className="block">
-          <span className="text-label mb-2 block">I want to buy or invest in</span>
+          <span className="text-label mb-2 block">I want to buy in</span>
           <select name="market" required defaultValue="" className="field appearance-none [&>option]:bg-[#0B0B10]">
             <option value="" disabled>Choose a country</option>
             {WAITLIST_MARKETS.map((c) => <option key={c} value={c}>{c}</option>)}
