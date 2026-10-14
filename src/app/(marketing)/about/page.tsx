@@ -54,8 +54,7 @@ export default function AboutPage() {
             <SectionHead num="02" label="Founder" title="Issa Sissoko" />
             <div data-reveal="up" className="mt-8 space-y-4 text-[15.5px] leading-relaxed text-[#C3C3CC]">
               <p>
-                Issa is an AI filmmaker and creative technologist, Malian and French, based between New York and
-                Montréal. He has watched families in the diaspora lose savings to land they never got to own.
+                Issa is an AI filmmaker and creative technologist, Malian and French, based in New York.
               </p>
               <p>
                 He built TIGI&apos;s working beta himself: the marketplace, portfolio, Legacy and land modules. TIGI is

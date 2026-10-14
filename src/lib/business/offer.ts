@@ -144,7 +144,7 @@ export const MARKETS: Market[] = [
     country: 'Canada',
     flag: 'CA',
     products: 'Shares',
-    why: 'Home base in Montréal.',
+    why: 'A large French-speaking West African diaspora, mostly in Montréal.',
     route: 'Offering memorandum through a registered dealer.',
     status: 'parallel',
     region: 'North America',
