@@ -97,7 +97,7 @@ export default function VerifyPage() {
     <div className="pb-24 md:pb-32">
       <PageHero
         live
-        photo="abujaHomes"
+        photo="lagosNight"
         eyebrow="TIGI Verify · Launching in Nigeria, Senegal and Mali"
         title="Know it’s real before you pay."
         lede={
@@ -174,7 +174,7 @@ export default function VerifyPage() {
 
       {/* Statement */}
       <div className="mt-24 md:mt-32">
-        <ParallaxBand photo="lagosNight" kicker="The one rule Verify never breaks" statement="Deed first. Then the money.">
+        <ParallaxBand photo="dakarMonument" kicker="The one rule Verify never breaks" statement="Deed first. Then the money.">
           <p className="max-w-[52ch] text-[17px] leading-relaxed text-[#D4D4DE]">
             Your payment waits with a licensed partner. It moves to the seller only when the registry shows the property
             in your name.
@@ -233,7 +233,7 @@ export default function VerifyPage() {
       {/* Close */}
       <div className="mt-24 md:mt-32">
         <CtaBand
-          photo="dakarMonument"
+          photo="nigeriaNight"
           title="Buying in Lagos, Abuja, Dakar or Bamako soon?"
           body={<p>Join the waitlist with the city and rough budget. We open Verify to the waitlist first, city by city.</p>}
         >

@@ -30,6 +30,10 @@ import { cn } from '@/lib/utils'
 
 const pad = (n: number) => String(n).padStart(2, '0')
 
+/** Night photos keep more of their own light; daytime photos are pushed darker. */
+const NIGHT: PhotoKey[] = ['lagosNight', 'nigeriaNight']
+const grade = (p: PhotoKey) => (NIGHT.includes(p) ? 'night-grade night-grade--lit' : 'night-grade')
+
 // ── PageHero ────────────────────────────────────────────────────────────────
 
 export function PageHero({
@@ -69,10 +73,11 @@ export function PageHero({
           fill
           priority
           sizes="100vw"
-          className="object-cover"
+          className={`${grade(photo)} object-cover`}
           style={{ objectPosition: position }}
         />
       </motion.div>
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[#22184f] opacity-45 mix-blend-multiply" aria-hidden="true" />
       {/* Night grade: legibility on the left, violet light top-right, black into the page */}
       <div
         className="pointer-events-none absolute inset-0 -z-10"
@@ -439,7 +444,7 @@ export function ParallaxBand({
   return (
     <section ref={ref} className="relative isolate flex min-h-[78vh] items-end overflow-hidden py-20 md:py-28">
       <motion.div className="absolute inset-x-0 -inset-y-[16%] -z-20" style={reduce ? undefined : { y, scale }}>
-        <Image src={photoUrl(photo, 2400, 78)} alt={PHOTOS[photo].alt} fill sizes="100vw" className="object-cover" style={{ objectPosition: position }} />
+        <Image src={photoUrl(photo, 2400, 78)} alt={PHOTOS[photo].alt} fill sizes="100vw" className={`${grade(photo)} object-cover`} style={{ objectPosition: position }} />
       </motion.div>
       <div
         className="pointer-events-none absolute inset-0 -z-10"
@@ -499,7 +504,7 @@ export function CtaBand({
         className="cta-band relative isolate overflow-hidden rounded-[28px] px-7 py-16 ring-1 ring-white/[0.08] sm:px-14 sm:py-20"
       >
         <motion.div className="absolute inset-x-0 -inset-y-[14%] -z-20" style={reduce ? undefined : { y }}>
-          <Image src={photoUrl(photo, 2000, 76)} alt="" fill sizes="(min-width: 1200px) 1200px, 100vw" className="object-cover" style={{ objectPosition: position }} />
+          <Image src={photoUrl(photo, 2000, 76)} alt="" fill sizes="(min-width: 1200px) 1200px, 100vw" className={`${grade(photo)} object-cover`} style={{ objectPosition: position }} />
         </motion.div>
         <div
           className="pointer-events-none absolute inset-0 -z-10"
@@ -615,7 +620,7 @@ export function PhotoBackdrop({
   return (
     <section ref={ref} className="relative isolate -mt-[72px] overflow-hidden pt-[72px]">
       <motion.div className="absolute inset-0 -z-20" style={reduce ? undefined : { y }}>
-        <Image src={photoUrl(photo, 2400, 78)} alt="" fill priority sizes="100vw" className="object-cover" style={{ objectPosition: position }} />
+        <Image src={photoUrl(photo, 2400, 78)} alt="" fill priority sizes="100vw" className={`${grade(photo)} object-cover`} style={{ objectPosition: position }} />
       </motion.div>
       <div
         className="pointer-events-none absolute inset-0 -z-10"

@@ -43,7 +43,7 @@ export default function FeesPage() {
   return (
     <div className="pb-24 md:pb-32">
       <PageHero
-        photo="lagosNight"
+        photo="nigeriaNight"
         eyebrow="Fees"
         title="Every fee, who pays it, and when."
         lede={
@@ -168,7 +168,7 @@ export default function FeesPage() {
 
       <div className="mt-24 md:mt-32">
         <CtaBand
-          photo="dakarCity"
+          photo="lagosNight"
           title="See the price before you order. Always."
           body={<p>Join the waitlist and we&apos;ll tell you when Verify opens in your city, with launch pricing.</p>}
         >

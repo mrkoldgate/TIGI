@@ -1504,3 +1504,9 @@
   @keyframes sparkDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
   @media (prefers-reduced-motion: reduce) { [data-reveal].is-visible .spark polyline { animation: none; } }
 }
+
+@layer components {
+  /* Night grade for photography behind copy: darker, cooler, a touch more contrast */
+  .night-grade { filter: brightness(0.6) contrast(1.1) saturate(0.82); }
+}
+@layer components { .night-grade--lit { filter: brightness(0.82) contrast(1.08) saturate(0.9); } }
