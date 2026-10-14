@@ -1321,3 +1321,33 @@
   }
   .panel-hover:hover::after { opacity: 1; }
 }
+
+/* ---------------------------------------------------------------------------
+   Neon skyline motif (components/shared/neon-skyline.tsx) — houses, apartment
+   blocks and towers in thin violet line; two neon pulses trace the skyline.
+   --------------------------------------------------------------------------- */
+@layer components {
+  .neon-sky-detail { fill: none; stroke: #8F82FA; stroke-opacity: 0.2; stroke-width: 1; }
+  .neon-sky-line { fill: none; stroke: #8F82FA; stroke-opacity: 0.42; stroke-width: 1.4; stroke-linejoin: round; }
+  .neon-sky-window { fill: #C4B5FD; opacity: 0; animation: neonSkyWindow 9s ease-in-out infinite; }
+  .neon-sky-trace {
+    fill: none;
+    stroke: #C4B5FD;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 0.045 0.955;
+    animation: neonSkyTrace 18s linear infinite;
+  }
+  .neon-sky-trace--head { stroke: #FFFFFF; stroke-width: 1.4; stroke-dasharray: 0.012 0.988; }
+  .neon-sky-trace--late { animation-delay: -9s; }
+
+  @keyframes neonSkyTrace { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  @keyframes neonSkyWindow { 0%, 100% { opacity: 0; } 35%, 55% { opacity: 0.55; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .neon-sky-trace { animation: none; stroke-dasharray: none; stroke-opacity: 0.25; }
+    .neon-sky-trace--head { display: none; }
+    .neon-sky-window { animation: none; }
+  }
+}

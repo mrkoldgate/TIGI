@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Logo } from '@/components/shared/logo'
 import { photoUrl, PHOTOS } from '@/lib/photography'
+import { NeonSkyline } from '@/components/shared/neon-skyline'
 
 // ---------------------------------------------------------------------------
 // Auth layout — v5
@@ -63,6 +64,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           style={{ background: 'radial-gradient(60% 50% at 50% 30%, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.05) 45%, transparent 75%)' }}
           aria-hidden="true"
         />
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 [mask-image:linear-gradient(to_top,black_50%,transparent)]" aria-hidden="true">
+          <NeonSkyline className="h-[26vh] min-h-[160px] w-full opacity-45" />
+        </div>
 
         <div className="relative mb-10 lg:hidden">
           <Logo />

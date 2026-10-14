@@ -6,6 +6,7 @@ import { TopNav } from './top-nav'
 import { AssistantPanel } from '@/components/assistant/assistant-panel'
 import { AssistantTrigger } from '@/components/assistant/assistant-trigger'
 import { cn } from '@/lib/utils'
+import { NeonSkyline } from '@/components/shared/neon-skyline'
 
 // ---------------------------------------------------------------------------
 // AppShell — Platform layout container
@@ -39,6 +40,9 @@ export function AppShell({ children, user }: AppShellProps) {
         <div className="absolute -right-40 -top-56 h-[760px] w-[760px] rounded-full bg-violet-600/[0.08] blur-[180px]" />
         <div className="absolute -bottom-64 left-[10%] h-[680px] w-[680px] rounded-full bg-indigo-500/[0.07] blur-[180px]" />
         <div className="absolute right-[20%] top-[45%] h-[420px] w-[420px] rounded-full bg-cyan-500/[0.03] blur-[160px]" />
+        <div className="absolute inset-x-0 bottom-0 [mask-image:linear-gradient(to_top,black_50%,transparent)]">
+          <NeonSkyline className="h-[26vh] min-h-[180px] w-full opacity-35" />
+        </div>
       </div>
 
       {/* Sidebar — fixed left column (desktop) / overlay (mobile) */}
