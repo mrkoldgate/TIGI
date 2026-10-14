@@ -16,8 +16,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Photo side */}
       <aside className="relative hidden overflow-hidden lg:block">
         <Image
-          src={photoUrl('houseDusk', 1600, 80)}
-          alt={PHOTOS.houseDusk.alt}
+          src={photoUrl('kigaliHomes', 1600, 80)}
+          alt={PHOTOS.kigaliHomes.alt}
           fill
           priority
           sizes="50vw"
@@ -43,13 +43,13 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
               className="font-display text-[clamp(2rem,1.2rem+2vw,3rem)] font-[520] leading-[1.04] tracking-[-0.035em] text-[#F5F5F7]"
               style={{ fontStretch: '110%' }}
             >
-              Own real estate by the share.
+              Own property in Africa, safely.
             </p>
             <p className="mt-4 text-[15px] leading-relaxed text-[#C3C3CC]">
-              Homes, apartments and land from $100. Lease out what you own. Pass it on to who you choose.
+              Titles checked at the registry. Money held in escrow until the deed moves. Heirs on record.
             </p>
             <p className="mt-8 font-mono text-[10.5px] uppercase tracking-[0.12em] text-white/50">
-              Photo · {PHOTOS.houseDusk.credit}
+              Photo · {PHOTOS.kigaliHomes.credit}
             </p>
           </div>
         </div>

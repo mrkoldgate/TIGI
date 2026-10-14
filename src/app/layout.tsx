@@ -14,18 +14,20 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: {
-    default: 'TIGI — Tokenized Intelligent Global Infrastructure',
+    default: 'TIGI — Property in Africa you can trust',
     template: '%s | TIGI',
   },
   description:
-    'Own real estate and land one fraction at a time. TIGI turns property into digital shares you can buy, hold, lease and pass on, with AI research on every listing. Private beta.',
+    'TIGI checks property titles at the official registry, holds your money in licensed escrow until the deed is yours, and records who inherits it. Launching in Nigeria, Senegal and Mali. Private beta.',
   keywords: [
-    'real estate',
+    'title verification',
+    'land registry',
+    'property escrow',
+    'diaspora property',
+    'Nigeria real estate',
+    'Senegal real estate',
     'fractional ownership',
-    'property investment',
-    'tokenized real estate',
-    'Solana',
-    'real estate marketplace',
+    'inheritance planning',
   ],
   authors: [{ name: 'TIGI' }],
   creator: 'TIGI',
@@ -34,14 +36,14 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'TIGI',
-    title: 'TIGI — Tokenized Intelligent Global Infrastructure',
+    title: 'TIGI — Property in Africa you can trust',
     description:
-      'Own real estate one fraction at a time. The premium platform for tokenized property investment.',
+      'Titles checked at the registry. Money held in escrow until the deed moves. Heirs on record.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'TIGI — Tokenized Intelligent Global Infrastructure',
-    description: 'Own real estate one fraction at a time.',
+    title: 'TIGI — Property in Africa you can trust',
+    description: 'Titles checked at the registry. Money held in escrow until the deed moves.',
   },
   robots: {
     index: true,

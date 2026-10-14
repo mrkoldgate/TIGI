@@ -43,6 +43,13 @@ export interface MockListing {
   // AI valuation (MockValuationService — real model plugs in at M6)
   aiEstimatedValue: number | null
   aiConfidence: AiConfidence | null
+
+  // Investor disclosures (Business Plan v2: every offering shows rent,
+  // expenses, net yield, manager and documents). Optional — when absent the
+  // detail page says these are disclosed in the offering documents.
+  grossRentMonthly?: number | null
+  expensesMonthly?: number | null
+  propertyManager?: string | null
 }
 
 export const MOCK_LISTINGS: MockListing[] = [

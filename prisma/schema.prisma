@@ -1027,3 +1027,28 @@ model TransactionIntent {
   @@index([status])
   @@map("transaction_intents")
 }
+
+// ---------------------------------------------------------------------------
+// Qualified waitlist (Business Plan v2 §7) — sizes demand per market before
+// each launch. Public sign-ups from /waitlist; no account required.
+// NOTE: the Vercel demo database is rebuilt on every deploy, so entries stored
+// here are not durable until TIGI moves to hosted Postgres. Set
+// WAITLIST_WEBHOOK_URL to also forward each sign-up somewhere durable.
+// ---------------------------------------------------------------------------
+
+model WaitlistEntry {
+  id          String   @id @default(cuid())
+  email       String
+  name        String?
+  livesIn     String   // country the person lives in
+  market      String   // country they want to buy or invest in
+  interests   String   // comma-separated: verify, shares, legacy, list, investor
+  amountRange String?
+  message     String?
+  source      String?  // page or campaign that brought them
+  createdAt   DateTime @default(now())
+
+  @@index([email])
+  @@index([market])
+  @@map("waitlist_entries")
+}

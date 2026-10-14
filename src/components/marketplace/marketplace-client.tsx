@@ -504,7 +504,7 @@ export function MarketplaceClient({ listings, stats, initialQuery = '' }: Market
       <PageHeader
         eyebrow="Marketplace"
         title="Own a share of real places"
-        description="Homes, apartment blocks and land, split into shares from $100. Filter, compare, then invest."
+        description="Sample listings in the private beta. Every property must pass TIGI Verify before it can be offered, and shares open only where TIGI is licensed."
         meta={<HeaderStats stats={stats} onLand={() => patchFilters({ category: 'LAND' })} />}
       />
 

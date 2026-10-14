@@ -1,157 +1,151 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Check, X, Sparkles, Building2, ArrowRight } from 'lucide-react'
-import { PLANS } from '@/lib/billing/billing-types'
+import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import { PageIntro, Wrap } from '@/components/marketing/page-intro'
 
 export const metadata: Metadata = {
-  title: 'Pricing — TIGI',
-  description: 'Choose the plan that fits your real estate investment strategy.',
+  title: 'Plans',
+  description: 'Free to start. Legacy for families at $5 a month. Pro research tools at $29 a month.',
 }
 
 // ---------------------------------------------------------------------------
-// /pricing — Public pricing page.
-// Static server component — no auth required.
+// /pricing — subscription plans (Business Plan v2 §6). Per-use fees (Verify,
+// escrow, Shares) live on /fees. Prices mirror src/lib/business/offer.ts.
 // ---------------------------------------------------------------------------
 
+const TIERS = [
+  {
+    name: 'Free',
+    price: '$0',
+    period: '',
+    annual: '',
+    tagline: 'Look around, ask questions, order checks.',
+    cta: 'Join the waitlist',
+    href: '/waitlist',
+    features: [
+      'Search properties and markets',
+      'Basic AI insights on every listing',
+      'Aria, the assistant, in English or French',
+      'Order Verify checks at the per-check price',
+      'Your title reports, saved',
+    ],
+  },
+  {
+    name: 'Legacy',
+    price: '$5',
+    period: '/ month',
+    annual: 'or $49 a year',
+    tagline: 'For families who want the paperwork settled.',
+    cta: 'Join for Legacy',
+    href: '/waitlist?interest=legacy',
+    highlighted: true,
+    features: [
+      'Everything in Free',
+      'Named heirs for every holding',
+      'Document vault for deeds and title reports',
+      'Step-by-step executor guide',
+      'Islamic inheritance-share calculator',
+      'Introductions to partner notaries',
+    ],
+  },
+  {
+    name: 'Pro',
+    price: '$29',
+    period: '/ month',
+    annual: '',
+    tagline: 'For agents, developers and active investors.',
+    cta: 'Join for Pro',
+    href: '/waitlist?interest=list',
+    features: [
+      'Everything in Legacy',
+      'Deeper price estimates with comparables',
+      'Market and neighbourhood analytics',
+      'Alerts on new listings and price changes',
+      'Exportable reports',
+    ],
+  },
+]
+
 export default function PricingPage() {
-  const displayPlans = ['free', 'pro', 'pro_plus', 'enterprise'] as const
-
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div className="pb-24 md:pb-32">
+      <PageIntro
+        eyebrow="Plans"
+        title="Start free. Pay for what you use."
+        lede={
+          <p>
+            Most people only pay when they use Verify or buy shares. Plans are for families who want their records
+            settled, and professionals who want deeper research.{' '}
+            <Link href="/fees" className="text-violet-200 no-underline hover:text-white">See per-use fees</Link>.
+          </p>
+        }
+      />
 
-      {/* Header */}
-      <div className="mb-12 text-center">
-        <p className="text-xs font-semibold uppercase tracking-widest text-[#6366F1]">Pricing</p>
-        <h1 className="mt-3 font-heading text-4xl font-semibold text-[#F5F5F7]">
-          Intelligence that scales with you
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base text-[#6B6B80]">
-          Start free. Unlock deeper AI analysis and premium signals as your portfolio grows.
-        </p>
-      </div>
-
-      {/* Plan grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
-        {displayPlans.map((planId) => {
-          const plan = PLANS[planId]
-          const isHighlighted = plan.highlighted
-          const isEnterprise = planId === 'enterprise'
-
-          return (
+      <Wrap className="mt-16">
+        <div className="grid gap-5 lg:grid-cols-3">
+          {TIERS.map((t, i) => (
             <div
-              key={planId}
-              className={`relative flex flex-col rounded-2xl border p-6 ${
-                isHighlighted
-                  ? 'border-[#6366F1]/40 bg-[#050505] shadow-[0_0_40px_rgba(99,102,241,0.08)]'
-                  : 'border-white/[0.04] bg-[#050505]'
-              }`}
+              key={t.name}
+              data-reveal="up"
+              data-reveal-delay={String(i * 100)}
+              className={`panel panel-hover flex flex-col p-7 ${t.highlighted ? '!border-violet-400/30 shadow-[0_0_60px_-20px_rgba(139,92,246,0.6)]' : ''}`}
             >
-              {plan.badge && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-[#6366F1] px-3 py-0.5 text-[11px] font-semibold text-[#0A0A0F]">
-                    <Sparkles className="h-2.5 w-2.5" />
-                    {plan.badge}
-                  </span>
-                </div>
-              )}
-
-              <div className="mb-4">
-                <h3 className="font-heading text-base font-semibold text-[#F5F5F7]">{plan.name}</h3>
-                <p className="mt-0.5 text-xs text-[#6B6B80]">{plan.tagline}</p>
+              <div className="flex items-center justify-between">
+                <p className="text-label">{t.name}</p>
+                {t.highlighted && <span className="pill is-active !py-1 !text-[11px]">For families</span>}
               </div>
+              <p className="mt-5 flex items-baseline gap-1.5">
+                <span className="figure text-[44px] leading-none">{t.price}</span>
+                {t.period && <span className="text-sm text-[#8E8E9C]">{t.period}</span>}
+              </p>
+              <p className="mt-1 h-5 text-xs text-[#8E8E9C]">{t.annual}</p>
+              <p className="mt-3 text-[15px] text-[#D4D4DE]">{t.tagline}</p>
 
-              <div className="mb-6">
-                {isEnterprise ? (
-                  <p className="font-display text-3xl font-[480] text-[#F5F5F7]">Custom</p>
-                ) : (
-                  <div>
-                    <p className="font-display text-3xl font-[480] tabular-nums text-[#F5F5F7]">
-                      {plan.priceMonthly === 0 ? 'Free' : `$${plan.priceMonthly}/mo`}
-                    </p>
-                    {!!plan.priceAnnual && plan.priceMonthly !== 0 && (
-                      <p className="mt-1 text-xs text-[#6B6B80]">
-                        or ${plan.priceAnnual}/yr — save {plan.annualSavingsPercent}%
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-
-              <div className="mb-6">
-                {isEnterprise ? (
-                  <a
-                    href="mailto:enterprise@tigi.com"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/[0.04] bg-white/[0.04] py-2.5 text-sm font-semibold text-[#A0A0B2] transition-colors hover:border-[#6366F1]/40 hover:text-[#6366F1]"
-                  >
-                    <Building2 className="h-4 w-4" />
-                    Contact sales
-                  </a>
-                ) : (
-                  <Link
-                    href={plan.priceMonthly === 0 ? '/auth/register' : '/auth/register'}
-                    className={`flex w-full items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition-all ${
-                      isHighlighted
-                        ? 'bg-[#6366F1] text-[#0A0A0F] hover:opacity-90'
-                        : 'border border-white/[0.04] bg-white/[0.04] text-[#A0A0B2] hover:border-[#6366F1]/40 hover:text-[#F5F5F7]'
-                    }`}
-                  >
-                    {isHighlighted && <Sparkles className="h-3.5 w-3.5" />}
-                    {plan.priceMonthly === 0 ? 'Get started free' : `Start ${plan.name}`}
-                    <ArrowRight className="h-3.5 w-3.5" />
-                  </Link>
-                )}
-              </div>
-
-              <ul className="space-y-2.5">
-                {plan.features.map((feat) => (
-                  <li key={feat.label} className="flex items-start gap-2.5">
-                    {feat.included ? (
-                      <Check className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#4ADE80]" />
-                    ) : (
-                      <X className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-[#3A3A4A]" />
-                    )}
-                    <span className={`text-xs leading-relaxed ${feat.included ? 'text-[#A0A0B2]' : 'text-[#4A4A5E]'}`}>
-                      {feat.label}
-                      {feat.note && (
-                        <span className="ml-1 text-[10px] text-[#4A4A5E]">({feat.note})</span>
-                      )}
-                    </span>
+              <ul className="mt-7 flex-1 space-y-3">
+                {t.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2.5 text-[14.5px] text-[#C3C3CC]">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-violet-300" />
+                    {f}
                   </li>
                 ))}
               </ul>
+
+              <Link href={t.href} className={`${t.highlighted ? 'btn-primary' : 'btn-glass'} mt-8 w-full no-underline`}>
+                {t.cta} <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-          )
-        })}
-      </div>
+          ))}
+        </div>
 
-      {/* FAQ row */}
-      <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        {[
-          {
-            q: 'Can I cancel anytime?',
-            a: 'Yes. Cancel from your billing settings at any time. Your access continues until the end of the current billing period.',
-          },
-          {
-            q: 'Is there a free trial?',
-            a: 'The Free plan includes 10 AI valuations per month — no credit card required. Upgrade when you need more.',
-          },
-          {
-            q: 'What payment methods are accepted?',
-            a: 'All major credit and debit cards via Stripe. More options available on Enterprise plans.',
-          },
-        ].map(({ q, a }) => (
-          <div key={q} className="rounded-xl border border-white/[0.04] bg-[#050505] p-5">
-            <p className="text-sm font-semibold text-[#F5F5F7]">{q}</p>
-            <p className="mt-2 text-xs leading-relaxed text-[#6B6B80]">{a}</p>
+        <div data-reveal="up" className="panel mt-5 flex flex-col gap-4 p-7 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-label">Developers and owners</p>
+            <p className="mt-2 max-w-[60ch] text-[15px] text-[#C3C3CC]">
+              Structuring and listing a completed project on TIGI Shares is quoted per project, from $10,000 to $25,000.
+            </p>
           </div>
-        ))}
-      </div>
+          <Link href="/waitlist?interest=list" className="btn-glass flex-shrink-0 no-underline">
+            Talk to us <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </div>
 
-      {/* Footer note */}
-      <p className="mt-12 text-center text-xs text-[#4A4A5E]">
-        AI estimates are not licensed appraisals. Past performance does not guarantee future results.
-        TIGI is not a registered investment advisor.
-      </p>
+        <div className="mt-16 grid gap-5 md:grid-cols-3">
+          {[
+            ['Can I cancel anytime?', 'Yes. Your plan runs to the end of the period you paid for. Your documents stay yours, and you can download them.'],
+            ['Do plans include Verify checks?', 'No. Checks and escrow are paid per property, so you only pay when you are buying. See the fees page.'],
+            ['Is the AI advice?', 'No. Estimates and insights are information, not financial advice and not an appraisal.'],
+          ].map(([q, a]) => (
+            <div key={q} data-reveal="up" className="panel p-6">
+              <p className="text-[15px] font-medium text-[#F5F5F7]">{q}</p>
+              <p className="mt-2 text-[14px] leading-relaxed text-[#B4B4C0]">{a}</p>
+            </div>
+          ))}
+        </div>
+
+        <p className="mt-10 text-caption">
+          Private beta: plans are not yet billed. Prices are in US dollars; local-currency pricing will follow at launch.
+        </p>
+      </Wrap>
     </div>
   )
 }

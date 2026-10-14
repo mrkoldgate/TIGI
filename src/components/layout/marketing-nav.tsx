@@ -11,18 +11,18 @@ import { NavProgressBar } from '@/components/ui/interactions'
 
 // ---------------------------------------------------------------------------
 // MarketingNav — v4
-// Transparent over the hero photograph, settles onto the onyx canvas once the
+// v6: Africa-first links (Verify, Markets, Shares, Legacy). Transparent over the hero photograph, settles onto the onyx canvas once the
 // page scrolls (Mercury). Links point at the homepage chapters plus Pricing,
 // so nothing in the public nav leads to a missing page.
 // ---------------------------------------------------------------------------
 
 const LINKS = [
-  { label: 'Market', href: '/#market' },
-  { label: 'How it works', href: '/#how' },
-  { label: 'Land', href: '/#land' },
+  { label: 'Verify', href: '/verify' },
+  { label: 'Markets', href: '/#markets' },
+  { label: 'Shares', href: '/#how' },
   { label: 'Legacy', href: '/#legacy' },
-  { label: 'Intelligence', href: '/#intelligence' },
   { label: 'Pricing', href: '/pricing' },
+  { label: 'About', href: '/about' },
 ]
 
 export function MarketingNav() {
@@ -78,8 +78,8 @@ export function MarketingNav() {
               <Link href="/auth/login" className="btn-glass !px-4 !py-2.5 text-sm no-underline">
                 Sign in
               </Link>
-              <Link href="/auth/register" className="btn-primary !px-5 !py-2.5 text-sm no-underline">
-                Get early access
+              <Link href="/waitlist" className="btn-primary !px-5 !py-2.5 text-sm no-underline">
+                Join the waitlist
               </Link>
             </>
           )}
@@ -116,7 +116,7 @@ export function MarketingNav() {
               <Link href="/dashboard" className="btn-primary no-underline">Dashboard</Link>
             ) : (
               <>
-                <Link href="/auth/register" className="btn-primary no-underline">Get early access</Link>
+                <Link href="/waitlist" className="btn-primary no-underline">Join the waitlist</Link>
                 <Link href="/auth/login" className="btn-glass no-underline">Sign in</Link>
               </>
             )}

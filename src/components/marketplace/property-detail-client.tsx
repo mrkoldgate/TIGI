@@ -21,6 +21,8 @@ import {
   Check,
   LayoutGrid,
   MessageSquare,
+  ShieldCheck,
+  ArrowUpRight,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { WaveChars } from '@/components/motion/wave-text'
@@ -325,6 +327,9 @@ function TabContent({
           </section>
         )}
 
+        {/* Investor disclosures */}
+        <InvestorInfo listing={listing} />
+
         {/* Location context */}
         <section>
           <h2 className="section-title mb-4 !text-[19px]">Location</h2>
@@ -453,6 +458,58 @@ function TabContent({
         )
       }
     />
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Investor information — the disclosures every offering must show before
+// anyone buys (Business Plan v2 §2, §9). Values come from the listing when
+// present; otherwise we say where they will be disclosed rather than guess.
+// ---------------------------------------------------------------------------
+
+function InvestorInfo({ listing }: { listing: MockListing }) {
+  const rent = listing.grossRentMonthly ?? null
+  const expenses = listing.expensesMonthly ?? null
+  const netYield = rent != null && expenses != null && listing.price > 0 ? ((rent - expenses) * 12) / listing.price : null
+  const pending = 'In offering documents'
+  const money = (n: number) => `$${Math.round(n).toLocaleString()} / mo`
+
+  const rows: Array<{ label: string; value: string; muted?: boolean }> = [
+    { label: 'Gross rent', value: rent != null ? money(rent) : pending, muted: rent == null },
+    { label: 'Expenses and reserves', value: expenses != null ? money(expenses) : pending, muted: expenses == null },
+    { label: 'Net yield', value: netYield != null ? `${(netYield * 100).toFixed(1)}% a year` : pending, muted: netYield == null },
+    { label: 'Property manager', value: listing.propertyManager ?? 'Named in offering documents', muted: !listing.propertyManager },
+    { label: 'Fees', value: 'Sourcing 3% · management 1% a year · resale 1%' },
+    { label: 'Exit', value: 'Long-term hold. Resale only on a licensed venue.' },
+  ]
+
+  return (
+    <section>
+      <h2 className="section-title mb-4 !text-[19px]">Before you invest</h2>
+      <div className="panel overflow-hidden">
+        <div className="flex items-start gap-3 border-b border-white/[0.06] px-5 py-4">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-violet-300" />
+          <div className="text-sm">
+            <p className="font-medium text-[#F5F5F7]">TIGI Verify · Not yet run</p>
+            <p className="mt-0.5 text-[#8E8E9C]">
+              Sample listing. A live offering must pass all five listing checks, including a registry title search, first.
+            </p>
+          </div>
+        </div>
+        <dl>
+          {rows.map((r) => (
+            <div key={r.label} className="grid gap-1 border-b border-white/[0.05] px-5 py-3.5 last:border-0 sm:grid-cols-[200px_1fr] sm:gap-6">
+              <dt className="text-[13.5px] text-[#8E8E9C]">{r.label}</dt>
+              <dd className={cn('text-[14px]', r.muted ? 'text-[#A0A0B2]' : 'text-[#F5F5F7]')}>{r.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+      <p className="mt-3 flex flex-wrap gap-x-5 gap-y-1 text-xs text-[#8E8E9C]">
+        <Link href="/risks" className="inline-flex items-center gap-1 no-underline hover:text-white">Read the risks <ArrowUpRight className="h-3 w-3" /></Link>
+        <Link href="/fees" className="inline-flex items-center gap-1 no-underline hover:text-white">All fees <ArrowUpRight className="h-3 w-3" /></Link>
+      </p>
+    </section>
   )
 }
 

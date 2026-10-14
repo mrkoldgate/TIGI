@@ -72,6 +72,52 @@ export const PHOTOS = {
     alt: 'A lone tree and a house in morning fog',
     credit: 'Emanuel Haas',
   },
+  // Africa-first set (v6) — markets TIGI launches in first
+  kigaliSunset: {
+    id: 'photo-1687986261123-b17f08f2796c',
+    alt: 'Kigali skyline at sunset, Rwanda',
+    credit: 'Jean Claude Akarikumutima',
+  },
+  kigaliHomes: {
+    id: 'photo-1708772565599-2c4e4b3ed9db',
+    alt: 'Terracotta rooftops across a hillside in Kigali, Rwanda',
+    credit: 'Protais Benjamin Mugenzi',
+  },
+  lagosWaterfront: {
+    id: 'photo-1618828665011-0abd973f7bb8',
+    alt: 'The Lagos waterfront and the road to Victoria Island, Nigeria',
+    credit: 'Nupo Deyon Daniel',
+  },
+  nairobiSkyline: {
+    id: 'photo-1741991110666-88115e724741',
+    alt: 'The Nairobi skyline on a clear day, Kenya',
+    credit: 'imsogabriel stock',
+  },
+  dakarPink: {
+    id: 'photo-1758061298787-667ae2a9d67c',
+    alt: 'A pink house with palm trees by the water, Senegal',
+    credit: 'Sweder Breet',
+  },
+  brickHome: {
+    id: 'photo-1787672358119-25cb4c768d14',
+    alt: 'A new brick family home with a grey metal roof',
+    credit: 'Divaris Shirichena',
+  },
+  modernVilla: {
+    id: 'photo-1787704113747-c1a65d1a6a62',
+    alt: 'A modern three-storey home with wood panelling and a covered drive',
+    credit: 'Ibrahim Design',
+  },
+  greenPlots: {
+    id: 'photo-1776090416729-20bedcc1a207',
+    alt: 'Open green land with a dirt road and scattered buildings',
+    credit: 'Shane Ryan Herilalaina',
+  },
+  orangeHouse: {
+    id: 'photo-1568903421626-ca0f5d72b5b2',
+    alt: 'A woman carrying a child on her back walks past an orange house',
+    credit: 'Vince Gx',
+  },
 } satisfies Record<string, Photo>
 
 export type PhotoKey = keyof typeof PHOTOS

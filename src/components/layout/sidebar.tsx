@@ -18,6 +18,7 @@ import {
   ChevronRight,
   X,
   Heart,
+  ShieldCheck,
 } from 'lucide-react'
 import { Logo } from '@/components/shared/logo'
 import { cn } from '@/lib/utils'
@@ -63,6 +64,7 @@ const NAV_GROUPS: NavGroup[] = [
       { href: '/marketplace', label: 'Marketplace', icon: Store },
       { href: '/explore', label: 'Explore', icon: Compass },
       { href: '/saved', label: 'Saved', icon: Heart },
+      { href: '/verify', label: 'Verify a title', icon: ShieldCheck },
     ],
   },
   {
