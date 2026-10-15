@@ -5,10 +5,14 @@ import Link from 'next/link'
 import { ArrowRight, ChevronDown, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
-// HeroFilm — the homepage header: TIGI's 10-second brand film (land →
-// buildings → apartments → vortex → glass "T" lockup). Autoplays muted and
-// holds on the final lockup; the tagline and CTAs fade in beneath the logo as
-// it lands. Sound and replay controls sit bottom-right.
+// HeroFilm — the homepage header: TIGI's 16-second header film, neon light
+// on torn paper. A neon land grid traces across a dark paper ground and paper
+// homes and apartment blocks rise (the land); two deeds land on one plot, a
+// light scan exposes the forgery and the VERIFIED stamp slams (Verify); a
+// block tears into share tiles (Shares); the legacy folder and key are passed
+// to the next home (Legacy); everything spirals into the glass "T" lockup.
+// It autoplays muted and holds on the lockup; the tagline and CTAs fade in
+// beneath the logo as it lands. Sound and replay controls sit bottom-right.
 //
 // Only the film is shown — no still image or poster. If a browser holds back
 // autoplay, the film starts on the visitor's first scroll, tap or key press,
@@ -19,10 +23,10 @@ import { ArrowRight, ChevronDown, Play, RotateCcw, Volume2, VolumeX } from 'luci
 // ---------------------------------------------------------------------------
 
 /** Film files: /media/tigi-film-{size}.mp4 (H.264) and .webm (VP9). */
-const filmPath = (size: '1080' | '720', ext: 'mp4' | 'webm') => `/media/tigi-film-${size}.${ext}`
+const filmPath = (size: '1080' | '720', ext: 'mp4' | 'webm') => `/media/tigi-film-${size}.${ext}?v=4`
 
 /** Second at which the lockup has formed and the tagline may appear. */
-const LOCKUP_AT = 8.4
+const LOCKUP_AT = 14.6
 
 type Mode = 'loading' | 'playing' | 'ended' | 'held'
 
@@ -123,7 +127,7 @@ export function HeroFilm() {
           setLanded(true)
           setMode('ended')
         }}
-        aria-label="Land parcels, homes and apartment blocks drawn in violet light swirl into the TIGI logo"
+        aria-label="A neon land grid on torn paper fills with homes and apartment blocks; a forged deed is exposed and the true one verified, a block becomes share tiles, a legacy is passed on, then everything swirls into the TIGI logo"
         className={`absolute inset-0 -z-10 h-full w-full ${fit}`}
       >
         {size && <source src={filmPath(size, 'mp4')} type="video/mp4" />}
