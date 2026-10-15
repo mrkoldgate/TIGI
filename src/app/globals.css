@@ -1,4 +1,21 @@
+/* scrollcraft (vendored scroll engine, see src/vendor/scrollcraft/README.md) sits in the LOWEST cascade layer:
+   its device rules apply, but its reset never beats the site's own base styles. */
+@layer scrollcraft;
+@import "../vendor/scrollcraft/scrollcraft.css" layer(scrollcraft);
 @import "tailwindcss";
+
+/* TIGI tokens for the scroll engine (unlayered, so they win over the engine's defaults) */
+:root {
+  --sc-canvas: #050507;
+  --sc-surface: #0E0E14;
+  --sc-ink: #F5F5F7;
+  --sc-ink-soft: #C3C3CC;
+  --sc-accent: #8B5CF6;
+  --sc-accent-ink: #FFFFFF;
+  --sc-font-display: var(--font-display);
+  --sc-font-text: var(--font-body);
+  --sc-font-mono: var(--font-mono);
+}
 
 /* =============================================================================
    TIGI Design System v5 — Hyper-Glass Elite, refined
@@ -1510,3 +1527,43 @@
   .night-grade { filter: brightness(0.6) contrast(1.1) saturate(0.82); }
 }
 @layer components { .night-grade--lit { filter: brightness(0.82) contrast(1.08) saturate(0.9); } }
+
+/* =============================================================================
+   Homepage scroll score (scrollcraft engine). Acts publish their progress as
+   --sc-p (0..1); everything below reads it in CSS. Without JS --sc-p is unset
+   and every fallback below is the finished state.
+   ========================================================================== */
+
+/* Peak: the sample title report checks itself as the Verify steps advance */
+.sc-report__row { --k: clamp(0, (var(--sc-p, 1) - var(--at, 0)) * 14, 1); }
+.sc-report__val { opacity: calc(0.18 + 0.82 * var(--k)); filter: blur(calc((1 - var(--k)) * 2.5px)); }
+.sc-report__tick { opacity: var(--k); transform: scale(calc(0.4 + 0.6 * var(--k))); transform-origin: center; }
+.sc-report__status { display: inline-grid; }
+.sc-report__status > span { grid-area: 1 / 1; display: inline-flex; align-items: center; justify-content: center; }
+.sc-report__clear { opacity: clamp(0, (var(--sc-p, 1) - 0.74) * 14, 1); }
+.sc-report__checking { opacity: calc(1 - clamp(0, (var(--sc-p, 1) - 0.74) * 14, 1)); }
+.sc-report__scan {
+  position: absolute; left: 0; right: 0; height: 2px; pointer-events: none; z-index: 2;
+  top: calc(6% + 88% * clamp(0, (var(--sc-p, 1) - 0.08) / 0.66, 1));
+  background: linear-gradient(90deg, transparent, #C4B5FD 30%, #EDE9FE 50%, #C4B5FD 70%, transparent);
+  box-shadow: 0 0 18px 3px rgba(139, 92, 246, 0.55);
+  opacity: calc(clamp(0, (var(--sc-p, 1) - 0.05) * 12, 1) * clamp(0, (0.8 - var(--sc-p, 1)) * 12, 1));
+}
+
+/* Markets rail: cards settle in order as the rail travels (a drawer being pulled, not a slideshow) */
+@media (prefers-reduced-motion: no-preference) {
+  .sc-rail__item {
+    --k: clamp(0, var(--sc-p, 1) * 9.5 - var(--i, 0) + 1.2, 1);
+    opacity: calc(0.55 + 0.45 * var(--k));
+    transform: translate3d(0, calc((1 - var(--k)) * 22px), 0);
+  }
+}
+
+/* Phones: the Verify peak unpins and reads as a page (it doesn't fit one screen);
+   the report still checks itself as it passes. Product wipes run on desktop only. */
+@media (max-width: 859px) {
+  .sc-unpin-mobile { height: auto !important; }
+  .sc-unpin-mobile > .sc-stage { position: static; height: auto; overflow: visible; }
+  .sc-unpin-mobile [data-sc-cue] { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+  #products [data-sc-reveal] { clip-path: none !important; }
+}

@@ -9,6 +9,7 @@ import { MouseTiltCard } from '@/components/ui/interactions'
 import { MarketTable } from '@/components/marketing/market-table'
 import { OrderTicket } from '@/components/marketing/order-ticket'
 import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
+import { ScrollCraftStage } from '@/components/motion/scrollcraft-stage'
 
 // ---------------------------------------------------------------------------
 // TIGI Homepage — v6 "Africa first"
@@ -18,23 +19,32 @@ import { WaveChars, WaveHeadline } from '@/components/motion/wave-text'
 // come from src/lib/business/offer.ts so the site and the plan stay in step.
 // Every number here is a sourced statistic, a product rule, or sample data
 // labelled as such.
+//
+// Scroll score (scrollcraft engine, src/vendor/scrollcraft — see
+// docs/scrollcraft-home.md): film hero → flow intro → PIN problem (headline
+// assembles, three sourced figures count in one at a time) → REVEAL products
+// (photos wipe up in turn) → PIN verify, the peak (the steps advance while the
+// sample title report checks itself, row by row) → PAN markets (vertical
+// scroll travels the photo rail sideways) → flow shares → IRIS legacy → flow.
 // ---------------------------------------------------------------------------
 
 export default function HomePage() {
   return (
     <>
       <HeroFilm />
-      <Intro />
-      <Problem />
-      <Products />
-      <VerifyChapter />
-      <Markets />
-      <SharesChapter />
-      <LegacyChapter />
-      <Intelligence />
-      <Trust />
-      <Faq />
-      <Closing />
+      <ScrollCraftStage>
+        <Intro />
+        <Problem />
+        <Products />
+        <VerifyChapter />
+        <Markets />
+        <SharesChapter />
+        <LegacyChapter />
+        <Intelligence />
+        <Trust />
+        <Faq />
+        <Closing />
+      </ScrollCraftStage>
     </>
   )
 }
@@ -187,26 +197,50 @@ const PROBLEM_STATS: Array<{ figure: string; label: string; source: string }> = 
   { figure: '~40%', label: 'of ordinary court cases in Mali are land disputes.', source: 'APA News' },
 ]
 
+// Pinned act (span 3.2): the question holds on the left while the three
+// sourced figures arrive one at a time and count up to their real values.
+const PROBLEM_COUNTS: Array<{ pre: string; to: string; post: string }> = [
+  { pre: '~', to: '10', post: '%' },
+  { pre: '$', to: '56', post: 'bn' },
+  { pre: '~', to: '40', post: '%' },
+]
+
 function Problem() {
   return (
-    <section id="problem" className="scroll-mt-24 py-16 md:py-24">
-      <Wrap>
-        <Chapter
-          num="01"
-          label="The problem"
-          title="The paper says it’s yours. Is it?"
-          lede="Across much of Africa, buying property means trusting a document nobody can easily check. Plots are sold twice, sold by people who don’t own them, or don’t exist. The families sending the most money home are the easiest to defraud."
-        />
-        <dl className="tray mt-14 grid gap-1.5 md:grid-cols-3">
-          {PROBLEM_STATS.map((s, i) => (
-            <div key={s.figure} data-reveal="up" data-reveal-delay={String(i * 110)} className="cell p-7">
-              <dt className="figure text-[clamp(2.4rem,1.8rem+2vw,3.4rem)]">{s.figure}</dt>
-              <dd className="mt-3 text-[15px] leading-relaxed text-[#C3C3CC]">{s.label}</dd>
-              <dd className="text-label mt-5 !text-[10px]">Source · {s.source}</dd>
-            </div>
-          ))}
-        </dl>
-      </Wrap>
+    <section id="problem" data-sc-act="pin" data-sc-span="3.2" className="sc-problem scroll-mt-24 bg-[#060509]">
+      <div data-sc-stage>
+        <Wrap className="flex h-full flex-col justify-center gap-10 py-20 lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
+          <div>
+            <p className="text-label" data-sc-cue="0 1 0 0.1">The problem</p>
+            <h2 className="text-display mt-6 max-w-[14ch]" data-sc-cue="0 0.97 0 0.08">
+              The paper says it’s yours. Is it?
+            </h2>
+            <p className="mt-6 max-w-[48ch] text-[17px] leading-relaxed text-[#C3C3CC]" data-sc-cue="0 0.97 0 0.08">
+              Across much of Africa, buying property means trusting a document nobody can easily check. Plots are sold
+              twice, sold by people who don’t own them, or don’t exist.
+            </p>
+          </div>
+          <dl className="relative min-h-[15rem] lg:min-h-[19rem]">
+            {PROBLEM_STATS.map((st, i) => {
+              const c = PROBLEM_COUNTS[i]
+              // one figure at a time: short ramps so two big numbers never sit on top of each other for long
+              const from = 0.1 + i * 0.29
+              const win = i === PROBLEM_STATS.length - 1 ? `${from} 1 0.12 0.05` : `${from} ${from + 0.31} 0.14 0.12`
+              return (
+                <div key={st.figure} className="absolute inset-0" data-sc-cue={win}>
+                  <dt className="figure text-[clamp(4.5rem,3rem+6vw,8.5rem)] leading-none">
+                    {c.pre}
+                    <span data-sc-count={`0 ${c.to}`} data-sc-count-at={`${from} ${from + 0.14}`}>{c.to}</span>
+                    {c.post}
+                  </dt>
+                  <dd className="mt-5 max-w-[34ch] text-[19px] leading-snug text-[#E4E4EC]">{st.label}</dd>
+                  <dd className="text-label mt-4 !text-[10px]">Source · {st.source}</dd>
+                </div>
+              )
+            })}
+          </dl>
+        </Wrap>
+      </div>
     </section>
   )
 }
@@ -223,7 +257,7 @@ const PRODUCT_PHOTOS: Record<string, PhotoKey> = {
 
 function Products() {
   return (
-    <section id="products" className="scroll-mt-24 py-16 md:py-24">
+    <section id="products" data-sc-act="flow" className="scroll-mt-24 py-16 md:py-24">
       <Wrap>
         <Chapter
           num="02"
@@ -235,7 +269,8 @@ function Products() {
           {PRODUCTS.map((p, i) => (
             <li key={p.id} data-reveal="up" data-reveal-delay={String(i * 110)}>
               <Link href={p.href} className="panel panel-hover group flex h-full flex-col overflow-hidden no-underline">
-                <div className="plate relative aspect-[4/3]">
+                {/* the photo wipes up into its frame, one product after another */}
+                <div className="plate relative aspect-[4/3]" data-sc-reveal="up" data-sc-reveal-at={`${0.2 + i * 0.07} ${0.45 + i * 0.07}`}>
                   <Image
                     src={photoUrl(PRODUCT_PHOTOS[p.id], 900, 75)}
                     alt={PHOTOS[PRODUCT_PHOTOS[p.id]].alt}
@@ -273,52 +308,73 @@ const VERIFY_STEPS = [
   { t: 'The deed moves, then the money', d: 'Funds are released only when the deed is registered in your name.' },
 ]
 
+// THE PEAK. Pinned act (span 4.2, the longest on the page): the four steps
+// advance on the left while the sample title report on the right checks
+// itself, row by row, under a scan line, and flips from "Checking" to "Clear"
+// as the last step lands. The report is driven from the act's --sc-p in CSS
+// (.sc-report in globals.css). On phones the act unpins and reads as a page.
+const REPORT_ROWS: Array<[string, string]> = [
+  ['Registry search', 'Owner matches seller'],
+  ['Certificate of Occupancy', 'Genuine, registered'],
+  ['Encumbrances', 'None found'],
+  ['Court records', 'No open disputes'],
+  ['Government acquisition', 'Not affected'],
+]
+
 function VerifyChapter() {
   return (
-    <section id="verify" className="scroll-mt-24 py-16 md:py-24">
-      <Wrap>
-        <Chapter
-          num="03"
-          label="TIGI Verify"
-          title="Know before you pay."
-          lede="Verify is for anyone buying land or a home in Nigeria, Senegal or Mali, especially from abroad. You get a written title report and your money stays protected until the property is legally yours."
-        />
+    <>
+      <section id="verify" data-sc-act="pin" data-sc-span="4.2" className="sc-verify sc-unpin-mobile scroll-mt-24 bg-[#07060D]">
+        <div data-sc-stage>
+          <Wrap className="grid h-full content-center gap-10 py-16 lg:grid-cols-[1fr_400px] lg:gap-20">
+            <div>
+              <p className="text-label" data-sc-cue="0 1 0 0.06">TIGI Verify</p>
+              <h2 className="text-display mt-5 max-w-[16ch]" data-sc-cue="0 1 0 0.06">
+                Know before you pay.
+              </h2>
+              <p className="mt-5 max-w-[52ch] text-[16.5px] leading-relaxed text-[#C3C3CC]" data-sc-cue="0 1 0 0.06">
+                For anyone buying land or a home in Nigeria, Senegal or Mali, especially from abroad. You get a written
+                title report and your money stays protected until the property is legally yours.
+              </p>
+              <ol className="mt-9 grid gap-x-8 gap-y-6 sm:grid-cols-2">
+                {VERIFY_STEPS.map((st, i) => (
+                  <li key={st.t} className="sc-step border-t border-white/[0.1] pt-4" data-sc-cue={`${0.08 + i * 0.17} 1 0.25 0.04`}>
+                    <h3 className="text-h4">{st.t}</h3>
+                    <p className="mt-2 text-[14.5px] leading-relaxed text-[#B4B4C0]">{st.d}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-[1fr_400px] lg:gap-20">
-          <ol className="tray grid gap-1.5 sm:grid-cols-2">
-            {VERIFY_STEPS.map((s, i) => (
-              <li key={s.t} data-reveal="up" data-reveal-delay={String(i * 110)} className="cell group p-7">
-                <span className="font-mono text-xs text-violet-300 transition-colors group-hover:text-violet-100">0{i + 1}</span>
-                <h3 className="text-h3 mt-6">{s.t}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-[#C3C3CC]">{s.d}</p>
-              </li>
-            ))}
-          </ol>
-
-          {/* Sample title report */}
-          <figure aria-label="Illustration of a TIGI title report" className="self-start" data-reveal="right">
-            <MouseTiltCard maxTilt={6} spotlightColor="rgba(139, 92, 246, 0.10)" className="rounded-xl">
-              <div className="glass-glossy edge-lit rounded-2xl p-6">
+            {/* Sample title report: checks itself as the steps advance */}
+            <figure aria-label="Illustration of a TIGI title report" className="self-center" data-sc-cue="0 1 0 0.06">
+              <div className="sc-report glass-glossy edge-lit relative overflow-hidden rounded-2xl p-6">
+                <span className="sc-report__scan" aria-hidden="true" />
                 <div className="flex items-center justify-between">
                   <span className="text-label">Title report · Sample</span>
-                  <span className="pill !py-1 !text-[11px] text-emerald-200">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" aria-hidden="true" /> Clear
+                  <span className="sc-report__status pill !py-1 !text-[11px]">
+                    <span className="sc-report__checking text-[#C3C3CC]">Checking…</span>
+                    <span className="sc-report__clear text-emerald-200">
+                      <span className="mr-1.5 inline-block h-1.5 w-1.5 rounded-full bg-emerald-400 align-middle" aria-hidden="true" />
+                      Clear
+                    </span>
                   </span>
                 </div>
                 <p className="mt-5 text-[17px] font-medium text-[#F5F5F7]">Plot 14, Lekki Phase 1</p>
                 <p className="font-mono text-[11px] uppercase tracking-[0.08em] text-[#8E8E9C]">Lagos State · 648 m²</p>
 
                 <ul className="mt-6 space-y-3 text-sm">
-                  {[
-                    ['Registry search', 'Owner matches seller'],
-                    ['Certificate of Occupancy', 'Genuine, registered'],
-                    ['Encumbrances', 'None found'],
-                    ['Court records', 'No open disputes'],
-                    ['Government acquisition', 'Not affected'],
-                  ].map(([k, v]) => (
-                    <li key={k} className="flex justify-between gap-4 border-b border-white/[0.06] pb-3 last:border-0 last:pb-0">
+                  {REPORT_ROWS.map(([k, v], i) => (
+                    <li
+                      key={k}
+                      className="sc-report__row flex justify-between gap-4 border-b border-white/[0.06] pb-3 last:border-0 last:pb-0"
+                      style={{ '--at': 0.12 + i * 0.13 } as React.CSSProperties}
+                    >
                       <span className="text-[#8E8E9C]">{k}</span>
-                      <span className="text-right text-[#F5F5F7]">{v}</span>
+                      <span className="sc-report__val text-right text-[#F5F5F7]">
+                        <Check className="sc-report__tick mr-1.5 inline h-3.5 w-3.5 text-emerald-300" aria-hidden="true" />
+                        {v}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -328,12 +384,14 @@ function VerifyChapter() {
                   <p className="mt-1.5 text-[14px] text-[#E4E4EC]">Held by licensed partner · released on registration</p>
                 </div>
               </div>
-            </MouseTiltCard>
-            <figcaption className="mt-3 text-caption">Illustration · Not a real property or report</figcaption>
-          </figure>
+              <figcaption className="mt-3 text-caption">Illustration · Not a real property or report</figcaption>
+            </figure>
+          </Wrap>
         </div>
+      </section>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+      <Wrap className="pb-16 pt-10 md:pb-24">
+        <div className="flex flex-wrap items-center gap-4">
           <Link href="/verify" className="btn-glass no-underline">
             More about Verify <ArrowUpRight className="h-4 w-4" />
           </Link>
@@ -342,7 +400,7 @@ function VerifyChapter() {
           </Link>
         </div>
       </Wrap>
-    </section>
+    </>
   )
 }
 
@@ -362,30 +420,40 @@ const PLACES: Array<{ title: string; meta: string; photo: PhotoKey }> = [
 
 function Markets() {
   return (
-    <section id="markets" className="scroll-mt-24 py-16 md:py-24">
-      <Wrap>
-        <Chapter
-          num="04"
-          label="Markets"
-          title="Africa first. The diaspora everywhere."
-          lede="We start where title fraud costs families most and where the law already allows each product. North America runs in parallel, because that is where many buyers live."
-        />
-      </Wrap>
-
-      <div className="mt-12 overflow-x-auto pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <ul className="mx-auto flex w-max snap-x snap-mandatory gap-4 px-5 sm:px-8 xl:px-[max(2rem,calc((100vw-1200px)/2+2rem))]">
-          {PLACES.map((c, i) => (
-            <li key={c.title} data-reveal="up" data-reveal-delay={String(i * 80)} className="w-[78vw] max-w-[400px] snap-start sm:w-[340px]">
-              <div className="group">
-                <div className="photo-card plate aspect-[16/10]">
-                  <Image src={photoUrl(c.photo, 900, 75)} alt={PHOTOS[c.photo].alt} fill sizes="400px" className="object-cover" />
-                </div>
-                <p className="mt-3 text-[15px] font-medium text-[#F5F5F7]">{c.title}</p>
-                <p className="text-caption mt-0.5">{c.meta}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+    <section id="markets" className="scroll-mt-24 pb-16 md:pb-24">
+      {/* Pan act: vertical scroll travels the rail sideways. The heading is the
+          rail's first item and a note closes it, so the travel has a start and
+          a resolution rather than an end. */}
+      <div data-sc-act="pan" data-sc-span="3.4" className="sc-markets">
+        <div data-sc-stage>
+          <div className="flex h-full items-center">
+            <ul className="sc-rail flex w-max items-end gap-5 px-5 sm:px-8 xl:px-[max(2rem,calc((100vw-1200px)/2+2rem))]" data-sc-pan="0.04">
+              <li className="w-[min(86vw,520px)] flex-shrink-0 self-center pr-6">
+                <p className="text-label">Markets</p>
+                <h2 className="text-display mt-5 max-w-[12ch]">Africa first. The diaspora everywhere.</h2>
+                <p className="mt-5 max-w-[42ch] text-[16.5px] leading-relaxed text-[#C3C3CC]">
+                  We start where title fraud costs families most and where the law already allows each product. North
+                  America runs in parallel, because that is where many buyers live.
+                </p>
+              </li>
+              {PLACES.map((c, i) => (
+                <li key={c.title} className="sc-rail__item w-[72vw] max-w-[420px] flex-shrink-0 sm:w-[380px]" style={{ '--i': i } as React.CSSProperties}>
+                  <div className="photo-card plate aspect-[4/5]">
+                    <Image src={photoUrl(c.photo, 900, 75)} alt={PHOTOS[c.photo].alt} fill sizes="420px" className="object-cover" />
+                  </div>
+                  <p className="mt-3 text-[15px] font-medium text-[#F5F5F7]">{c.title}</p>
+                  <p className="text-caption mt-0.5">{c.meta}</p>
+                </li>
+              ))}
+              <li className="w-[min(78vw,360px)] flex-shrink-0 self-center pl-4">
+                <p className="text-[19px] leading-snug text-[#E4E4EC]">
+                  Nigeria, Senegal and Mali first for Verify. Kenya, then the United States, for Shares.
+                </p>
+                <p className="text-caption mt-3">The full launch order is below.</p>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <Wrap className="mt-12">
@@ -511,10 +579,13 @@ function SharesChapter() {
 
 function LegacyChapter() {
   return (
-    <section id="legacy" className="scroll-mt-24 py-16 md:py-24">
+    <section id="legacy" data-sc-act="flow" className="scroll-mt-24 py-16 md:py-24">
       <Wrap>
         <div className="grid items-start gap-14 lg:grid-cols-2 lg:gap-20">
-          <Plate photo="orangeHouse" className="aspect-[4/5]" sizes="(min-width: 1024px) 50vw, 100vw" caption="Senegal" />
+          {/* the family home opens out of a point: the page's one iris */}
+          <div data-sc-reveal="iris" data-sc-reveal-at="0.12 0.48">
+            <Plate photo="orangeHouse" className="aspect-[4/5]" sizes="(min-width: 1024px) 50vw, 100vw" caption="Senegal" />
+          </div>
 
           <div className="lg:pt-10">
             <Chapter

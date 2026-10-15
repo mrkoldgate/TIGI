@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight, ChevronDown, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
+import { ArrowRight, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
 
 // ---------------------------------------------------------------------------
 // HeroFilm — the homepage header: TIGI's 16-second header film, neon light
@@ -172,16 +172,9 @@ export function HeroFilm() {
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom bar: sound and replay only. No scroll cue: visitors are looking at the film, they know. */}
       <div className="mt-auto">
-        <div className="mx-auto flex w-full max-w-[1200px] items-center justify-between gap-4 px-5 pb-6 sm:px-8">
-          <span className="text-label hidden !text-[#A0A0B2] sm:inline">Property in Africa · Verify · Shares · Legacy</span>
-          <a
-            href="#intro"
-            className="text-label flex items-center gap-1.5 !text-[#A0A0B2] no-underline transition-colors hover:!text-white sm:absolute sm:left-1/2 sm:-translate-x-1/2"
-          >
-            Scroll <ChevronDown className="h-3.5 w-3.5 animate-bounce" />
-          </a>
+        <div className="mx-auto flex w-full max-w-[1200px] items-center justify-end gap-4 px-5 pb-6 sm:px-8">
           <div className="flex items-center gap-2">
             <button
               type="button"
