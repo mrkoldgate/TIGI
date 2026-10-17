@@ -1567,3 +1567,7 @@
   .sc-unpin-mobile [data-sc-cue] { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
   #products [data-sc-reveal] { clip-path: none !important; }
 }
+
+/* Nothing may widen the page on phones (an element mid-reveal that starts offset to the right made the
+   layout viewport 20px wider than the screen). clip, unlike hidden, keeps position: sticky working. */
+html, body { overflow-x: clip; }
