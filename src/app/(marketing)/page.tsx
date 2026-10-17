@@ -208,7 +208,7 @@ const PROBLEM_COUNTS: Array<{ pre: string; to: string; post: string }> = [
 function Problem() {
   return (
     <section id="problem" data-sc-act="pin" data-sc-span="3.2" className="sc-problem scroll-mt-24 bg-[#060509]">
-      <div data-sc-stage>
+      <div data-sc-stage className="overflow-hidden">
         <Wrap className="flex h-full flex-col justify-center gap-10 py-20 lg:grid lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-20">
           <div>
             <p className="text-label" data-sc-cue="0 1 0 0.1">The problem</p>
@@ -325,7 +325,7 @@ function VerifyChapter() {
   return (
     <>
       <section id="verify" data-sc-act="pin" data-sc-span="4.2" className="sc-verify sc-unpin-mobile scroll-mt-24 bg-[#07060D]">
-        <div data-sc-stage>
+        <div data-sc-stage className="overflow-hidden">
           <Wrap className="grid h-full content-center gap-10 py-16 lg:grid-cols-[1fr_400px] lg:gap-20">
             <div>
               <p className="text-label" data-sc-cue="0 1 0 0.06">TIGI Verify</p>
@@ -425,7 +425,7 @@ function Markets() {
           rail's first item and a note closes it, so the travel has a start and
           a resolution rather than an end. */}
       <div data-sc-act="pan" data-sc-span="3.4" className="sc-markets">
-        <div data-sc-stage>
+        <div data-sc-stage className="overflow-hidden">
           <div className="flex h-full items-center">
             <ul className="sc-rail flex w-max items-end gap-5 px-5 sm:px-8 xl:px-[max(2rem,calc((100vw-1200px)/2+2rem))]" data-sc-pan="0.04">
               <li className="w-[min(86vw,520px)] flex-shrink-0 self-center pr-6">

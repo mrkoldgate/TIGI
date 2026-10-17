@@ -42,7 +42,8 @@ export function HeroFilm() {
 
   // Pick the file for the screen.
   useEffect(() => {
-    setSize(window.innerWidth < 900 ? '540' : '1080')
+    // screen.width too: a wide element can briefly widen the layout viewport on phones before hydration
+    setSize(Math.min(window.innerWidth, window.screen.width) < 900 ? '540' : '1080')
     // Portrait screens letterbox the film, so the tagline and CTAs sit below it
     // from the start instead of waiting for the lockup at the end of the film.
     if (window.matchMedia(PORTRAIT).matches) setLanded(true)
