@@ -17,13 +17,16 @@ import { ArrowRight, Play, RotateCcw, Volume2, VolumeX } from 'lucide-react'
 // Only the film is shown — no still image or poster. If a browser holds back
 // autoplay, the film starts on the visitor's first scroll, tap or key press,
 // and the tagline appears with a "Play the film" button in the meantime.
-// Phones get the 720p file; wide screens the 1080p file (H.264 mp4, with a
+// Phones get a light 540p file (~1.8 MB); wide screens the 1080p file (H.264 mp4, with a
 // VP9 webm fallback). On portrait screens the 16:9 film is contained so the
 // logo is never cropped.
 // ---------------------------------------------------------------------------
 
 /** Film files: /media/tigi-film-{size}.mp4 (H.264) and .webm (VP9). */
-const filmPath = (size: '1080' | '720', ext: 'mp4' | 'webm') => `/media/tigi-film-${size}.${ext}?v=4`
+const filmPath = (size: '1080' | '540', ext: 'mp4' | 'webm') => `/media/tigi-film-${size}.${ext}?v=5`
+
+/** Screens where the 16:9 film is contained (letterboxed) rather than cropped. */
+const PORTRAIT = '(max-aspect-ratio: 4/3)'
 
 /** Second at which the lockup has formed and the tagline may appear. */
 const LOCKUP_AT = 14.6
@@ -32,14 +35,17 @@ type Mode = 'loading' | 'playing' | 'ended' | 'held'
 
 export function HeroFilm() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [size, setSize] = useState<'1080' | '720' | null>(null)
+  const [size, setSize] = useState<'1080' | '540' | null>(null)
   const [mode, setMode] = useState<Mode>('loading')
   const [landed, setLanded] = useState(false)
   const [muted, setMuted] = useState(true)
 
   // Pick the file for the screen.
   useEffect(() => {
-    setSize(window.innerWidth < 900 ? '720' : '1080')
+    setSize(window.innerWidth < 900 ? '540' : '1080')
+    // Portrait screens letterbox the film, so the tagline and CTAs sit below it
+    // from the start instead of waiting for the lockup at the end of the film.
+    if (window.matchMedia(PORTRAIT).matches) setLanded(true)
   }, [])
 
   // Autoplay, retrying on the first interaction if the browser holds it back.
@@ -88,7 +94,7 @@ export function HeroFilm() {
   const play = (withSound = false) => {
     const v = videoRef.current
     if (!v) return
-    setLanded(false)
+    setLanded(window.matchMedia(PORTRAIT).matches)
     v.currentTime = 0
     v.muted = withSound ? false : muted
     if (withSound) setMuted(false)
